@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Validations_Tests.ValidationsTests.GenericTestableObjects;
+namespace PopValidations_Tests.ValidationsTests.GenericTestableObjects;
 
 public class NonNullAllFieldTypesDto : IComparable
 {

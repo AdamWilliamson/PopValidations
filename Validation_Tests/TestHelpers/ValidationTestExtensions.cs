@@ -2,7 +2,7 @@
 using PopValidations.Validations.Base;
 using System.Collections.Generic;
 
-namespace Validation_Tests;
+namespace PopValidations_Tests.TestHelpers;
 
 public static class ValidationTestExtensions
 {

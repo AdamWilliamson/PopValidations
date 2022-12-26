@@ -1,4 +1,4 @@
-﻿namespace Validations_Tests.ValidationsTests.GenericTestableObjects;
+﻿namespace PopValidations_Tests.ValidationsTests.GenericTestableObjects;
 
 public struct NonNullFieldTestStruct
 {

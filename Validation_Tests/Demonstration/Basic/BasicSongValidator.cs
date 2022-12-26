@@ -1,6 +1,6 @@
-﻿using Validations;
+﻿using PopValidations;
 
-namespace Validations_Tests.Demonstration.Basic;
+namespace PopValidations_Tests.Demonstration.Basic;
 
 public class BasicSongValidator : AbstractValidator<BasicSong>
 {

@@ -1,6 +1,6 @@
-﻿namespace PopValidations_Tests.Demonstration.Basic;
+﻿namespace PopValidations_Tests.Demonstration.Advanced;
 
-public record BasicSong(
+public record AdvancedSong(
     string Artist,
     int? TrackNumber,
     string TrackName,

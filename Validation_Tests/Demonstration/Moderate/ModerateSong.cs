@@ -1,4 +1,4 @@
-﻿namespace Validations_Tests.Demonstration.Moderate;
+﻿namespace PopValidations_Tests.Demonstration.Moderate;
 
 public record ModerateSong(
     string Artist,

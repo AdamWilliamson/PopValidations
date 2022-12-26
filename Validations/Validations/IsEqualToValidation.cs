@@ -17,11 +17,6 @@ public class IsEqualToValidation : ValidationComponentBase
         this.scopedData = scopedData;
     }
 
-    public IsEqualToValidation(IComparable? value)
-    {
-        Value = value;
-    }
-
     public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
     {
         scopedData?.ReHome(attemptedScopeFieldDescriptor);

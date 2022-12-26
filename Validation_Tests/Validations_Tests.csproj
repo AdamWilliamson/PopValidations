@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+
+    <RootNamespace>PopValidations_Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -70,10 +72,6 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>IsEqualToValidation_RunnerTests.cs</DependentUpon>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Demonstration\Advanced\" />
   </ItemGroup>
 
 </Project>

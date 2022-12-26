@@ -2,7 +2,7 @@
 using PopValidations.ValidatorInternals;
 using System.Collections.Generic;
 
-namespace Validations_Tests.TestHelpers
+namespace PopValidations_Tests.TestHelpers
 {
     internal static class ValidationRunnerHelper
     {

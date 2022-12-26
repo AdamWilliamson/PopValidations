@@ -3,7 +3,7 @@ using PopValidations.Execution.Stores;
 using PopValidations.Execution.Stores.Internal;
 using PopValidations.ValidatorInternals;
 
-namespace Validations;
+namespace PopValidations;
 
 public abstract class AbstractSubValidator<TValidationType>
     : AbstractValidatorBase<TValidationType>, ISubValidatorClass

@@ -1,12 +1,12 @@
 ﻿using ApprovalTests;
 using FluentAssertions;
 using System.Threading.Tasks;
-using Validations;
-using Validations_Tests.TestHelpers;
-using Validations_Tests.ValidationsTests.GenericTestableObjects;
+using PopValidations;
+using PopValidations_Tests.TestHelpers;
+using PopValidations_Tests.ValidationsTests.GenericTestableObjects;
 using Xunit;
 
-namespace Validations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests;
 
 public class NotNull_NoError_TestingValidator : AbstractValidator<NullAllFieldTypesDto>
 {

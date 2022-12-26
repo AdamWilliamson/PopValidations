@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Validations;
+using PopValidations;
 
-namespace Validations_Tests.Demonstration.Moderate;
+namespace PopValidations_Tests.Demonstration.Moderate;
 
 public class ModerateAlbumValidator : AbstractValidator<ModerateAlbum>
 {

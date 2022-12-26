@@ -4,7 +4,7 @@ using PopValidations.Validations;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Validations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests;
 
 public class NotNullValidationTests
 {

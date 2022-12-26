@@ -1,11 +1,10 @@
 ﻿using ApprovalTests;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Validations_Tests.TestHelpers;
+using PopValidations_Tests.TestHelpers;
 using Xunit;
 
-namespace Validations_Tests.Demonstration.Moderate;
+namespace PopValidations_Tests.Demonstration.Moderate;
 
 public class ModerateDemonstrationTests
 {

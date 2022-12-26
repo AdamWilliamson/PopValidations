@@ -3,7 +3,7 @@ using Newtonsoft.Json.Serialization;
 using PopValidations.Execution.Description;
 using PopValidations.Execution.Validation;
 
-namespace Validations_Tests.TestHelpers;
+namespace PopValidations_Tests.TestHelpers;
 
 public static class JsonConverter
 {

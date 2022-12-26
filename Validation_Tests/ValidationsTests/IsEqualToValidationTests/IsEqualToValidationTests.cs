@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Validations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests;
 
 public class IsEqualToValidationTests
 {
@@ -21,7 +21,7 @@ public class IsEqualToValidationTests
     public void WhenValidatingWithEqualValues_TheyAllPass(IComparable testValue, IComparable incomingValue)
     {
         // Arrange
-        var validator = new IsEqualToValidation(testValue);
+        var validator = new IsEqualToValidation(new ScopedData<object, IComparable>(testValue));
 
         // Act
         var result = validator.Validate(incomingValue);
@@ -40,7 +40,7 @@ public class IsEqualToValidationTests
     public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable incomingValue)
     {
         // Arrange
-        var validator = new IsEqualToValidation(testValue);
+        var validator = new IsEqualToValidation(new ScopedData<object, IComparable>(testValue));
 
         // Act
         var result = validator.Validate(incomingValue);
@@ -53,7 +53,7 @@ public class IsEqualToValidationTests
     public void TheValidationAndDescriptionValues_AreCorrect()
     {
         // Arrange
-        var validator = new IsEqualToValidation(2.33);
+        var validator = new IsEqualToValidation(new ScopedData<object, IComparable>(2.33));
 
         // Act
         var validationResult = validator.Validate(0);

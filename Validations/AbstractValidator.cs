@@ -1,7 +1,7 @@
 ﻿using PopValidations.Scopes;
 using PopValidations.ValidatorInternals;
 
-namespace Validations;
+namespace PopValidations;
 
 public abstract class AbstractValidator<TValidationType> 
     : AbstractValidatorBase<TValidationType>, IMainValidator<TValidationType>

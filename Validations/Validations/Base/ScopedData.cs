@@ -4,23 +4,18 @@ using PopValidations.FieldDescriptors.Base;
 
 namespace PopValidations.Validations.Base;
 
-public interface IScopeData
-{
-    void ReHome(IFieldDescriptorOutline fieldDescriptorOutline);
-    Task Init(object? instance);
-    object? GetValue();
-    string Describe();
-    
-    void SetParent(IScopeData parent);
-}
-
-public interface IScopeData<TResponse> : IScopeData { }
-
 public class ScopedData<TPassThrough, TResponse> : IScopeData
 {
-    private Func<TPassThrough, Task<TResponse>> PassThroughFunction { get; }
+    private Func<TPassThrough, Task<TResponse>>? PassThroughFunction { get; }
     protected IScopeData? Parent { get; set; } = null;
-    TResponse? RetrievedValue = default(TResponse);
+    private TResponse? RetrievedValue = default(TResponse);
+    private bool HasRetrievedValue = false;
+
+    public ScopedData(TResponse data)
+    {
+        RetrievedValue = data;
+        HasRetrievedValue = true;
+    }
 
     public ScopedData(Func<TPassThrough, Task<TResponse>> passThroughFunction)
     {
@@ -65,6 +60,8 @@ public class ScopedData<TPassThrough, TResponse> : IScopeData
 
     public async Task Init(object? instance)
     {
+        if (HasRetrievedValue) return;
+
         if (Parent != null)
         {
             await Parent.Init(instance);
@@ -75,6 +72,9 @@ public class ScopedData<TPassThrough, TResponse> : IScopeData
                 throw new Exception();
             }
 
+            if (PassThroughFunction == null)
+                throw new Exception("Passthrough should NOT be null");
+
             RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)parentValue);
         }
         else
@@ -84,8 +84,13 @@ public class ScopedData<TPassThrough, TResponse> : IScopeData
                 throw new Exception();
             }
 
+            if (PassThroughFunction == null)
+                throw new Exception("Passthrough should NOT be null");
+
             RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)instance);
         }
+
+        HasRetrievedValue = true;
     }
 
     public object? GetValue()
@@ -95,7 +100,9 @@ public class ScopedData<TPassThrough, TResponse> : IScopeData
 
     public string Describe()
     {
-        return "No";
+        if (HasRetrievedValue) return RetrievedValue?.ToString() ?? String.Empty;
+
+        return String.Empty;
     }
 
     public ScopedData<TPassThrough, TNewResponse> To<TNewResponse>(
