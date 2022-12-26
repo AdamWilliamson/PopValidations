@@ -1,0 +1,160 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Integer",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "String",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Decimal",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Double",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Short",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Long",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "TwoComponentTuple",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "TwoComponentTuple",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "TwoComponentNewTupple",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "TwoComponentNewTupple",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesList",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "AllFieldTypesList",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesLinkedList",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "AllFieldTypesLinkedList",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesIEnumerable",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "AllFieldTypesIEnumerable",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesDictionary",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "AllFieldTypesDictionary",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Struct",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Struct",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        }
+    ]
+}

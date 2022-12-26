@@ -1,0 +1,75 @@
+﻿{
+    "scopeMessage": null,
+    "validator": null,
+    "error": null,
+    "description": null,
+    "children": [
+        {
+            "scopeMessage": null,
+            "validator": null,
+            "error": null,
+            "description": "TrackNumber",
+            "children": [
+                {
+                    "scopeMessage": null,
+                    "validator": null,
+                    "error": "Is not equal to 1",
+                    "description": "Must equal to 1",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "scopeMessage": null,
+            "validator": null,
+            "error": null,
+            "description": "TrackName",
+            "children": [
+                {
+                    "scopeMessage": null,
+                    "validator": null,
+                    "error": "Is Null",
+                    "description": "Must not be Null",
+                    "children": []
+                },
+                {
+                    "scopeMessage": null,
+                    "validator": null,
+                    "error": "Is not equal to A Song Title",
+                    "description": "Must equal to A Song Title",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "scopeMessage": null,
+            "validator": null,
+            "error": null,
+            "description": "Duration",
+            "children": [
+                {
+                    "scopeMessage": null,
+                    "validator": null,
+                    "error": "Is not equal to 2.3",
+                    "description": "Must equal to 2.3",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "scopeMessage": null,
+            "validator": null,
+            "error": null,
+            "description": "IntegerList",
+            "children": [
+                {
+                    "scopeMessage": null,
+                    "validator": null,
+                    "error": "Is Null",
+                    "description": "Must not be Null",
+                    "children": []
+                }
+            ]
+        }
+    ]
+}

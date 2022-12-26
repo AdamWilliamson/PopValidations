@@ -1,0 +1,60 @@
+﻿::Validators Wanted::
+
+Custom Function. (need name)
+	Supply a Function that returns true/false, and a text Description
+
+HasInclusiveLengthBetween
+	Takes a string, or array. 
+HasExclusiveLengthBetween
+	Takes a string, or array. 
+
+IsNotEmpty
+	Takes an Array or a String.  Tests if its Empty string or Empty Array.
+
+IsEmpty
+	array or String Must be empty
+
+IsNull
+	Value Must be null
+
+Email Validator
+	Microsoft apprived email rules are sufficient
+
+IsGreaterThan
+IsGreaterThanOrEqualTo
+IsLessthan
+IsLessthanOrEqualTo
+	Does the stanard logic operators
+
+MatchesRegularExpression
+	takes a regular Expression, string must match
+
+IsEnum
+	Incoming Value converts to the supplied Enum.
+	description should show all valid conversions.
+
+IsPolymorphic
+	Takes a list of types, incoming value must be convertible to this type
+	Can restrict to classes.
+
+IsConvertableTo
+	takes a string or object.  Proves the incoming value is convertable
+	Nullable fields are tricky. Must be allowed as input. But can fail conversion to non-nullable entities.
+
+ScalePrecision
+	Takes a decimal, or nullable decimal.
+	Decimal must have matching scale and precision. 
+
+IsOneOf
+	Matches item against a list of those items.
+	May need to be IComparable
+
+IsJson
+	String/Object must be parsable to json.
+
+MatchesJsonSchema
+	string/object must match Json Schema.
+
+IsUrl
+	takes string, checks if valid url format.
+

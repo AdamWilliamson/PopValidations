@@ -1,0 +1,28 @@
+﻿{
+    "results": [
+        {
+            "property": "Artist",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Artist",
+                    "message": "Is not equal to 'John'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Songs[0]",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Songs[0]",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+﻿{
+    "results": [
+        {
+            "property": "TrackNumber",
+            "outcomes": [
+                {
+                    "propertyName": "TrackNumber",
+                    "message": "Must not be null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "TrackName",
+            "outcomes": [
+                {
+                    "propertyName": "TrackName",
+                    "message": "Must equal to '{{Definitely Not The Correct Song Name.}}'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Duration",
+            "outcomes": [
+                {
+                    "propertyName": "Duration",
+                    "message": "Songs must force you to travel slowly backwards in time to listen to.",
+                    "group": null
+                }
+            ]
+        }
+    ]
+}

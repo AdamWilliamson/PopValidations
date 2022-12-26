@@ -1,0 +1,40 @@
+﻿{
+    "results": [
+        {
+            "property": "TrackNumber",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "TrackNumber",
+                    "message": "Is not null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "TrackName",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "TrackName",
+                    "message": "Is not equal to 'Definitely Not The Correct Song Name.'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Duration",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Duration",
+                    "message": "Song must have a negative duration.",
+                    "group": null
+                }
+            ]
+        }
+    ]
+}
