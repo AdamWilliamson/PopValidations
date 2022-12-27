@@ -18,6 +18,7 @@ public class IsEqualToValidationTests
     [InlineData(float.MaxValue, float.MaxValue)]
     [InlineData(long.MaxValue, long.MaxValue)]
     [InlineData(short.MaxValue, short.MaxValue)]
+    [InlineData(null, null)]
     public void WhenValidatingWithEqualValues_TheyAllPass(IComparable testValue, IComparable incomingValue)
     {
         // Arrange
@@ -37,6 +38,7 @@ public class IsEqualToValidationTests
     [InlineData(float.MaxValue, long.MaxValue)]
     [InlineData(long.MaxValue, short.MaxValue)]
     [InlineData(short.MaxValue, int.MaxValue)]
+    [InlineData(short.MaxValue, null)]
     public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable incomingValue)
     {
         // Arrange

@@ -9,8 +9,7 @@ public class IsEqualToValidation : ValidationComponentBase
     public override string DescriptionTemplate { get; protected set; } = "Must equal to '{{value}}'";
     public override string ErrorTemplate { get; protected set; } = "Is not equal to '{{value}}'";
 
-    private readonly IComparable? Value = null;
-    private readonly IScopeData? scopedData = null;
+    private readonly IScopeData scopedData;
 
     public IsEqualToValidation(IScopeData scopedData)
     {
@@ -19,12 +18,12 @@ public class IsEqualToValidation : ValidationComponentBase
 
     public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
     {
-        scopedData?.ReHome(attemptedScopeFieldDescriptor);
+        scopedData.ReHome(attemptedScopeFieldDescriptor);
     }
 
     public override ValidationActionResult Validate(object? value)
     {
-        var RealValue = GetData(scopedData, Value);
+        var RealValue = (IComparable?)scopedData.GetValue();
 
         if (
             (RealValue == null && value == null)
@@ -45,7 +44,7 @@ public class IsEqualToValidation : ValidationComponentBase
 
     public override DescribeActionResult Describe()
     {
-        var describedValue = GetDataDescription(scopedData, Value);
+        var describedValue = scopedData.Describe();
         
         return CreateDescription(
                 ("value", describedValue)

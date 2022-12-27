@@ -8,7 +8,8 @@ public class ModerateAlbumValidator : AbstractValidator<ModerateAlbum>
     public ModerateAlbumValidator()
     {
         Describe(x => x.Artist)
-            .Vitally().IsEqualTo("John");
+            .Vitally().IsEqualTo("John")
+            ;
 
         When(
             "Artist is NOT 'Disturbed'",

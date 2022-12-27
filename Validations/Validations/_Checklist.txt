@@ -1,4 +1,5 @@
-﻿::Validators Wanted::
+﻿Copy FluentValidator as needed.
+::Validators Wanted::
 
 Custom Function. (need name)
 	Supply a Function that returns true/false, and a text Description

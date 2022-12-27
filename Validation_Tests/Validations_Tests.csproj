@@ -29,9 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Demonstration\Moderate\ModerateDemonstrationTests.AlbumValidator_Describe_ToJson.approved.json">
-      <DependentUpon>ModerateDemonstrationTests.cs</DependentUpon>
-    </None>
     <None Update="Demonstration\Moderate\ModerateDemonstrationTests.BasicValidator_Describe_ToJson.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>

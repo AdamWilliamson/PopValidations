@@ -17,7 +17,7 @@ public class BasicDemonstrationTests
             "Disturbed", 
             null, 
             "Down With The Sickness", 
-            2.3, 
+            2.4,
             string.Empty
         );
 
