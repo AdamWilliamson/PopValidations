@@ -1,29 +1,27 @@
 ﻿using PopValidations.Validations.Base;
 
-namespace PopValidations.Validations
+namespace PopValidations.Validations;
+public class IsNullValidation : ValidationComponentBase
 {
-    public class IsNullValidation : ValidationComponentBase
+    public override string DescriptionTemplate { get; protected set; } = $"Must be null";
+    public override string ErrorTemplate { get; protected set; } = $"Is null";
+
+    public IsNullValidation() { }
+
+    public override ValidationActionResult Validate(object? value)
     {
-        public override string DescriptionTemplate { get; protected set; } = $"Must be null";
-        public override string ErrorTemplate { get; protected set; } = $"Is null";
-
-        public IsNullValidation() { }
-
-        public override ValidationActionResult Validate(object? value)
+        if (value == null)
         {
-            if (value == null)
-            {
-                return CreateValidationSuccessful();
-            }
-            else
-            {
-                return CreateValidationError();
-            }
+            return CreateValidationSuccessful();
         }
-
-        public override DescribeActionResult Describe()
+        else
         {
-            return CreateDescription();
+            return CreateValidationError();
         }
+    }
+
+    public override DescribeActionResult Describe()
+    {
+        return CreateDescription();
     }
 }
