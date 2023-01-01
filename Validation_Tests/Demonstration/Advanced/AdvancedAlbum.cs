@@ -6,14 +6,15 @@ namespace PopValidations_Tests.Demonstration.Advanced;
 public enum AlbumType
 {
     SingleArtist,
-    Collaboration,
-    Mix
+    Collaboration
 }
 
-public record AdvancedAlbum(    
-    AlbumType Type,
-    string Artist, 
-    string CoverImageUrl,
-    DateTime Created,
-    List<AdvancedSong?> Songs
+public record AdvancedAlbum(
+    string? Title,
+    AlbumType? Type,
+    string? Artist,
+    string? CoverImageUrl,
+    DateTime? Created,
+    List<AdvancedSong?>? Songs,
+    List<int>? PublishedDates
 );

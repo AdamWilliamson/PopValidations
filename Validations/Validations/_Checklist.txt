@@ -59,3 +59,19 @@ MatchesJsonSchema
 IsUrl
 	takes string, checks if valid url format.
 
+
+Switch
+	Example:
+	.Switch(s => s
+		.Case(
+			field => field is string {length: > 0},
+			"Field must be greater than 0 length"
+		)
+		.Case(
+			scopedData.To(data => data is not null),
+			"Field must not be null"
+		)
+	)
+
+**
+Ensure validators for string comparison allow Cultural Selection and String comparison settings.

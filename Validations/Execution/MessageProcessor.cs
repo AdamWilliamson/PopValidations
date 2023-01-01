@@ -35,7 +35,7 @@ public class MessageProcessor
 
         foreach (var keyValue in keyValues)
         {
-            message = message.Replace(keyValue.Key, keyValue.Value);
+            message = message.Replace($"{{{{{keyValue.Key}}}}}", keyValue.Value);
         }
 
         return message;

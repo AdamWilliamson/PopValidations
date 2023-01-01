@@ -7,7 +7,7 @@ namespace PopValidations.FieldDescriptors;
 public class FieldDescriptor<TValidationType, TFieldType>
     : IFieldDescriptor<TValidationType, TFieldType>
 {
-    public PropertyExpressionTokenBase<TValidationType, TFieldType> PropertyToken { get; }
+    public PropertyExpressionTokenBase<TValidationType, TFieldType?> PropertyToken { get; }
     object? RetrievedValue = null;
     bool ValueHasBeenRetrieved = false;
     public ValidationConstructionStore Store { get; }
@@ -32,7 +32,7 @@ public class FieldDescriptor<TValidationType, TFieldType>
     }
 
     public FieldDescriptor(
-        PropertyExpressionTokenBase<TValidationType, TFieldType> propertyToken,
+        PropertyExpressionTokenBase<TValidationType, TFieldType?> propertyToken,
         ValidationConstructionStore store
     )
     {

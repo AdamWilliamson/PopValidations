@@ -5,7 +5,7 @@
             "outcomes": [
                 {
                     "propertyName": "Artist",
-                    "message": "Must equal to '{{John}}'",
+                    "message": "Must equal to 'John'",
                     "group": null
                 }
             ]

@@ -8,15 +8,12 @@ namespace PopValidations.Scopes.ForEachs;
 
 public class IndexedPropertyExpressionToken<TInput, TOutput>
     : PropertyExpressionTokenBase<TInput, TOutput>
-    where TInput : IEnumerable<TOutput>
+    where TInput : IEnumerable<TOutput?>
 {
-    public override Expression<Func<TInput, TOutput>> Expression { get; }
+    public override Expression<Func<TInput, TOutput?>> Expression { get; }
     public override string Name { get; }
 
-    public IndexedPropertyExpressionToken(
-        //Expression<Func<TInput, TOutput>> expression, 
-        string name,
-        int index)
+    public IndexedPropertyExpressionToken(string name, int index)
     {
         Expression = (input) => input.ElementAt(index);
         Name = name;

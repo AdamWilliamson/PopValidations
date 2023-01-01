@@ -5,7 +5,7 @@ namespace PopValidations.FieldDescriptors.Base;
 
 public interface IFieldDescriptor<TValidationType, TFieldType> : IFieldDescriptorOutline
 {
-    PropertyExpressionTokenBase<TValidationType, TFieldType> PropertyToken { get; }
+    PropertyExpressionTokenBase<TValidationType, TFieldType?> PropertyToken { get; }
     ValidationConstructionStore Store { get; }
     void AddValidation(IExpandableEntity component);
 

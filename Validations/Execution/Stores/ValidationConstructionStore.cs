@@ -184,7 +184,42 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
 
     public void Merge(ValidationConstructionStore store)
     {
-        unExpandedItems.AddRange(store.GetItems());
+        foreach(var item in store.GetItems())
+        {
+            if (item is IExpandableStoreItem expandable && expandable is not null)
+            {
+                AddItem(expandable.FieldDescriptor, expandable.Component);
+            }
+            else if (item is IValidatableStoreItem validatable)
+            {
+                int pushedParents = PushParentTree(validatable.ScopeParent);
+
+                if (validatable.CurrentFieldExecutor != null)
+                    FieldExecutors.Push(validatable.CurrentFieldExecutor);
+
+                if (validatable.FieldDescriptor == null)
+                    throw new Exception("FieldDescriptor is null on IValidatable.");
+
+                var scopeParent = new ScopeParent(
+                    validatable.ScopeParent?.CurrentScope,
+                    GetCurrentScopeParent()
+                );
+                validatable.ScopeParent = scopeParent;
+
+                IValidatableStoreItem decoratedItem = validatable;
+                foreach (var decorator in Decorators.Where(d => d is not null))
+                {
+                    decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
+                }
+
+                unExpandedItems.Add(decoratedItem);
+
+                if (validatable.CurrentFieldExecutor != null)
+                    FieldExecutors.Pop();
+
+                PopCount(pushedParents);
+            }
+        }
     }
 
     internal List<IValidatableStoreItem> ExpandToValidate<TValidationType>(TValidationType? instance)

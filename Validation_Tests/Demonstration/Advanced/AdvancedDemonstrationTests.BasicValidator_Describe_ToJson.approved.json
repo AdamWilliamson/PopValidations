@@ -1,0 +1,91 @@
+﻿{
+    "results": [
+        {
+            "property": "Artist",
+            "outcomes": [
+                {
+                    "propertyName": "Artist",
+                    "message": "Must equal to ''artist' with Something appended'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Created",
+            "outcomes": [
+                {
+                    "propertyName": "Created",
+                    "message": "Name is too short",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Songs[n]",
+            "outcomes": [
+                {
+                    "propertyName": "Songs[n]",
+                    "message": "Must not be null",
+                    "group": null
+                },
+                {
+                    "propertyName": "Songs[n]",
+                    "message": "Must not be null",
+                    "group": {
+                        "name": "Album constains songs we don't own the copyright to",
+                        "description": "Album constains songs we don't own the copyright to",
+                        "group": null
+                    }
+                },
+                {
+                    "propertyName": "Songs[n]",
+                    "message": "Checks to ensure the song's rights are owned by us.",
+                    "group": {
+                        "name": "Album constains songs we don't own the copyright to",
+                        "description": "Album constains songs we don't own the copyright to",
+                        "group": null
+                    }
+                }
+            ]
+        },
+        {
+            "property": "Songs[n].TrackNumber",
+            "outcomes": [
+                {
+                    "propertyName": "Songs[n].TrackNumber",
+                    "message": "Must not be null",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Songs[n].TrackName",
+            "outcomes": [
+                {
+                    "propertyName": "Songs[n].TrackName",
+                    "message": "Must equal to 'Definitely Not The Correct Song Name.'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Songs[n].Duration",
+            "outcomes": [
+                {
+                    "propertyName": "Songs[n].Duration",
+                    "message": "Songs must force you to travel slowly backwards in time to listen to.",
+                    "group": null
+                },
+                {
+                    "propertyName": "Songs[n].Duration",
+                    "message": "Must equal to '10.1'",
+                    "group": {
+                        "name": "Song Duration is greater than 5 minutes",
+                        "description": "Song Duration is greater than 5 minutes",
+                        "group": null
+                    }
+                }
+            ]
+        }
+    ]
+}

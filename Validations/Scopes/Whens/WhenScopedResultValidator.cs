@@ -18,13 +18,14 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
         ValidationConstructionStore validatorStore,
         string whenDescription,
         Func<TValidationType, Task<bool>> ifTrue,
-        Func<TValidationType, Task<TPassThrough>> scoped,
+        ScopedData<TValidationType, TPassThrough> scopedData,
+        //Func<TValidationType, Task<TPassThrough>> scoped,
         Action<ScopedData<TValidationType, TPassThrough>> rules
     ) : base(validatorStore)
     {
         this.whenDescription = whenDescription;
         this.ifTrue = ifTrue;
-        this.scoped = new ScopedData<TValidationType, TPassThrough>(scoped);
+        this.scoped = scopedData;// new ScopedData<TValidationType, TPassThrough>(scoped);
         this.rules = rules;
 
         something = new WhenStringValidator_IfTrue<TValidationType>(ifTrue);

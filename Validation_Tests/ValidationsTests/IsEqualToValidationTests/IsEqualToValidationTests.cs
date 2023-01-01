@@ -79,7 +79,7 @@ public class IsEqualToValidationTests
     public void WhenUsingScopedData_TheMessagesAreCorrect()
     {
         // Arrange
-        var validator = new IsEqualToValidation(new ScopedData <int, int>((int x) => Task.FromResult(x)));
+        var validator = new IsEqualToValidation(new ScopedData <int, int>("Original", (int x) => Task.FromResult(x)));
 
         // Act
         validator.InitScopes(2.33);

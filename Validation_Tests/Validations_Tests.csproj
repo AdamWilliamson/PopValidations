@@ -29,6 +29,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Demonstration\Advanced\AdvancedDemonstrationTests.BasicValidator_Describe_ToJson.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>AdvancedDemonstrationTests.cs</DependentUpon>
+    </None>
+    <None Update="Demonstration\Advanced\AdvancedDemonstrationTests.BasicValidator_Validate_ToJson.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>AdvancedDemonstrationTests.cs</DependentUpon>
+    </None>
     <None Update="Demonstration\Moderate\ModerateDemonstrationTests.BasicValidator_Describe_ToJson.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>

@@ -94,12 +94,11 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
     {
         var descriptionResult = new DescriptionResult();
         var store = new ValidationConstructionStore();
-        //var executionStore = new ValidationExecutionStore();
         var allItems = new List<ExpandedItem>();
 
         foreach (var mainValidator in mainValidators)
         {
-            var expandedItems = mainValidator.Store.Describe();//ExpandToDescribe();
+            var expandedItems = mainValidator.Store.Describe();
             if (expandedItems?.Any() == true)
             {
                 allItems.AddRange(expandedItems);

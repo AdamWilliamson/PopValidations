@@ -5,7 +5,7 @@
             "outcomes": [
                 {
                     "propertyName": "Integer",
-                    "message": "Must equal to '{{2147483647}}'",
+                    "message": "Must equal to '2147483647'",
                     "group": null
                 }
             ]
@@ -15,7 +15,7 @@
             "outcomes": [
                 {
                     "propertyName": "String",
-                    "message": "Must equal to '{{￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿}}'",
+                    "message": "Must equal to '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'",
                     "group": null
                 }
             ]
@@ -25,7 +25,7 @@
             "outcomes": [
                 {
                     "propertyName": "Decimal",
-                    "message": "Must equal to '{{79228162514264337593543950335}}'",
+                    "message": "Must equal to '79228162514264337593543950335'",
                     "group": null
                 }
             ]
@@ -35,7 +35,7 @@
             "outcomes": [
                 {
                     "propertyName": "Double",
-                    "message": "Must equal to '{{1.7976931348623157E+308}}'",
+                    "message": "Must equal to '1.7976931348623157E+308'",
                     "group": null
                 }
             ]
@@ -45,7 +45,7 @@
             "outcomes": [
                 {
                     "propertyName": "Short",
-                    "message": "Must equal to '{{32767}}'",
+                    "message": "Must equal to '32767'",
                     "group": null
                 }
             ]
@@ -55,7 +55,7 @@
             "outcomes": [
                 {
                     "propertyName": "Long",
-                    "message": "Must equal to '{{9223372036854775807}}'",
+                    "message": "Must equal to '9223372036854775807'",
                     "group": null
                 }
             ]
@@ -65,7 +65,7 @@
             "outcomes": [
                 {
                     "propertyName": "TwoComponentTuple",
-                    "message": "Must equal to '{{(-2147483648, 2147483647)}}'",
+                    "message": "Must equal to '(-2147483648, 2147483647)'",
                     "group": null
                 }
             ]

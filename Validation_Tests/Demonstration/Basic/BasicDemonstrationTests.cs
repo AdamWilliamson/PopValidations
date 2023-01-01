@@ -1,10 +1,9 @@
 ﻿using ApprovalTests;
-using PopValidations_Tests.Demonstration.Basic;
 using PopValidations_Tests.TestHelpers;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Validations_Tests.Demonstration.Basic;
+namespace PopValidations_Tests.Demonstration.Basic;
 
 public class BasicDemonstrationTests
 {

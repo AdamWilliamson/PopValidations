@@ -9,15 +9,15 @@ namespace PopValidations.Scopes.ForEachs;
 internal class ForEachIndexedScope<TValidationType, TFieldType> : ScopeBase
 {
     public override bool IgnoreScope => true;
-    private readonly FieldDescriptor<IEnumerable<TFieldType>, TFieldType> fieldDescriptor;
-    private readonly Action<IFieldDescriptor<IEnumerable<TFieldType>, TFieldType>> actions;
+    private readonly FieldDescriptor<IEnumerable<TFieldType?>, TFieldType?> fieldDescriptor;
+    private readonly Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions;
 
     public override string Name => "Nothing";
 
     public ForEachIndexedScope(
         ValidationConstructionStore store,
-        FieldDescriptor<IEnumerable<TFieldType>, TFieldType> fieldDescriptor,
-        Action<IFieldDescriptor<IEnumerable<TFieldType>, TFieldType>> actions
+        FieldDescriptor<IEnumerable<TFieldType?>, TFieldType?> fieldDescriptor,
+        Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions
     ) : base(store)
     {
         this.fieldDescriptor = fieldDescriptor;

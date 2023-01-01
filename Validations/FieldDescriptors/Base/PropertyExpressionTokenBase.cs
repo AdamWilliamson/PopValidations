@@ -11,7 +11,7 @@ public interface IPropertyExpressionToken
 public abstract class PropertyExpressionTokenBase<TInput, TOutput> : IPropertyExpressionToken
 {
     public abstract string Name { get; }
-    public abstract Expression<Func<TInput, TOutput>> Expression { get; }
+    public abstract Expression<Func<TInput, TOutput?>> Expression { get; }
 
     public virtual string CombineWithParentProperty(string parentProperty)
     {

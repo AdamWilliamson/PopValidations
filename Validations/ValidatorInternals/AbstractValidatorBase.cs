@@ -24,24 +24,56 @@ public abstract class AbstractValidatorBase<TValidationType>
         Store = store;
     }
 
-    protected IFieldDescriptor<TValidationType, IEnumerable<TFieldType>> DescribeEnumerable<TFieldType>(
-        Expression<Func<TValidationType, IEnumerable<TFieldType>>> expr
+    protected IFieldDescriptor<TValidationType, IEnumerable<TFieldType?>?> DescribeEnumerable<TFieldType>(
+        Expression<Func<TValidationType, IEnumerable<TFieldType?>?>> expr
     )
     {
-        var fieldDescriptor = new FieldDescriptor<TValidationType, IEnumerable<TFieldType>>(
-            new PropertyExpressionToken<TValidationType, IEnumerable<TFieldType>>(expr),
+        var fieldDescriptor = new FieldDescriptor<TValidationType, IEnumerable<TFieldType?>?>(
+            new PropertyExpressionToken<TValidationType, IEnumerable<TFieldType?>?>(expr),
             Store
         );
         return fieldDescriptor;
     }
 
-    public IFieldDescriptor<TValidationType, TFieldType> Describe<TFieldType>(Expression<Func<TValidationType, TFieldType>> expr)
+    public IFieldDescriptor<TValidationType, TFieldType?> Describe<TFieldType>(Expression<Func<TValidationType, TFieldType?>> expr)
     {
-        var fieldDescriptor = new FieldDescriptor<TValidationType, TFieldType>(
-            new PropertyExpressionToken<TValidationType, TFieldType>(expr),
+        var fieldDescriptor = new FieldDescriptor<TValidationType, TFieldType?>(
+            new PropertyExpressionToken<TValidationType, TFieldType?>(expr),
             Store
         );
         return fieldDescriptor;
+    }
+
+    public void Scope<TData>(
+        string scopedDataDecsription,
+        Func<Task<TData?>> dataRetrievalFunc,
+        Action<IScopedData<TData?>>  action
+        ) 
+    {
+        Store.AddItem(
+            null,
+            new Scope<TData>(
+                Store, 
+                new ScopedData<TData?>(scopedDataDecsription, dataRetrievalFunc), 
+                action
+            )
+        );
+    }
+
+    public void Scope<TData>(
+        string scopedDataDecsription,
+        Func<TValidationType, Task<TData?>> dataRetrievalFunc,
+        Action<IScopedData<TData?>> action
+        )
+    {
+        Store.AddItem(
+            null,
+            new Scope<TData>(
+                Store,
+                new ScopedData<TValidationType, TData?>(scopedDataDecsription, dataRetrievalFunc),
+                action
+            )
+        );
     }
 
     public void When(
@@ -60,20 +92,22 @@ public abstract class AbstractValidatorBase<TValidationType>
     public void ScopeWhen<TPassThrough>(
         string whenDescription,
         Func<TValidationType, Task<bool>> ifTrue,
+        string scopedDescription,
         Func<TValidationType, Task<TPassThrough>> scoped,
-        Action<Validations.Base.ScopedData<TValidationType, TPassThrough>> rules)
+        Action<ScopedData<TValidationType, TPassThrough>> rules)
     {
         var context = new WhenScopedResultValidator<TValidationType, TPassThrough>(
             Store,
             whenDescription,
             ifTrue,
-            scoped,
+            new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
             rules);
         Store.AddItem(null, context);
     }
 
     public void ScopeWhen<TPassThrough>(
         string whenDescription,
+        string scopedDescription,
         Func<TValidationType, Task<TPassThrough>> scoped,
         Func<TValidationType, TPassThrough, Task<bool>> ifTrue,
         Action<ScopedData<TValidationType, TPassThrough>> rules)
@@ -81,10 +115,15 @@ public abstract class AbstractValidatorBase<TValidationType>
         var context = new WhenScopeToValidator<TValidationType, TPassThrough>(
             Store,
             whenDescription,
-            scoped,
+            new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
             ifTrue,
             rules);
         Store.AddItem(null, context);
+    }
+
+    public void Include(AbstractSubValidator<TValidationType> subValidator)
+    {
+        Store.Merge(subValidator.Store);
     }
 
     public ValidationConstructionStore Store { get; }

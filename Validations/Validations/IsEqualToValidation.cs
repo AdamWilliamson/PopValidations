@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
@@ -14,6 +15,11 @@ public class IsEqualToValidation : ValidationComponentBase
     public IsEqualToValidation(IScopeData scopedData)
     {
         this.scopedData = scopedData;
+    }
+
+    public override async Task InitScopes(object? instance) 
+    {
+        await scopedData.Init(instance);
     }
 
     public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
