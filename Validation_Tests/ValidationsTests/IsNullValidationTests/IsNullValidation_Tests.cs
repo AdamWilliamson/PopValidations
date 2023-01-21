@@ -4,18 +4,18 @@ using PopValidations.Validations;
 using System.Collections.Generic;
 using Xunit;
 
-namespace PopValidations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests.IsNullValidationTests;
 
-public class NotNullValidationTests
+public class IsNullValidation_Tests
 {
     [Fact]
     public void WhenSupplyingANullValue_ItValidatesAsSuccessful()
     {
         // Arrange
-        var validator = new NotNullValidation();
+        var validator = new IsNullValidation();
 
         // Act
-        var result = validator.Validate(0);
+        var result = validator.Validate(null);
 
         // Assert
         result.Success.Should().BeTrue();
@@ -25,19 +25,19 @@ public class NotNullValidationTests
     public void TheValidationAndDescriptionValues_AreCorrect()
     {
         // Arrange
-        var validator = new NotNullValidation();
+        var validator = new IsNullValidation();
 
         // Act
-        var validationResult = validator.Validate(null);
+        var validationResult = validator.Validate(0);
         var descriptionResult = validator.Describe();
 
         // Assert
-        using(new AssertionScope())
-        { 
-            validationResult.Message.Should().Be("Is not null");
+        using (new AssertionScope())
+        {
+            validationResult.Message.Should().Be("Is not null.");
             validationResult.KeyValues.Should()
                 .BeEquivalentTo(new List<KeyValuePair<string, string>>());
-            descriptionResult.Message.Should().Be("Must not be null");
+            descriptionResult.Message.Should().Be("Must be null.");
         }
     }
 }

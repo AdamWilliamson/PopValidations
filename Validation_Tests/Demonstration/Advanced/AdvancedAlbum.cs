@@ -12,7 +12,7 @@ public enum AlbumType
 public record AdvancedAlbum(
     string? Title,
     AlbumType? Type,
-    string? Artist,
+    AdvancedArtist? Artist,
     string? CoverImageUrl,
     DateTime? Created,
     List<AdvancedSong?>? Songs,

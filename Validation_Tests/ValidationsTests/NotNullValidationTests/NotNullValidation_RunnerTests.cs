@@ -6,7 +6,7 @@ using PopValidations_Tests.TestHelpers;
 using PopValidations_Tests.ValidationsTests.GenericTestableObjects;
 using Xunit;
 
-namespace PopValidations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests.NotNullValidationTests.NotNullValidationTests;
 
 public class NotNull_NoError_TestingValidator : AbstractValidator<NullAllFieldTypesDto>
 {
@@ -40,7 +40,7 @@ public class NotNullValidation_RunnerTests
         var validationResult = await runner.Validate(new NullAllFieldTypesDto());
 
         // Assert
-        validationResult.Results.Should().BeEmpty();
+        validationResult.Errors.Should().BeEmpty();
     }
 
     [Fact]
@@ -69,22 +69,7 @@ public class NotNullValidation_RunnerTests
         var json = JsonConverter.ToJson(validationResult);
 
         // Assert
-        validationResult.Results.Should().HaveCount(13);
-        Approvals.VerifyJson(json);
-    }
-
-    [Fact]
-    public void GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions()
-    {
-        // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new EqualTo_NoError_TestingValidator());
-
-        // Act
-        var description = runner.Describe();
-        var json = JsonConverter.ToJson(description);
-
-        // Assert
-        description.Results.Should().HaveCount(7);
+        validationResult.Errors.Should().HaveCount(13);
         Approvals.VerifyJson(json);
     }
 }

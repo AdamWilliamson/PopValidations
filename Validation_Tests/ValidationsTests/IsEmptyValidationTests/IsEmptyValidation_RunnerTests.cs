@@ -36,7 +36,7 @@ public class IsEmptyValidation_RunnerTests
         });
 
         // Assert
-        validationResult.Results.Should().BeEmpty();
+        validationResult.Errors.Should().BeEmpty();
     }
 
     [Fact]
@@ -59,7 +59,7 @@ public class IsEmptyValidation_RunnerTests
         var json = JsonConverter.ToJson(validationResult);
 
         // Assert
-        validationResult.Results.Should().HaveCount(5);
+        validationResult.Errors.Should().HaveCount(5);
         Approvals.VerifyJson(json);
     }
 }

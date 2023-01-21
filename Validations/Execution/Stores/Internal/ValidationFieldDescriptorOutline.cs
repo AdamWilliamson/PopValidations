@@ -1,5 +1,4 @@
-﻿using System;
-using PopValidations.FieldDescriptors.Base;
+﻿using PopValidations.FieldDescriptors.Base;
 
 namespace PopValidations.Execution.Stores.Internal;
 
@@ -7,7 +6,10 @@ class ValidationFieldDescriptorOutline : IFieldDescriptorOutline
 {
     private readonly IFieldDescriptorOutline outline;
 
-    public ValidationFieldDescriptorOutline(string propertyName, IFieldDescriptorOutline outline)
+    public ValidationFieldDescriptorOutline(
+        string propertyName,
+        IFieldDescriptorOutline outline
+    )
     {
         PropertyName = propertyName;
         this.outline = outline;
@@ -17,7 +19,7 @@ class ValidationFieldDescriptorOutline : IFieldDescriptorOutline
 
     public string AddTo(string existing)
     {
-        throw new NotImplementedException();
+        return existing + "." + PropertyName;// outline.PropertyName;
     }
 
     public object? GetValue(object? input)

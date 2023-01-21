@@ -35,6 +35,24 @@ public class AdvancedSongValidator : AbstractSubValidator<AdvancedSong>
             });
     }
 
+    public class SingleArtistSongValidator : AbstractSubValidator<AdvancedSong>
+    {
+        public SingleArtistSongValidator()
+        {
+            Describe(x => x.Artist).IsNull();
+        }
+    }
+
+    public class CollaborativeSongValidator : AbstractSubValidator<AdvancedSong>
+    {
+        public CollaborativeSongValidator()
+        {
+            Describe(x => x.Artist)
+                //.NotNull()
+                .SetValidator(new AdvancedArtistValidator());
+        }
+    }
+
     internal class RockSongValidator : AbstractSubValidator<AdvancedSong>
     {
         public RockSongValidator()

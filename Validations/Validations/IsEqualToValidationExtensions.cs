@@ -36,12 +36,12 @@ public static class IsEqualToValidationExtensions
 
     public static IFieldDescriptor<TValidationType, TFieldType> IsEqualTo<TValidationType, TFieldType>(
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
-        TFieldType value,
+        IComparable value,
         Action<ValidationOptions>? optionsAction = null
     )
         where TFieldType : IComparable
     {
-        var scopedData = new ScopedData<TValidationType, TFieldType>(value);
+        var scopedData = new ScopedData<TValidationType, IComparable>(value);
         var validation = new IsEqualToValidation(scopedData);
         optionsAction?.Invoke(new ValidationOptions(validation));
         fieldDescriptor.AddValidation(validation);

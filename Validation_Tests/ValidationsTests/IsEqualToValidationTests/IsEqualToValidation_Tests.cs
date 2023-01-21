@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests.IsEqualToValidationTests;
 
-public class IsEqualToValidationTests
+public class IsEqualToValidation_Tests
 {
     [Theory]
     [InlineData(int.MaxValue, int.MaxValue)]
@@ -62,8 +62,8 @@ public class IsEqualToValidationTests
         var descriptionResult = validator.Describe();
 
         // Assert
-        using(new AssertionScope())
-        { 
+        using (new AssertionScope())
+        {
             validationResult.Message.Should().Be("Is not equal to '{{value}}'");
             validationResult.KeyValues.Should()
                 .BeEquivalentTo(
@@ -76,14 +76,14 @@ public class IsEqualToValidationTests
     }
 
     [Fact]
-    public void WhenUsingScopedData_TheMessagesAreCorrect()
+    public async Task WhenUsingScopedData_TheMessagesAreCorrect()
     {
         // Arrange
-        var validator = new IsEqualToValidation(new ScopedData <int, int>("Original", (int x) => Task.FromResult(x)));
+        var validator = new IsEqualToValidation(new ScopedData<int, int>("Original", (x) => Task.FromResult(x)));
 
         // Act
-        validator.InitScopes(2.33);
-        var validationResult = validator.Validate(2.33);
+        await validator.InitScopes(2);
+        var validationResult = validator.Validate(3);
         var descriptionResult = validator.Describe();
 
         // Assert

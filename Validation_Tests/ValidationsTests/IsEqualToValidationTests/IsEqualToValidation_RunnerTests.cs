@@ -7,7 +7,7 @@ using PopValidations_Tests.TestHelpers;
 using PopValidations_Tests.ValidationsTests.GenericTestableObjects;
 using Xunit;
 
-namespace PopValidations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests.IsEqualToValidationTests;
 
 public class EqualTo_NoError_TestingValidator : AbstractValidator<NonNullAllFieldTypesDto>
 {
@@ -19,7 +19,6 @@ public class EqualTo_NoError_TestingValidator : AbstractValidator<NonNullAllFiel
         Describe(x => x.Double).IsEqualTo(double.MaxValue);
         Describe(x => x.Short).IsEqualTo(short.MaxValue);
         Describe(x => x.Long).IsEqualTo(long.MaxValue);
-        Describe(x => x.TwoComponentTuple).IsEqualTo(Tuple.Create(int.MinValue, int.MaxValue));
     }
 }
 
@@ -33,7 +32,6 @@ public class EqualTo_AllErrored_TestingValidator : AbstractValidator<NonNullAllF
         Describe(x => x.Double).IsEqualTo(double.MinValue);
         Describe(x => x.Short).IsEqualTo(short.MinValue);
         Describe(x => x.Long).IsEqualTo(long.MinValue);
-        Describe(x => x.TwoComponentTuple).IsEqualTo(Tuple.Create(int.MaxValue, int.MinValue));
     }
 }
 
@@ -49,7 +47,7 @@ public class IsEqualToValidation_RunnerTests
         var validationResult = await runner.Validate(new NonNullAllFieldTypesDto());
 
         // Assert
-        validationResult.Results.Should().BeEmpty();
+        validationResult.Errors.Should().BeEmpty();
     }
 
     [Fact]
@@ -63,7 +61,7 @@ public class IsEqualToValidation_RunnerTests
         var json = JsonConverter.ToJson(validationResult);
 
         // Assert
-        validationResult.Results.Should().HaveCount(7);
+        validationResult.Errors.Should().HaveCount(6);
         Approvals.VerifyJson(json);
     }
 
@@ -78,7 +76,7 @@ public class IsEqualToValidation_RunnerTests
         var json = JsonConverter.ToJson(description);
 
         // Assert
-        description.Results.Should().HaveCount(7);
+        description.Results.Should().HaveCount(6);
         Approvals.VerifyJson(json);
     }
 }

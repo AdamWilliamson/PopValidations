@@ -8,7 +8,7 @@ namespace PopValidations.Execution.Validation;
 
 public class ValidationResult
 {
-    public List<ValidationItemResult> Results = new();
+    public Dictionary<string, List<string>> Errors { get; private set; } = new ();
 
     public void AddItem(ExpandedItem item, ValidationActionResult outcome)
     {
@@ -26,28 +26,28 @@ public class ValidationResult
         }
         var realName = item.FullAddressableName;
 
-        var existingProperty = Results.SingleOrDefault(r => r.Property == item.PropertyName);
+        var existingProperty = Errors.ContainsKey(item.PropertyName);
         var newOutcome = new Validations.ValidationOutcome(item.PropertyName, outcome.Success, outcome.Message);
-        if (existingProperty != null)
+
+        if (existingProperty)
         {
-            existingProperty.Outcomes.Add(newOutcome);
+            if (Errors[item.PropertyName] == null)
+            {
+                Errors[item.PropertyName] = new();
+            }
+
+            if (!string.IsNullOrWhiteSpace(newOutcome.Message))
+            {
+                Errors[item.PropertyName].Add(newOutcome.Message);
+            }
         }
         else
         {
-            existingProperty = new ValidationItemResult(item.PropertyName);
-            existingProperty.Outcomes.Add(newOutcome);
-
-            Results.Add(existingProperty);
-        }
-
-        if (scopes.Count > 0)
-        {
-            ValidationGroupResult? group = null;
-            foreach (var scope in scopes)
+            Errors.Add(item.PropertyName, new());
+            if (!string.IsNullOrWhiteSpace(newOutcome.Message))
             {
-                group = new ValidationGroupResult(scope, group);
+                Errors[item.PropertyName].Add(newOutcome.Message);
             }
-            newOutcome.Group = group;
         }
     }
 }

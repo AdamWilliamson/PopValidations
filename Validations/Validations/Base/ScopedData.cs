@@ -161,7 +161,7 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
         {
             if (instance is not TPassThrough)
             {
-                throw new Exception();
+                throw new Exception("Invalid Data Type.");
             }
 
             if (PassThroughFunction == null)
