@@ -1,0 +1,64 @@
+﻿{
+    "results": [
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "String",
+                    "message": "Is not empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesList",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "AllFieldTypesList",
+                    "message": "Is not empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesLinkedList",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "AllFieldTypesLinkedList",
+                    "message": "Is not empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesIEnumerable",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "AllFieldTypesIEnumerable",
+                    "message": "Is not empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesDictionary",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "AllFieldTypesDictionary",
+                    "message": "Is not empty",
+                    "group": null
+                }
+            ]
+        }
+    ]
+}
