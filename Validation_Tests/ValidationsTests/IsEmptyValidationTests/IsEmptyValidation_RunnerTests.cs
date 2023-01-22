@@ -45,16 +45,13 @@ public class IsEmptyValidation_RunnerTests
         // Arrange
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsEmpty_NoError_TestingValidator());
 
-        List<NonNullAllFieldTypesDto> list = new() { new NonNullAllFieldTypesDto() };
-        LinkedList<NonNullAllFieldTypesDto> ll = new(list);
-        Dictionary<string, NonNullAllFieldTypesDto> dictionary = new() { { "item", new NonNullAllFieldTypesDto() } };
-
         NullAllFieldTypesDto dto = new()
         {
-            AllFieldTypesList = list,
-            AllFieldTypesLinkedList = ll,
-            AllFieldTypesIEnumerable = list,
-            AllFieldTypesDictionary = dictionary
+            String = "item",
+            AllFieldTypesList = new() { new NonNullAllFieldTypesDto() },
+            AllFieldTypesLinkedList = new(new[] { new NonNullAllFieldTypesDto() }),
+            AllFieldTypesIEnumerable = new List<NonNullAllFieldTypesDto>() { new NonNullAllFieldTypesDto() },
+            AllFieldTypesDictionary = new() { { "item", new NonNullAllFieldTypesDto() } }
         };
 
         // Act
