@@ -45,22 +45,20 @@ public class IsEmptyValidation_RunnerTests
         // Arrange
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsEmpty_NoError_TestingValidator());
 
-        LinkedList<NonNullAllFieldTypesDto> ll = new();
-        ll.AddFirst(new NonNullAllFieldTypesDto());
-        Dictionary<string, NonNullAllFieldTypesDto> d = new()
+        List<NonNullAllFieldTypesDto> list = new() { new NonNullAllFieldTypesDto() };
+        LinkedList<NonNullAllFieldTypesDto> ll = new(list);
+        Dictionary<string, NonNullAllFieldTypesDto> dictionary = new() { { "item", new NonNullAllFieldTypesDto() } };
+
+        NullAllFieldTypesDto dto = new()
         {
-            { "item", new NonNullAllFieldTypesDto() }
+            AllFieldTypesList = list,
+            AllFieldTypesLinkedList = ll,
+            AllFieldTypesIEnumerable = list,
+            AllFieldTypesDictionary = dictionary
         };
 
         // Act
-        var validationResult = await runner.Validate(new NullAllFieldTypesDto()
-        {
-            String = "item",
-            AllFieldTypesList = new List<NonNullAllFieldTypesDto>() { new NonNullAllFieldTypesDto() },
-            AllFieldTypesLinkedList = ll,
-            AllFieldTypesIEnumerable = new List<NonNullAllFieldTypesDto>() { new NonNullAllFieldTypesDto() },
-            AllFieldTypesDictionary = d
-        });
+        var validationResult = await runner.Validate(dto);
         var json = JsonConverter.ToJson(validationResult);
 
         // Assert
