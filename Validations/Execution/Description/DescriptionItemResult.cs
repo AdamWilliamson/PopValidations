@@ -7,7 +7,7 @@ public class DescriptionItemResult
 {
     public string Property { get; }
     public List<DescriptionOutcome> Outcomes { get; } = new();
-
+    public List<DescriptionGroupResult> ValidationGroups { get; } = new();
 
     public DescriptionItemResult(string property)
     {

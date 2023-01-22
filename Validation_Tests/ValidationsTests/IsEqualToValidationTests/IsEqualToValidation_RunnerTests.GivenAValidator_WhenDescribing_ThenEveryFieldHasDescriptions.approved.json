@@ -4,71 +4,97 @@
             "property": "Integer",
             "outcomes": [
                 {
-                    "propertyName": "Integer",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to '2147483647'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "2147483647"
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "String",
             "outcomes": [
                 {
-                    "propertyName": "String",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿"
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Decimal",
             "outcomes": [
                 {
-                    "propertyName": "Decimal",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to '79228162514264337593543950335'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "79228162514264337593543950335"
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Double",
             "outcomes": [
                 {
-                    "propertyName": "Double",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to '1.7976931348623157E+308'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1.7976931348623157E+308"
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Short",
             "outcomes": [
                 {
-                    "propertyName": "Short",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to '32767'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "32767"
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Long",
             "outcomes": [
                 {
-                    "propertyName": "Long",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to '9223372036854775807'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "9223372036854775807"
+                        }
+                    ]
                 }
-            ]
-        },
-        {
-            "property": "TwoComponentTuple",
-            "outcomes": [
-                {
-                    "propertyName": "TwoComponentTuple",
-                    "message": "Must equal to '(-2147483648, 2147483647)'",
-                    "group": null
-                }
-            ]
+            ],
+            "validationGroups": []
         }
     ]
 }

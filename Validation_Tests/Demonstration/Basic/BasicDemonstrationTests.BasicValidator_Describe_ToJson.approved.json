@@ -4,31 +4,44 @@
             "property": "TrackNumber",
             "outcomes": [
                 {
-                    "propertyName": "TrackNumber",
-                    "message": "Must not be null",
-                    "group": null
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "TrackName",
             "outcomes": [
                 {
-                    "propertyName": "TrackName",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to 'Definitely Not The Correct Song Name.'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Definitely Not The Correct Song Name."
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Duration",
             "outcomes": [
                 {
-                    "propertyName": "Duration",
+                    "validator": "IsEqualToValidation",
                     "message": "Songs must force you to travel slowly backwards in time to listen to.",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-1"
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         }
     ]
 }

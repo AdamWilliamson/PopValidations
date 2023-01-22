@@ -4,8 +4,8 @@ namespace PopValidations.Validations;
 
 public class NotNullValidation : ValidationComponentBase
 {
-    public override string DescriptionTemplate { get; protected set; } = $"Must not be null";
-    public override string ErrorTemplate { get; protected set; } = $"Is not null";
+    public override string DescriptionTemplate { get; protected set; } = $"Must not be null.";
+    public override string ErrorTemplate { get; protected set; } = $"Is null.";
 
     public NotNullValidation() { }
 

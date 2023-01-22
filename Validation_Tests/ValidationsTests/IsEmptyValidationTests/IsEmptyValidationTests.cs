@@ -11,7 +11,7 @@ public class IsEmptyValidationTests
 {
     [Theory]
     [MemberData(nameof(GetPassingData))]
-    public void WhenSupplyingANullOrEmptyValue_ItValidatesAsSuccessful(IEnumerable value)
+    public void WhenSupplyingANullOrEmptyValue_ItValidatesAsSuccessful(object? value)
     {
         // Arrange
         var validator = new IsEmptyValidation();
@@ -23,17 +23,17 @@ public class IsEmptyValidationTests
         result.Success.Should().BeTrue();
     }
 
-    public static IEnumerable<object[]> GetPassingData()
+    public static IEnumerable<object?[]> GetPassingData()
     {
-        var allData = new List<object[]>
+        var allData = new List<object?[]>
         {
-            new object[] { System.Array.Empty<object>() },
-            new object[] { new List<object>() },
-            new object[] { new LinkedList<object>() },
-            new object[] { "" },
-            new object[] { " " },
-            new object[] { new Dictionary<object, object>() },
-            new object[] { null },
+            new object?[] { System.Array.Empty<object>() },
+            new object?[] { new List<object>() },
+            new object?[] { new LinkedList<object>() },
+            new object?[] { "" },
+            new object?[] { " " },
+            new object?[] { new Dictionary<object, object>() },
+            new object?[] { null },
         };
 
         return allData;

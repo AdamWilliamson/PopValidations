@@ -1,12 +1,15 @@
-﻿using ApprovalTests;
+﻿
+using ApprovalTests;
 using FluentAssertions;
 using PopValidations;
 using PopValidations_Tests.TestHelpers;
 using PopValidations_Tests.ValidationsTests.GenericTestableObjects;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests.IsNullValidationTests;
+
 public class IsNull_NoError_TestingValidator : AbstractValidator<NullAllFieldTypesDto>
 {
     public IsNull_NoError_TestingValidator()
@@ -54,7 +57,7 @@ public class IsNullValidation_RunnerTests
         });
 
         // Assert
-        validationResult.Results.Should().BeEmpty();
+        validationResult.Errors.Should().BeEmpty();
     }
 
     [Fact]
@@ -64,26 +67,26 @@ public class IsNullValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsNull_NoError_TestingValidator());
 
         // Act
-        var validationResult = await runner.Validate(new NullAllFieldTypesDto());
+        var validationResult = await runner.Validate(new NullAllFieldTypesDto()
+        {
+            Integer = 1,
+            String = "",
+            Decimal = 1.0m,
+            Double = 1.0d,
+            Short = 2,
+            Long = 3,
+            TwoComponentTuple = new(1,1),
+            TwoComponentNewTupple = new(1,1),
+            AllFieldTypesList = new(),
+            AllFieldTypesLinkedList = new(),
+            AllFieldTypesIEnumerable = new List<NonNullAllFieldTypesDto>(),
+            AllFieldTypesDictionary = new(),
+            Struct = new (),
+        });
         var json = JsonConverter.ToJson(validationResult);
 
         // Assert
-        validationResult.Results.Should().HaveCount(13);
-        Approvals.VerifyJson(json);
-    }
-
-    [Fact]
-    public void GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions()
-    {
-        // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new EqualTo_NoError_TestingValidator());
-
-        // Act
-        var description = runner.Describe();
-        var json = JsonConverter.ToJson(description);
-
-        // Assert
-        description.Results.Should().HaveCount(7);
+        validationResult.Errors.Should().HaveCount(13);
         Approvals.VerifyJson(json);
     }
 }

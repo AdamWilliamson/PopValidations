@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using PopValidations;
-using PopValidations.FieldDescriptors.Base;
+using static PopValidations_Tests.Demonstration.Advanced.Validators.AdvancedSongValidator;
 
 namespace PopValidations_Tests.Demonstration.Advanced.Validators;
 
@@ -27,11 +27,18 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
             (album) => Task.FromResult(new DesignedToBePatternMatched(album)),
             (data) =>
             {
-                Describe(x => x.Artist)
-                    .IsEqualTo(
-                        data.To("'artist' with Something appended", artist => Task.FromResult<string?>(artist + "Something")),
-                        o => o.WithErrorMessage("{{value}} is ensured to be false by adding Something to the end.")
-                    );
+                When(
+                    "Artist is not null",
+                    (album) => Task.FromResult(album.Artist != null),
+                    () =>
+                    {
+                        Describe(x => x.Artist).SetValidator(new AdvancedArtistValidator());
+                        Describe(x => x.Artist.Name)
+                            .IsEqualTo(
+                                data.To("'artist' with Something appended", artist => Task.FromResult<string?>(artist + "Something")),
+                                o => o.WithErrorMessage("{{value}} is ensured to be false by adding Something to the end.")
+                            );
+                    });
 
                 Describe(x => x.Created)
                     .Must(
@@ -42,9 +49,6 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
             }
         );
 
-        Describe(x => x.Artist);
-        //.Vitally().NotEmpty();
-
         DescribeEnumerable(x => x.Songs)
             //.Vitally().NotEmpty()
             .ForEach(song =>
@@ -53,13 +57,13 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                     .SetValidator(new AdvancedSongValidator())
             );
 
-        When("Album is Collaboration",
-            (album) => Task.FromResult(album?.Type == AlbumType.Collaboration),
-            () => Include(new CollaborationAlbumValidator()));
-
         When("Album is Single Artist",
             (album) => Task.FromResult(album?.Type == AlbumType.SingleArtist),
-            () => Include(new SingleArtistAlbumValidator()));
+            () =>
+            {
+                Include(new SingleArtistAlbumValidator());
+                Describe(x => x.Artist).NotNull();
+            });
 
         ScopeWhen("Album constains songs we don't own the copyright to",
             (album) => Task.FromResult(album.Created != null && album.Created?.Year > 1900),
@@ -79,6 +83,31 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                                 x => Task.FromResult(x.Any(u => u.Item1.TrackName == s.TrackName && u.Item2)))
                         );
                     });
+            });
+
+        When("Album is Collaboration",
+            (album) => Task.FromResult(album?.Type == AlbumType.Collaboration),
+            () => {
+                Include(new CollaborationAlbumValidator());
+                //Describe(x => x.Artist).IsNull();
+            });
+
+        When(
+            "Album is SingleArtist",
+            album => Task.FromResult(album.Type == AlbumType.SingleArtist),
+            () =>
+            {
+                DescribeEnumerable(x => x.Songs)
+                   .ForEach((song) => song.SetValidator(new SingleArtistSongValidator()));
+            });
+
+        When(
+            "Album is Collaborative",
+            album => Task.FromResult(album.Type == AlbumType.Collaboration),
+            () =>
+            {
+                DescribeEnumerable(x => x.Songs)
+                   .ForEach((song) => song.SetValidator(new CollaborativeSongValidator()));
             });
     }
 }

@@ -1,12 +1,30 @@
 ﻿{
     "results": [
         {
-            "property": "Artist",
-            "outcomes": [
+            "property": "Artist.Name",
+            "outcomes": [],
+            "validationGroups": [
                 {
-                    "propertyName": "Artist",
-                    "message": "Must equal to ''artist' with Something appended'",
-                    "group": null
+                    "name": "Artist is not null",
+                    "description": "Artist is not null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "NotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        },
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to ''artist' with Something appended'",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "'artist' with Something appended"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -14,37 +32,39 @@
             "property": "Created",
             "outcomes": [
                 {
-                    "propertyName": "Created",
+                    "validator": "MustValidation`1",
                     "message": "Name is too short",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Songs[n]",
             "outcomes": [
                 {
-                    "propertyName": "Songs[n]",
-                    "message": "Must not be null",
-                    "group": null
-                },
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": [
                 {
-                    "propertyName": "Songs[n]",
-                    "message": "Must not be null",
-                    "group": {
-                        "name": "Album constains songs we don't own the copyright to",
-                        "description": "Album constains songs we don't own the copyright to",
-                        "group": null
-                    }
-                },
-                {
-                    "propertyName": "Songs[n]",
-                    "message": "Checks to ensure the song's rights are owned by us.",
-                    "group": {
-                        "name": "Album constains songs we don't own the copyright to",
-                        "description": "Album constains songs we don't own the copyright to",
-                        "group": null
-                    }
+                    "name": "Album constains songs we don't own the copyright to",
+                    "description": "Album constains songs we don't own the copyright to",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "NotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        },
+                        {
+                            "validator": "MustValidation`1",
+                            "message": "Checks to ensure the song's rights are owned by us.",
+                            "values": []
+                        }
+                    ]
                 }
             ]
         },
@@ -52,38 +72,138 @@
             "property": "Songs[n].TrackNumber",
             "outcomes": [
                 {
-                    "propertyName": "Songs[n].TrackNumber",
-                    "message": "Must not be null",
-                    "group": null
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Songs[n].TrackName",
             "outcomes": [
                 {
-                    "propertyName": "Songs[n].TrackName",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to 'Definitely Not The Correct Song Name.'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Definitely Not The Correct Song Name."
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Songs[n].Duration",
             "outcomes": [
                 {
-                    "propertyName": "Songs[n].Duration",
+                    "validator": "IsEqualToValidation",
                     "message": "Songs must force you to travel slowly backwards in time to listen to.",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "Song Duration is greater than 5 minutes",
+                    "description": "Song Duration is greater than 5 minutes",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to '10.1'",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "10.1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Songs[n].Artist",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "Album is Single Artist",
+                    "description": "Album is Single Artist",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsNullValidation",
+                            "message": "Must be null.",
+                            "values": []
+                        }
+                    ]
                 },
                 {
-                    "propertyName": "Songs[n].Duration",
-                    "message": "Must equal to '10.1'",
-                    "group": {
-                        "name": "Song Duration is greater than 5 minutes",
-                        "description": "Song Duration is greater than 5 minutes",
-                        "group": null
-                    }
+                    "name": "Album is SingleArtist",
+                    "description": "Album is SingleArtist",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsNullValidation",
+                            "message": "Must be null.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Artist",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "Album is Single Artist",
+                    "description": "Album is Single Artist",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "NotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Songs[n].Artist.Name",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "Album is Collaboration",
+                    "description": "Album is Collaboration",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "NotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Album is Collaborative",
+                    "description": "Album is Collaborative",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "NotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        }
+                    ]
                 }
             ]
         }

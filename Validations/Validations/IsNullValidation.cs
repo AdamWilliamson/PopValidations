@@ -1,10 +1,11 @@
 ﻿using PopValidations.Validations.Base;
 
 namespace PopValidations.Validations;
+
 public class IsNullValidation : ValidationComponentBase
 {
-    public override string DescriptionTemplate { get; protected set; } = $"Must be null";
-    public override string ErrorTemplate { get; protected set; } = $"Is null";
+    public override string DescriptionTemplate { get; protected set; } = $"Must be null.";
+    public override string ErrorTemplate { get; protected set; } = $"Is not null.";
 
     public IsNullValidation() { }
 

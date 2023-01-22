@@ -13,7 +13,7 @@
 *Depends On
 	Need a way to ensure another field is done first, and only if it succeeds is this item completed.
 
-*Switch
+*Switch (Moved to _Checklist for Validations as design is completable as a Validation)
 	Pattern matching is super useful for complex validations.
 	need a way to emulate/use that, to produce succint but complex validations.
 
@@ -40,4 +40,4 @@
 
 
 * = V1
-** v2
+** = V2

@@ -26,8 +26,8 @@ public class ForEachValidationActionResult : ValidationActionResult
         );
 
         if (
-            currentValidationResult?.Results
-                ?.Any(r => r.Property.StartsWith(currentProperty)) == true
+            currentValidationResult?.Errors.Keys
+                ?.Any(r => r.StartsWith(currentProperty)) == true
         )
         {
             return new List<string>() { currentProperty };

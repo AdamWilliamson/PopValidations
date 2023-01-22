@@ -8,16 +8,21 @@ using PopValidations.ValidatorInternals;
 
 namespace PopValidations.Execution;
 
-public interface IValidationRunner<TValidationType>
+public interface IValidationDescriber
 {
-    Task<ValidationResult> Validate(TValidationType instance);
     DescriptionResult Describe();
 }
 
-public class ValidationRunner<TValidationType> : IValidationRunner<TValidationType>
+public interface IValidationRunner<TValidationType>: IValidationDescriber
+{
+    Task<ValidationResult> Validate(TValidationType instance);
+}
+
+public class ValidationRunner<TValidationType> : IValidationRunner<TValidationType>, IValidationDescriber
 {
     private readonly IEnumerable<IMainValidator<TValidationType>> mainValidators;
     private readonly MessageProcessor messageProcessor;
+    DescriptionResult? descriptionResult = null;
 
     public ValidationRunner(
         IEnumerable<IMainValidator<TValidationType>> mainValidators,
@@ -51,9 +56,7 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
         {
             foreach (var propertyGroup in validationObjectGroup)
             {
-                if (vitallyFailedFields
-                    .Any(f => propertyGroup.PropertyName.StartsWith(f))
-                )
+                if (vitallyFailedFields.Any(f => propertyGroup.PropertyName.StartsWith(f)))
                 {
                     continue;
                 }
@@ -92,7 +95,9 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
 
     public DescriptionResult Describe() 
     {
-        var descriptionResult = new DescriptionResult();
+        if (descriptionResult != null) return descriptionResult;
+
+        descriptionResult = new();
         var store = new ValidationConstructionStore();
         var allItems = new List<ExpandedItem>();
 
