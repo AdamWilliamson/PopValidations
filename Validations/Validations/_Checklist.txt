@@ -1,9 +1,6 @@
 ﻿Copy FluentValidator as needed.
 ::Validators Wanted::
 
-Custom Function. (need name)
-	Supply a Function that returns true/false, and a text Description
-
 HasInclusiveLengthBetween
 	Takes a string, or array. 
 HasExclusiveLengthBetween
@@ -11,12 +8,6 @@ HasExclusiveLengthBetween
 
 IsNotEmpty
 	Takes an Array or a String.  Tests if its Empty string or Empty Array.
-
-IsEmpty
-	array or String Must be empty
-
-IsNull
-	Value Must be null
 
 Email Validator
 	Microsoft apprived email rules are sufficient
@@ -29,10 +20,6 @@ IsLessthanOrEqualTo
 
 MatchesRegularExpression
 	takes a regular Expression, string must match
-
-IsEnum
-	Incoming Value converts to the supplied Enum.
-	description should show all valid conversions.
 
 IsPolymorphic
 	Takes a list of types, incoming value must be convertible to this type

@@ -1,0 +1,13 @@
+﻿{
+    "errors": {
+        "integer": [
+            "Error"
+        ],
+        "string": [
+            "Error"
+        ],
+        "decimal": [
+            "Error"
+        ]
+    }
+}

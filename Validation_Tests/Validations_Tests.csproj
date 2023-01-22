@@ -39,6 +39,46 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>ModerateDemonstrationTests.cs</DependentUpon>
     </None>
+    <None Update="ValidationsTests\IsEnumValidationTests\IsEnumValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsEnumValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsEnumValidationTests\IsEnumValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsEnumValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsEnumValidationTests\IsEnumValidation_Tests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsEnumValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsEnumValidationTests\IsEnumValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsEnumValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsCustomValidationTests\IsCustomValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsCustomValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsCustomValidationTests\IsCustomValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsCustomValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsCustomValidationTests\IsCustomValidation_Tests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsCustomValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsCustomValidationTests\IsCustomValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsCustomValidation_Tests.cs</DependentUpon>
+    </None>
     <None Update="ValidationsTests\IsEqualToValidationTests\IsEqualToValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
       <DependentUpon>IsEqualToValidation_Tests.cs</DependentUpon>
     </None>
