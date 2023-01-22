@@ -32,7 +32,7 @@
             "property": "Created",
             "outcomes": [
                 {
-                    "validator": "MustValidation`1",
+                    "validator": "MustValidation",
                     "message": "Name is too short",
                     "values": []
                 }
@@ -60,7 +60,7 @@
                             "values": []
                         },
                         {
-                            "validator": "MustValidation`1",
+                            "validator": "MustValidation",
                             "message": "Checks to ensure the song's rights are owned by us.",
                             "values": []
                         }

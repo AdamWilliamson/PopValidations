@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PopValidations.FieldDescriptors.Base;
@@ -46,7 +47,7 @@ public abstract class ValidationComponentBase : IValidationComponent
 
     protected ValidationActionResult CreateValidationError(
         params (string Key, string Value)[] keyValues
-        )
+    )
     {
         return new ValidationActionResult(
             validator: this.GetType().Name,
@@ -60,8 +61,15 @@ public abstract class ValidationComponentBase : IValidationComponent
 
     protected DescribeActionResult CreateDescription(params (string Key, string Value)[] keyValues)
     {
+        string GetNameWithoutGenericArity(Type t)
+        {
+            string name = t.Name;
+            int index = name.IndexOf('`');
+            return index == -1 ? name : name.Substring(0, index);
+        }
+
         return new DescribeActionResult(
-            validator: this.GetType().Name,
+            validator: GetNameWithoutGenericArity(this.GetType()),
             message: DescriptionTemplate,
             keyValues
                 .Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value))
