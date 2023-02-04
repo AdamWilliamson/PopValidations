@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests.IsEmptyValidationTests.IsEmptyValidationTests;
 
 public class IsEmpty_NoError_TestingValidator : AbstractValidator<NullAllFieldTypesDto>
 {

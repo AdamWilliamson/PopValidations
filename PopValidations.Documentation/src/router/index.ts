@@ -22,6 +22,7 @@ import TestingExtensions from "@/features/testability/testingextensions.vue";
 
 //== Validations
 import IsNullValidationVue from "@/features/validations/IsNullValidation.vue";
+import IsEmptyValidationVue from "@/features/validations/IsEmptyValidation.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -110,6 +111,11 @@ const router = createRouter({
           path: "/validation/isnull",
           name: "IsNullValidation",
           component: IsNullValidationVue,
+        },
+        {
+          path: "/validation/isempty",
+          name: "IsEmptyValidation",
+          component: IsEmptyValidationVue,
         },
       ],
     },

@@ -1,0 +1,74 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "propertyName": "Integer",
+                    "message": "Must equal to '{{2147483647}}'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "propertyName": "String",
+                    "message": "Must equal to '{{￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿}}'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "propertyName": "Decimal",
+                    "message": "Must equal to '{{79228162514264337593543950335}}'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "propertyName": "Double",
+                    "message": "Must equal to '{{1.7976931348623157E+308}}'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "propertyName": "Short",
+                    "message": "Must equal to '{{32767}}'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "propertyName": "Long",
+                    "message": "Must equal to '{{9223372036854775807}}'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "TwoComponentTuple",
+            "outcomes": [
+                {
+                    "propertyName": "TwoComponentTuple",
+                    "message": "Must equal to '{{(-2147483648, 2147483647)}}'",
+                    "group": null
+                }
+            ]
+        }
+    ]
+}

@@ -25,7 +25,7 @@ public class IsEnumValidation_Tests
     public void WhenValidatingWithConvertableValues_TheyAllPass(object value)
     {
         // Arrange
-        var validator = new IsEnumValidation(typeof(TestEnum));
+        var validator = new IsEnumValidation<object>(typeof(TestEnum));
 
         // Act
         var result = validator.Validate(value);
@@ -45,7 +45,7 @@ public class IsEnumValidation_Tests
     public void WhenValidatingWithNonConvertableValues_TheyAllFail(object value)
     {
         // Arrange
-        var validator = new IsEnumValidation(typeof(TestEnum));
+        var validator = new IsEnumValidation<object>(typeof(TestEnum));
 
         // Act
         var result = validator.Validate(value);
@@ -58,7 +58,7 @@ public class IsEnumValidation_Tests
     public void TheValidationAndDescriptionValues_AreCorrect()
     {
         // Arrange
-        var validator = new IsEnumValidation(typeof(TestEnum));
+        var validator = new IsEnumValidation<int>(typeof(TestEnum));
 
         // Act
         var validationResult = validator.Validate(0);
@@ -80,7 +80,8 @@ public class IsEnumValidation_Tests
                                 ',',
                                 Enum.GetValues<TestEnum>().Cast<Enum>().Select(x => x.ToString("d")).ToArray()
                             )
-                        )
+                        ),
+                        new KeyValuePair<string, string>("fieldType", "number"),
                     });
             descriptionResult.Message.Should().Be("Must be one of '{{enumNames}}' or '{{enumValues}}'");
         }

@@ -6,17 +6,8 @@ HasInclusiveLengthBetween
 HasExclusiveLengthBetween
 	Takes a string, or array. 
 
-IsNotEmpty
-	Takes an Array or a String.  Tests if its Empty string or Empty Array.
-
 Email Validator
 	Microsoft apprived email rules are sufficient
-
-IsGreaterThan
-IsGreaterThanOrEqualTo
-IsLessthan
-IsLessthanOrEqualTo
-	Does the stanard logic operators
 
 MatchesRegularExpression
 	takes a regular Expression, string must match

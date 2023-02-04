@@ -1,0 +1,100 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '2147483647'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "2147483647"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '79228162514264337593543950335'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "79228162514264337593543950335"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '1.7976931348623157E+308'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1.7976931348623157E+308"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '32767'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "32767"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '9223372036854775807'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "9223372036854775807"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

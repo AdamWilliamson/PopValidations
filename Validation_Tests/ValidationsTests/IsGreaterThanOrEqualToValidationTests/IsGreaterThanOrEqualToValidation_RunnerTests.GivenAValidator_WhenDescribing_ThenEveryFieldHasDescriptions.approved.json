@@ -1,0 +1,160 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '-1073741824'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-1073741824"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '-2147483648'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-2147483648"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '-79228162514264337593543950335'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-79228162514264337593543950335"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '79228162514264337593543950335'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "79228162514264337593543950335"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '-1.7976931348623157E+308'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-1.7976931348623157E+308"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '1.7976931348623157E+308'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1.7976931348623157E+308"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '-32768'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-32768"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '32767'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "32767"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '-9223372036854775808'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-9223372036854775808"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to '9223372036854775807'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "9223372036854775807"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}
