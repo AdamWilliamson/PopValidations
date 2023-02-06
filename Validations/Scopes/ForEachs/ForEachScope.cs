@@ -28,6 +28,7 @@ internal class ForEachScope<TValidationType, TFieldType> : ScopeBase
         {
             return;
         }
+
         if (value is IEnumerable<TFieldType> list)
         {
             int index = 0;

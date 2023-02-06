@@ -1,0 +1,37 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Description",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Description",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Description",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

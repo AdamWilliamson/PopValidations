@@ -1,6 +1,4 @@
-﻿using PopValidations.Execution.Validation;
-
-namespace PopValidations.Execution.Validations;
+﻿namespace PopValidations.Execution.Validations;
 
 public class ValidationOutcome
 {
@@ -9,7 +7,7 @@ public class ValidationOutcome
     public bool IsSucceeded => succeeded;
     public string PropertyName { get; set; }
     public string? Message { get; }
-    public ValidationGroupResult? Group { get; set; }
+    public DescriptionGroupResult? Group { get; set; }
 
     public ValidationOutcome(string propertyName, bool succeeded, string? message)
     {

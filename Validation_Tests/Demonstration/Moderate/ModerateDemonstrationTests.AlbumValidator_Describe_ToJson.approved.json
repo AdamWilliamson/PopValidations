@@ -4,31 +4,39 @@
             "property": "Artist",
             "outcomes": [
                 {
-                    "propertyName": "Artist",
+                    "validator": "IsEqualToValidation",
                     "message": "Must equal to 'John'",
-                    "group": null
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "John"
+                        }
+                    ]
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Songs",
             "outcomes": [
                 {
-                    "propertyName": "Songs",
-                    "message": "Must not be null",
-                    "group": null
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Songs[n]",
             "outcomes": [
                 {
-                    "propertyName": "Songs[n]",
-                    "message": "Must not be null",
-                    "group": null
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         }
     ]
 }

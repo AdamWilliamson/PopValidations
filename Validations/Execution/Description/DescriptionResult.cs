@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using PopValidations.Execution.Stores;
-using PopValidations.Execution.Validation;
 using PopValidations.Execution.Validations;
 using PopValidations.Scopes;
 using PopValidations.Validations.Base;
@@ -28,27 +27,55 @@ public class DescriptionResult
         }
 
         var existingProperty = Results.SingleOrDefault(r => r.Property == item.PropertyName);
-        var newOutcome = new DescriptionOutcome(item.PropertyName, outcome.Message);
-        if (existingProperty != null)
-        {
-            existingProperty.Outcomes.Add(newOutcome);
-        }
-        else
+        if (existingProperty == null)
         {
             existingProperty = new DescriptionItemResult(item.PropertyName);
-            existingProperty.Outcomes.Add(newOutcome);
-
             Results.Add(existingProperty);
         }
 
-        if (scopes.Count > 0)
+
+        if (scopes.Any())
         {
-            ValidationGroupResult? group = null;
-            foreach (var scope in scopes)
+            DescriptionGroupResult? foundGroup = null;
+            var tempScopes = scopes.ToList();
+            tempScopes.Reverse();
+            foreach (var scope in tempScopes)
             {
-                group = new ValidationGroupResult(scope, group);
+                DescriptionGroupResult? newfoundGroup = null;
+                if (foundGroup == null)
+                {
+                    newfoundGroup = existingProperty.ValidationGroups.FirstOrDefault(f => f.Id == scope.Id);
+                }
+                else
+                {
+                    newfoundGroup = foundGroup.Children.FirstOrDefault(f => f.Id == scope.Id);
+                }
+
+                if (newfoundGroup == null)
+                {
+                    newfoundGroup = new DescriptionGroupResult(scope);
+                    
+                    if (foundGroup is not null)
+                        foundGroup.Children.Add(newfoundGroup);
+                    //else
+
+                    else if (scope == tempScopes.First())
+                    {
+                        existingProperty.ValidationGroups.Add(newfoundGroup);
+                    }
+                }
+
+                foundGroup = newfoundGroup;
+
+                if (scope == tempScopes.Last())
+                {
+                    foundGroup.Outcomes.Add(new DescriptionOutcome(outcome.Validator, outcome.Message, outcome.KeyValues));
+                }
             }
-            newOutcome.Group = group;
+        }
+        else
+        {
+            existingProperty.Outcomes.Add(new DescriptionOutcome(outcome.Validator, outcome.Message, outcome.KeyValues));
         }
     }
 }

@@ -1,16 +1,18 @@
-﻿using PopValidations.Execution.Validation;
+﻿using System.Collections.Generic;
 
 namespace PopValidations.Execution.Validations;
 
 public class DescriptionOutcome
 {
-    public string PropertyName { get; set; }
+    public string Validator { get; }
     public string? Message { get; }
-    public ValidationGroupResult? Group { get; set; }
+    public List<KeyValuePair<string, string>> Values { get; }
+    //public ValidationGroupResult? Group { get; set; }
 
-    public DescriptionOutcome(string propertyName, string? message)
+    public DescriptionOutcome(string validator, string? message, List<KeyValuePair<string, string>> values)
     {
-        PropertyName = propertyName;
+        Validator = validator;
         Message = message;
+        Values = values;
     }
 }
