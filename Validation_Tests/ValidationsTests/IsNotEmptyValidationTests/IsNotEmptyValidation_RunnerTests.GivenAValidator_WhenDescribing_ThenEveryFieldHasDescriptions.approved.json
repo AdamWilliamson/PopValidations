@@ -1,0 +1,134 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "propertyName": "Integer",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "propertyName": "String",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "propertyName": "Decimal",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "propertyName": "Double",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "propertyName": "Short",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "propertyName": "Long",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "TwoComponentTuple",
+            "outcomes": [
+                {
+                    "propertyName": "TwoComponentTuple",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "TwoComponentNewTupple",
+            "outcomes": [
+                {
+                    "propertyName": "TwoComponentNewTupple",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesList",
+            "outcomes": [
+                {
+                    "propertyName": "AllFieldTypesList",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesLinkedList",
+            "outcomes": [
+                {
+                    "propertyName": "AllFieldTypesLinkedList",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesIEnumerable",
+            "outcomes": [
+                {
+                    "propertyName": "AllFieldTypesIEnumerable",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "AllFieldTypesDictionary",
+            "outcomes": [
+                {
+                    "propertyName": "AllFieldTypesDictionary",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Struct",
+            "outcomes": [
+                {
+                    "propertyName": "Struct",
+                    "message": "Must not be empty",
+                    "group": null
+                }
+            ]
+        }
+    ]
+}
