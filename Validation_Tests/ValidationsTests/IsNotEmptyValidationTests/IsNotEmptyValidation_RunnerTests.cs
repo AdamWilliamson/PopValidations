@@ -51,7 +51,7 @@ public class IsNotEmptyValidation_RunnerTests
         var validationResult = await runner.Validate(dto);
 
         // Assert
-        validationResult.Results.Should().BeEmpty();
+        validationResult.Errors.Should().BeEmpty();
     }
 
     [Fact]
@@ -80,7 +80,7 @@ public class IsNotEmptyValidation_RunnerTests
         var json = JsonConverter.ToJson(validationResult);
 
         // Assert
-        validationResult.Results.Should().HaveCount(13);
+        validationResult.Errors.Should().HaveCount(13);
         Approvals.VerifyJson(json);
     }
 

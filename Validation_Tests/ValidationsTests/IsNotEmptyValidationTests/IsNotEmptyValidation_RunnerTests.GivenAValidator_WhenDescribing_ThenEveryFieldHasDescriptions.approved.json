@@ -4,131 +4,144 @@
             "property": "Integer",
             "outcomes": [
                 {
-                    "propertyName": "Integer",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "String",
             "outcomes": [
                 {
-                    "propertyName": "String",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Decimal",
             "outcomes": [
                 {
-                    "propertyName": "Decimal",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Double",
             "outcomes": [
                 {
-                    "propertyName": "Double",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Short",
             "outcomes": [
                 {
-                    "propertyName": "Short",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Long",
             "outcomes": [
                 {
-                    "propertyName": "Long",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "TwoComponentTuple",
             "outcomes": [
                 {
-                    "propertyName": "TwoComponentTuple",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "TwoComponentNewTupple",
             "outcomes": [
                 {
-                    "propertyName": "TwoComponentNewTupple",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "AllFieldTypesList",
             "outcomes": [
                 {
-                    "propertyName": "AllFieldTypesList",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "AllFieldTypesLinkedList",
             "outcomes": [
                 {
-                    "propertyName": "AllFieldTypesLinkedList",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "AllFieldTypesIEnumerable",
             "outcomes": [
                 {
-                    "propertyName": "AllFieldTypesIEnumerable",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "AllFieldTypesDictionary",
             "outcomes": [
                 {
-                    "propertyName": "AllFieldTypesDictionary",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         },
         {
             "property": "Struct",
             "outcomes": [
                 {
-                    "propertyName": "Struct",
+                    "validator": "IsNotEmptyValidation",
                     "message": "Must not be empty",
-                    "group": null
+                    "values": []
                 }
-            ]
+            ],
+            "validationGroups": []
         }
     ]
 }

@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace PopValidations_Tests.ValidationsTests;
+namespace PopValidations_Tests.ValidationsTests.IsNotEmptyValidationTests;
 
-public class IsNotEmptyValidationTests
+public class IsNotEmptyValidation_Tests
 {
     [Theory]
     [MemberData(nameof(NotNullOrEmptyData))]
