@@ -1,0 +1,88 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Integer",
+                    "message": "Is not equal to '-2147483648'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "String",
+                    "message": "Is not equal to '\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Decimal",
+                    "message": "Is not equal to '-79228162514264337593543950335'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Double",
+                    "message": "Is not equal to '-1.7976931348623157E+308'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Short",
+                    "message": "Is not equal to '-32768'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "Long",
+                    "message": "Is not equal to '-9223372036854775808'",
+                    "group": null
+                }
+            ]
+        },
+        {
+            "property": "TwoComponentTuple",
+            "outcomes": [
+                {
+                    "isFailed": true,
+                    "isSucceeded": false,
+                    "propertyName": "TwoComponentTuple",
+                    "message": "Is not equal to '(2147483647, -2147483648)'",
+                    "group": null
+                }
+            ]
+        }
+    ]
+}

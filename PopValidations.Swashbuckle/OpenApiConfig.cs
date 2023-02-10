@@ -1,4 +1,5 @@
 ﻿using PopValidations.Swashbuckle.Converters;
+using PopValidations.Swashbuckle.Converters.Base;
 
 namespace PopValidations.Swashbuckle;
 

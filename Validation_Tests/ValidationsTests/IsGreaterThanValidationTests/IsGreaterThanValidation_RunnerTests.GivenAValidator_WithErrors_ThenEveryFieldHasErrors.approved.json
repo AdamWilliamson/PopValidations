@@ -1,0 +1,22 @@
+﻿{
+    "errors": {
+        "integer": [
+            "Is not greater than '2147483647'"
+        ],
+        "string": [
+            "Is not greater than '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'"
+        ],
+        "decimal": [
+            "Is not greater than '79228162514264337593543950335'"
+        ],
+        "double": [
+            "Is not greater than '1.7976931348623157E+308'"
+        ],
+        "short": [
+            "Is not greater than '32767'"
+        ],
+        "long": [
+            "Is not greater than '9223372036854775807'"
+        ]
+    }
+}

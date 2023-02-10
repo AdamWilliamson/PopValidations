@@ -20,7 +20,10 @@ public abstract class ValidationComponentBase : IValidationComponent
     public virtual Task InitScopes(object? instance) { return Task.CompletedTask; }
     public abstract ValidationActionResult Validate(object? value);
 
-    public abstract DescribeActionResult Describe();
+    public virtual DescribeActionResult Describe()
+    {
+        return CreateDescription();
+    }
 
     protected virtual TResult? GetData<TResult>(IScopeData? scopedData, TResult? value)
     {

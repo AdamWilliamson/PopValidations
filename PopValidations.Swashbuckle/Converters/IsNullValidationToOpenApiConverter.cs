@@ -1,6 +1,7 @@
 ﻿using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using PopValidations.Execution.Validations;
+using PopValidations.Swashbuckle.Converters.Base;
 using PopValidations.Validations;
 
 namespace PopValidations.Swashbuckle.Converters;

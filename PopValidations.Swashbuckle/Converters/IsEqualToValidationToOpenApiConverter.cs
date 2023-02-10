@@ -1,6 +1,7 @@
 ﻿using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using PopValidations.Execution.Validations;
+using PopValidations.Swashbuckle.Converters.Base;
 using PopValidations.Validations;
 
 namespace PopValidations.Swashbuckle.Converters;
@@ -21,7 +22,7 @@ public class IsEqualToValidationToOpenApiConverter : IValidationToOpenApiConvert
     {
         propertySchema.Enum = new List<IOpenApiAny>()
         {
-            new OpenApiString(description.Values.First().Value)
+            new OpenApiString(description.Values.First(c => c.Key == "value").Value)
         };
     }
 }

@@ -79,6 +79,86 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>IsCustomValidation_Tests.cs</DependentUpon>
     </None>
+    <None Update="ValidationsTests\IsLessThanOrEqualToValidationTests\IsLessThanOrEqualToValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsLessThanOrEqualToValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsLessThanOrEqualToValidationTests\IsLessThanOrEqualToValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsLessThanOrEqualToValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsLessThanOrEqualToValidationTests\IsLessThanOrEqualToValidation_Tests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsLessThanOrEqualToValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsLessThanOrEqualToValidationTests\IsLessThanOrEqualToValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsLessThanOrEqualToValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsGreaterThanOrEqualToValidationTests\IsGreaterThanOrEqualToValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanOrEqualToValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsGreaterThanOrEqualToValidationTests\IsGreaterThanOrEqualToValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanOrEqualToValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsGreaterThanOrEqualToValidationTests\IsGreaterThanOrEqualToValidation_Tests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanOrEqualToValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsGreaterThanOrEqualToValidationTests\IsGreaterThanOrEqualToValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanOrEqualToValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsLessThanValidationTests\IsLessThanValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsLessThanValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsLessThanValidationTests\IsLessThanValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsLessThanValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsLessThanValidationTests\IsLessThanValidation_Tests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsLessThanValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsLessThanValidationTests\IsLessThanValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsLessThanValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsGreaterThanValidationTests\IsGreaterThanValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsGreaterThanValidationTests\IsGreaterThanValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsGreaterThanValidationTests\IsGreaterThanValidation_Tests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsGreaterThanValidationTests\IsGreaterThanValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanValidation_Tests.cs</DependentUpon>
+    </None>
     <None Update="ValidationsTests\IsEqualToValidationTests\IsEqualToValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
       <DependentUpon>IsEqualToValidation_Tests.cs</DependentUpon>
     </None>

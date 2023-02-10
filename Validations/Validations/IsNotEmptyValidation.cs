@@ -10,6 +10,7 @@ public class IsNotEmptyValidation : ValidationComponentBase
     public override string ErrorTemplate { get; protected set; } = $"Is empty";
 
     public IsNotEmptyValidation() { }
+
     public override ValidationActionResult Validate(object? value)
     {
         switch (value)

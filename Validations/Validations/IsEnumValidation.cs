@@ -4,7 +4,7 @@ using PopValidations.Validations.Base;
 
 namespace PopValidations.Validations;
 
-public class IsEnumValidation : ValidationComponentBase
+public class IsEnumValidation<TFieldType> : ValidationComponentBase
 {
     private readonly Type enumType;
 
@@ -45,7 +45,14 @@ public class IsEnumValidation : ValidationComponentBase
                         ',',
                         Enum.GetValues(enumType).Cast<Enum>().Select(x => x.ToString("d")).ToArray()
                     )
-                )
+                ),
+                ("fieldType", typeof(TFieldType) switch
+                {
+                    Type t when t.IsEnum => "enum",
+                    Type t when Type.GetTypeCode(t.GetType()) == TypeCode.String => "string",
+                    Type t when IsNumericType(t) => "number",
+                    _ => "unknown"
+                })
             );
         }
     }
@@ -60,7 +67,35 @@ public class IsEnumValidation : ValidationComponentBase
                     ',',
                     Enum.GetValues(enumType).Cast<Enum>().Select(x => x.ToString("d")).ToArray()
                 )
-            )
+            ),
+             ("fieldType", typeof(TFieldType) switch
+             {
+                 Type t when t.IsEnum => "enum",
+                 Type t when Type.GetTypeCode(t.GetType()) == TypeCode.String => "string",
+                 Type t when IsNumericType(t) => "number",
+                 _ => "unknown"
+             })
         );
+    }
+
+    public static bool IsNumericType(Type type)
+    {
+        switch (Type.GetTypeCode(type))
+        {
+            case TypeCode.Byte:
+            case TypeCode.SByte:
+            case TypeCode.UInt16:
+            case TypeCode.UInt32:
+            case TypeCode.UInt64:
+            case TypeCode.Int16:
+            case TypeCode.Int32:
+            case TypeCode.Int64:
+            case TypeCode.Decimal:
+            case TypeCode.Double:
+            case TypeCode.Single:
+                return true;
+            default:
+                return false;
+        }
     }
 }

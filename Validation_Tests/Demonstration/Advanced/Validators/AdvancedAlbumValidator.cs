@@ -41,7 +41,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                     });
 
                 Describe(x => x.Created)
-                    .Must(
+                    .Is(
                         "Has a SufficientlyLong Name",
                         "Name is too short",
                         c => data.To("", x => Task.FromResult(x is { HasSufficientlyLongName: true }))
@@ -75,7 +75,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                     .Vitally().ForEach((song) =>
                     {
                         song.NotNull()
-                        .Must(
+                        .Is(
                             "{{value}} Was not found in list of songs we own the rights to",
                             "Checks to ensure the song's rights are owned by us.",
                             s => SongOwnedPair.To(
