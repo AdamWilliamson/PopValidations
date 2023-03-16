@@ -1,0 +1,19 @@
+﻿{
+    "errors": {
+        "string": [
+            "Is not between 0 and 10 exclusive."
+        ],
+        "allFieldTypesList": [
+            "Is not between -1 and 1 exclusive."
+        ],
+        "allFieldTypesLinkedList": [
+            "Is not between -1 and 1 exclusive."
+        ],
+        "allFieldTypesIEnumerable": [
+            "Is not between -1 and 1 exclusive."
+        ],
+        "allFieldTypesDictionary": [
+            "Is not between -1 and 1 exclusive."
+        ]
+    }
+}

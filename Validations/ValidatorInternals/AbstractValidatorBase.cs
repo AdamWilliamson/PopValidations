@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using PopValidations.Execution.Stores;
@@ -35,6 +36,7 @@ public abstract class AbstractValidatorBase<TValidationType>
         return fieldDescriptor;
     }
 
+    
     public IFieldDescriptor<TValidationType, TFieldType?> Describe<TFieldType>(Expression<Func<TValidationType, TFieldType?>> expr)
     {
         var fieldDescriptor = new FieldDescriptor<TValidationType, TFieldType?>(

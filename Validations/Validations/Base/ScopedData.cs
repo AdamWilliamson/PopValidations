@@ -9,6 +9,8 @@ public interface IScopedData<TResponse> : IScopeData
     ScopedData<TResponse, TNewResponse> To<TNewResponse>(string newDescription,
         Func<TResponse, Task<TNewResponse>> passThroughFunction
     );
+
+    TResponse? GetTypedValue();
 }
 
 public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
@@ -59,6 +61,22 @@ public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
 
         Init(null).Wait();
         return RetrievedValue;
+    }
+
+    public TResponse? GetTypedValue()
+    {
+        try 
+        {
+            if (HasRetrievedValue)
+                return RetrievedValue;
+
+            Init(null).Wait();
+            return RetrievedValue;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
     public string Describe()
@@ -182,6 +200,24 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
             Init(Parent.GetValue()).Wait();
 
         return RetrievedValue;
+    }
+
+    public TResponse? GetTypedValue()
+    {
+        try
+        {
+            if (HasRetrievedValue)
+                return RetrievedValue;
+
+            if (Parent != null)
+                Init(Parent.GetValue()).Wait();
+
+            return RetrievedValue;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
     public string Describe()

@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validations_Tests", "Valida
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopValidations.Swashbuckle", "PopValidations.Swashbuckle\PopValidations.Swashbuckle.csproj", "{2C3D9B69-5E23-4A79-9890-4D190056FE95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopValidations.ExampleWebApi", "PopValidations.ExampleWebApi\PopValidations.ExampleWebApi.csproj", "{F5493B35-C7BC-4B44-BD12-70F1FC7D2653}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopValidations.ExampleWebApi", "PopValidations.ExampleWebApi\PopValidations.ExampleWebApi.csproj", "{F5493B35-C7BC-4B44-BD12-70F1FC7D2653}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopValidations.Swashbuckle_Tests", "PopValidations.Swashbuckle_Tests\PopValidations.Swashbuckle_Tests.csproj", "{53468BEB-DB72-488F-984F-7816D882ACC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopValidations.MediatR", "PopValidations.MediatR\PopValidations.MediatR.csproj", "{1B27413A-D163-4428-98D0-D673BB3A4532}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{F5493B35-C7BC-4B44-BD12-70F1FC7D2653}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5493B35-C7BC-4B44-BD12-70F1FC7D2653}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5493B35-C7BC-4B44-BD12-70F1FC7D2653}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53468BEB-DB72-488F-984F-7816D882ACC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53468BEB-DB72-488F-984F-7816D882ACC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53468BEB-DB72-488F-984F-7816D882ACC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53468BEB-DB72-488F-984F-7816D882ACC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B27413A-D163-4428-98D0-D673BB3A4532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B27413A-D163-4428-98D0-D673BB3A4532}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B27413A-D163-4428-98D0-D673BB3A4532}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B27413A-D163-4428-98D0-D673BB3A4532}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

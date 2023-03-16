@@ -10,7 +10,16 @@ public class OpenApiConfig
     public List<IValidationToOpenApiConverter> Converters = new()
     {
         new NotNullValidationToOpenApiConverter(),
+        new IsEnumValidationToOpenApiConverter(),
         new IsEqualToValidationToOpenApiConverter(),
         new IsNullValidationToOpenApiConverter(),
+        new IsLengthInclusivelyBetweenValidationToOpenApiConverter(),
+        new IsLengthExclusivelyBetweenValidationToOpenApiConverter(),
+        new IsGreaterThanValidationToOpenApiConverter(),
+        new IsGreaterThanOrEqualToValidationToOpenApiConverter(),
+        new IsLessThanValidationToOpenApiConverter(),
+        new IsLessThanOrEqualToValidationToOpenApiConverter(),
+        new IsEmptyValidationToOpenApiConverter(),
+        new IsNotEmptyValidationToOpenApiConverter()
     };
 }

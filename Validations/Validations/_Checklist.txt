@@ -1,7 +1,7 @@
 ﻿Copy FluentValidator as needed.
 ::Validators Wanted::
 
-HasInclusiveLengthBetween
+IsLengthInclusivelyBetween
 	Takes a string, or array. 
 HasExclusiveLengthBetween
 	Takes a string, or array. 

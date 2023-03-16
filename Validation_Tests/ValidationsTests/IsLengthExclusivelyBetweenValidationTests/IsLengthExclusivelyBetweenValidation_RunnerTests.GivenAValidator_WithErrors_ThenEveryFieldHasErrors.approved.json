@@ -1,0 +1,19 @@
+﻿{
+    "errors": {
+        "string": [
+            "Is not between {{startvalue}} and {{endvalue}} exclusive."
+        ],
+        "allFieldTypesList": [
+            "Is not between {{startvalue}} and {{endvalue}} exclusive."
+        ],
+        "allFieldTypesLinkedList": [
+            "Is not between {{startvalue}} and {{endvalue}} exclusive."
+        ],
+        "allFieldTypesIEnumerable": [
+            "Is not between {{startvalue}} and {{endvalue}} exclusive."
+        ],
+        "allFieldTypesDictionary": [
+            "Is not between {{startvalue}} and {{endvalue}} exclusive."
+        ]
+    }
+}
