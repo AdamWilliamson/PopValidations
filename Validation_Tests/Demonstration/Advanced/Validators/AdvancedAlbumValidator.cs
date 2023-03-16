@@ -24,7 +24,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
     public AdvancedAlbumValidator(IFakeAlbumDetailsChecker fakeAlbumDetailsChecker)
     {
         Scope("get X Data",
-            (album) => Task.FromResult(new DesignedToBePatternMatched(album)),
+            (album) => Task.FromResult<DesignedToBePatternMatched?>(new DesignedToBePatternMatched(album)),
             (data) =>
             {
                 When(
@@ -33,7 +33,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                     () =>
                     {
                         Describe(x => x.Artist).SetValidator(new AdvancedArtistValidator());
-                        Describe(x => x.Artist.Name)
+                        Describe(x => x.Artist!.Name)
                             .IsEqualTo(
                                 data.To("'artist' with Something appended", artist => Task.FromResult<string?>(artist + "Something")),
                                 o => o.WithErrorMessage("{{value}} is ensured to be false by adding Something to the end.")
@@ -80,7 +80,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                             "Checks to ensure the song's rights are owned by us.",
                             s => SongOwnedPair.To(
                                 "Matches Track and Is Owned",
-                                x => Task.FromResult(x.Any(u => u.Item1.TrackName == s.TrackName && u.Item2)))
+                                x => Task.FromResult(x.Any(u => u.Item1!.TrackName == s.TrackName && u.Item2)))
                         );
                     });
             });

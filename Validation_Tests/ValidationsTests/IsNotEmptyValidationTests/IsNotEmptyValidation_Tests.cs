@@ -51,7 +51,9 @@ public class IsNotEmptyValidation_Tests
         yield return new object[] { "" };
         yield return new object[] { "   " };
         yield return new object[] { Array.Empty<int>() };
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         yield return new object[] { null };
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [Fact]

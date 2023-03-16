@@ -59,4 +59,8 @@ createApp(App)
     "CodeWindow",
     defineAsyncComponent(() => import("@/components/CodeWindow.vue"))
   )
+  .component(
+    "PanelsOrTabs",
+    defineAsyncComponent(() => import("@/components/PanelsOrTabs.vue"))
+  )
   .mount("#app");

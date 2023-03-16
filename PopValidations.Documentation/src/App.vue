@@ -91,9 +91,79 @@ export default defineComponent({
         ></v-list-item>
         <v-list-item
           color="secondary"
+          title="Is Not Null"
+          value="Is Not Null"
+          :to="{ name: 'IsNotNullValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
           title="Is Empty"
           value="Is Empty"
           :to="{ name: 'IsEmptyValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Not Empty"
+          value="Is Not Empty"
+          :to="{ name: 'IsNotEmptyValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Equal To"
+          value="Is Equal To"
+          :to="{ name: 'IsEqualToValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Greater Than"
+          value="Is Greater Than"
+          :to="{ name: 'IsGreaterThanValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Greater Than Or Equal To"
+          value="Is Greater Than Or Equal To"
+          :to="{ name: 'IsGreaterThanOrEqualToValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Less Than"
+          value="Is Less Than"
+          :to="{ name: 'IsLessThanValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Less Than Or Equal To"
+          value="Is Less Than Or Equal To"
+          :to="{ name: 'IsLessThanOrEqualToValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Length Inclusively Between"
+          value="Is Length Inclusively Between"
+          :to="{ name: 'IsLengthInclusivelyBetweenValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Length Exclusively Between"
+          value="Is Length Exclusively Between"
+          :to="{ name: 'IsLengthExclusivelyBetweenValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is"
+          value="Is"
+          :to="{ name: 'IsValidation' }"
           link
         ></v-list-item>
 

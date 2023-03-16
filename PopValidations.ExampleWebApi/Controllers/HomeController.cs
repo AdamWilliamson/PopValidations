@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using PopValidations.ExampleWebApi.Handlers;
 
 namespace PopValidations.ExampleWebApi.Controllers;
 
@@ -18,8 +20,12 @@ public class SongValidator: AbstractSubValidator<Song>
 {
     public SongValidator()
     {
-        Describe(x => x.Name).NotNull();
-        Describe(x => x.ArtistAgain).NotNull().SetValidator(new ArtistValidator());
+        Describe(x => x.Name)
+            .NotNull()
+            .IsLengthInclusivelyBetween(5, 200);
+        Describe(x => x.ArtistAgain)
+            .NotNull()
+            .SetValidator(new ArtistValidator());
 
         When(
             "Song: Artist is not null",
@@ -37,7 +43,10 @@ public class AlbumValidator : AbstractValidator<Album>
 {
     public AlbumValidator()
     {
-        Describe(x => x.Name).NotNull().IsEqualTo("Hello");
+        Describe(x => x.Name)
+            .NotNull()
+            .IsEqualTo("Hello")
+            .IsLengthExclusivelyBetween(4, 201);
         DescribeEnumerable(x => x.Songs)
             .NotNull()
             .ForEach(x => x.SetValidator(new SongValidator()));
@@ -77,6 +86,13 @@ public class AlbumValidator : AbstractValidator<Album>
 [Route("api/[controller]")]
 public class HomeController : ControllerBase
 {
+    private readonly IMediator mediator;
+
+    public HomeController(IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
+
     [Route(nameof(Details))]
     [HttpGet]
     public Album Details(int id)
@@ -86,8 +102,8 @@ public class HomeController : ControllerBase
 
     [Route(nameof(Edit))]
     [HttpPut]
-    public IActionResult Edit(int id, Album album)
+    public Task Edit(int id, Album album)
     {
-        return Ok();
+        return mediator.Send(new TestRequest());
     }
 }

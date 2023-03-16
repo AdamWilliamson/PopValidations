@@ -21,8 +21,19 @@ import AddingALanguage from "@/features/localisation/addingalanguage.vue";
 import TestingExtensions from "@/features/testability/testingextensions.vue";
 
 //== Validations
-import IsNullValidationVue from "@/features/validations/IsNullValidation.vue";
-import IsEmptyValidationVue from "@/features/validations/IsEmptyValidation.vue";
+import IsNullValidation from "@/features/validations/IsNullValidation.vue";
+import IsEmptyValidation from "@/features/validations/IsEmptyValidation.vue";
+import IsEqualToValidation from "@/features/validations/IsEqualToValidation.vue";
+import IsValidation from "@/features/validations/IsValidation.vue";
+import IsLengthInclusivelyBetweenValidation from "@/features/validations/IsLengthInclusivelyBetweenValidation.vue";
+import IsLengthExclusivelyBetweenValidation from "@/features/validations/IsLengthExclusivelyBetweenValidation.vue";
+
+import IsGreaterThanValidation from "@/features/validations/IsGreaterThanValidation.vue";
+import IsGreaterThanOrEqualToValidation from "@/features/validations/IsGreaterThanOrEqualToValidation.vue";
+import IsLessThanValidation from "@/features/validations/IsLessThanValidation.vue";
+import IsLessThanOrEqualToValidation from "@/features/validations/IsLessThanOrEqualToValidation.vue";
+import IsNotNullValidation from "@/features/validations/IsNotNullValidation.vue";
+import IsNotEmptyValidation from "@/features/validations/IsNotEmptyValidation.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,20 +66,20 @@ const router = createRouter({
       ],
     },
     {
-      path:"/integration",
-      redirect:"/",
-      children:[
+      path: "/integration",
+      redirect: "/",
+      children: [
         {
-          path:"/integration/swashbuckle",
-          name:"SwashbuckleIntegration",
-          component: SwashbuckleIntegration
+          path: "/integration/swashbuckle",
+          name: "SwashbuckleIntegration",
+          component: SwashbuckleIntegration,
         },
         {
-          path:"/integration/mediatr",
-          name:"MediatRIntegration",
-          component: MediatRIntegration
-        }
-      ]
+          path: "/integration/mediatr",
+          name: "MediatRIntegration",
+          component: MediatRIntegration,
+        },
+      ],
     },
     {
       path: "/configurability",
@@ -110,16 +121,66 @@ const router = createRouter({
         {
           path: "/validation/isnull",
           name: "IsNullValidation",
-          component: IsNullValidationVue,
+          component: IsNullValidation,
         },
         {
           path: "/validation/isempty",
           name: "IsEmptyValidation",
-          component: IsEmptyValidationVue,
+          component: IsEmptyValidation,
         },
-      ],
-    },
-  ],
+        {
+          path: "/validation/isequalto",
+          name: "IsEqualToValidation",
+          component: IsEqualToValidation,
+        },
+        {
+          path: "/validation/is",
+          name: "IsValidation",
+          component: IsValidation,
+        },
+        {
+          path: "/validation/islengthinclusivelybetween",
+          name: "IsLengthInclusivelyBetweenValidation",
+          component: IsLengthInclusivelyBetweenValidation,
+        },
+        {
+          path: "/validation/islengthexclusivelybetween",
+          name: "IsLengthExclusivelyBetweenValidation",
+          component: IsLengthExclusivelyBetweenValidation,
+        },
+        {
+          path: "/validation/isgreaterthan",
+          name: "IsGreaterThanValidation",
+          component: IsGreaterThanValidation,
+        },
+        {
+          path: "/validation/isgreaterthanorequalto",
+          name: "IsGreaterThanOrEqualToValidation",
+          component: IsGreaterThanOrEqualToValidation,
+        },
+        {
+          path: "/validation/islessthan",
+          name: "IsLessThanValidation",
+          component: IsLessThanValidation,
+        },
+        {
+          path: "/validation/islessthanorequalto",
+          name: "IsLessThanOrEqualToValidation",
+          component: IsLessThanOrEqualToValidation,
+        },
+        {
+          path: "/validation/isnotnull",
+          name: "IsNotNullValidation",
+          component: IsNotNullValidation,
+        },
+        {
+          path: "/validation/isnotempty",
+          name: "IsNotEmptyValidation",
+          component: IsNotEmptyValidation,
+        }
+      ]
+    }
+  ]
 });
 
 export default router;
