@@ -24,19 +24,87 @@ export default defineComponent({
       <template #code>
         <CodeWindow
               language="csharp"
-              source=''
+              source='
+public class BasicSongValidator : AbstractValidator
+{
+    public BasicSongValidator()
+    {
+        Describe(x => x.TrackName).NotNull();
+        Describe(x => x.TrackNumber).NotNull();
+        Describe(x => x.Duration).NotNull();
+        Describe(x => x.Genre)
+          .Vitally().NotNull(options => 
+            options
+              .SetErrorMessage("Null is Invalid")
+              .SetDescription("Nulls are bad.")
+          );
+    }
+}'
             ></CodeWindow>
       </template>
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackNumber": [
+            "Is null."
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "results": [
+        {
+            "property": "TrackName",
+            "outcomes": [
+                {
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "TrackNumber",
+            "outcomes": [
+                {
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Duration",
+            "outcomes": [
+                {
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Genre",
+            "outcomes": [
+                {
+                    "validator": "NotNullValidation",
+                    "message": "Nulls are bad.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+  }'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>

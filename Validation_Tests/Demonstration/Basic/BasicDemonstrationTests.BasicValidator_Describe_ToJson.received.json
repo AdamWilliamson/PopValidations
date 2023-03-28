@@ -1,0 +1,48 @@
+﻿{
+    "results": [
+        {
+            "property": "TrackName",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "TrackNumber",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Duration",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Genre",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Values are bad.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}
