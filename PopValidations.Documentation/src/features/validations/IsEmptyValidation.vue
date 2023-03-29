@@ -42,13 +42,55 @@ public class BasicSongValidator : AbstractValidator
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackName": [
+            "Is not empty"
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "results": [
+        {
+            "property": "TrackName",
+            "outcomes": [
+                {
+                    "validator": "IsEmptyValidation",
+                    "message": "Must be empty",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "TrackNumber",
+            "outcomes": [
+                {
+                    "validator": "IsEmptyValidation",
+                    "message": "Must be empty",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Genre",
+            "outcomes": [
+                {
+                    "validator": "IsEmptyValidation",
+                    "message": "This Field must be Empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
