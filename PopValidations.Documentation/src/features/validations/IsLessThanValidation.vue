@@ -24,19 +24,125 @@ export default defineComponent({
       <template #code>
         <CodeWindow
               language="csharp"
-              source=''
+              source='
+public class BasicSongValidator : AbstractValidator
+{
+    public BasicSongValidator()
+    {
+        Describe(x => x.TrackName)
+            .IsLessThan("Down With The Sickness");
+        Describe(x => x.TrackNumber)
+            .IsLessThan(new ScopedData<double>(double.MaxValue));
+        Describe(x => x.Duration)
+            .IsLessThan(new ScopedData<double>(2));
+    }
+}'
             ></CodeWindow>
       </template>
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackName": [
+            "Is not less than "Down With The Sickness""
+        ],
+        "trackNumber": [
+            "Is not greater than or equal to "1.7976931348623157E+308"",
+            "Is not less than "1.7976931348623157E+308""
+        ],
+        "duration": [
+            "Is not less than "2""
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "results": [
+        {
+            "property": "TrackName",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to "Down With The Sickness"",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Down With The Sickness"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than "Down With The Sickness"",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Down With The Sickness"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "TrackNumber",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to "1.7976931348623157E+308"",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1.7976931348623157E+308"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than "1.7976931348623157E+308"",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1.7976931348623157E+308"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Duration",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to "2"",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "2"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than "2"",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "2"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
