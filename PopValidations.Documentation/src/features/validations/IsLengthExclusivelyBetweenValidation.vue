@@ -55,5 +55,13 @@ public class BasicSongValidator : AbstractValidator
       </template>
     </PanelsOrTabs>
 
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-text>Contributed by Adam Williamson. <v-btn href="https://github.com/AdamWilliamson" flat link><v-icon icon="mdi-github"></v-icon></v-btn></v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    
   </v-container>
 </template>

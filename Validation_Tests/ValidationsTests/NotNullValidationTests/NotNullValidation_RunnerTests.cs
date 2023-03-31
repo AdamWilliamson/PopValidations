@@ -1,9 +1,9 @@
 ﻿using ApprovalTests;
 using FluentAssertions;
-using System.Threading.Tasks;
 using PopValidations;
 using PopValidations_Tests.TestHelpers;
 using PopValidations_Tests.ValidationsTests.GenericTestableObjects;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace PopValidations_Tests.ValidationsTests.NotNullValidationTests.NotNullValidationTests;

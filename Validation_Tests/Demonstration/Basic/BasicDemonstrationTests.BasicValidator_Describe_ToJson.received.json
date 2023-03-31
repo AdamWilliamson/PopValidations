@@ -1,45 +1,35 @@
 ﻿{
     "results": [
         {
-            "property": "TrackName",
-            "outcomes": [
-                {
-                    "validator": "IsNullValidation",
-                    "message": "Must be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
             "property": "TrackNumber",
             "outcomes": [
                 {
-                    "validator": "IsNullValidation",
-                    "message": "Must be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Duration",
-            "outcomes": [
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 5 and 10 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "5"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "10"
+                        }
+                    ]
+                },
                 {
-                    "validator": "IsNullValidation",
-                    "message": "Must be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Genre",
-            "outcomes": [
-                {
-                    "validator": "IsNullValidation",
-                    "message": "Values are bad.",
-                    "values": []
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 2 and 5 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "2"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "5"
+                        }
+                    ]
                 }
             ],
             "validationGroups": []

@@ -15,7 +15,7 @@ export default defineComponent({
       <v-col>
         <v-card>
           <v-card-title><h3>Is Greater Than Or Equal To</h3></v-card-title>
-          <v-card-text></v-card-text>
+          <v-card-text>Is Greater Than Or Equal To works on any IEnumerable based types, note that it will not return an error if both fields are nulls. It will report an error if the fields are of different types or if only one of them is null.</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -109,5 +109,13 @@ export default defineComponent({
       </template>
     </PanelsOrTabs>
 
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-text>Contributed by Adam Williamson. <v-btn href="https://github.com/AdamWilliamson" flat link><v-icon icon="mdi-github"></v-icon></v-btn></v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    
   </v-container>
 </template>

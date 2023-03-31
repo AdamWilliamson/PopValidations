@@ -15,7 +15,7 @@ export default defineComponent({
       <v-col>
         <v-card>
           <v-card-title><h3>Is Not Null</h3></v-card-title>
-          <v-card-text></v-card-text>
+          <v-card-text>Is Not Null works on any null compatible type, both nullable, and class types.  It will report an error if the field contains a null.</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -109,5 +109,13 @@ public class BasicSongValidator : AbstractValidator
       </template>
     </PanelsOrTabs>
 
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-text>Contributed by Adam Williamson. <v-btn href="https://github.com/AdamWilliamson" flat link><v-icon icon="mdi-github"></v-icon></v-btn></v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    
   </v-container>
 </template>

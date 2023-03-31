@@ -13,9 +13,9 @@ public class BasicDemonstrationTests
         // Arrange
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new BasicSongValidator());
         var song = new BasicSong(
-            "Disturbed", 
-            null, 
-            "Down With The Sickness", 
+            "Disturbed",
+            2,
+            "Down With The Sickness",
             2.4,
             string.Empty
         );

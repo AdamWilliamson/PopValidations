@@ -1,13 +1,7 @@
 ﻿{
     "errors": {
-        "trackName": [
-            "Is not null."
-        ],
-        "duration": [
-            "Is not null."
-        ],
-        "genre": [
-            "We don't like values"
+        "trackNumber": [
+            "Is not between 5 and 10 inclusive."
         ]
     }
 }
