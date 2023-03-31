@@ -32,7 +32,10 @@ public class BasicSongValidator : AbstractValidator
 {
     public BasicSongValidator()
     {
-        Describe(x => x.TrackNumber).IsLengthExclusivelyBetween(4, 41);
+        Describe(x => x.TrackNumber)
+            .IsLengthExclusivelyBetween(4, 41);
+        Describe(x => x.TrackNumber)
+            .IsLengthExclusivelyBetween(0, 5);
     }
 }'
             ></CodeWindow>
@@ -40,16 +43,55 @@ public class BasicSongValidator : AbstractValidator
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackNumber": [
+            "Is not between 4 and 41 exclusive."
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='Song{
-  name*	string
-  maxLength: 200
-  minLength: 5
+              source='{
+    "results": [
+        {
+            "property": "TrackNumber",
+            "outcomes": [
+                {
+                    "validator": "IsLengthExclusivelyBetweenValidation",
+                    "message": "Must be between 4 and 41 exclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "4"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "41"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsLengthExclusivelyBetweenValidation",
+                    "message": "Must be between 0 and 5 exclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "0"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "5"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
 }'
             ></CodeWindow>
       </template>
