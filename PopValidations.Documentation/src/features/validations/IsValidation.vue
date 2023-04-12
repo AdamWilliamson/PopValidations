@@ -27,14 +27,19 @@ export default defineComponent({
               source='
 public class BasicSongValidator : AbstractValidator
 {
+  public BasicSongValidator()
+  {
+    Describe(x => x.TrackNumber)
+    .Is(
+      "{Interesting description here}", 
+      "{Humorous error message here}", 
+      IntTest
+      );
+    }
+
     public static bool IntTest(int? value)
     {
         return value == 1;
-    }
-
-    public BasicSongValidator()
-    {
-        Describe(x => x.TrackNumber).Is("Description", "Error", IntTest);
     }
 }'
             ></CodeWindow>
@@ -42,24 +47,46 @@ public class BasicSongValidator : AbstractValidator
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackNumber": [
+            "{Humorous error message here}"
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      },
+      "trackNumber": {
+        "type": "integer",
+        "format": "int32",
+        "nullable": true
+      }
+    },
+    "additionalProperties": false,
+    "x-aemo-validation": {
+      "trackNumber": [
+        "{Interesting description here}"
+      ]
+    }
+  }
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
 
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-text>Contributed by Adam Williamson. <v-btn href="https://github.com/AdamWilliamson" flat link><v-icon icon="mdi-github"></v-icon></v-btn></v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    
   </v-container>
 </template>

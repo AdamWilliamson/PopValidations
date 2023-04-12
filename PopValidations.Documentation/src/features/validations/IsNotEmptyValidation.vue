@@ -31,7 +31,7 @@ public class BasicSongValidator : AbstractValidator
     {
         Describe(x => x.TrackName).IsNotEmpty();
         Describe(x => x.TrackNumber).IsNotEmpty();
-        Describe(x => x.Genre)
+        Describe(x => x.Artist)
           .Vitally().IsNotEmpty(options =>
             options
               .WithErrorMessage("Non Empty Fields are Invalid.")
@@ -46,10 +46,13 @@ public class BasicSongValidator : AbstractValidator
               language="json"
               source='{
     "errors": {
+        "trackName": [
+            "Is empty"
+        ],
         "trackNumber": [
             "Is empty"
         ],
-        "genre": [
+        "artist": [
             "Empty Fields are Invalid."
         ]
     }
@@ -60,41 +63,38 @@ public class BasicSongValidator : AbstractValidator
         <CodeWindow
               language="json"
               source='{
-    "results": [
-        {
-            "property": "TrackName",
-            "outcomes": [
-                {
-                    "validator": "IsNotEmptyValidation",
-                    "message": "Must not be empty",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "TrackNumber",
-            "outcomes": [
-                {
-                    "validator": "IsNotEmptyValidation",
-                    "message": "Must not be empty",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Genre",
-            "outcomes": [
-                {
-                    "validator": "IsNotEmptyValidation",
-                    "message": "This Field must not be Empty.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        }
-    ]
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "minLength": 1,
+        "minItems": 1,
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      },
+      "trackNumber": {
+        "minLength": 1,
+        "minItems": 1,
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "additionalProperties": false,
+    "x-aemo-validation": {
+      "trackName": [
+        "Must not be empty"
+      ],
+      "artist": [
+        "This Field must not be Empty."
+      ],
+      "trackNumber": [
+        "Must not be empty"
+      ]
+    }
+  }
 }'
             ></CodeWindow>
       </template>

@@ -29,12 +29,8 @@ public class BasicSongValidator : AbstractValidator
 {
     public BasicSongValidator()
     {
-        Describe(x => x.TrackName)
-                .IsLessThanOrEqualTo("Down With The Sickness");
-        Describe(x => x.TrackNumber)
-                .IsLessThanOrEqualTo(new ScopedData<double>(double.MaxValue));
         Describe(x => x.Duration)
-                .IsLessThanOrEqualTo(new ScopedData<double>(2));
+            .IsLessThanOrEqualTo(new ScopedData<double>(2));
     }
 }'
             ></CodeWindow>
@@ -44,12 +40,8 @@ public class BasicSongValidator : AbstractValidator
               language="json"
               source='{
     "errors": {
-        "trackNumber": [
-            "Is not greater than or equal to "1.7976931348623157E+308"",
-            "Is not less than or equal to "1.7976931348623157E+308""
-        ],
         "duration": [
-            "Is not less than or equal to "2""
+            "Is not less than or equal to &#39;2&#39;"
         ]
     }
 }'
@@ -59,98 +51,34 @@ public class BasicSongValidator : AbstractValidator
         <CodeWindow
               language="json"
               source='{
-    "results": [
-        {
-            "property": "TrackName",
-            "outcomes": [
-                {
-                    "validator": "IsGreaterThanOrEqualToValidation",
-                    "message": "Must be greater than or equal to "Down With The Sickness"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "Down With The Sickness"
-                        }
-                    ]
-                },
-                {
-                    "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to "Down With The Sickness"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "Down With The Sickness"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
+    "Song": {
+        "type": "object",
+        "properties": {
+            "trackName": {
+             "type": "string",
+             "nullable": true
+            },
+            "artist": {
+              "$ref": "#/components/schemas/Artist"
+            },
+            "duration": {
+              "maximum": 2,
+              "exclusiveMaximum": false,
+              "type": "number",
+              "format": "double"
+            }
         },
-        {
-            "property": "TrackNumber",
-            "outcomes": [
-                {
-                    "validator": "IsGreaterThanOrEqualToValidation",
-                    "message": "Must be greater than or equal to "1.7976931348623157E+308"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "1.7976931348623157E+308"
-                        }
-                    ]
-                },
-                {
-                    "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to "1.7976931348623157E+308"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "1.7976931348623157E+308"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Duration",
-            "outcomes": [
-                {
-                    "validator": "IsGreaterThanOrEqualToValidation",
-                    "message": "Must be greater than or equal to "2"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "2"
-                        }
-                    ]
-                },
-                {
-                    "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to "2"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "2"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
+        "additionalProperties": false,
+        "x-aemo-validation": {
+            "duration": [
+            "Must be less than or equal to &#39;2&#39;"
+            ]
         }
-    ]
+    }
 }'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
 
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-text>Contributed by Adam Williamson. <v-btn href="https://github.com/AdamWilliamson" flat link><v-icon icon="mdi-github"></v-icon></v-btn></v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    
   </v-container>
 </template>

@@ -29,12 +29,12 @@ public class BasicSongValidator : AbstractValidator
 {
     public BasicSongValidator()
     {
-        Describe(x => x.TrackName)
-            .IsGreaterThan("Down With The Sickness");
         Describe(x => x.TrackNumber)
-            .IsGreaterThan(new ScopedData<double>(double.MaxValue));
+            .IsGreaterThan(
+            new ScopedData<int>(int.MaxValue));
         Describe(x => x.Duration)
-            .IsGreaterThan(new ScopedData<double>(2));
+            .IsGreaterThan(
+            new ScopedData<double>(3));
     }
 }'
             ></CodeWindow>
@@ -44,11 +44,11 @@ public class BasicSongValidator : AbstractValidator
               language="json"
               source='{
     "errors": {
-        "trackName": [
-            "Is not greater than "Down With The Sickness""
-        ],
         "trackNumber": [
-            "Is not greater than "1.7976931348623157E+308""
+            "Is not greater than &#39;2147483647&#39;"
+        ],
+        "duration": [
+            "Is not greater than &#39;3&#39;"
         ]
     }
 }'
@@ -58,68 +58,43 @@ public class BasicSongValidator : AbstractValidator
         <CodeWindow
               language="json"
               source='{
-    "results": [
-        {
-            "property": "TrackName",
-            "outcomes": [
-                {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than "Down With The Sickness"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "Down With The Sickness"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "TrackNumber",
-            "outcomes": [
-                {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than "1.7976931348623157E+308"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "1.7976931348623157E+308"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Duration",
-            "outcomes": [
-                {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than "2"",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "2"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
-        }
-    ]
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      },
+      "trackNumber": {
+        "minimum": 2147483647,
+        "exclusiveMinimum": true,
+        "type": "integer",
+        "format": "int32"
+      },
+      "duration": {
+        "minimum": 3,
+        "exclusiveMinimum": true,
+        "type": "number",
+        "format": "double"
+      }
+    },
+    "additionalProperties": false,
+    "x-aemo-validation": {
+      "trackNumber": [
+        "Must be greater than &#39;2147483647&#39;"
+      ],
+      "duration": [
+        "Must be greater than &#39;3&#39;"
+      ]
+    }
+  }
 }'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
-
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-text>Contributed by Adam Williamson. <v-btn href="https://github.com/AdamWilliamson" flat link><v-icon icon="mdi-github"></v-icon></v-btn></v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
     
   </v-container>
 </template>

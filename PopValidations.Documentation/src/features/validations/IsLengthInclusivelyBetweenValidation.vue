@@ -33,9 +33,7 @@ public class BasicSongValidator : AbstractValidator
     public BasicSongValidator()
     {
         Describe(x => x.TrackNumber)
-            .IsLengthInclusivelyBetween(5, 10);
-        Describe(x => x.TrackNumber)
-            .IsLengthInclusivelyBetween(2, 5);
+            .IsLengthInclusivelyBetween(0, 5);
     }
 }'
             ></CodeWindow>
@@ -46,7 +44,7 @@ public class BasicSongValidator : AbstractValidator
               source='{
     "errors": {
         "trackNumber": [
-            "Is not between 5 and 10 inclusive."
+            "Is not between 0 and 5 inclusive."
         ]
     }
 }'
@@ -56,42 +54,30 @@ public class BasicSongValidator : AbstractValidator
         <CodeWindow
               language="json"
               source='{
-    "results": [
-        {
-            "property": "TrackNumber",
-            "outcomes": [
-                {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between 5 and 10 inclusive.",
-                    "values": [
-                        {
-                            "key": "startValue",
-                            "value": "5"
-                        },
-                        {
-                            "key": "endValue",
-                            "value": "10"
-                        }
-                    ]
-                },
-                {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between 2 and 5 inclusive.",
-                    "values": [
-                        {
-                            "key": "startValue",
-                            "value": "2"
-                        },
-                        {
-                            "key": "endValue",
-                            "value": "5"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
-        }
-    ]
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      },
+      "trackNumber": {
+        "maxLength": 5,
+        "minLength": 0,
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "additionalProperties": false,
+    "x-aemo-validation": {
+      "trackNumber": [
+        "Must be between 0 and 5 inclusive."
+      ]
+    }
+  }
 }'
             ></CodeWindow>
       </template>

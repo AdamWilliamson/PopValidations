@@ -31,12 +31,10 @@ public class BasicSongValidator : AbstractValidator
     public BasicSongValidator()
     {
         Describe(x => x.TrackName).IsNull();
-        Describe(x => x.TrackNumber).IsNull();
-        Describe(x => x.Duration).IsNull();
-        Describe(x => x.Genre)
+        Describe(x => x.Artist)
           .Vitally().IsNull(options => 
             options
-            .WithErrorMessage("We don`t like values")
+            .WithErrorMessage("We don&#39;t like values")
               .WithDescription("Values are bad.")
           );
     }
@@ -51,11 +49,8 @@ public class BasicSongValidator : AbstractValidator
         "trackName": [
             "Is not null."
         ],
-        "duration": [
-            "Is not null."
-        ],
-        "genre": [
-            "We don`t like values"
+        "artist": [
+            "We don&#39;t like values"
         ]
     }
 }'
@@ -65,52 +60,30 @@ public class BasicSongValidator : AbstractValidator
         <CodeWindow
               language="json"
               source='{
-    "results": [
-        {
-            "property": "TrackName",
-            "outcomes": [
-                {
-                    "validator": "IsNullValidation",
-                    "message": "Must be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "TrackNumber",
-            "outcomes": [
-                {
-                    "validator": "IsNullValidation",
-                    "message": "Must be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Duration",
-            "outcomes": [
-                {
-                    "validator": "IsNullValidation",
-                    "message": "Must be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Genre",
-            "outcomes": [
-                {
-                    "validator": "IsNullValidation",
-                    "message": "Values are bad.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        }
-    ]
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "enum": [
+          "null"
+        ],
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      }
+    },
+    "additionalProperties": false,
+    "x-aemo-validation": {
+      "trackName": [
+        "Must be null."
+      ],
+      "artist": [
+        "Values are bad."
+      ]
+    }
+  }
 }'
             ></CodeWindow>
       </template>

@@ -30,14 +30,12 @@ public class BasicSongValidator : AbstractValidator
     public BasicSongValidator()
     {
         Describe(x => x.TrackName).NotNull();
-        Describe(x => x.TrackNumber).NotNull();
-        Describe(x => x.Duration).NotNull();
-        Describe(x => x.Genre)
-          .Vitally().NotNull(options => 
-            options
-              .SetErrorMessage("Null is Invalid")
-              .SetDescription("Nulls are bad.")
-          );
+        Describe(x => x.TrackNumber)
+            .NotNull(options =>
+                options
+                    .WithErrorMessage("Null is Invalid")
+                    .WithDescription("Nulls are bad.")
+            );
     }
 }'
             ></CodeWindow>
@@ -47,9 +45,12 @@ public class BasicSongValidator : AbstractValidator
               language="json"
               source='{
     "errors": {
-        "trackNumber": [
+        "trackName": [
             "Is null."
-        ]
+        ],
+        "trackNumber": [
+            "Null is Invalid"
+        ],
     }
 }'
             ></CodeWindow>
@@ -58,64 +59,38 @@ public class BasicSongValidator : AbstractValidator
         <CodeWindow
               language="json"
               source='{
-    "results": [
-        {
-            "property": "TrackName",
-            "outcomes": [
-                {
-                    "validator": "NotNullValidation",
-                    "message": "Must not be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "TrackNumber",
-            "outcomes": [
-                {
-                    "validator": "NotNullValidation",
-                    "message": "Must not be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Duration",
-            "outcomes": [
-                {
-                    "validator": "NotNullValidation",
-                    "message": "Must not be null.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Genre",
-            "outcomes": [
-                {
-                    "validator": "NotNullValidation",
-                    "message": "Nulls are bad.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        }
-    ]
-  }'
+  "Song": {
+    "required": [
+      "trackName",
+      "trackNumber"
+    ],
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "type": "string"
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      },
+      "trackNumber": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "additionalProperties": false,
+    "x-aemo-validation": {
+      "trackName": [
+        "Must not be null."
+      ],
+      "trackNumber": [
+        "Nulls are bad."
+      ]
+    }
+  }
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
 
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-text>Contributed by Adam Williamson. <v-btn href="https://github.com/AdamWilliamson" flat link><v-icon icon="mdi-github"></v-icon></v-btn></v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    
   </v-container>
 </template>

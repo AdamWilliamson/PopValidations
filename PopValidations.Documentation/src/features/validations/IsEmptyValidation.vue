@@ -28,9 +28,9 @@ public class BasicSongValidator : AbstractValidator
 {
     public BasicSongValidator()
     {
-        Describe(x => x.TrackNumber).IsEmpty();
-        Describe(x => x.Genre)
-          .Vitally().IsEmpty(options => 
+        Describe(x => x.TrackName).IsEmpty();
+        Describe(x => x.Artist)
+          .IsEmpty(options => 
             options
               .SetErrorMessage("Non Empty Fields are Invalid.")
               .SetDescription("This Field must be Empty.")
@@ -46,6 +46,9 @@ public class BasicSongValidator : AbstractValidator
     "errors": {
         "trackName": [
             "Is not empty"
+        ],
+        "artist": [
+            "Non Empty Fields are Invalid."
         ]
     }
 }'
@@ -55,42 +58,30 @@ public class BasicSongValidator : AbstractValidator
         <CodeWindow
               language="json"
               source='{
-    "results": [
-        {
-            "property": "TrackName",
-            "outcomes": [
-                {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
+      "Song": {
+        "type": "object",
+        "properties": {
+          "trackName": {
+            "maxLength": 0,
+            "maxItems": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "artist": {
+            "$ref": "#/components/schemas/Artist"
+          }
         },
-        {
-            "property": "TrackNumber",
-            "outcomes": [
-                {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Genre",
-            "outcomes": [
-                {
-                    "validator": "IsEmptyValidation",
-                    "message": "This Field must be Empty.",
-                    "values": []
-                }
-            ],
-            "validationGroups": []
+        "additionalProperties": false,
+        "x-aemo-validation": {
+          "trackName": [
+            "Must be empty"
+          ],
+          "artist": [
+            "This Field must be Empty."
+          ]
         }
-    ]
-}'
+      }
+    }'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>

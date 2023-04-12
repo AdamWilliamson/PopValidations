@@ -28,14 +28,10 @@ export default defineComponent({
               source='
 public class BasicSongValidator : AbstractValidator
 {
-    public static bool IntTest(int? value)
+  public BasicSongValidator()
     {
-        return value == 1;
-    }
-
-    public BasicSongValidator()
-    {
-        Describe(x => x.TrackNumber).Is("Description", "Error", IntTest);
+        Describe(x => x.TrackName)
+            .IsEqualTo("Mind numbing boredom");
     }
 }'
             ></CodeWindow>
@@ -43,24 +39,44 @@ public class BasicSongValidator : AbstractValidator
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackName": [
+            "Is not equal to &#39;Mind numbing boredom&#39;"
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "enum": [
+          "Mind numbing boredom"
+        ],
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      }
+    },
+    "additionalProperties": false,
+    "x-aemo-validation": {
+      "trackName": [
+        "Must equal to &#39;Mind numbing boredom&#39;"
+      ]
+    }
+  }
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
 
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-text>Contributed by Adam Williamson. <v-btn href="https://github.com/AdamWilliamson" flat link><v-icon icon="mdi-github"></v-icon></v-btn></v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    
   </v-container>
 </template>
