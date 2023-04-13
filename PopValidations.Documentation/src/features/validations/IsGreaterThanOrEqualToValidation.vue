@@ -15,7 +15,7 @@ export default defineComponent({
       <v-col>
         <v-card>
           <v-card-title><h3>Is Greater Than Or Equal To</h3></v-card-title>
-          <v-card-text>Is Greater Than Or Equal To works on any IEnumerable based types, note that it will not return an error if both fields are nulls. It will report an error if the fields are of different types or if only one of them is null.</v-card-text>
+          <v-card-text>Is Greater Than Or Equal To works on any IComparable based types, note that it will not return an error if both fields are nulls. It will report an error if the fields are of different types or if only one of them is null.</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -82,7 +82,7 @@ public class BasicSongValidator : AbstractValidator
       }
     },
     "additionalProperties": false,
-    "x-aemo-validation": {
+    "x-validation": {
       "trackNumber": [
         "Must be greater than or equal to &#39;-2147483648&#39;"
       ],

@@ -67,7 +67,7 @@ public class BasicSongValidator : AbstractValidator
       }
     },
     "additionalProperties": false,
-    "x-aemo-validation": {
+    "x-validation": {
       "trackName": [
         "Must equal to &#39;Mind numbing boredom&#39;"
       ]

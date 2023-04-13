@@ -78,7 +78,7 @@ public class BasicSongValidator : AbstractValidator
       }
     },
     "additionalProperties": false,
-    "x-aemo-validation": {
+    "x-validation": {
       "trackName": [
         "Must not be null."
       ],

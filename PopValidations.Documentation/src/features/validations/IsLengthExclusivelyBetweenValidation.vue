@@ -72,7 +72,7 @@ public class BasicSongValidator : AbstractValidator
       }
     },
     "additionalProperties": false,
-    "x-aemo-validation": {
+    "x-validation": {
       "trackNumber": [
         "Must be between 0 and 5 exclusive."
       ]

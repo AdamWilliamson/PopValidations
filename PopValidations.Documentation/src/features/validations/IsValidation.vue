@@ -77,7 +77,7 @@ public class BasicSongValidator : AbstractValidator
       }
     },
     "additionalProperties": false,
-    "x-aemo-validation": {
+    "x-validation": {
       "trackNumber": [
         "{Interesting description here}"
       ]

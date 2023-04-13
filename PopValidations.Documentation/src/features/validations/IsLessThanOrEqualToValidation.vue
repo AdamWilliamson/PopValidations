@@ -69,7 +69,7 @@ public class BasicSongValidator : AbstractValidator
             }
         },
         "additionalProperties": false,
-        "x-aemo-validation": {
+        "x-validation": {
             "duration": [
             "Must be less than or equal to &#39;2&#39;"
             ]
