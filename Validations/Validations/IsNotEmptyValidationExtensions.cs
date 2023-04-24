@@ -1,8 +1,9 @@
 ﻿using PopValidations.Execution.Validations.Base;
 using PopValidations.FieldDescriptors.Base;
+using PopValidations.Validations;
 using System;
 
-namespace PopValidations.Validations;
+namespace PopValidations;
 
 public static class IsNotEmptyValidationExtensions
 {

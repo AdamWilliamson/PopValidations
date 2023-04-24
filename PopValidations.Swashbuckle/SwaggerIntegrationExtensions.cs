@@ -18,7 +18,7 @@ public static class SwaggerIntegrationExtensions
     )
     {
         services.AddSingleton(config ?? new OpenApiConfig());
-        services.AddSingleton(typeof(IValidationRunnerFactory), validationRunnerFactoryType ?? typeof(ValidationRunnerFactory));
+        services.AddTransient(typeof(IValidationRunnerFactory), validationRunnerFactoryType ?? typeof(ValidationRunnerFactory));
         return services;
     }
 }

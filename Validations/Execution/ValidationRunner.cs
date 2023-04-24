@@ -96,6 +96,7 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
     public DescriptionResult Describe() 
     {
         if (descriptionResult != null) return descriptionResult;
+        if (mainValidators == null) return new();
 
         descriptionResult = new();
         var store = new ValidationConstructionStore();

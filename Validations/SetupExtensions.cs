@@ -12,7 +12,7 @@ public static class PopValidation
     public static IServiceCollection RegisterRunner(this IServiceCollection services)
     {
         services.AddSingleton(typeof(MessageProcessor));
-        services.AddSingleton(typeof(IValidationRunner<>), typeof(ValidationRunner<>));
+        services.AddTransient(typeof(IValidationRunner<>), typeof(ValidationRunner<>));
         return services;
     }
 
@@ -25,7 +25,7 @@ public static class PopValidation
             .ToList()
             .ForEach(typesToRegister =>
             {
-                typesToRegister.serviceTypes.ForEach(typeToRegister => services.AddSingleton(typeToRegister, typesToRegister.assignedType));
+                typesToRegister.serviceTypes.ForEach(typeToRegister => services.AddTransient(typeToRegister, typesToRegister.assignedType));
             });
 
         return services;

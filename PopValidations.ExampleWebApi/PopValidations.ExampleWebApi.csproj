@@ -8,12 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi" Version="5.2.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PopValidations.MediatR\PopValidations.MediatR.csproj" />
     <ProjectReference Include="..\PopValidations.Swashbuckle\PopValidations.Swashbuckle.csproj" />
     <ProjectReference Include="..\Validations\Validations.csproj" />
   </ItemGroup>

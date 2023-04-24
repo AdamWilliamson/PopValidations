@@ -21,6 +21,14 @@ public class IsNotEmptyValidationToOpenApiConverter : IValidationToOpenApiConver
         DescriptionOutcome description
     )
     {
+        if (owningObjectSchema.Required == null)
+        {
+            owningObjectSchema.Required = new HashSet<string>();
+        }
+        if (!owningObjectSchema.Required.Contains(property))
+        {
+            owningObjectSchema.Required.Add(property);
+        }
         propertySchema.MinLength = 1;
         propertySchema.MinItems = 1;
     }
