@@ -1,5 +1,5 @@
 <template>
-      <v-container fluid bg-color="surface">
+  <v-container fluid bg-color="surface">
     <v-row>
       <v-col>
         <v-card>

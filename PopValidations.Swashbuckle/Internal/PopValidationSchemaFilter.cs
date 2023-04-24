@@ -44,10 +44,10 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
         var results = runner.Describe();
 
-        if (!results.Results.Any())
-            return;
+        //if (!results.Results.Any())
+        //    return;
 
-        RunRules("", model, results.Results, context, null);
+        //RunRules("", model, results.Results, context, null);
     }
 
     private void RunRules(
@@ -151,20 +151,20 @@ public class PopValidationSchemaFilter : ISchemaFilter
     )
     {
         OpenApiObject modelValidations = new OpenApiObject();
-        if (modelSchema.Extensions.ContainsKey("x-aemo-validation"))
+        if (modelSchema.Extensions.ContainsKey("x-validation"))
         {
-            if (modelSchema.Extensions["x-aemo-validation"] is OpenApiObject converted)
+            if (modelSchema.Extensions["x-validation"] is OpenApiObject converted)
             {
                 modelValidations = converted;
             }
             else
             {
-                modelSchema.Extensions["x-aemo-validation"] = modelValidations;
+                modelSchema.Extensions["x-validation"] = modelValidations;
             }
         }
         else
         {
-            modelSchema.Extensions.Add("x-aemo-validation", modelValidations);
+            modelSchema.Extensions.Add("x-validation", modelValidations);
         }
 
         OpenApiArray array;

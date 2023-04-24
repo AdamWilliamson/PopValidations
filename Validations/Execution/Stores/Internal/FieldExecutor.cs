@@ -18,6 +18,11 @@ public class FieldExecutor
 
     public void SetParent(FieldExecutor? newParent)
     {
+        if (newParent == this)
+        {
+            return;
+        }
+
         if (Parent == null)
         {
             Parent = newParent;
