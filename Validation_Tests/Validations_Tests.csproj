@@ -39,6 +39,9 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>ModerateDemonstrationTests.cs</DependentUpon>
     </None>
+    <None Update="MultiValidationsTests\GivenMultiLevelledForeachWithMultipleChildValidations.Test1.approved.json">
+      <DependentUpon>GivenMultiLevelledForeachWithMultipleChildValidations.cs</DependentUpon>
+    </None>
     <None Update="ValidationsTests\IsEnumValidationTests\IsEnumValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>

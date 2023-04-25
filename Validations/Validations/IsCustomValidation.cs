@@ -40,12 +40,12 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
             }
             else
             {
-                throw new Exception("value is wrong type");
+                throw new ValidationException("value is wrong type");
             }
         }
         catch (Exception ex)
         {
-            throw new Exception("Custom function exceptioned", ex);
+            throw new ValidationException("Custom function exceptioned", ex);
         }
        
         var valueAsString = value?.ToString() ?? "null";

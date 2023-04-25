@@ -1,5 +1,4 @@
 ﻿using PopValidations.Validations.Base;
-using System;
 using System.Threading.Tasks;
 
 namespace PopValidations.Validations;
@@ -40,21 +39,16 @@ public class IsLengthInclusivelyBetweenValidation<TPropertyType>
 
         if (start == null || end == null)
         {
-            throw new Exception("Start value should be greater than end value.");
+            throw new ValidationException("Start value should be greater than end value.");
         }
         else
         {
-            //if (comparer != null)
-            //{
-            if (start.Value.CompareTo(end.Value) >= 0) //comparer.Compare(start, end) >= 0)
+            if (start.Value.CompareTo(end.Value) >= 0)
             {
-                throw new Exception("Start value should be greater than end value.");
+                throw new ValidationException("Start value should be greater than end value.");
             }
-            //}
         }
 
-        //if (comparer != null)
-        //{
         switch (value)
         {
             case TPropertyType converted:
@@ -71,30 +65,9 @@ public class IsLengthInclusivelyBetweenValidation<TPropertyType>
                         ("endValue", end.ToString() ?? "")
                     );
                 }
-                //break;
             default:
-                throw new Exception("Type is invalid");
+                throw new ValidationException("Type is invalid");
         }
-
-        //return value switch
-        //{
-        //    TPropertyType converted => comparer.Compare(converted, start) >= 0 && comparer.Compare(converted, end) <= 0,
-        //    _ => throw new Exception("Type is invalid")
-        //};
-        //}
-
-        //switch (value)
-        //{
-        //    case Array a:
-        //        if (typeof(TPropertyType) == start.GetType())
-        //            comparer.Compare((TPropertyType)a.Length, start);
-        //    case ICollection { Count: 0 }:
-        //    case string s when string.IsNullOrWhiteSpace(s):
-        //    case IEnumerable e when !e.GetEnumerator().MoveNext():
-        //        return CreateValidationSuccessful();
-        //}
-
-        //return CreateValidationError();
     }
 
     public override DescribeActionResult Describe()

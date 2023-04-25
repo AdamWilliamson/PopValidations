@@ -1,13 +1,22 @@
 using PopValidations;
 using PopValidations.ExampleWebApi.Controllers;
+using PopValidations.ExampleWebApi.Handlers;
+using PopValidations.MediatR;
 using PopValidations.Swashbuckle;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(
+    options => options.Filters.Add<PopValidationExceptionFilter>()
+);
+builder.Services.AddEndpointsApiExplorer();
 
 //== Swagger Setup Services
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddMediatR(
+    cfg => cfg
+        .RegisterServicesFromAssemblyContaining<HomeController>()
+        .AddPopValidations()
+);
 builder.Services.RegisterRunner().RegisterAllMainValidators(typeof(AlbumValidator).Assembly);
 builder.Services.RegisterPopValidationsOpenApiDefaults();
 builder.Services.AddSwaggerGen(
@@ -28,6 +37,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllers();
 
 if (app.Environment.IsDevelopment())
 {
