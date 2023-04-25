@@ -32,7 +32,8 @@ public class BasicSongValidator : AbstractValidator
 {
     public BasicSongValidator()
     {
-        Describe(x => x.TrackNumber).IsLengthInclusivelyBetween(5, 40);
+        Describe(x => x.TrackNumber)
+            .IsLengthInclusivelyBetween(0, 5);
     }
 }'
             ></CodeWindow>
@@ -40,13 +41,44 @@ public class BasicSongValidator : AbstractValidator
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackNumber": [
+            "Is not between 0 and 5 inclusive."
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      },
+      "trackNumber": {
+        "maxLength": 5,
+        "minLength": 0,
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+      "trackNumber": [
+        "Must be between 0 and 5 inclusive."
+      ]
+    }
+  }
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>

@@ -28,14 +28,10 @@ export default defineComponent({
               source='
 public class BasicSongValidator : AbstractValidator
 {
-    public static bool IntTest(int? value)
+  public BasicSongValidator()
     {
-        return value == 1;
-    }
-
-    public BasicSongValidator()
-    {
-        Describe(x => x.TrackNumber).Is("Description", "Error", IntTest);
+        Describe(x => x.TrackName)
+            .IsEqualTo("Mind numbing boredom");
     }
 }'
             ></CodeWindow>
@@ -43,13 +39,41 @@ public class BasicSongValidator : AbstractValidator
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackName": [
+            "Is not equal to &#39;Mind numbing boredom&#39;"
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "enum": [
+          "Mind numbing boredom"
+        ],
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+      "trackName": [
+        "Must equal to &#39;Mind numbing boredom&#39;"
+      ]
+    }
+  }
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>

@@ -30,12 +30,12 @@ public class BasicSongValidator : AbstractValidator
 {
     public BasicSongValidator()
     {
-        Describe(x => x.TrackNumber).NotNull();
-        Describe(x => x.Genre)
-          .Vitally().NotNull(options => 
+        Describe(x => x.TrackName).IsNull();
+        Describe(x => x.Artist)
+          .Vitally().IsNull(options => 
             options
-              .SetErrorMessage("Null is Invalid")
-              .SetDescription("Nulls are bad.")
+            .WithErrorMessage("We don&#39;t like values")
+              .WithDescription("Values are bad.")
           );
     }
 }'
@@ -44,13 +44,47 @@ public class BasicSongValidator : AbstractValidator
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackName": [
+            "Is not null."
+        ],
+        "artist": [
+            "We don&#39;t like values"
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "enum": [
+          "null"
+        ],
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+      "trackName": [
+        "Must be null."
+      ],
+      "artist": [
+        "Values are bad."
+      ]
+    }
+  }
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
@@ -62,5 +96,6 @@ public class BasicSongValidator : AbstractValidator
         </v-card>
       </v-col>
     </v-row>
+    
   </v-container>
 </template>

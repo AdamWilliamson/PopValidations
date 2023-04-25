@@ -12,13 +12,13 @@ public static class SwaggerIntegrationExtensions
     }
 
     public static IServiceCollection RegisterPopValidationsOpenApiDefaults(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         OpenApiConfig? config = null,
         Type? validationRunnerFactoryType = null
     )
     {
         services.AddSingleton(config ?? new OpenApiConfig());
-        services.AddSingleton(typeof(IValidationRunnerFactory), validationRunnerFactoryType ?? typeof(ValidationRunnerFactory));
+        services.AddTransient(typeof(IValidationRunnerFactory), validationRunnerFactoryType ?? typeof(ValidationRunnerFactory));
         return services;
     }
 }

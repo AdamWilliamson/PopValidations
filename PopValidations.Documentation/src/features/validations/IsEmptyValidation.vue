@@ -28,9 +28,9 @@ public class BasicSongValidator : AbstractValidator
 {
     public BasicSongValidator()
     {
-        Describe(x => x.TrackNumber).IsEmpty();
-        Describe(x => x.Genre)
-          .Vitally().IsEmpty(options => 
+        Describe(x => x.TrackName).IsEmpty();
+        Describe(x => x.Artist)
+          .IsEmpty(options => 
             options
               .SetErrorMessage("Non Empty Fields are Invalid.")
               .SetDescription("This Field must be Empty.")
@@ -42,13 +42,46 @@ public class BasicSongValidator : AbstractValidator
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackName": [
+            "Is not empty"
+        ],
+        "artist": [
+            "Non Empty Fields are Invalid."
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+      "Song": {
+        "type": "object",
+        "properties": {
+          "trackName": {
+            "maxLength": 0,
+            "maxItems": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "artist": {
+            "$ref": "#/components/schemas/Artist"
+          }
+        },
+        "additionalProperties": false,
+        "x-validation": {
+          "trackName": [
+            "Must be empty"
+          ],
+          "artist": [
+            "This Field must be Empty."
+          ]
+        }
+      }
+    }'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>

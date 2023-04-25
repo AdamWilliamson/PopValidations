@@ -15,7 +15,7 @@ export default defineComponent({
       <v-col>
         <v-card>
           <v-card-title><h3>Is Greater Than Or Equal To</h3></v-card-title>
-          <v-card-text></v-card-text>
+          <v-card-text>Is Greater Than Or Equal To works on any IComparable based types, note that it will not return an error if both fields are nulls. It will report an error if the fields are of different types or if only one of them is null.</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -24,19 +24,74 @@ export default defineComponent({
       <template #code>
         <CodeWindow
               language="csharp"
-              source=''
+              source='
+public class BasicSongValidator : AbstractValidator
+{
+    public BasicSongValidator()
+    {
+        Describe(x => x.TrackNumber)
+            .IsGreaterThanOrEqualTo(
+                new ScopedData<int>(int.MinValue));
+        Describe(x => x.Duration)
+            .IsGreaterThanOrEqualTo(
+                new ScopedData<double>(3));
+    }
+}'
             ></CodeWindow>
       </template>
       <template #errorreport>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+    "errors": {
+        "trackNumber": [
+            "Is not greater than or equal to &#39;-2147483648&#39;"
+        ],
+        "duration": [
+            "Is not greater than or equal to &#39;3&#39;"
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{}'
+              source='{
+  "Song": {
+    "type": "object",
+    "properties": {
+      "trackName": {
+        "type": "string",
+        "nullable": true
+      },
+      "artist": {
+        "$ref": "#/components/schemas/Artist"
+      },
+      "trackNumber": {
+        "minimum": -2147483648,
+        "exclusiveMinimum": false,
+        "type": "integer",
+        "format": "int32"
+      },
+      "duration": {
+        "minimum": 3,
+        "exclusiveMinimum": false,
+        "type": "number",
+        "format": "double"
+      }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+      "trackNumber": [
+        "Must be greater than or equal to &#39;-2147483648&#39;"
+      ],
+      "duration": [
+        "Must be greater than or equal to &#39;3&#39;"
+      ]
+    }
+  }
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>
