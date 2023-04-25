@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using PopValidations.Execution;
+using PopValidations.Validations.Base;
 using PopValidations.ValidatorInternals;
 
 namespace PopValidations.MediatR;
@@ -25,31 +26,49 @@ public class PopValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
         CancellationToken cancellationToken
     )
     {
-        //var errors = new List<ValidationResult>();
         Dictionary<string, List<string>> errors = new ();
         foreach(var validator in _validators)
         {
-            var errorResult = await runner.Validate(request);
-            foreach(var error in errorResult.Errors)
+            try
             {
-                if (!errors.ContainsKey(error.Key))
+                var errorResult = await runner.Validate(request);
+                
+                foreach(var error in errorResult.Errors)
                 {
-                    errors.Add(error.Key, new());
-                }
+                    if (!errors.ContainsKey(error.Key))
+                    {
+                        errors.Add(error.Key, new());
+                    }
 
-                errors[error.Key].AddRange(error.Value.Where(x => !errors[error.Key].Contains(x)));
+                    errors[error.Key].AddRange(error.Value.Where(x => !errors[error.Key].Contains(x)));
+                }
+            }
+            catch (ValidationException exception)
+            {
+                if (!errors.ContainsKey("ValidationException"))
+                    errors.Add("ValidationException", new());
+
+                errors["ValidationException"].Add(exception.Message);
+            }
+            catch(PopValidationException exception)
+            {
+                if (!errors.ContainsKey(exception.Property))
+                    errors.Add(exception.Property, new());
+
+                errors[exception.Property].Add(exception.Message);
+            }
+            catch(Exception exception)
+            {
+                if (!errors.ContainsKey("PopValidationException"))
+                    errors.Add("PopValidationException", new());
+
+                errors["PopValidationException"].Add(exception.Message);
             }
         }
 
-        //var failures = _validators
-        //    .Select(v => v.Validate(request))
-        //    .SelectMany(result => result.Errors)
-        //    .Where(f => f != null)
-        //    .ToList();
-
         if (errors.Any())
         {
-            throw new PopValidationException(errors);
+            throw new PopValidationHttpException(errors);
         }
 
         return await next();

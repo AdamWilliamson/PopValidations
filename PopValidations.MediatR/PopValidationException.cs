@@ -1,17 +1,14 @@
-﻿using System.Web.Http.Filters;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using PopValidations.MediatR;
 using System.Net;
 using System.Web.Http;
 using IActionFilter = Microsoft.AspNetCore.Mvc.Filters.IActionFilter;
 
 namespace PopValidations.MediatR;
 
-public class PopValidationException : HttpResponseException
+public class PopValidationHttpException : HttpResponseException
 {
-    public PopValidationException(Dictionary<string, List<string>> errors)
+    public PopValidationHttpException(Dictionary<string, List<string>> errors)
         :base(HttpStatusCode.UnprocessableEntity)
     {
         Errors = errors;
@@ -28,9 +25,9 @@ public class PopValidationExceptionFilter : IActionFilter, IOrderedFilter
 
     public void OnActionExecuted(ActionExecutedContext context)
     {
-        if (context.Exception is PopValidationException httpResponseException)
+        if (context.Exception is PopValidationHttpException exception)
         {
-            context.Result = new ObjectResult(httpResponseException)
+            context.Result = new ObjectResult(exception.Errors)
             {
                 StatusCode = (int)HttpStatusCode.UnprocessableEntity
             };

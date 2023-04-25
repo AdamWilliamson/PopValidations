@@ -42,6 +42,31 @@
                 }
             ],
             "validationGroups": []
+        },
+        {
+            "property": "Genre",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty",
+                    "values": []
+                },
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 20 and 400 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "20"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "400"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
         }
     ]
 }
