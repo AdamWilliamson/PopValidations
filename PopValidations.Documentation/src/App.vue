@@ -166,6 +166,13 @@ export default defineComponent({
           :to="{ name: 'IsValidation' }"
           link
         ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Is Email"
+          value="Is Email"
+          :to="{ name: 'IsEmailValidation' }"
+          link
+        ></v-list-item>
 
         <v-list-subheader color="secondary">Localisation</v-list-subheader>
         <v-list-item

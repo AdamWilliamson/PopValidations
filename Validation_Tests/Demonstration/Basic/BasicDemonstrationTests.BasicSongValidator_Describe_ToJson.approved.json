@@ -1,0 +1,72 @@
+﻿{
+    "results": [
+        {
+            "property": "TrackNumber",
+            "outcomes": [
+                {
+                    "validator": "NotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "TrackName",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Definitely Not The Correct Song Name.'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Definitely Not The Correct Song Name."
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Duration",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Songs must force you to travel slowly backwards in time to listen to.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Genre",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty",
+                    "values": []
+                },
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 20 and 400 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "20"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "400"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

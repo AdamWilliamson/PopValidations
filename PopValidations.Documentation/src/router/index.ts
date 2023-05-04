@@ -35,6 +35,8 @@ import IsLessThanOrEqualToValidation from "@/features/validations/IsLessThanOrEq
 import IsNotNullValidation from "@/features/validations/IsNotNullValidation.vue";
 import IsNotEmptyValidation from "@/features/validations/IsNotEmptyValidation.vue";
 
+import IsEmailValidation from "@/features/validations/IsEmailValidation.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -177,6 +179,11 @@ const router = createRouter({
           path: "/validation/isnotempty",
           name: "IsNotEmptyValidation",
           component: IsNotEmptyValidation,
+        },
+        {
+          path: "/validation/isEmail",
+          name: "IsEmailValidation",
+          component: IsEmailValidation,
         }
       ]
     }
