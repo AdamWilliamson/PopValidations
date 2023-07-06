@@ -37,4 +37,15 @@ public class IsEnumValidationToOpenApiConverter : IValidationToOpenApiConverter
             _ => new List<IOpenApiAny>()
         };
     }
+
+    public void UpdateAttribute(
+        OpenApiSchema owningObjectSchema,
+        OpenApiSchema propertySchema,
+        string property,
+        DescriptionOutcome description,
+        OpenApiArray attributeDescription
+    )
+    {
+        attributeDescription.Add(new OpenApiString(description.Message));
+    }
 }

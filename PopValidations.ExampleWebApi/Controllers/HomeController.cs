@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PopValidations.ExampleWebApi.Handlers;
 
-
 namespace PopValidations.ExampleWebApi.Controllers;
 
 [ApiController]
@@ -16,22 +15,22 @@ public class HomeController : Controller
         this.mediator = mediator;
     }
 
-    [Route(nameof(Details) + "/{id}")]
-    [HttpGet]
-    public Album Details(int id)
-    {
-        return new Album("Album Name", null, null);
-    }
+    //[Route(nameof(Details) + "/{id}")]
+    //[HttpGet]
+    //public Album Details(int id)
+    //{
+    //    return new Album("Album Name", null, null);
+    //}
 
-    [Route(nameof(Edit))]
-    [HttpPut]
-    public Task Edit(Song song)
-    {
-        //, [FromBody]Album album 
-        //, Album = album
-        //return mediator.Send(album);
-        return Task.CompletedTask;
-    }
+    //[Route(nameof(Edit))]
+    //[HttpPut]
+    //public Task Edit(Song song)
+    //{
+    //    //, [FromBody]Album album 
+    //    //, Album = album
+    //    //return mediator.Send(album);
+    //    return Task.CompletedTask;
+    //}
 
     [Route(nameof(Edit2))]
     [HttpPut]

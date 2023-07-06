@@ -18,7 +18,7 @@ builder.Services.AddMediatR(
         .AddPopValidations()
 );
 builder.Services.RegisterRunner().RegisterAllMainValidators(typeof(AlbumValidator).Assembly);
-builder.Services.RegisterPopValidationsOpenApiDefaults();
+builder.Services.RegisterPopValidationsOpenApiDefaults(new WebApiConfig());
 builder.Services.AddSwaggerGen(
     options =>
     {
@@ -44,7 +44,10 @@ if (app.Environment.IsDevelopment())
 {
     //== Setup Swagger and UI
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.ShowExtensions();
+    });
 }
 
 app.Run();

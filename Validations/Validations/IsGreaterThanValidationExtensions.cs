@@ -34,7 +34,7 @@ public static class IsGreaterThanValidationExtensions
         fieldDescriptor.AddValidation(validation);
         return fieldDescriptor;
     }
-
+    
     public static IFieldDescriptor<TValidationType, TFieldType> IsGreaterThan<TValidationType, TFieldType, TPassThrough>(
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
         IScopedData<TPassThrough?> scopedData,

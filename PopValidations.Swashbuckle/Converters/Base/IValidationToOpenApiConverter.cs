@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using PopValidations.Execution.Validations;
 
 namespace PopValidations.Swashbuckle.Converters.Base;
@@ -11,5 +12,13 @@ public interface IValidationToOpenApiConverter
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description
+    );
+
+    void UpdateAttribute(
+        OpenApiSchema owningObjectSchema,
+        OpenApiSchema propertySchema,
+        string property,
+        DescriptionOutcome description,
+        OpenApiArray attributeDescription
     );
 }

@@ -1,5 +1,20 @@
 ﻿//using System.Web.Http;
 
+using PopValidations.Swashbuckle;
+
+public class WebApiConfig : OpenApiConfig
+{
+    public WebApiConfig()
+    {
+        TypeValidationLevel = (Type t) => 
+            (
+                t == typeof(PopValidations.ExampleWebApi.Handlers.Song) 
+                    ? ValidationLevel.ValidationAttributeInBase 
+                    : ValidationLevel.FullDetails
+            );
+    }
+}
+
 //public static class WebApiConfig
 //{
 //    public static void Register(HttpConfiguration config)

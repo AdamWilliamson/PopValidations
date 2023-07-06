@@ -47,9 +47,10 @@ public class SongSubValidator : AbstractSubValidator<Song>
             .NotNull()
             .IsLengthInclusivelyBetween(5, 200)
             ;
+
         Describe(x => x.ArtistAgain)
             .NotNull()
-            //.SetValidator(new ArtistValidator())
+            .SetValidator(new ArtistValidator())
             ;
 
         //When(
@@ -75,7 +76,7 @@ public class AlbumValidator : AbstractSubValidator<Album>
         //    .IsLengthExclusivelyBetween(4, 201); 
         DescribeEnumerable(x => x.Songs)
             .NotNull()
-            .ForEach(x => x.SetValidator(new SongSubValidator()))//   <-- FOREACH FAILS ON DESCRIBE
+            .ForEach(x => x.SetValidator(new SongSubValidator()))
             ;
 
         //When(
@@ -121,12 +122,12 @@ public class EditAlbumRequestValidator : AbstractValidator<EditAlbumRequest>
 {
     public EditAlbumRequestValidator()
     {
-        Describe(x => x.Id)
-            .Vitally().NotNull()
-            .IsNotEmpty();
+        //Describe(x => x.Id)
+        //    .Vitally().NotNull()
+        //    .IsNotEmpty();
 
         Describe(x => x.Album)
-            .Vitally().NotNull()
+            //.Vitally().NotNull()
             .SetValidator(new AlbumValidator())
             ;
     }

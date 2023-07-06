@@ -26,4 +26,15 @@ public class IsNullValidationToOpenApiConverter : IValidationToOpenApiConverter
             new OpenApiString("null")
         };
     }
+
+    public void UpdateAttribute(
+        OpenApiSchema owningObjectSchema,
+        OpenApiSchema propertySchema,
+        string property,
+        DescriptionOutcome description,
+        OpenApiArray attributeDescription
+    )
+    {
+        attributeDescription.Add(new OpenApiString(description.Message));
+    }
 }

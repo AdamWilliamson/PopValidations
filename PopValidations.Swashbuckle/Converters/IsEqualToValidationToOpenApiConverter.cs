@@ -25,4 +25,15 @@ public class IsEqualToValidationToOpenApiConverter : IValidationToOpenApiConvert
             new OpenApiString(description.Values.First(c => c.Key == "value").Value)
         };
     }
+
+    public void UpdateAttribute(
+        OpenApiSchema owningObjectSchema,
+        OpenApiSchema propertySchema,
+        string property,
+        DescriptionOutcome description,
+        OpenApiArray attributeDescription
+    )
+    {
+        attributeDescription.Add(new OpenApiString(description.Message));
+    }
 }
