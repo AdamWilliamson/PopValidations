@@ -24,11 +24,11 @@ public class IsLengthExclusivelyBetweenValidationToOpenApiConverter : IValidatio
     {
         var startValue = description.Values.FirstOrDefault(x => x.Key == "startValue").Value;
         var endValue = description.Values.FirstOrDefault(x => x.Key == "endValue").Value;
-
+        
         if (int.TryParse(startValue, out var start) && int.TryParse(endValue, out var end))
         {
-            propertySchema.MinLength = start - 1;
-            propertySchema.MaxLength = end + 1;
+            propertySchema.MinLength = start + 1;
+            propertySchema.MaxLength = end - 1;
         }
     }
 

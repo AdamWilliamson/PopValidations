@@ -1,15 +1,4 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-//using Microsoft.Extensions.Configuration;
-//using Microsoft.Extensions.DependencyInjection;
-//using Microsoft.OpenApi.Writers;
-//using Swashbuckle.AspNetCore.Swagger;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Data.Common;
-//using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
@@ -22,10 +11,6 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using PopValidations.ValidatorInternals;
-//using Microsoft.AspNetCore.Mvc.Testing;
-//using Microsoft.Data.Sqlite;
-//using Microsoft.EntityFrameworkCore;
-//using RazorPagesProject.Data;
 
 namespace PopValidations.Swashbuckle_Tests
 {
@@ -113,14 +98,25 @@ namespace PopValidations.Swashbuckle_Tests
 
         public ApiWebApplicationFactory AddController<T>()
         {
-            AdditionalControllers.Add(typeof(T));
+            AddController(typeof(T));
+            return this;
+        }
+        public ApiWebApplicationFactory AddController(Type type)
+        {
+            AdditionalControllers.Add(type);
             return this;
         }
 
-        public ApiWebApplicationFactory AddValidator<T, X>()
-            where T: IMainValidator<X>
+        public ApiWebApplicationFactory AddValidator<TValidator, TRequest>()
+            where TValidator : IMainValidator<TRequest>
         {
-            validators.Add((typeof(IMainValidator<X>), typeof(T)));
+            AddValidator(typeof(IMainValidator<TRequest>), typeof(TValidator));
+            return this;
+        }
+
+        public ApiWebApplicationFactory AddValidator(Type validator, Type request)
+        {
+            validators.Add((validator, request));
             return this;
         }
 
@@ -138,7 +134,10 @@ namespace PopValidations.Swashbuckle_Tests
 
                 // Override to specify custom configs for testing settings.
                 services.RegisterPopValidationsOpenApiDefaults(Config);
-                
+                //services.AddTransient(
+                //    typeof(IMainValidator<NotNullTests.NotNullBaseTests.Request>),
+                //    typeof(RequestValidator));
+
                 foreach (var val in validators) 
                 {
                     services.AddTransient(val.Item1, val.Item2);

@@ -48,7 +48,7 @@
             "outcomes": [
                 {
                     "validator": "IsNotEmptyValidation",
-                    "message": "Must not be empty",
+                    "message": "Must not be empty.",
                     "values": []
                 },
                 {

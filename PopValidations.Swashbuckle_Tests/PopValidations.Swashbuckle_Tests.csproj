@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.19" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <PrivateAssets>all</PrivateAssets>
@@ -30,11 +31,6 @@
     <ProjectReference Include="..\PopValidations.Swashbuckle\PopValidations.Swashbuckle.csproj" />
     <ProjectReference Include="..\Validations\Validations.csproj" />
     <ProjectReference Include="..\Validation_Tests\Validations_Tests.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Converters\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

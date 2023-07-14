@@ -1,0 +1,98 @@
+﻿{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "PopValidations.ExampleWebApi",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/Test/test": {
+            "get": {
+                "tags": [
+                    "Test"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Request": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "maximum": 5,
+                        "exclusiveMaximum": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "child": {
+                        "$ref": "#/components/schemas/SubRequest"
+                    }
+                },
+                "additionalProperties": false,
+                "x-validation": {
+                    "id": [
+                        "Must be less than or equal to '5'"
+                    ],
+                    "name": [
+                        "Must be less than or equal to 'Test'"
+                    ],
+                    "child": []
+                }
+            },
+            "SubRequest": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "maximum": 7,
+                        "exclusiveMaximum": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "x-validation": {
+                    "id": [
+                        "Must be less than or equal to '7'"
+                    ],
+                    "name": [
+                        "Must be less than or equal to 'Test2'"
+                    ]
+                }
+            }
+        }
+    }
+}

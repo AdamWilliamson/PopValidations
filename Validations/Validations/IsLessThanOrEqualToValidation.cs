@@ -35,7 +35,8 @@ public class IsLessThanOrEqualToValidation : ValidationComponentBase
 
         if (
             RealValue?.GetType() == value?.GetType()
-            &&((RealValue == null && value == null) || RealValue?.CompareTo(value) >= 0))
+            && ((RealValue == null && value == null) || RealValue?.CompareTo(value) >= 0)
+        )
         {
             return CreateValidationSuccessful();
         }
