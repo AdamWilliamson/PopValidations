@@ -1,36 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using PopValidations.Execution.Stores;
-using PopValidations.FieldDescriptors;
-using PopValidations.FieldDescriptors.Base;
+﻿//using System;
+//using System.Collections.Generic;
+//using PopValidations.Execution.Stores;
+//using PopValidations.FieldDescriptors;
+//using PopValidations.FieldDescriptors.Base;
 
-namespace PopValidations.Scopes.ForEachs;
+//namespace PopValidations.Scopes.ForEachs;
 
-internal class ForEachIndexedScope<TValidationType, TFieldType> : ScopeBase
-{
-    public override bool IgnoreScope => true;
-    private readonly FieldDescriptor<IEnumerable<TFieldType?>, TFieldType?> fieldDescriptor;
-    private readonly Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions;
+//internal class ForEachIndexedScope<TValidationType, TFieldType> : ScopeBase
+//{
+//    public override bool IgnoreScope => false;
+//    private readonly int index;
 
-    public override string Name => "Nothing";
+//    //private readonly FieldDescriptor<IEnumerable<TFieldType?>, TFieldType?> fieldDescriptor;
+//    private readonly Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions;
 
-    public ForEachIndexedScope(
-        ValidationConstructionStore store,
-        FieldDescriptor<IEnumerable<TFieldType?>, TFieldType?> fieldDescriptor,
-        Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions
-    ) : base(store)
-    {
-        this.fieldDescriptor = fieldDescriptor;
-        this.actions = actions;
-    }
+//    public override string Name => "Nothing";
 
-    protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
-    {
-        actions.Invoke(fieldDescriptor);
-    }
+//    public ForEachIndexedScope(
+//        ValidationConstructionStore store,
+//        int index,
+//        //FieldDescriptor<IEnumerable<TFieldType?>, TFieldType?> fieldDescriptor,
+//        Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions
+//    ) : base(store)
+//    {
+//        this.index = index;
+//        //this.fieldDescriptor = fieldDescriptor;
+//        this.actions = actions;
+//    }
 
-    protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
-    {
-        actions.Invoke(fieldDescriptor);
-    }
-}
+//    protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
+//    {
+//        var thingo = new FieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>(
+//                    new IndexedPropertyExpressionToken<IEnumerable<TFieldType?>, TFieldType?>(
+//                        $"[{index}]",
+//                        index
+//                    ),
+//                    store
+//                );
+
+//        actions.Invoke(thingo);
+//    }
+
+//    protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
+//    {
+//        var thingo = new FieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>(
+//            new IndexedPropertyExpressionToken<IEnumerable<TFieldType?>, TFieldType?>(
+//                $"[n]",
+//                -1
+//            ),
+//            //this.validatorStore
+//            store
+//        );
+
+//        //store.PushFieldDescriptor(thingo);
+
+//        actions.Invoke(thingo);
+//        //store.PopFieldDescriptor();
+//    }
+//}

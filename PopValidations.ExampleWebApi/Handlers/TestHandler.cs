@@ -45,13 +45,15 @@ public class SongSubValidator : AbstractSubValidator<Song>
     {
         Describe(x => x.Name)
             .NotNull()
-            .IsLengthInclusivelyBetween(5, 200)
+            //.Equals("string")
+            //.Equals("string2")
+        //    .IsLengthInclusivelyBetween(5, 200)
             ;
 
-        Describe(x => x.ArtistAgain)
-            .NotNull()
-            .SetValidator(new ArtistValidator())
-            ;
+        //Describe(x => x.ArtistAgain)
+        //    .NotNull()
+        //    .SetValidator(new ArtistValidator())
+        //    ;
 
         //When(
         //    "Song: Artist is not null",
@@ -75,7 +77,7 @@ public class AlbumValidator : AbstractSubValidator<Album>
         //    .IsEqualTo("Hello")
         //    .IsLengthExclusivelyBetween(4, 201); 
         DescribeEnumerable(x => x.Songs)
-            .NotNull()
+            //.NotNull()
             .ForEach(x => x.SetValidator(new SongSubValidator()))
             ;
 

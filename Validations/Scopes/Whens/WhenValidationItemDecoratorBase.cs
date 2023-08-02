@@ -32,7 +32,7 @@ public abstract class WhenValidationItemDecoratorBase<TValidationType> : IValida
     public IFieldDescriptorOutline? FieldDescriptor
     {
         get { return ItemToDecorate.FieldDescriptor; }
-        set { ItemToDecorate.FieldDescriptor = value; }
+        //set { ItemToDecorate.FieldDescriptor = value; }
     }
 
     public IValidationComponent Component => ItemToDecorate.Component;

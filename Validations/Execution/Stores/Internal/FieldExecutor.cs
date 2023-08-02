@@ -2,7 +2,7 @@
 
 namespace PopValidations.Execution.Stores.Internal;
 
-public class FieldExecutor
+public class FieldExecutor : IFieldDescriptorOutline
 {
     object? RetrievedValue = null;
     bool ValueHasBeenRetrieved = false;
@@ -14,11 +14,38 @@ public class FieldExecutor
     {
         Parent = parent;
         FieldDescriptor = fieldDescriptor;
+
+        PrintName();
     }
+
+    private void PrintName()
+    {
+        if (FieldDescriptor != null)
+            DebugLogger.Log(FieldDescriptor.PropertyName);
+
+       if (Parent != null)
+            Parent.PrintName();
+    }
+
+    #region IFieldDescriptorOutline
+    public string PropertyName 
+    { 
+        get 
+        {
+            if (Parent == null)
+                return FieldDescriptor.PropertyName;
+            else
+                return FieldDescriptor.AddTo(Parent.PropertyName);
+                //FieldDescriptor.PropertyName;
+        } 
+    } 
+    public string AddTo(string existing) => FieldDescriptor.AddTo(existing);
+    #endregion
+
 
     public void SetParent(FieldExecutor? newParent)
     {
-        if (newParent == this)
+        if (newParent == this || newParent == null)
         {
             return;
         }
@@ -34,7 +61,7 @@ public class FieldExecutor
     }
 
     public FieldExecutor? Parent { get; protected set; }
-    public IFieldDescriptorOutline FieldDescriptor { get; }
+    protected IFieldDescriptorOutline FieldDescriptor { get; init; }
 
     public object? GetValue(object? value)
     {

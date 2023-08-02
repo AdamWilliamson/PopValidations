@@ -1,0 +1,23 @@
+﻿{
+    "Name": [
+        "Is not equal to 'Level1_Name'"
+    ],
+    "Level1PropertyForLevel2.Name": [
+        "Is not equal to 'Level2_Name'"
+    ],
+    "Level1PropertyForLevel2.Level2PropertyForLevel3.Name": [
+        "Is not equal to 'Togle'"
+    ],
+    "Level1PropertyForLevel2.Level2ArrayPropertyForLevel3[0].Name": [
+        "Is not equal to 'INSIDE ARRAY'"
+    ],
+    "Level1ArrayPropertyForLevel2[0].Name": [
+        "Is not equal to 'INSIDEARRAY'"
+    ],
+    "Level1ArrayPropertyForLevel2[0].Level2PropertyForLevel3": [
+        "Is null."
+    ],
+    "Level1ArrayPropertyForLevel2[0].Level2ArrayPropertyForLevel3": [
+        "Is null."
+    ]
+}

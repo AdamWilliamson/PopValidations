@@ -8,7 +8,7 @@ namespace PopValidations;
 public abstract class AbstractSubValidator<TValidationType>
     : AbstractValidatorBase<TValidationType>, ISubValidatorClass
 {
-    public bool IgnoreScope => false;
+    public virtual bool IgnoreScope => false;
     public override string Name => typeof(TValidationType).Name;
     public Func<IValidatableStoreItem, IValidatableStoreItem>? Decorator => null;
 
@@ -16,24 +16,26 @@ public abstract class AbstractSubValidator<TValidationType>
 
     protected AbstractSubValidator() : base(null, new()) { }
 
-    public void ExpandToValidate(ValidationConstructionStore store, object? value)
+    public virtual void ExpandToValidate(ValidationConstructionStore store, object? value)
     {
-        var expandedItems = Store.ExpandToValidate(value);
-        foreach (var item in expandedItems)
-        {
-            if (item != null)
-                store.AddItemToCurrentScope(item);
-        }
+        store.AddExpandedItemsForValidation(Store, value);
+        //var expandedItems = Store.ExpandToValidate(value);
+        //foreach (var item in expandedItems)
+        //{
+        //    if (item != null)
+        //        store.AddItemToCurrentScope(item);
+        //}
     }
 
-    public void ExpandToDescribe(ValidationConstructionStore store)
+    public virtual void ExpandToDescribe(ValidationConstructionStore store)
     {
-        var expandedItems = Store.ExpandToDescribe();
-        foreach (var item in expandedItems)
-        {
-            if (item != null)
-                store.AddItemToCurrentScope(item);
-        }
+        store.AddExpandedItemsForDescription(Store);
+        //var expandedItems = Store.ExpandToDescribe();
+        //foreach (var item in expandedItems)
+        //{
+        //    if (item != null)
+        //        store.AddItemToCurrentScope(item);
+        //}
     }
 }
 

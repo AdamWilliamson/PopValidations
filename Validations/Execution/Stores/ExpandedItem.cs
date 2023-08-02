@@ -16,13 +16,13 @@ public class ExpandedItem
 
     public ScopeParent? ScopeParent => validatableStoreItem.ScopeParent;
 
-    public string PropertyName => validatableStoreItem.FieldDescriptor?.PropertyName ?? throw new Exception();
+    public string PropertyName => validatableStoreItem.CurrentFieldExecutor?.PropertyName ?? throw new Exception();
 
     public string FullAddressableName
     {
         get
         {
-            return validatableStoreItem.CurrentFieldExecutor?.FieldDescriptor?.PropertyName
+            return validatableStoreItem.CurrentFieldExecutor?.PropertyName
                 ?? PropertyName;
         }
     }

@@ -1,0 +1,7 @@
+﻿{
+    "errors": {
+        "artist.Name": [
+            "PopValidations_Tests.Demonstration.Advanced.Validators.DesignedToBePatternMatchedSomething is ensured to be false by adding Something to the end."
+        ]
+    }
+}

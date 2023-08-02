@@ -1,0 +1,116 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '2147483647'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "2147483647"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '79228162514264337593543950335'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "79228162514264337593543950335"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1.7976931348623157E+308'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1.7976931348623157E+308"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '32767'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "32767"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '9223372036854775807'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "9223372036854775807"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "TwoComponentTuple",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '(-2147483648, 2147483647)'",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "(-2147483648, 2147483647)"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

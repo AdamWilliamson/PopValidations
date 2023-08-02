@@ -7,7 +7,7 @@ namespace PopValidations.FieldDescriptors;
 
 public class PropertyExpressionToken<TInput, TOutput> : PropertyExpressionTokenBase<TInput, TOutput>
 {
-    public override Expression<Func<TInput, TOutput?>> Expression { get; }
+    protected override Expression<Func<TInput, TOutput?>> Expression { get; }
     public override string Name { get; }
 
     public PropertyExpressionToken(

@@ -13,6 +13,13 @@ class ValidationFieldDescriptorOutline : IFieldDescriptorOutline
     {
         PropertyName = propertyName;
         this.outline = outline;
+
+        PrintName();
+    }
+
+    private void PrintName()
+    {
+        DebugLogger.Log(PropertyName);
     }
 
     public string PropertyName { get; }

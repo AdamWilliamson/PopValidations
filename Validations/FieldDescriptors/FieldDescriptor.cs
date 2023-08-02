@@ -7,13 +7,13 @@ namespace PopValidations.FieldDescriptors;
 public class FieldDescriptor<TValidationType, TFieldType>
     : IFieldDescriptor<TValidationType, TFieldType>
 {
-    public PropertyExpressionTokenBase<TValidationType, TFieldType?> PropertyToken { get; }
-    object? RetrievedValue = null;
-    bool ValueHasBeenRetrieved = false;
+    public IPropertyExpressionToken<TValidationType, TFieldType?> PropertyToken { get; }
+    protected object? RetrievedValue = null;
+    protected bool ValueHasBeenRetrieved = false;
     public ValidationConstructionStore Store { get; }
     public string PropertyName => PropertyToken.Name;
 
-    public string AddTo(string existing)
+    public virtual string AddTo(string existing)
     {
         return PropertyToken.CombineWithParentProperty(existing);
     }
@@ -32,7 +32,7 @@ public class FieldDescriptor<TValidationType, TFieldType>
     }
 
     public FieldDescriptor(
-        PropertyExpressionTokenBase<TValidationType, TFieldType?> propertyToken,
+        IPropertyExpressionToken<TValidationType, TFieldType?> propertyToken,
         ValidationConstructionStore store
     )
     {
@@ -53,20 +53,29 @@ public class FieldDescriptor<TValidationType, TFieldType>
         _NextValidationVital = false;
     }
 
+    public void AddSelfDescribingEntity(IExpandableEntity component)
+    {
+        Store.AddItem(
+            null,
+            component
+        );    
+        _NextValidationVital = false;
+    }
+
     public void AddValidation(IValidationComponent validation)
     {
         Store.AddItem(_NextValidationVital || _AlwaysVital, this, validation);
         _NextValidationVital = false;
     }
 
-    public object? GetValue(object? value)
+    public virtual object? GetValue(object? value)
     {
         if (ValueHasBeenRetrieved)
             return RetrievedValue;
 
         if (value is TValidationType result && result != null)
         {
-            RetrievedValue = PropertyToken.Expression.Compile().Invoke(result);
+            RetrievedValue = PropertyToken.Execute(result);
             ValueHasBeenRetrieved = true;
         }
         return RetrievedValue;

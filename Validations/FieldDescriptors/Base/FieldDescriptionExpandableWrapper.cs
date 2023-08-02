@@ -47,7 +47,7 @@ public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
 
         if (value is TValidationType result && result != null)
         {
-            RetrievedValue = fieldDescriptor.PropertyToken.Expression.Compile().Invoke(result);
+            RetrievedValue = fieldDescriptor.PropertyToken.Execute(result);
             ValueHasBeenRetrieved = true;
         }
         return RetrievedValue;
