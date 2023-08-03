@@ -6,7 +6,7 @@ using PopValidations.ValidatorInternals;
 namespace PopValidations;
 
 public abstract class AbstractSubValidator<TValidationType>
-    : AbstractValidatorBase<TValidationType>, ISubValidatorClass
+    : AbstractValidatorBase<TValidationType>, ISubValidatorClass<TValidationType>
 {
     public virtual bool IgnoreScope => false;
     public override string Name => typeof(TValidationType).Name;

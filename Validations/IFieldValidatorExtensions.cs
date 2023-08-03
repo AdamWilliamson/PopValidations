@@ -22,7 +22,7 @@ public static partial class IFieldValidatorExtensions
         TFieldType
     >(
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
-        ISubValidatorClass validatorClass
+        ISubValidatorClass<TFieldType> validatorClass
     )
     {
         fieldDescriptor.AddValidation(validatorClass);
