@@ -1,0 +1,10 @@
+﻿{
+    "errors": {
+        "arrayOfStrings[0]": [
+            "Is null."
+        ],
+        "arrayOfStrings[1]": [
+            "Is null."
+        ]
+    }
+}

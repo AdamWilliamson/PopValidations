@@ -12,19 +12,19 @@ public class NotNull_NoError_TestingValidator : AbstractValidator<NullAllFieldTy
 {
     public NotNull_NoError_TestingValidator()
     {
-        Describe(x => x.Integer).NotNull();
-        Describe(x => x.String).NotNull();
-        Describe(x => x.Decimal).NotNull();
-        Describe(x => x.Double).NotNull();
-        Describe(x => x.Short).NotNull();
-        Describe(x => x.Long).NotNull();
-        Describe(x => x.TwoComponentTuple).NotNull();
-        Describe(x => x.TwoComponentNewTupple).NotNull();
-        Describe(x => x.AllFieldTypesList).NotNull();
-        Describe(x => x.AllFieldTypesLinkedList).NotNull();
-        Describe(x => x.AllFieldTypesIEnumerable).NotNull();
-        Describe(x => x.AllFieldTypesDictionary).NotNull();
-        Describe(x => x.Struct).NotNull();
+        Describe(x => x.Integer).IsNotNull();
+        Describe(x => x.String).IsNotNull();
+        Describe(x => x.Decimal).IsNotNull();
+        Describe(x => x.Double).IsNotNull();
+        Describe(x => x.Short).IsNotNull();
+        Describe(x => x.Long).IsNotNull();
+        Describe(x => x.TwoComponentTuple).IsNotNull();
+        Describe(x => x.TwoComponentNewTupple).IsNotNull();
+        Describe(x => x.AllFieldTypesList).IsNotNull();
+        Describe(x => x.AllFieldTypesLinkedList).IsNotNull();
+        Describe(x => x.AllFieldTypesIEnumerable).IsNotNull();
+        Describe(x => x.AllFieldTypesDictionary).IsNotNull();
+        Describe(x => x.Struct).IsNotNull();
     }
 }
 

@@ -34,6 +34,7 @@ import IsLessThanValidation from "@/features/validations/IsLessThanValidation.vu
 import IsLessThanOrEqualToValidation from "@/features/validations/IsLessThanOrEqualToValidation.vue";
 import IsNotNullValidation from "@/features/validations/IsNotNullValidation.vue";
 import IsNotEmptyValidation from "@/features/validations/IsNotEmptyValidation.vue";
+import ViallyValidation from "@/features/validations/Vitally.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -118,6 +119,11 @@ const router = createRouter({
       path: "/validation/",
       redirect: "/",
       children: [
+        {
+          path: "/validation/vitally",
+          name:"VitallyValidation",
+          component: ViallyValidation
+        },
         {
           path: "/validation/isnull",
           name: "IsNullValidation",

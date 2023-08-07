@@ -1,0 +1,26 @@
+﻿{
+    "results": [
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "NString",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 ﻿{
     "errors": {
         "artist": [
-            "Is not equal to 'John'"
+            "Is not equal to 'John'."
         ],
         "songs[0]": [
             "Is null."

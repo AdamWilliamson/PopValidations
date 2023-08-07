@@ -8,8 +8,8 @@ namespace PopValidations.Validations;
 public class IsLessThanValidation : ValidationComponentBase
 {
     public override string DescriptionTemplate { get; protected set; } =
-        "Must be less than '{{value}}'";
-    public override string ErrorTemplate { get; protected set; } = "Is not less than '{{value}}'";
+        "Must be less than '{{value}}'.";
+    public override string ErrorTemplate { get; protected set; } = "Is not less than '{{value}}'.";
 
     private readonly IScopeData scopedData;
 

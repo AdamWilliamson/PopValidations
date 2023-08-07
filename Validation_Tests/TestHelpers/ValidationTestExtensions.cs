@@ -10,8 +10,9 @@ public static class ValidationTestExtensions
 {
     public static List<string> GetErrorsForField(this ValidationResult? results, string fieldName)
     {
-        return results?.Errors.Keys.ToList()
-            .Where(o => o == fieldName).ToList() ?? new List<string>();
+        return results?.Errors
+            .Where(o => o.Key == fieldName).SelectMany(o => o.Value).ToList()
+            ?? new List<string>();
     }
 
     public static void ContainsAnyError(this ValidationResult? results, string fieldName)

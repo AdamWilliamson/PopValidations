@@ -8,7 +8,7 @@ public class AdvancedSongValidator : AbstractSubValidator<AdvancedSong>
     public AdvancedSongValidator()
     {
         Describe(x => x.TrackNumber)
-            .NotNull();
+            .IsNotNull();
 
         Describe(x => x.TrackName)
             .IsEqualTo("Definitely Not The Correct Song Name.");

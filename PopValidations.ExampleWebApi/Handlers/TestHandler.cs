@@ -11,7 +11,7 @@ public class ArtistValidator : AbstractSubValidator<Artist>
 {
     public ArtistValidator()
     {
-        Describe(x => x.Name).NotNull();
+        Describe(x => x.Name).IsNotNull();
     }
 }
 
@@ -44,7 +44,7 @@ public class SongSubValidator : AbstractSubValidator<Song>
     public SongSubValidator()
     {
         Describe(x => x.Name)
-            .NotNull()
+            .IsNotNull()
             //.Equals("string")
             //.Equals("string2")
         //    .IsLengthInclusivelyBetween(5, 200)

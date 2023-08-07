@@ -1,0 +1,17 @@
+﻿{
+    "Name": [
+        "Is not equal to 'Level1Validator'"
+    ],
+    "Level2Array[0].Name": [
+        "Is not equal to 'Level2Validator'"
+    ],
+    "Level2Array[0].Level3Array[0].Name": [
+        "Is not equal to 'Level3Validator'"
+    ],
+    "Level2Array[0].Level3Array[0].Level4Array[0].Name": [
+        "Is not equal to 'Level4Validator'"
+    ],
+    "Level2Array[0].Level3Array[0].Level4Array[0].Level5Array[0].Name": [
+        "Is not equal to 'Level5Validator'"
+    ]
+}

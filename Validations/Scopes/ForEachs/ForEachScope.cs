@@ -156,19 +156,27 @@ internal class ForEachScope<TValidationType, TFieldType> : ScopeBase//, ISubVali
 
                 if (this.IsVital)
                 {
-                    var thingo2 = new ForEachFieldDescriptor<TValidationType, IEnumerable<TFieldType?>, TFieldType>(
-                        fieldDescriptor.PropertyToken,
-                        new IndexedPropertyExpressionToken<TValidationType, IEnumerable<TFieldType?>, TFieldType?>(
-                            fieldDescriptor.PropertyToken.Name
-                                + $"[{index}]"
-                                + Char.MaxValue,
-                            index
-                        ),
-                        store
-                    );
-                    
+                    //var thingo2 = new ForEachFieldDescriptor<TValidationType, IEnumerable<TFieldType?>, TFieldType>(
+                    //    fieldDescriptor.PropertyToken,
+                    //    new IndexedPropertyExpressionToken<TValidationType, IEnumerable<TFieldType?>, TFieldType?>(
+                    //        fieldDescriptor.PropertyToken.Name + $"[{index}]" + Char.MaxValue,
+                    //        index
+                    //    ),
+                    //    store
+                    //);
+
+                    var thingo2 = new ForEachFieldDescriptor<TValidationType, IEnumerable<TFieldType?>, TFieldType?>(
+                    fieldDescriptor.PropertyToken,
+                    new IndexedPropertyExpressionToken<TValidationType, IEnumerable<TFieldType?>, TFieldType?>(
+                        //fieldDescriptor.PropertyToken.Name + $"[{index}]" + Char.MaxValue,
+                        fieldDescriptor.PropertyToken.Name + $"[" + Char.MaxValue,
+                        index
+                    ),
+                    store
+                );
+
                     thingo2.NextValidationIsVital();
-                    
+
                     thingo2.AddValidation(
                         new VitallyForEachValidation(fieldDescriptor.PropertyToken.Name + $"[")
                     );

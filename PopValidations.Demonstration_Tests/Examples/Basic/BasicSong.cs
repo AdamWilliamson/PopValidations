@@ -1,4 +1,4 @@
-﻿namespace PopValidations_Tests.Demonstration.Basic;
+﻿namespace PopValidations.Demonstration_Tests.Examples.Basic;
 
 public record BasicSong(
     string Artist,

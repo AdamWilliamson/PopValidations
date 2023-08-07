@@ -83,7 +83,7 @@ public class IsEnumValidation_Tests
                         ),
                         new KeyValuePair<string, string>("fieldType", "number"),
                     });
-            descriptionResult.Message.Should().Be("Must be one of '{{enumNames}}' or '{{enumValues}}'");
+            descriptionResult.Message.Should().Be("Must be one of '{{enumNames}}' or '{{enumValues}}'.");
         }
     }
 }

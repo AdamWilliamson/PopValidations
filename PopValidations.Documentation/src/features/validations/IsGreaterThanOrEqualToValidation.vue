@@ -25,30 +25,30 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
+public class Validator : AbstractValidator<InputObject>
 {
-    public BasicSongValidator()
+    public Validator()
     {
-        Describe(x => x.TrackNumber)
-            .IsGreaterThanOrEqualTo(
-                new ScopedData<int>(int.MinValue));
-        Describe(x => x.Duration)
-            .IsGreaterThanOrEqualTo(
-                new ScopedData<double>(3));
+        Describe(x => x.NInteger).IsGreaterThanOrEqualTo(5);
     }
 }'
             ></CodeWindow>
       </template>
+
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(int? NInteger);'
+            ></CodeWindow>
+      </template>
+
       <template #errorreport>
         <CodeWindow
               language="json"
               source='{
     "errors": {
-        "trackNumber": [
-            "Is not greater than or equal to &#39;-2147483648&#39;"
-        ],
-        "duration": [
-            "Is not greater than or equal to &#39;3&#39;"
+        "nInteger": [
+            "Is not greater than or equal to `5`"
         ]
     }
 }'
@@ -57,40 +57,23 @@ public class BasicSongValidator : AbstractValidator
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-  "Song": {
+              source='"InputObject": {
     "type": "object",
     "properties": {
-      "trackName": {
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      },
-      "trackNumber": {
-        "minimum": -2147483648,
-        "exclusiveMinimum": false,
-        "type": "integer",
-        "format": "int32"
-      },
-      "duration": {
-        "minimum": 3,
-        "exclusiveMinimum": false,
-        "type": "number",
-        "format": "double"
-      }
+        "nInteger": {
+            "minimum": 5,
+            "exclusiveMinimum": false,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+        }
     },
     "additionalProperties": false,
     "x-validation": {
-      "trackNumber": [
-        "Must be greater than or equal to &#39;-2147483648&#39;"
-      ],
-      "duration": [
-        "Must be greater than or equal to &#39;3&#39;"
-      ]
+        "nInteger": [
+            "Must be greater than or equal to `5`"
+        ]
     }
-  }
 }'
             ></CodeWindow>
       </template>

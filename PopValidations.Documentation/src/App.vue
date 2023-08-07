@@ -84,6 +84,13 @@ export default defineComponent({
         <v-list-subheader color="secondary">Validations</v-list-subheader>
         <v-list-item
           color="secondary"
+          title="Vitally"
+          value="Vitally"
+          :to="{ name: 'VitallyValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
           title="Is Null"
           value="Is Null"
           :to="{ name: 'IsNullValidation' }"

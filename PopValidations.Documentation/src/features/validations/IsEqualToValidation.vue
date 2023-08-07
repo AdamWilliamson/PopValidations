@@ -26,23 +26,30 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
+public class Validator : AbstractValidator<InputObject>
 {
-  public BasicSongValidator()
+    public Validator()
     {
-        Describe(x => x.TrackName)
-            .IsEqualTo("Mind numbing boredom");
+        Describe(x => x.NString).IsEqualTo("Name");
     }
 }'
             ></CodeWindow>
       </template>
+
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(string? NString);'
+            ></CodeWindow>
+      </template>
+
       <template #errorreport>
         <CodeWindow
               language="json"
               source='{
     "errors": {
-        "trackName": [
-            "Is not equal to &#39;Mind numbing boredom&#39;"
+        "nString": [
+            "Is not equal to `Name`"
         ]
     }
 }'
@@ -51,28 +58,23 @@ public class BasicSongValidator : AbstractValidator
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-  "Song": {
+              source='"InputObject": {
     "type": "object",
     "properties": {
-      "trackName": {
-        "enum": [
-          "Mind numbing boredom"
-        ],
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      }
+        "nString": {
+            "enum": [
+                "Name"
+            ],
+            "type": "string",
+            "nullable": true
+        }
     },
     "additionalProperties": false,
     "x-validation": {
-      "trackName": [
-        "Must equal to &#39;Mind numbing boredom&#39;"
-      ]
+        "nString": [
+            "Must equal to `Name`"
+        ]
     }
-  }
 }'
             ></CodeWindow>
       </template>

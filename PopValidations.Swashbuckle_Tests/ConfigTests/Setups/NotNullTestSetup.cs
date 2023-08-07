@@ -13,8 +13,8 @@ public static class NotNullTestSetup
     {
         public RequestValidator()
         {
-            Describe(x => x.Id).NotNull();
-            Describe(x => x.Name).Vitally().NotNull();
+            Describe(x => x.Id).IsNotNull();
+            Describe(x => x.Name).Vitally().IsNotNull();
             Describe(x => x.Child).SetValidator(new SubRequestValidator());
         }
     }
@@ -23,8 +23,8 @@ public static class NotNullTestSetup
     {
         public SubRequestValidator()
         {
-            Describe(x => x.Id).NotNull();
-            Describe(x => x.Name).Vitally().NotNull();
+            Describe(x => x.Id).IsNotNull();
+            Describe(x => x.Name).Vitally().IsNotNull();
         }
     }
 }

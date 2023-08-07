@@ -60,10 +60,10 @@
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must be less than '5'"
+                        "Must be less than '5'."
                     ],
                     "name": [
-                        "Must be less than 'Test'"
+                        "Must be less than 'Test'."
                     ],
                     "child": []
                 }
@@ -86,10 +86,10 @@
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must be less than '6'"
+                        "Must be less than '6'."
                     ],
                     "name": [
-                        "Must be less than 'Test2'"
+                        "Must be less than 'Test2'."
                     ]
                 }
             }

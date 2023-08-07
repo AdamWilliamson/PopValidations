@@ -8,7 +8,7 @@ public class IsEnumValidation<TFieldType> : ValidationComponentBase
 {
     private readonly Type enumType;
 
-    public override string DescriptionTemplate { get; protected set; } = "Must be one of '{{enumNames}}' or '{{enumValues}}'";
+    public override string DescriptionTemplate { get; protected set; } = "Must be one of '{{enumNames}}' or '{{enumValues}}'.";
     public override string ErrorTemplate { get; protected set; } = "'{{value}}' Is not a valid value.";
 
     public IsEnumValidation(Type enumType)

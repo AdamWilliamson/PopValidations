@@ -25,32 +25,31 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
+public class Validator : AbstractValidator<InputObject>
 {
-    public BasicSongValidator()
+    public Validator()
     {
-        Describe(x => x.TrackName).NotNull();
-        Describe(x => x.TrackNumber)
-            .NotNull(options =>
-                options
-                    .WithErrorMessage("Null is Invalid")
-                    .WithDescription("Nulls are bad.")
-            );
+        Describe(x => x.NInteger).IsNotNull();
     }
 }'
             ></CodeWindow>
       </template>
+
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(int? NInteger);'
+            ></CodeWindow>
+      </template>
+
       <template #errorreport>
         <CodeWindow
               language="json"
               source='{
     "errors": {
-        "trackName": [
+        "nInteger": [
             "Is null."
-        ],
-        "trackNumber": [
-            "Null is Invalid"
-        ],
+        ]
     }
 }'
             ></CodeWindow>
@@ -58,35 +57,23 @@ public class BasicSongValidator : AbstractValidator
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-  "Song": {
+              source='"InputObject": {
     "required": [
-      "trackName",
-      "trackNumber"
+        "nInteger"
     ],
     "type": "object",
     "properties": {
-      "trackName": {
-        "type": "string"
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      },
-      "trackNumber": {
-        "type": "integer",
-        "format": "int32"
-      }
+        "nInteger": {
+            "type": "integer",
+            "format": "int32"
+        }
     },
     "additionalProperties": false,
     "x-validation": {
-      "trackName": [
-        "Must not be null."
-      ],
-      "trackNumber": [
-        "Nulls are bad."
-      ]
+        "nInteger": [
+            "Must not be null."
+        ]
     }
-  }
 }'
             ></CodeWindow>
       </template>

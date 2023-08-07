@@ -5,7 +5,7 @@
             "outcomes": [
                 {
                     "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to '2147483647'",
+                    "message": "Must be less than or equal to '2147483647'.",
                     "values": [
                         {
                             "key": "value",
@@ -21,7 +21,7 @@
             "outcomes": [
                 {
                     "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'",
+                    "message": "Must be less than or equal to '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'.",
                     "values": [
                         {
                             "key": "value",
@@ -37,7 +37,7 @@
             "outcomes": [
                 {
                     "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to '79228162514264337593543950335'",
+                    "message": "Must be less than or equal to '79228162514264337593543950335'.",
                     "values": [
                         {
                             "key": "value",
@@ -53,7 +53,7 @@
             "outcomes": [
                 {
                     "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to '1.7976931348623157E+308'",
+                    "message": "Must be less than or equal to '1.7976931348623157E+308'.",
                     "values": [
                         {
                             "key": "value",
@@ -69,7 +69,7 @@
             "outcomes": [
                 {
                     "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to '32767'",
+                    "message": "Must be less than or equal to '32767'.",
                     "values": [
                         {
                             "key": "value",
@@ -85,7 +85,7 @@
             "outcomes": [
                 {
                     "validator": "IsLessThanOrEqualToValidation",
-                    "message": "Must be less than or equal to '9223372036854775807'",
+                    "message": "Must be less than or equal to '9223372036854775807'.",
                     "values": [
                         {
                             "key": "value",

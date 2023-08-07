@@ -8,9 +8,9 @@ namespace PopValidations.Validations;
 public class IsGreaterThanOrEqualToValidation : ValidationComponentBase
 {
     public override string DescriptionTemplate { get; protected set; } =
-        "Must be greater than or equal to '{{value}}'";
+        "Must be greater than or equal to '{{value}}'.";
     public override string ErrorTemplate { get; protected set; } =
-        "Is not greater than or equal to '{{value}}'";
+        "Is not greater than or equal to '{{value}}'.";
 
     private readonly IScopeData scopedData;
 

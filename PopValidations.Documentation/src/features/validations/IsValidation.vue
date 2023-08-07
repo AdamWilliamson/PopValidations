@@ -25,32 +25,34 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
+public class Validator : AbstractValidator<InputObject>
 {
-  public BasicSongValidator()
-  {
-    Describe(x => x.TrackNumber)
-    .Is(
-      "{Interesting description here}", 
-      "{Humorous error message here}", 
-      IntTest
-      );
-    }
-
-    public static bool IntTest(int? value)
+    public Validator()
     {
-        return value == 1;
+        Describe(x => x.NString).Is(
+            "Must be `NString`",
+            "`{{value}}` is an invalid option",
+            i => i == "NString"
+        );
     }
 }'
             ></CodeWindow>
       </template>
+
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(string? NString);'
+            ></CodeWindow>
+      </template>
+
       <template #errorreport>
         <CodeWindow
               language="json"
               source='{
     "errors": {
-        "trackNumber": [
-            "{Humorous error message here}"
+        "nString": [
+            "`NotNString` is an invalid option"
         ]
     }
 }'
@@ -59,30 +61,20 @@ public class BasicSongValidator : AbstractValidator
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-  "Song": {
+              source='"InputObject": {
     "type": "object",
     "properties": {
-      "trackName": {
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      },
-      "trackNumber": {
-        "type": "integer",
-        "format": "int32",
-        "nullable": true
-      }
+        "nString": {
+            "type": "string",
+            "nullable": true
+        }
     },
     "additionalProperties": false,
     "x-validation": {
-      "trackNumber": [
-        "{Interesting description here}"
-      ]
+        "nString": [
+            "Must be `NString`"
+        ]
     }
-  }
 }'
             ></CodeWindow>
       </template>

@@ -28,23 +28,34 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
-{
-    public BasicSongValidator()
-    {
-        Describe(x => x.TrackNumber)
-            .IsLengthInclusivelyBetween(0, 5);
-    }
-}'
+  public class Validator : AbstractValidator<InputObject>
+  {
+      public Validator()
+      {
+          Describe(x => x.NString).IsLengthExclusivelyBetween(1, 5);
+          Describe(x => x.Array).IsLengthExclusivelyBetween(1, 5);
+      }
+  }'
             ></CodeWindow>
       </template>
+
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(string? NString, List<int> Array);'
+            ></CodeWindow>
+      </template>
+
       <template #errorreport>
         <CodeWindow
               language="json"
               source='{
     "errors": {
-        "trackNumber": [
-            "Is not between 0 and 5 inclusive."
+        "nString": [
+            "Is not between 1 and 5 inclusive."
+        ],
+        "array": [
+            "Is not between 1 and 5 inclusive."
         ]
     }
 }'
@@ -53,31 +64,35 @@ public class BasicSongValidator : AbstractValidator
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-  "Song": {
+              source='"InputObject": {
     "type": "object",
     "properties": {
-      "trackName": {
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      },
-      "trackNumber": {
-        "maxLength": 5,
-        "minLength": 0,
-        "type": "integer",
-        "format": "int32"
-      }
+        "nString": {
+            "maxLength": 5,
+            "minLength": 1,
+            "type": "string",
+            "nullable": true
+        },
+        "array": {
+            "maxLength": 5,
+            "minLength": 1,
+            "type": "array",
+            "items": {
+                "type": "integer",
+                "format": "int32"
+            },
+            "nullable": true
+        }
     },
     "additionalProperties": false,
     "x-validation": {
-      "trackNumber": [
-        "Must be between 0 and 5 inclusive."
-      ]
+        "nString": [
+            "Must be between 1 and 5 inclusive."
+        ],
+        "array": [
+            "Must be between 1 and 5 inclusive."
+        ]
     }
-  }
 }'
             ></CodeWindow>
       </template>

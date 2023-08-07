@@ -13,8 +13,8 @@
     <PackageReference Include="ApprovalTests" Version="5.8.0" />
     <PackageReference Include="FluentAssertions" Version="6.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -38,6 +38,26 @@
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>ModerateDemonstrationTests.cs</DependentUpon>
+    </None>
+    <None Update="Demonstration\ValidatorDemoTests\NotNull_DemoTest.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>NotNull_DemoTest.cs</DependentUpon>
+    </None>
+    <None Update="Demonstration\ValidatorDemoTests\NotNull_DemoTest.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>NotNull_DemoTest.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\ForEachTests\ForEachVitallyTests.Given5LevelsDeepForeachValidations_ItShowsErrorsAtEachDepth.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>ForEachVitallyTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\ForEachTests\ForEachVitallyTests.MultipleForeachs_WhenInternalToEachOther_ItShowsX2Errors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>ForEachVitallyTests.cs</DependentUpon>
     </None>
     <None Update="ValidationsTests\IsEnumValidationTests\IsEnumValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>

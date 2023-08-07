@@ -60,10 +60,10 @@
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must be greater than '5'"
+                        "Must be greater than '5'."
                     ],
                     "name": [
-                        "Must be greater than 'Test'"
+                        "Must be greater than 'Test'."
                     ],
                     "child": []
                 }
@@ -86,10 +86,10 @@
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must be greater than '6'"
+                        "Must be greater than '6'."
                     ],
                     "name": [
-                        "Must be greater than 'Test2'"
+                        "Must be greater than 'Test2'."
                     ]
                 }
             }

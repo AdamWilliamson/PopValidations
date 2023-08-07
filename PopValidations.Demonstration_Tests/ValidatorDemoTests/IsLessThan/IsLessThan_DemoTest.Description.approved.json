@@ -1,0 +1,20 @@
+﻿{
+    "results": [
+        {
+            "property": "NInteger",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '5'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "5"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

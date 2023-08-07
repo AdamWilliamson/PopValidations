@@ -6,6 +6,7 @@ export default defineComponent({
   data() {
     return {
       tab: "code",
+      secondtab: "error"
     };
   },
 });
@@ -16,6 +17,7 @@ export default defineComponent({
             <v-col>
                 <v-tabs v-model="tab">
                     <v-tab value="code">Validator</v-tab>
+                    <v-tab value="request">Object To Validate</v-tab>
                     <v-tab value="error">Error Report</v-tab>
                     <v-tab value="openapi">OpenApi Schema</v-tab>
                 </v-tabs>
@@ -23,6 +25,10 @@ export default defineComponent({
                 <v-window v-model="tab">
                     <v-window-item value="code" class="bg-darkgrey">
                         <slot name="code"></slot>
+                    </v-window-item>
+
+                    <v-window-item value="request" class="bg-darkgrey">
+                        <slot name="request"></slot>
                     </v-window-item>
 
                     <v-window-item value="error">
@@ -38,23 +44,27 @@ export default defineComponent({
 
         <v-row class="d-xl-flex">
             <v-col>
-                <v-tabs>
-                    <v-tab value="error">Code</v-tab>
+                <v-tabs  v-model="tab">
+                    <v-tab value="code">Validator</v-tab>
+                    <v-tab value="request">Object To Validate</v-tab>
                 </v-tabs>
 
-                <v-window>
-                    <v-window-item >
+                <v-window  v-model="tab">
+                    <v-window-item value="code">
                         <slot name="code"></slot>
+                    </v-window-item>
+                    <v-window-item value="request">
+                        <slot name="request"></slot>
                     </v-window-item>
                 </v-window>
             </v-col>
             <v-col>
-                <v-tabs v-model="tab">
+                <v-tabs v-model="secondtab">
                     <v-tab value="error">Error Report</v-tab>
                     <v-tab value="openapi">OpenApi Schema</v-tab>
                 </v-tabs>
 
-                <v-window v-model="tab">
+                <v-window v-model="secondtab">
                     <v-window-item value="error">
                         <slot name="errorreport"></slot>
                     </v-window-item>

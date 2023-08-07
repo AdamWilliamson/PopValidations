@@ -55,9 +55,16 @@ public class FieldDescriptor<TValidationType, TFieldType>
 
     public void AddSelfDescribingEntity(IExpandableEntity component)
     {
+        if (_NextValidationVital || _AlwaysVital) component.AsVital();
+
         Store.AddItem(
             null,
             component
+            //new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
+            //    null,
+            //    _NextValidationVital || _AlwaysVital,
+            //    component
+            //)
         );    
         _NextValidationVital = false;
     }

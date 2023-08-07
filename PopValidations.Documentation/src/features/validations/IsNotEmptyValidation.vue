@@ -25,35 +25,34 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
+public class Validator : AbstractValidator<InputObject>
 {
-    public BasicSongValidator()
+    public Validator()
     {
-        Describe(x => x.TrackName).IsNotEmpty();
-        Describe(x => x.TrackNumber).IsNotEmpty();
-        Describe(x => x.Artist)
-          .Vitally().IsNotEmpty(options =>
-            options
-              .WithErrorMessage("Non Empty Fields are Invalid.")
-              .WithDescription("This Field must be Empty.")
-          );
+        Describe(x => x.String).IsNotEmpty();
+        Describe(x => x.NString).IsNotEmpty();
     }
 }'
             ></CodeWindow>
       </template>
+
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(string String, string? NString);'
+            ></CodeWindow>
+      </template>
+
       <template #errorreport>
         <CodeWindow
               language="json"
               source='{
     "errors": {
-        "trackName": [
-            "Is empty"
+        "string": [
+            "Is empty."
         ],
-        "trackNumber": [
-            "Is empty"
-        ],
-        "artist": [
-            "Empty Fields are Invalid."
+        "nString": [
+            "Is empty."
         ]
     }
 }'
@@ -62,39 +61,35 @@ public class BasicSongValidator : AbstractValidator
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-  "Song": {
+              source='"InputObject": {
+    "required": [
+        "nString",
+        "string"
+    ],
     "type": "object",
     "properties": {
-      "trackName": {
-        "minLength": 1,
-        "minItems": 1,
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      },
-      "trackNumber": {
-        "minLength": 1,
-        "minItems": 1,
-        "type": "integer",
-        "format": "int32"
-      }
+        "string": {
+            "minLength": 1,
+            "minItems": 1,
+            "type": "string",
+            "nullable": true
+        },
+        "nString": {
+            "minLength": 1,
+            "minItems": 1,
+            "type": "string",
+            "nullable": true
+        }
     },
     "additionalProperties": false,
     "x-validation": {
-      "trackName": [
-        "Must not be empty"
-      ],
-      "artist": [
-        "This Field must not be Empty."
-      ],
-      "trackNumber": [
-        "Must not be empty"
-      ]
+        "string": [
+            "Must not be empty."
+        ],
+        "nString": [
+            "Must not be empty."
+        ]
     }
-  }
 }'
             ></CodeWindow>
       </template>

@@ -1,0 +1,18 @@
+﻿"InputObject": {
+    "type": "object",
+    "properties": {
+        "nInteger": {
+            "maximum": 5,
+            "exclusiveMinimum": true,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nInteger": [
+            "Must be less than '5'."
+        ]
+    }
+}

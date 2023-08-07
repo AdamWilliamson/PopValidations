@@ -26,19 +26,19 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
+public class Validator : AbstractValidator<InputObject>
 {
-    public BasicSongValidator()
+    public Validator()
     {
-        Describe(x => x.TrackName).IsNull();
-        Describe(x => x.Artist)
-          .Vitally().IsNull(options => 
-            options
-            .WithErrorMessage("We don&#39;t like values")
-              .WithDescription("Values are bad.")
-          );
+        Describe(x => x.NInteger).IsNull();
     }
 }'
+            ></CodeWindow>
+      </template>
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(int? NInteger);'
             ></CodeWindow>
       </template>
       <template #errorreport>
@@ -46,11 +46,8 @@ public class BasicSongValidator : AbstractValidator
               language="json"
               source='{
     "errors": {
-        "trackName": [
+        "nInteger": [
             "Is not null."
-        ],
-        "artist": [
-            "We don&#39;t like values"
         ]
     }
 }'
@@ -59,31 +56,24 @@ public class BasicSongValidator : AbstractValidator
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-  "Song": {
+              source='"InputObject": {
     "type": "object",
     "properties": {
-      "trackName": {
-        "enum": [
-          "null"
-        ],
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      }
+        "nInteger": {
+            "enum": [
+                "null"
+            ],
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+        }
     },
     "additionalProperties": false,
     "x-validation": {
-      "trackName": [
-        "Must be null."
-      ],
-      "artist": [
-        "Values are bad."
-      ]
+        "nInteger": [
+            "Must be null."
+        ]
     }
-  }
 }'
             ></CodeWindow>
       </template>

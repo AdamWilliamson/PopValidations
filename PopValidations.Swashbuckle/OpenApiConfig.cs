@@ -24,7 +24,7 @@ public class OpenApiConfig
 
     public List<IValidationToOpenApiConverter> Converters = new()
     {
-        new NotNullValidationToOpenApiConverter(),
+        new IsNotNullValidationToOpenApiConverter(),
         new IsEnumValidationToOpenApiConverter(),
         new IsEqualToValidationToOpenApiConverter(),
         new IsNullValidationToOpenApiConverter(),
@@ -35,7 +35,8 @@ public class OpenApiConfig
         new IsLessThanValidationToOpenApiConverter(),
         new IsLessThanOrEqualToValidationToOpenApiConverter(),
         new IsEmptyValidationToOpenApiConverter(),
-        new IsNotEmptyValidationToOpenApiConverter()
+        new IsNotEmptyValidationToOpenApiConverter(),
+        new IsCustomValidationToOpenApiConverter()
     };
 
     public Func<Type, ValidationLevel> TypeValidationLevel { get; set; } 

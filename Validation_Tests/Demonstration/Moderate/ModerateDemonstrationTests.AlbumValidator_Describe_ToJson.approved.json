@@ -5,7 +5,7 @@
             "outcomes": [
                 {
                     "validator": "IsEqualToValidation",
-                    "message": "Must equal to 'John'",
+                    "message": "Must equal to 'John'.",
                     "values": [
                         {
                             "key": "value",
@@ -20,7 +20,7 @@
             "property": "Songs",
             "outcomes": [
                 {
-                    "validator": "NotNullValidation",
+                    "validator": "IsNotNullValidation",
                     "message": "Must not be null.",
                     "values": []
                 }
@@ -31,7 +31,7 @@
             "property": "Songs[n]",
             "outcomes": [
                 {
-                    "validator": "NotNullValidation",
+                    "validator": "IsNotNullValidation",
                     "message": "Must not be null.",
                     "values": []
                 }

@@ -21,11 +21,11 @@ public class ModerateAlbumValidator : AbstractValidator<ModerateAlbum>
             });
 
         DescribeEnumerable(x => x.Songs)
-            .Vitally().NotNull()
+            .Vitally().IsNotNull()
             //.LengthExlusiveBetween(5, 40)
             .ForEach(song => 
                 song
-                    .Vitally().NotNull()
+                    .Vitally().IsNotNull()
             );
     }
 }

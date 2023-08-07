@@ -53,7 +53,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
             //.Vitally().NotEmpty()
             .ForEach(song =>
                 song
-                    .Vitally().NotNull()
+                    .Vitally().IsNotNull()
                     .SetValidator(new AdvancedSongValidator())
             );
 
@@ -62,7 +62,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
             () =>
             {
                 Include(new SingleArtistAlbumValidator());
-                Describe(x => x.Artist).NotNull();
+                Describe(x => x.Artist).IsNotNull();
             });
 
         ScopeWhen("Album constains songs we don't own the copyright to",
@@ -74,7 +74,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                 DescribeEnumerable(x => x.Songs)
                     .Vitally().ForEach((song) =>
                     {
-                        song.NotNull()
+                        song.IsNotNull()
                         .Is(
                             "{{value}} Was not found in list of songs we own the rights to",
                             "Checks to ensure the song's rights are owned by us.",

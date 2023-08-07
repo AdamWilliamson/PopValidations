@@ -3,18 +3,18 @@ using PopValidations_Tests.TestHelpers;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations_Tests.Demonstration.Basic;
+namespace PopValidations.Demonstration_Tests.Examples.Basic;
 
 public class BasicDemonstrationTests
 {
     [Fact]
-    public async Task BasicValidator_Validate_ToJson()
+    public async Task Validation()
     {
         // Arrange
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new BasicSongValidator());
         var song = new BasicSong(
             "Disturbed",
-            2,
+            null,
             "Down With The Sickness",
             2.4,
             string.Empty
@@ -22,24 +22,22 @@ public class BasicDemonstrationTests
 
         // Act
         var results = await runner.Validate(song);
-        var json = JsonConverter.ToJson(results);
 
         // Assert
-        Approvals.VerifyJson(json);
+        Approvals.VerifyJson(JsonConverter.ToJson(results));
     }
 
     [Fact]
-    public void BasicValidator_Describe_ToJson()
+    public void Description()
     {
         // Arrange
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new BasicSongValidator());
 
         // Act
         var results = runner.Describe();
-        var json = JsonConverter.ToJson(results);
 
         // Assert
-        Approvals.VerifyJson(json);
+        Approvals.VerifyJson(JsonConverter.ToJson(results));
     }
 }
 

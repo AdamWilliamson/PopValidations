@@ -4,80 +4,69 @@ using FluentAssertions.Execution;
 using Newtonsoft.Json;
 using PopValidations;
 using PopValidations_Tests.TestHelpers;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations_Tests.Bugs;
+namespace PopValidations_Tests.ValidationsTests.ForEachTests;
 
-public record Level5(string Name);
-
-public record Level4(string Name, List<Level5> Level5Array);
-
-public record Level3(string Name, List<Level4> Level4Array);
-
-public record Level2(string Name, List<Level3>? Level3Array);
-
-public record Level1(string Name, List<Level2>? Level2Array);
-
-public class Level1Validator : AbstractValidator<Level1>
+public class Level1DepthValidator : AbstractValidator<Level1>
 {
-    public Level1Validator()
+    public Level1DepthValidator()
     {
-        Describe(x => x.Name).IsEqualTo(nameof(Level1Validator));
+        Describe(x => x.Name).IsEqualTo(nameof(Level1DepthValidator));
 
         DescribeEnumerable(x => x.Level2Array)
             .Vitally()
-            .NotNull()
-            .ForEach(x => x.SetValidator(new Level2Validator()));
+            .IsNotNull()
+            .ForEach(x => x.SetValidator(new Level2DepthValidator()));
     }
 }
 
-public class Level2Validator : AbstractSubValidator<Level2>
+public class Level2DepthValidator : AbstractSubValidator<Level2>
 {
-    public Level2Validator()
+    public Level2DepthValidator()
     {
-        Describe(x => x.Name).IsEqualTo(nameof(Level2Validator));
+        Describe(x => x.Name).IsEqualTo(nameof(Level2DepthValidator));
 
         DescribeEnumerable(x => x.Level3Array)
             .Vitally()
-            .NotNull()
-            .ForEach(x => x.SetValidator(new Level3Validator()));
+            .IsNotNull()
+            .ForEach(x => x.SetValidator(new Level3DepthValidator()));
     }
 }
 
-public class Level3Validator : AbstractSubValidator<Level3>
+public class Level3DepthValidator : AbstractSubValidator<Level3>
 {
-    public Level3Validator()
+    public Level3DepthValidator()
     {
-        Describe(x => x.Name).IsEqualTo(nameof(Level3Validator));
+        Describe(x => x.Name).IsEqualTo(nameof(Level3DepthValidator));
 
         DescribeEnumerable(x => x.Level4Array)
             .Vitally()
-            .NotNull()
-            .ForEach(x => x.SetValidator(new Level4Validator()));
+            .IsNotNull()
+            .ForEach(x => x.SetValidator(new Level4DepthValidator()));
     }
 }
 
-public class Level4Validator : AbstractSubValidator<Level4>
+public class Level4DepthValidator : AbstractSubValidator<Level4>
 {
-    public Level4Validator()
+    public Level4DepthValidator()
     {
-        Describe(x => x.Name).IsEqualTo(nameof(Level4Validator));
+        Describe(x => x.Name).IsEqualTo(nameof(Level4DepthValidator));
 
         DescribeEnumerable(x => x.Level5Array)
             .Vitally()
-            .NotNull()
-            .ForEach(x => x.SetValidator(new Level5Validator()));
+            .IsNotNull()
+            .ForEach(x => x.SetValidator(new Level5DepthValidator()));
     }
 }
 
-public class Level5Validator : AbstractSubValidator<Level5>
+public class Level5DepthValidator : AbstractSubValidator<Level5>
 {
-    public Level5Validator()
+    public Level5DepthValidator()
     {
-        Describe(x => x.Name).IsEqualTo(nameof(Level5Validator));
+        Describe(x => x.Name).IsEqualTo(nameof(Level5DepthValidator));
     }
 }
 
@@ -87,24 +76,24 @@ public class ForEachDepthTests
     public async Task Given5LevelsDeepForeachValidations_ItShowsNoErrors()
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1Validator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1DepthValidator());
         var testSubject = new Level1(
-            Name: nameof(Level1Validator),
+            Name: nameof(Level1DepthValidator),
             Level2Array: new()
             {
                 new Level2(
-                    Name: nameof(Level2Validator),
+                    Name: nameof(Level2DepthValidator),
                     Level3Array: new()
                     {
                         new Level3(
-                            Name: nameof(Level3Validator),
+                            Name: nameof(Level3DepthValidator),
                             Level4Array: new()
                             {
                                 new Level4(
-                                    Name: nameof(Level4Validator),
+                                    Name: nameof(Level4DepthValidator),
                                     Level5Array: new()
                                     {
-                                        new Level5(nameof(Level5Validator))
+                                        new Level5(nameof(Level5DepthValidator))
                                     }
                                 )
                             }
@@ -128,7 +117,7 @@ public class ForEachDepthTests
     public async Task Given5LevelsDeepForeachValidations_ItShowsErrorsAtEachDepth()
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1Validator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1DepthValidator());
         var testSubject = new Level1(
             Name: "Invalid",
             Level2Array: new()
@@ -143,9 +132,9 @@ public class ForEachDepthTests
                             {
                                 new Level4(
                                     Name: "Invalid",
-                                    Level5Array: new() 
-                                    { 
-                                        new Level5("Invalid") 
+                                    Level5Array: new()
+                                    {
+                                        new Level5("Invalid")
                                     }
                                 )
                             }
@@ -178,9 +167,9 @@ public class ForEachDepthTests
     public async Task SingleLevelForeachValidations_ItShowsXErrors(int x)
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1Validator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1DepthValidator());
         var testSubject = new Level1(
-            Name: nameof(Level1Validator),
+            Name: nameof(Level1DepthValidator),
             Level2Array: Enumerable.Repeat(
                 new Level2(
                     Name: "Invalid",
@@ -212,9 +201,9 @@ public class ForEachDepthTests
     public async Task MultiLayeredForeachValidations_ItShowsXErrors(int x)
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1Validator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1DepthValidator());
         var testSubject = new Level1(
-            Name: nameof(Level1Validator),
+            Name: nameof(Level1DepthValidator),
             Level2Array: new()
             {
                 new Level2(
@@ -252,9 +241,9 @@ public class ForEachDepthTests
     public async Task MultipleForeachs_WhenInternalToEachOther_ItShowsX2Errors(int x)
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1Validator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1DepthValidator());
         var testSubject = new Level1(
-            Name: nameof(Level1Validator),
+            Name: nameof(Level1DepthValidator),
             Level2Array: Enumerable.Repeat(
                 new Level2(
                     Name: "Invalid",
@@ -265,7 +254,7 @@ public class ForEachDepthTests
                         )
                     , x).ToList()
                 )
-            ,x).ToList()
+            , x).ToList()
         );
 
         // Act

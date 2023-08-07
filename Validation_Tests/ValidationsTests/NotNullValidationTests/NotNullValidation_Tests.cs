@@ -12,7 +12,7 @@ public class NotNullValidation_Tests
     public void WhenSupplyingANullValue_ItValidatesAsSuccessful()
     {
         // Arrange
-        var validator = new NotNullValidation();
+        var validator = new IsNotNullValidation();
 
         // Act
         var result = validator.Validate(0);
@@ -25,7 +25,7 @@ public class NotNullValidation_Tests
     public void TheValidationAndDescriptionValues_AreCorrect()
     {
         // Arrange
-        var validator = new NotNullValidation();
+        var validator = new IsNotNullValidation();
 
         // Act
         var validationResult = validator.Validate(null);

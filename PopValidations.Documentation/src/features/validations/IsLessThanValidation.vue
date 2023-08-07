@@ -25,23 +25,30 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
+public class Validator : AbstractValidator<InputObject>
 {
-    public BasicSongValidator()
+    public Validator()
     {
-        Describe(x => x.Duration)
-            .IsLessThan(new ScopedData<double>(2));
+        Describe(x => x.NInteger).IsLessThan(5);
     }
 }'
             ></CodeWindow>
       </template>
+
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(int? NInteger);'
+            ></CodeWindow>
+      </template>
+
       <template #errorreport>
         <CodeWindow
               language="json"
               source='{
     "errors": {
-        "duration": [
-            "Is not less than &#39;2&#39;"
+        "nInteger": [
+            "Is not less than `5`"
         ]
     }
 }'
@@ -50,30 +57,22 @@ public class BasicSongValidator : AbstractValidator
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-    "Song": {
-        "type": "object",
-        "properties": {
-            "trackName": {
-              "type": "string",
-              "nullable": true
-            },
-            "artist": {
-              "$ref": "#/components/schemas/Artist"
-            },
-            "duration": {
-              "maximum": 2,
-              "exclusiveMinimum": true,
-              "type": "number",
-              "format": "double"
-            }
-        },
-        "additionalProperties": false,
-        "x-validation": {
-            "duration": [
-            "Must be less than &#39;2&#39;"
-            ]
+              source='"InputObject": {
+    "type": "object",
+    "properties": {
+        "nInteger": {
+            "maximum": 5,
+            "exclusiveMinimum": true,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
         }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nInteger": [
+            "Must be less than `5`"
+        ]
     }
 }'
             ></CodeWindow>

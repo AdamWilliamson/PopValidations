@@ -58,10 +58,10 @@
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must be one of 'Value1,Value2' or '0,1'"
+                        "Must be one of 'Value1,Value2' or '0,1'."
                     ],
                     "name": [
-                        "Must be one of 'Value1,Value2' or '0,1'"
+                        "Must be one of 'Value1,Value2' or '0,1'."
                     ],
                     "child": []
                 }
@@ -82,10 +82,10 @@
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must be one of 'Value1,Value2' or '0,1'"
+                        "Must be one of 'Value1,Value2' or '0,1'."
                     ],
                     "name": [
-                        "Must be one of 'Value1,Value2' or '0,1'"
+                        "Must be one of 'Value1,Value2' or '0,1'."
                     ]
                 }
             }

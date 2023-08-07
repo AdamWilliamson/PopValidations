@@ -1,0 +1,28 @@
+﻿"InputObject": {
+    "required": [
+        "arrayOfStrings"
+    ],
+    "type": "object",
+    "properties": {
+        "arrayOfStrings": {
+            "minLength": 1,
+            "minItems": 1,
+            "enum": [
+                "Test"
+            ],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "arrayOfStrings": [
+            "Must not be null.",
+            "Must not be null.",
+            "Must not be empty.",
+            "Must equal to 'Test'."
+        ]
+    }
+}

@@ -6,7 +6,7 @@ namespace PopValidations_Tests.Demonstration.Advanced.Validators
     {
         public AdvancedArtistValidator()
         {
-            Describe(x => x.Name).NotNull();
+            Describe(x => x.Name).IsNotNull();
         }
     }
 }

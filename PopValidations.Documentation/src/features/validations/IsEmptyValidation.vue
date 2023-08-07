@@ -24,64 +24,54 @@ export default defineComponent({
         <CodeWindow
               language="csharp"
               source='
-public class BasicSongValidator : AbstractValidator
+public class Validator : AbstractValidator<InputObject>
 {
-    public BasicSongValidator()
+    public Validator()
     {
-        Describe(x => x.TrackName).IsEmpty();
-        Describe(x => x.Artist)
-          .IsEmpty(options => 
-            options
-              .SetErrorMessage("Non Empty Fields are Invalid.")
-              .SetDescription("This Field must be Empty.")
-          );
+        Describe(x => x.NString).IsEmpty();
     }
 }'
             ></CodeWindow>
       </template>
+
+      <template #request>
+        <CodeWindow
+              language="csharp"
+              source='public record InputObject(string? NString);'
+            ></CodeWindow>
+      </template>
+
       <template #errorreport>
         <CodeWindow
               language="json"
               source='{
     "errors": {
-        "trackName": [
+        "nString": [
             "Is not empty"
-        ],
-        "artist": [
-            "Non Empty Fields are Invalid."
         ]
-    }
-}'
+    }'
             ></CodeWindow>
       </template>
       <template #openapi>
         <CodeWindow
               language="json"
-              source='{
-      "Song": {
-        "type": "object",
-        "properties": {
-          "trackName": {
+              source='"InputObject": {
+    "type": "object",
+    "properties": {
+        "nString": {
             "maxLength": 0,
             "maxItems": 0,
             "type": "string",
             "nullable": true
-          },
-          "artist": {
-            "$ref": "#/components/schemas/Artist"
-          }
-        },
-        "additionalProperties": false,
-        "x-validation": {
-          "trackName": [
-            "Must be empty"
-          ],
-          "artist": [
-            "This Field must be Empty."
-          ]
         }
-      }
-    }'
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nString": [
+            "Must be empty"
+        ]
+    }
+}'
             ></CodeWindow>
       </template>
     </PanelsOrTabs>

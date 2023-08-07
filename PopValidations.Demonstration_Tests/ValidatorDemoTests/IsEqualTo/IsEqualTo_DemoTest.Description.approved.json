@@ -1,0 +1,20 @@
+﻿{
+    "results": [
+        {
+            "property": "NString",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Name'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Name"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

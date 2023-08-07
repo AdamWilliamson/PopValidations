@@ -1,0 +1,30 @@
+﻿"InputObject": {
+    "required": [
+        "nString",
+        "string"
+    ],
+    "type": "object",
+    "properties": {
+        "string": {
+            "minLength": 1,
+            "minItems": 1,
+            "type": "string",
+            "nullable": true
+        },
+        "nString": {
+            "minLength": 1,
+            "minItems": 1,
+            "type": "string",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "string": [
+            "Must not be empty."
+        ],
+        "nString": [
+            "Must not be empty."
+        ]
+    }
+}

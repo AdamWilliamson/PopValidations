@@ -1,0 +1,19 @@
+﻿"InputObject": {
+    "type": "object",
+    "properties": {
+        "nInteger": {
+            "enum": [
+                "null"
+            ],
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nInteger": [
+            "Must be null."
+        ]
+    }
+}
