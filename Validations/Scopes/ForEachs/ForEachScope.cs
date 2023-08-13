@@ -169,7 +169,7 @@ internal class ForEachScope<TValidationType, TFieldType> : ScopeBase//, ISubVali
                     fieldDescriptor.PropertyToken,
                     new IndexedPropertyExpressionToken<TValidationType, IEnumerable<TFieldType?>, TFieldType?>(
                         //fieldDescriptor.PropertyToken.Name + $"[{index}]" + Char.MaxValue,
-                        fieldDescriptor.PropertyToken.Name + $"[" + Char.MaxValue,
+                        fieldDescriptor.PropertyToken.Name + $"[{index}" + Char.MaxValue,
                         index
                     ),
                     store

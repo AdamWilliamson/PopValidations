@@ -1,9 +1,9 @@
 ﻿{
     "errors": {
-        "string": [
+        "nString": [
             "Is empty."
         ],
-        "nString": [
+        "string": [
             "Is empty."
         ]
     }

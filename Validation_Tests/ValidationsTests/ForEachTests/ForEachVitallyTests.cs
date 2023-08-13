@@ -1,9 +1,8 @@
-﻿using ApprovalTests;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
-using Newtonsoft.Json;
 using PopValidations;
 using PopValidations_Tests.TestHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,22 +12,11 @@ namespace PopValidations_Tests.ValidationsTests.ForEachTests;
 
 public record VitallyModel(List<string> ArrayOfStrings);
 
-public class Level1VitallyForEachValidator : AbstractValidator<VitallyModel>
-{
-    public Level1VitallyForEachValidator()
-    {
-        DescribeEnumerable(x => x.ArrayOfStrings)
-            .Vitally().IsNotNull()
-            .Vitally().ForEach(x => x
-                .Vitally().IsNotNull()
-                .IsEqualTo("Test")
-            );
-    }
-}
 
-public class Level1ForEachValidator : AbstractValidator<VitallyModel>
+
+public class ForEachValidator : AbstractValidator<VitallyModel>
 {
-    public Level1ForEachValidator()
+    public ForEachValidator()
     {
         DescribeEnumerable(x => x.ArrayOfStrings)
             .Vitally().IsNotNull()
@@ -40,9 +28,9 @@ public class Level1ForEachValidator : AbstractValidator<VitallyModel>
 }
 
 
-public class Level1ForEachMultipleErrorsValidator : AbstractValidator<VitallyModel>
+public class ForEachMultipleErrorsValidator : AbstractValidator<VitallyModel>
 {
-    public Level1ForEachMultipleErrorsValidator()
+    public ForEachMultipleErrorsValidator()
     {
         DescribeEnumerable(x => x.ArrayOfStrings)
             .Vitally().IsNotNull()
@@ -56,17 +44,36 @@ public class Level1ForEachMultipleErrorsValidator : AbstractValidator<VitallyMod
 
 public class ForEachVitallyTests
 {
-    [Fact]
-    public async Task GivenAVitallyFailingFirstItem_ThenItDoesntReportAnyAdditionalErrors()
+    public class VitallyForEachValidator : AbstractValidator<VitallyModel>
+    {
+        public VitallyForEachValidator()
+        {
+            DescribeEnumerable(x => x.ArrayOfStrings)
+                .Vitally().IsNotNull()
+                .Vitally().ForEach(x => x
+                    .Vitally().IsNotNull()
+                    .IsEqualTo("Test")
+                    .IsEqualTo("Test")
+                );
+        }
+    }
+
+    [Theory]
+    [InlineData(null, "Failure", null, 1, 1, 0)]
+    [InlineData("Test", "Test_Fail", null, 1, 2, 1)]
+    [InlineData("Test_Fail", "Test_Fail", null, 1, 2, 0)]
+    public async Task GivenAVitallyFailingFirstItem_ThenItDoesntReportAnyAdditionalErrors(
+        string? item1, string? item2, string? item3, int fields, int fieldErrorCount, int errorfieldIndex
+        )
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1VitallyForEachValidator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new VitallyForEachValidator());
         var testSubject = new VitallyModel(
             ArrayOfStrings: new()
             {
-                null,
-                "Failure",
-                null
+                item1,
+                item2,
+                item3
             }
         );
 
@@ -76,16 +83,16 @@ public class ForEachVitallyTests
         // Assert
         using (new AssertionScope())
         {
-            validationResult.Errors.Should().HaveCount(1);
+            validationResult.Errors.Should().HaveCount(fields);
+            validationResult.Errors[$"ArrayOfStrings[{errorfieldIndex}]"].Should().HaveCount(fieldErrorCount);
         }
     }
-
 
     [Fact]
     public async Task GivenAVitallyFailingFirstItem_ThatDoesntVitallyFailItsOwnValidation_ReportsEqualToError()
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1VitallyForEachValidator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new VitallyForEachValidator());
         var testSubject = new VitallyModel(
             ArrayOfStrings: new()
             {
@@ -111,7 +118,7 @@ public class ForEachVitallyTests
     public async Task GivenAFailingFirstItem_WithoutVitalForEach_MultipleItemsError()
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1ForEachValidator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new ForEachValidator());
         var testSubject = new VitallyModel(
             ArrayOfStrings: new()
             {
@@ -141,7 +148,7 @@ public class ForEachVitallyTests
     public async Task GivenEveryItemFailing_ItShouldReturnMultipleErrorsOnEachItem()
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1ForEachMultipleErrorsValidator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new ForEachMultipleErrorsValidator());
         var testSubject = new VitallyModel(
             ArrayOfStrings: new()
             {
@@ -161,6 +168,48 @@ public class ForEachVitallyTests
             validationResult.GetErrorsForField("ArrayOfStrings[0]").Should().HaveCount(3);
             validationResult.GetErrorsForField("ArrayOfStrings[1]").Should().HaveCount(3);
             validationResult.GetErrorsForField("ArrayOfStrings[2]").Should().HaveCount(3);
+        }
+    }
+
+    public class MultipleForEachValidator : AbstractValidator<VitallyModel>
+    {
+        public MultipleForEachValidator()
+        {
+            DescribeEnumerable(x => x.ArrayOfStrings)
+                .Vitally().IsNotNull()
+                .ForEach(x => x
+                    .IsNull()
+                );
+
+            DescribeEnumerable(x => x.ArrayOfStrings)
+                .Vitally().ForEach(x => x
+                    .IsEqualTo("Test")
+                );
+        }
+    }
+
+    [Fact]
+    public async Task GivenMultipleDescriptionsOfTheSameArray_VitallyForEach_Merges()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new MultipleForEachValidator());
+        var testSubject = new VitallyModel(
+            ArrayOfStrings: new()
+            {
+                "FailingValue",
+                "Failure",
+                "Another Failure"
+            }
+        );
+
+        // Act
+        var validationResult = await runner.Validate(testSubject);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            validationResult.Errors.Should().HaveCount(1);
+            validationResult.GetErrorsForField("ArrayOfStrings[0]").Should().HaveCount(2);
         }
     }
 }

@@ -1,9 +1,15 @@
 ﻿{
     "errors": {
-        "integer": [
+        "allFieldTypesDictionary": [
             "Is empty."
         ],
-        "string": [
+        "allFieldTypesIEnumerable": [
+            "Is empty."
+        ],
+        "allFieldTypesLinkedList": [
+            "Is empty."
+        ],
+        "allFieldTypesList": [
             "Is empty."
         ],
         "decimal": [
@@ -12,31 +18,25 @@
         "double": [
             "Is empty."
         ],
-        "short": [
+        "integer": [
             "Is empty."
         ],
         "long": [
             "Is empty."
         ],
-        "twoComponentTuple": [
+        "short": [
+            "Is empty."
+        ],
+        "string": [
+            "Is empty."
+        ],
+        "struct": [
             "Is empty."
         ],
         "twoComponentNewTupple": [
             "Is empty."
         ],
-        "allFieldTypesList": [
-            "Is empty."
-        ],
-        "allFieldTypesLinkedList": [
-            "Is empty."
-        ],
-        "allFieldTypesIEnumerable": [
-            "Is empty."
-        ],
-        "allFieldTypesDictionary": [
-            "Is empty."
-        ],
-        "struct": [
+        "twoComponentTuple": [
             "Is empty."
         ]
     }

@@ -50,7 +50,8 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
         }
 
         var groupedItems = allItems
-            .GroupBy(x => new { x.PropertyName });
+            .GroupBy(x => new { x.PropertyName }).OrderBy(x => x.Key.PropertyName);
+        //groupedItems.Sort();
 
         var vitallyFailedFields = new List<string>();
         

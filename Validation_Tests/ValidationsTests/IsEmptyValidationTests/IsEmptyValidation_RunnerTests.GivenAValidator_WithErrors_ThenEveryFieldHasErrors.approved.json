@@ -1,18 +1,18 @@
 ﻿{
     "errors": {
-        "string": [
-            "Is not empty."
-        ],
-        "allFieldTypesList": [
-            "Is not empty."
-        ],
-        "allFieldTypesLinkedList": [
+        "allFieldTypesDictionary": [
             "Is not empty."
         ],
         "allFieldTypesIEnumerable": [
             "Is not empty."
         ],
-        "allFieldTypesDictionary": [
+        "allFieldTypesLinkedList": [
+            "Is not empty."
+        ],
+        "allFieldTypesList": [
+            "Is not empty."
+        ],
+        "string": [
             "Is not empty."
         ]
     }

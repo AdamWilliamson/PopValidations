@@ -1,0 +1,16 @@
+﻿{
+    "errors": {
+        "duration": [
+            "Song must have a negative duration."
+        ],
+        "genre": [
+            "Is empty."
+        ],
+        "trackName": [
+            "Is not equal to 'Definitely Not The Correct Song Name.'."
+        ],
+        "trackNumber": [
+            "Is null."
+        ]
+    }
+}

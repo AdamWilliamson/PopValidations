@@ -1,19 +1,19 @@
 ﻿{
     "errors": {
-        "string": [
-            "Is not between 0 and 10 inclusive."
-        ],
-        "allFieldTypesList": [
-            "Is not between 0 and 1 inclusive."
-        ],
-        "allFieldTypesLinkedList": [
+        "allFieldTypesDictionary": [
             "Is not between 0 and 1 inclusive."
         ],
         "allFieldTypesIEnumerable": [
             "Is not between 0 and 1 inclusive."
         ],
-        "allFieldTypesDictionary": [
+        "allFieldTypesLinkedList": [
             "Is not between 0 and 1 inclusive."
+        ],
+        "allFieldTypesList": [
+            "Is not between 0 and 1 inclusive."
+        ],
+        "string": [
+            "Is not between 0 and 10 inclusive."
         ]
     }
 }
