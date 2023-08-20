@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PopValidations.Execution.Stores;
-using PopValidations.Scopes;
 
 namespace PopValidations.Scopes.Whens;
 

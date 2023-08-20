@@ -268,7 +268,7 @@ public class InfoStack
             return InformationDepth
                 .Where(x => x is not null && x.FieldExecutor is not null)
                 .Where(x => x.FieldExecutor != ignore)
-                .LastOrDefault()
+                .FirstOrDefault()
                 ?.FieldExecutor;
         return null;
     }
@@ -278,7 +278,7 @@ public class InfoStack
         if (InformationDepth.Any())
             return InformationDepth
                 .Where(x => x is not null && x.ScopeParent is not null)
-                .LastOrDefault()
+                .FirstOrDefault()
                 ?.ScopeParent;
         return null;
     }
@@ -639,8 +639,13 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
         if (storeItem is IValidatableStoreItem converted)
         {
             var attemptedScopeFieldDescriptor = InformationDepth.GetCurrentFieldExecutor();
+
             if (attemptedScopeFieldDescriptor != null)
+            {
+                converted.SetParent(attemptedScopeFieldDescriptor);
                 converted.ReHomeScopes(attemptedScopeFieldDescriptor);
+            }
+
             return new() { converted };
         }
         else if (storeItem is IExpandableStoreItem expandable)
@@ -659,7 +664,16 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
                 //PushParent(expandable.ScopeParent?.CurrentScope);
 
                 //if (storeItem.FieldDescriptor != null)
-                    //PushFieldDescriptor(storeItem.FieldDescriptor);
+                //PushFieldDescriptor(storeItem.FieldDescriptor);
+            }
+            else
+            {
+                originalInformationDepth = InformationDepth.PushAndParentScope(
+                    null,
+                    storeItem.FieldDescriptor,
+                    //null,
+                    expandable.Decorator
+                );
             }
 
             expandable.ExpandToDescribe(this);
@@ -675,30 +689,30 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
                 }
             }
 
-            if (!expandable.Component.IgnoreScope)
-            {
-                InformationDepth.PopToCount(originalInformationDepth);
-                //if (storeItem.FieldDescriptor != null)
-                //    InformationDepth.PopToBeforeDescriptor();//PopFieldDescriptor();
-                //InformationDepth.PopToBeforeScopeParent(); //PopParent();
-                //InformationDepth.Pop();//PopDecorator();
-            }
+            // if (!expandable.Component.IgnoreScope)
+            // {
+            InformationDepth.PopToCount(originalInformationDepth);
+            //if (storeItem.FieldDescriptor != null)
+            //    InformationDepth.PopToBeforeDescriptor();//PopFieldDescriptor();
+            //InformationDepth.PopToBeforeScopeParent(); //PopParent();
+            //InformationDepth.Pop();//PopDecorator();
+            //}
         }
 
         return results;
     }
-    
-    private ValidationFieldDescriptorOutline GenerateName(IFieldDescriptorOutline outline)
-    {
-        var fieldParent = InformationDepth.GetCurrentFieldExecutor();//.GetAllFieldParents();
 
-        //if (!fieldParents.Any())
-        if (fieldParent == null)
-            return new ValidationFieldDescriptorOutline(outline.PropertyName, outline);
+    //private ValidationFieldDescriptorOutline GenerateName(IFieldDescriptorOutline outline)
+    //{
+    //    var fieldParent = InformationDepth.GetCurrentFieldExecutor();//.GetAllFieldParents();
 
-        //var ownerField = fieldParents.Last();// FieldParents.Where(x => x is not null).First();
-        return new ValidationFieldDescriptorOutline(outline.AddTo(fieldParent.PropertyName), outline);
-    }
+    //    //if (!fieldParents.Any())
+    //    if (fieldParent == null)
+    //        return new ValidationFieldDescriptorOutline(outline.PropertyName, outline);
+
+    //    //var ownerField = fieldParents.Last();// FieldParents.Where(x => x is not null).First();
+    //    return new ValidationFieldDescriptorOutline(outline.AddTo(fieldParent.PropertyName), outline);
+    //}
 
     internal List<IValidatableStoreItem> ExpandToValidateRecursive<TValidationType>(
         IStoreItem storeItem,

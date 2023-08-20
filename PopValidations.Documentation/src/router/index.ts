@@ -3,6 +3,7 @@ import Home from "@/features/home/home.vue";
 
 //== Geting Started
 import Installation from "@/features/getting-started/installation.vue";
+import MainValidators from "@/features/getting-started/MainValidators.vue";
 
 //== Demonstrations
 import BasicDemonstration from "@/features/demonstrations/basic.vue";
@@ -34,7 +35,10 @@ import IsLessThanValidation from "@/features/validations/IsLessThanValidation.vu
 import IsLessThanOrEqualToValidation from "@/features/validations/IsLessThanOrEqualToValidation.vue";
 import IsNotNullValidation from "@/features/validations/IsNotNullValidation.vue";
 import IsNotEmptyValidation from "@/features/validations/IsNotEmptyValidation.vue";
-import ViallyValidation from "@/features/validations/Vitally.vue";
+import VitallyValidation from "@/features/validations/Vitally.vue";
+import SetValidation from "@/features/validations/SetValidation.vue";
+import Include from "@/features/validations/Include.vue";
+import When from "@/features/validations/When.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,6 +57,11 @@ const router = createRouter({
           name: "Installation",
           component: Installation,
         },
+        {
+          path: "/getting-started/mainvalidators",
+          name: "MainValidators",
+          component: MainValidators,
+        }
       ],
     },
     {
@@ -120,11 +129,6 @@ const router = createRouter({
       redirect: "/",
       children: [
         {
-          path: "/validation/vitally",
-          name:"VitallyValidation",
-          component: ViallyValidation
-        },
-        {
           path: "/validation/isnull",
           name: "IsNullValidation",
           component: IsNullValidation,
@@ -183,6 +187,26 @@ const router = createRouter({
           path: "/validation/isnotempty",
           name: "IsNotEmptyValidation",
           component: IsNotEmptyValidation,
+        },
+        {
+          path: "/validation/vitally",
+          name:"VitallyValidation",
+          component: VitallyValidation
+        },
+        {
+          path:"/validation/setvalidation",
+          name:"SetValidation",
+          component: SetValidation
+        },
+        {
+          path:"/validation/include",
+          name:"Include",
+          component: Include
+        },
+        {
+          path:"/validation/when",
+          name:"When",
+          component: When
         }
       ]
     }

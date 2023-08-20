@@ -14,8 +14,8 @@ export default defineComponent({
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title><h3>Vitally</h3></v-card-title>
-          <v-card-text>Vitally, is a Validation modification. It ensures no validations run, if the validation right after it, fails. This ensures you can test an object for nullability, for example, and not run any validation or custom validations that may fail with less than useful error messages.</v-card-text>
+          <v-card-title><h3>SetValidation</h3></v-card-title>
+          <v-card-text>Breaking up objects into parent and children can help make sense of your data.  SetValidation allows you to import a validator for a subobject.</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -28,9 +28,17 @@ export default defineComponent({
 {
     public Validator()
     {
+        Describe(x => x.Child)
+            .SetValidator(new ChildValidator());
+    }
+}
+
+public class ChildValidator : AbstractSubValidator<ChildInputObject>
+{
+    public ChildValidator()
+    {
         Describe(x => x.NString)
-          .Vitally().IsNotEmpty()
-          .IsEqualTo("Test");
+            .IsNotNull();
     }
 }'
             ></CodeWindow>
@@ -39,7 +47,8 @@ export default defineComponent({
       <template #request>
         <CodeWindow
               language="csharp"
-              source='public record InputObject(string? NString);'
+              source='    public record InputObject(ChildInputObject? Child);
+public record ChildInputObject(string? NString);'
             ></CodeWindow>
       </template>
 
@@ -48,8 +57,8 @@ export default defineComponent({
               language="json"
               source='{
     "errors": {
-        "nString": [
-            "Is empty."
+        "child.NString": [
+            "Is null."
         ]
     }
 }'
@@ -58,27 +67,20 @@ export default defineComponent({
       <template #openapi>
         <CodeWindow
               language="json"
-              source='"InputObject": {
+              source='"ChildInputObject": {
     "required": [
         "nString"
     ],
     "type": "object",
     "properties": {
         "nString": {
-            "minLength": 1,
-            "minItems": 1,
-            "enum": [
-                "Test"
-            ],
-            "type": "string",
-            "nullable": true
+            "type": "string"
         }
     },
     "additionalProperties": false,
     "x-validation": {
         "nString": [
-            "Must not be empty.",
-            "Must equal to `Test`"
+            "Must not be null."
         ]
     }
 }'

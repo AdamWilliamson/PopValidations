@@ -44,6 +44,13 @@ export default defineComponent({
           :to="{ name: 'Installation' }"
           link
         ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Main Validators"
+          value="MainValidators"
+          :to="{ name: 'MainValidators' }"
+          link
+        ></v-list-item>
 
         <v-list-subheader color="secondary">Demonstrations</v-list-subheader>
 
@@ -82,13 +89,7 @@ export default defineComponent({
         ></v-list-item>
 
         <v-list-subheader color="secondary">Validations</v-list-subheader>
-        <v-list-item
-          color="secondary"
-          title="Vitally"
-          value="Vitally"
-          :to="{ name: 'VitallyValidation' }"
-          link
-        ></v-list-item>
+        
         <v-list-item
           color="secondary"
           title="Is Null"
@@ -171,6 +172,38 @@ export default defineComponent({
           title="Is"
           value="Is"
           :to="{ name: 'IsValidation' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="Vitally"
+          value="Vitally"
+          :to="{ name: 'VitallyValidation' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="SetValidation"
+          value="SetValidation"
+          :to="{ name: 'SetValidation' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="Include"
+          value="Include"
+          :to="{ name: 'Include' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="When"
+          value="When"
+          :to="{ name: 'When' }"
           link
         ></v-list-item>
 

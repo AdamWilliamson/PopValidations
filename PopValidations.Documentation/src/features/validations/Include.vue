@@ -14,8 +14,8 @@ export default defineComponent({
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title><h3>Vitally</h3></v-card-title>
-          <v-card-text>Vitally, is a Validation modification. It ensures no validations run, if the validation right after it, fails. This ensures you can test an object for nullability, for example, and not run any validation or custom validations that may fail with less than useful error messages.</v-card-text>
+          <v-card-title><h3>Include</h3></v-card-title>
+          <v-card-text>Breaking up a set of validations into reusable components, or into similar validations, can make managing your code easier. To allow you to do this, Include allows you to merge multiple validation classes into 1 set of validations.</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -28,9 +28,16 @@ export default defineComponent({
 {
     public Validator()
     {
+        Include(new SecondaryValidator());
+    }
+}
+
+public class SecondaryValidator : AbstractSubValidator<InputObject>
+{
+    public SecondaryValidator()
+    {
         Describe(x => x.NString)
-          .Vitally().IsNotEmpty()
-          .IsEqualTo("Test");
+            .IsNotNull();
     }
 }'
             ></CodeWindow>
@@ -49,7 +56,7 @@ export default defineComponent({
               source='{
     "errors": {
         "nString": [
-            "Is empty."
+            "Is null."
         ]
     }
 }'
@@ -65,20 +72,13 @@ export default defineComponent({
     "type": "object",
     "properties": {
         "nString": {
-            "minLength": 1,
-            "minItems": 1,
-            "enum": [
-                "Test"
-            ],
-            "type": "string",
-            "nullable": true
+            "type": "string"
         }
     },
     "additionalProperties": false,
     "x-validation": {
         "nString": [
-            "Must not be empty.",
-            "Must equal to `Test`"
+            "Must not be null."
         ]
     }
 }'

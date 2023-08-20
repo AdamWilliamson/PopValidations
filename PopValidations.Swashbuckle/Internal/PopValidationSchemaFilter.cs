@@ -133,36 +133,16 @@ public class PopValidationSchemaFilter : ISchemaFilter
                     if (outcomeSet is null)
                         continue;
 
-                    foreach (
-                        var outcome in outcomeSet?.Outcomes
-                            ?? Enumerable.Empty<DescriptionOutcome>()
-                    )
-                    {
-                        // for each converter registered in the config
-                        foreach (var converter in config.Converters)
-                        {
-                            // Check if it supports the descriptor outcome
-                            if (converter.Supports(outcome))
-                            {
-                                //Incomplete
-                                if (PropertyValidationLevel.HasFlag(ValidationLevel.OpenApi)) 
-                                {
-                                    converter.UpdateSchema(model, model.Properties[openApiPropName], openApiPropName, outcome);
-                                }
+                    ConvertValiatorsToOpenApiDescriptions(
+                        model, 
+                        endPointObjectextention, 
+                        openApiPropName, 
+                        PropertyValidationLevel, 
+                        fieldName, 
+                        customRulesArray, 
+                        outcomeSet
+                    );
 
-                                if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttribute))
-                                {
-                                    converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, customRulesArray);
-                                }
-
-                                if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
-                                {
-                                    var array = InitArray(endPointObjectextention, fieldName);
-                                    converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, array);
-                                }
-                            }
-                        }
-                    }
                 }
 
                 //if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
@@ -216,6 +196,138 @@ public class PopValidationSchemaFilter : ISchemaFilter
                 }
             }
         }
+    }
+
+    private List<(string, DescriptionOutcome)> FlattenOutcomes(DescriptionItemResult descriptionItem)
+    {
+        //string Property = descriptionItem.Property;
+        var endOutcomes = new List<(string, DescriptionOutcome)>();
+
+        if (descriptionItem == null) return endOutcomes;
+        if (descriptionItem.Outcomes?.Any() == true)
+        {
+            foreach (var outcome in descriptionItem.Outcomes)
+            {
+                if (outcome == null) continue;
+
+                endOutcomes.Add((string.Empty, outcome!));
+            }
+        }
+
+        if (descriptionItem.ValidationGroups?.Any() == true)
+        {
+            foreach (var group in descriptionItem.ValidationGroups)
+            {
+                endOutcomes.AddRange(FlattenRecurse(string.Empty, group));
+            }
+        }
+
+        return endOutcomes;
+    }
+
+    private List<(string, DescriptionOutcome)> FlattenRecurse(string existing, DescriptionGroupResult group)
+    {
+        var endOutcomes = new List<(string, DescriptionOutcome)>();
+        var additive = string.IsNullOrWhiteSpace(existing) ? group.Description : config.MultiGroupIndicator + group.Description;
+
+        if (group.Outcomes?.Any() == true)
+        {
+            foreach(var outcome in group.Outcomes)
+            {
+                if (outcome == null) continue;
+
+                endOutcomes.Add(new (existing + additive, outcome!));
+            }
+        }
+
+        if (group.Children?.Any() == true)
+        {
+            foreach (var child in group.Children)
+            {
+                endOutcomes.AddRange(FlattenRecurse(existing + additive, child));
+            }
+        }
+
+        return endOutcomes;
+    }
+
+    private void ConvertValiatorsToOpenApiDescriptions(
+        OpenApiSchema model, 
+        OpenApiObject endPointObjectextention, 
+        string openApiPropName, 
+        ValidationLevel PropertyValidationLevel, 
+        string fieldName, 
+        OpenApiArray customRulesArray, 
+        DescriptionItemResult? outcomeSet)
+    {
+
+        if (outcomeSet == null) return;
+
+        var validationArray = new PopValidationArray(customRulesArray);
+
+        foreach (
+            var (owner, outcome) in FlattenOutcomes(outcomeSet)
+        //var outcome in outcomeSet?.Outcomes
+        //   ?? Enumerable.Empty<DescriptionOutcome>()
+        )
+        {
+            if (!string.IsNullOrWhiteSpace(owner))
+            {
+                validationArray.SetLineHeader(owner + config.GroupResultIndicator);
+            }
+            else
+            {
+                validationArray.SetLineHeader(string.Empty);
+            }
+            // for each converter registered in the config
+            foreach (var converter in config.Converters)
+            {
+                // Check if it supports the descriptor outcome
+                if (converter.Supports(outcome))
+                {
+                    //Incomplete
+                    if (string.IsNullOrWhiteSpace(owner) && PropertyValidationLevel.HasFlag(ValidationLevel.OpenApi))
+                    {
+                        converter.UpdateSchema(model, model.Properties[openApiPropName], openApiPropName, outcome);
+                    }
+
+                    if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttribute))
+                    {
+                        converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, validationArray);
+                    }
+
+                    if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
+                    {
+                        var array = new PopValidationArray(InitArray(endPointObjectextention, fieldName));
+                        array.SetLineHeader(owner);
+                        converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, array);
+                    }
+                }
+            }
+        }
+
+        //foreach (
+        //    var (owner, outcome) in FlattenOutcomes(outcomeSet)
+        //)
+        //{
+        //    foreach (var converter in config.Converters)
+        //    {
+        //        // Check if it supports the descriptor outcome
+        //        if (converter.Supports(outcome))
+        //        {
+        //            if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttribute))
+        //            {
+        //                converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, customRulesArray);
+        //            }
+
+        //            if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
+        //            {
+        //                var array = InitArray(endPointObjectextention, fieldName);
+        //                converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, array);
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     public static bool IsGenericList(Type oType)

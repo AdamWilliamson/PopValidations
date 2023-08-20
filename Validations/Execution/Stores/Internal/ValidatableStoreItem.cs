@@ -77,8 +77,10 @@ public class ValidatableStoreItem : IValidatableStoreItem
             ChildStoreItem.ReHomeScopes(attemptedScopeFieldDescriptor);
             return;
         }
-
-        Component?.ReHomeScopes(attemptedScopeFieldDescriptor);
+        else
+        {
+            Component?.ReHomeScopes(attemptedScopeFieldDescriptor);
+        }
     }
 
     public Task InitScopes(object? instance)

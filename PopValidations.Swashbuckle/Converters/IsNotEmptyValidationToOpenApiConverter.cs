@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using PopValidations.Execution.Validations;
 using PopValidations.Swashbuckle.Converters.Base;
 using PopValidations.Swashbuckle.Helpers;
+using PopValidations.Swashbuckle.Internal;
 using PopValidations.Validations;
 
 namespace PopValidations.Swashbuckle.Converters;
@@ -39,9 +40,9 @@ public class IsNotEmptyValidationToOpenApiConverter : IValidationToOpenApiConver
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description,
-        OpenApiArray attributeDescription
+        PopValidationArray attributeDescription
     )
     {
-        attributeDescription.Add(new OpenApiString(description.Message));
+        attributeDescription.Add(description.Message);
     }
 }

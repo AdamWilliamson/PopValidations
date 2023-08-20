@@ -1,0 +1,68 @@
+﻿{
+    "results": [
+        {
+            "property": "DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Test3'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Test3"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When Check is True",
+                    "description": "When Check is True",
+                    "children": [
+                        {
+                            "name": "When 10 == 10",
+                            "description": "When 10 == 10",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to 'Test1'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "Test1"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "When 5 == 5",
+                            "description": "When 5 == 5",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to 'Test2'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "Test2"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsNotEmptyValidation",
+                            "message": "Must not be empty.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

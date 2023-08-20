@@ -21,6 +21,8 @@ public class OpenApiConfig
     public string NewLine { get; set; } = Environment.NewLine;
     public string OrdinalIndicator { get; set; } = "[n]";
     public string ChildIndicator { get; set; } = ".";
+    public string MultiGroupIndicator { get; set; } = " & ";
+    public string GroupResultIndicator { get; set; } = " : ";
 
     public List<IValidationToOpenApiConverter> Converters = new()
     {
