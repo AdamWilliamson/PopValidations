@@ -1,48 +1,12 @@
 ﻿{
     "results": [
         {
-            "property": "TrackNumber",
-            "outcomes": [
-                {
-                    "validator": "IsNotNullValidation",
-                    "message": "Must not be null.",
-                    "values": []
-                },
-                {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '-1'.",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "-1"
-                        }
-                    ]
-                },
-                {
-                    "validator": "IsLessThanValidation",
-                    "message": "Must be less than '200'.",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "200"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
-        },
-        {
             "property": "TrackName",
             "outcomes": [
                 {
-                    "validator": "IsEqualToValidation",
-                    "message": "Must equal to 'Definitely Not The Correct Song Name.'.",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "Definitely Not The Correct Song Name."
-                        }
-                    ]
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
                 }
             ],
             "validationGroups": []
@@ -51,42 +15,45 @@
             "property": "Duration",
             "outcomes": [
                 {
-                    "validator": "IsEqualToValidation",
-                    "message": "Songs must force you to travel slowly backwards in time to listen to.",
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '2'.",
                     "values": [
                         {
                             "key": "value",
-                            "value": "-1"
+                            "value": "2"
                         }
                     ]
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "Genre",
-            "outcomes": [
-                {
-                    "validator": "IsNotEmptyValidation",
-                    "message": "Must not be empty.",
-                    "values": []
                 },
                 {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between 20 and 400 inclusive.",
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '5'.",
                     "values": [
                         {
-                            "key": "startValue",
-                            "value": "20"
-                        },
-                        {
-                            "key": "endValue",
-                            "value": "400"
+                            "key": "value",
+                            "value": "5"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "validationGroups": [
+                {
+                    "name": "When track is 13",
+                    "description": "When track is 13",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsLessThanValidation",
+                            "message": "The 13th song must be a shorter than 1 minute long intermission.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

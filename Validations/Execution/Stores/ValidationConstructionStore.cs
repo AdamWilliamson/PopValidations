@@ -248,11 +248,11 @@ public class InfoStack
     {
         var decorators = new List<Func<IValidatableStoreItem,IValidatableStoreItem>>();
 
-        for(var x = InformationDepth.Count - 1; x >= 0; x--)
+        for(var x = 0; x < InformationDepth.Count; x++)
         {
             if (InformationDepth.ElementAt(x).Decorator == null)
             {
-                break;
+                continue;
             }
 
             decorators.Add(InformationDepth.ElementAt(x).Decorator!);
@@ -539,6 +539,7 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
             }
             else if (item is IValidatableStoreItem validatable)
             {
+                var decorators = InformationDepth.GetScopedDecorators();
                 int infoCount = InformationDepth.Count();
                 //int pushedParents = 
                     PushParentTree(validatable.ScopeParent);
@@ -555,6 +556,7 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
                 if (validatable.FieldDescriptor == null)
                     throw new Exception("FieldDescriptor is null on IValidatable.");
 
+
                 var scopeParent = new ScopeParent(
                     validatable.ScopeParent?.CurrentScope,
                     InformationDepth.GetCurrentScopeParent()
@@ -562,7 +564,7 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
                 validatable.ScopeParent = scopeParent;
 
                 IValidatableStoreItem decoratedItem = validatable;
-                foreach (var decorator in InformationDepth.GetScopedDecorators()) //Decorators.Where(d => d is not null))
+                foreach (var decorator in decorators) //Decorators.Where(d => d is not null))
                 {
                     decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
                 }

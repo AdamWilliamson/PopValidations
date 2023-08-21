@@ -1,16 +1,11 @@
 ﻿{
     "errors": {
         "duration": [
-            "Song must have a negative duration."
-        ],
-        "genre": [
-            "Is empty."
+            "Is not greater than '2'.",
+            "The 13th Song must be an intermission."
         ],
         "trackName": [
-            "Is not equal to 'Definitely Not The Correct Song Name.'."
-        ],
-        "trackNumber": [
-            "Is null."
+            "Is empty."
         ]
     }
 }
