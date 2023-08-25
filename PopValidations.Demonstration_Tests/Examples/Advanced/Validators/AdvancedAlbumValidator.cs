@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using PopValidations;
+using PopValidations_Tests.Demonstration.Advanced.Validators;
 using static PopValidations_Tests.Demonstration.Advanced.Validators.AdvancedSongValidator;
 
-namespace PopValidations_Tests.Demonstration.Advanced.Validators;
-
+namespace PopValidations.Demonstration_Tests.Examples.Advanced.Validators;
 public class DesignedToBePatternMatched
 {
     private readonly AdvancedAlbum album;
@@ -16,10 +16,10 @@ public class DesignedToBePatternMatched
 
     public AlbumType? Type => album.Type;
     public bool HasAlbumType => album.Type == null;
-    public bool HasSufficientlyLongName => album.Title == null? false : album.Title.Length > 5;
+    public bool HasSufficientlyLongName => album.Title == null ? false : album.Title.Length > 5;
 }
 
-public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
+public class AdvancedAlbumValidator : AbstractValidator<Album>
 {
     public AdvancedAlbumValidator(IFakeAlbumDetailsChecker fakeAlbumDetailsChecker)
     {
@@ -87,7 +87,8 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
 
         When("Album is Collaboration",
             (album) => Task.FromResult(album?.Type == AlbumType.Collaboration),
-            () => {
+            () =>
+            {
                 Include(new CollaborationAlbumValidator());
                 //Describe(x => x.Artist).IsNull();
             });

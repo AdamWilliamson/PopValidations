@@ -1,87 +1,69 @@
-﻿//using ApprovalTests;
-//using PopValidations_Tests.Demonstration.Advanced.Validators;
-//using PopValidations_Tests.TestHelpers;
-//using System.Threading.Tasks;
-//using Xunit;
+﻿using ApprovalTests;
+using Newtonsoft.Json.Linq;
+using PopValidations.Swashbuckle_Tests.Helpers;
+using PopValidations_Tests.TestHelpers;
+using System.Threading.Tasks;
+using Xunit;
 
-//namespace PopValidations_Tests.Demonstration.Advanced;
+namespace PopValidations.Demonstration_Tests.Examples.Advanced;
 
-//public class AdvancedDemonstrationTests
-//{
-//    [Fact]
-//    public async Task AdvancedValidator_ValidateWithValidSingleArtistAlbum_ToJson()
-//    {
-//        // Arrange
-//        var fakeAlbumDetailChecker = new FakeAlbumDetailsChecker();
-//        var runner = ValidationRunnerHelper.BasicRunnerSetup(new AdvancedAlbumValidator(fakeAlbumDetailChecker));
+public class AdvancedDemonstrationTests
+{
+    [Fact]
+    public async Task Validation()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new AdvancedDemonstration.AlbumSubmissionValidator());
+        var album = new AdvancedDemonstration.Album(
+            "Disturbed",
+            "Rock",
+            new()
+            {
+                new ModerateDemonstration.ModerateSong("Down With The Sickness", -1, "", 17, "Pop"),
+                null
+            }
+        );
 
-//        // Act
-//        var results = await runner.Validate(AdvancedTestData.ValidSingleArtist());
-//        var json = JsonConverter.ToJson(results);
+        // Act
+        var results = await runner.Validate(album);
+        var json = JsonConverter.ToJson(results);
 
-//        // Assert
-//        Approvals.VerifyJson(json);
-//    }
+        // Assert
+        Approvals.VerifyJson(json);
+    }
 
-//    [Fact]
-//    public async Task AdvancedValidator_ValidateWithInValidSingleArtistAlbum_ToJson()
-//    {
-//        // Arrange
-//        var fakeAlbumDetailChecker = new FakeAlbumDetailsChecker();
-//        var runner = ValidationRunnerHelper.BasicRunnerSetup(new AdvancedAlbumValidator(fakeAlbumDetailChecker));
+    [Fact]
+    public void Description()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new AdvancedDemonstration.AlbumSubmissionValidator());
 
-//        // Act
-//        var results = await runner.Validate(AdvancedTestData.InValidSingleArtist());
-//        var json = JsonConverter.ToJson(results);
+        // Act
+        var results = runner.Describe();
+        var json = JsonConverter.ToJson(results);
 
-//        // Assert
-//        Approvals.VerifyJson(json);
-//    }
+        // Assert
+        Approvals.VerifyJson(json);
+    }
 
+    [Fact]
+    public async Task OpenApi()
+    {
+        // Arrange
+        var config = new WebApiConfig();
+        var setup = new TestSetup<
+               AdvancedDemonstration.TestController,
+               AdvancedDemonstration.AlbumSubmissionValidator,
+               AdvancedDemonstration.AlbumSubmission
+           >();
 
-//    [Fact]
-//    public async Task AdvancedValidator_ValidateWithValidCollaborationAlbum_ToJson()
-//    {
-//        // Arrange
-//        var fakeAlbumDetailChecker = new FakeAlbumDetailsChecker();
-//        var runner = ValidationRunnerHelper.BasicRunnerSetup(new AdvancedAlbumValidator(fakeAlbumDetailChecker));
+        // Act
+        var helper = await setup.GetHelper(config);
+        JObject json = JObject.Parse(helper.Content);
+        var match = json["components"]["schemas"];//.FirstOrDefault();
 
-//        // Act
-//        var results = await runner.Validate(AdvancedTestData.ValidCollaboration());
-//        var json = JsonConverter.ToJson(results);
-
-//        // Assert
-//        Approvals.VerifyJson(json);
-//    }
-
-//    [Fact]
-//    public async Task AdvancedValidator_ValidateWithInValidCollaborationAlbum_ToJson()
-//    {
-//        // Arrange
-//        var fakeAlbumDetailChecker = new FakeAlbumDetailsChecker();
-//        var runner = ValidationRunnerHelper.BasicRunnerSetup(new AdvancedAlbumValidator(fakeAlbumDetailChecker));
-
-//        // Act
-//        var results = await runner.Validate(AdvancedTestData.InValidCollaboration());
-//        var json = JsonConverter.ToJson(results);
-
-//        // Assert
-//        Approvals.VerifyJson(json);
-//    }
-
-//    [Fact]
-//    public void BasicValidator_Describe_ToJson()
-//    {
-//        // Arrange
-//        var fakeAlbumDetailChecker = new FakeAlbumDetailsChecker();
-//        var runner = ValidationRunnerHelper.BasicRunnerSetup(new AdvancedAlbumValidator(fakeAlbumDetailChecker));
-
-//        // Act
-//        var results = runner.Describe();
-//        var json = JsonConverter.ToJson(results);
-
-//        // Assert
-//        Approvals.VerifyJson(json);
-//    }
-//}
+        // Assert
+        Approvals.VerifyJson(match?.ToString(Newtonsoft.Json.Formatting.None));
+    }
+}
 

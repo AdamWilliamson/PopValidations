@@ -1,24 +1,25 @@
 ﻿using ApprovalTests;
-using System;
 using System.Threading.Tasks;
 using PopValidations_Tests.TestHelpers;
 using Xunit;
+using PopValidations.Swashbuckle_Tests.Helpers;
+using Newtonsoft.Json.Linq;
 
 namespace PopValidations.Demonstration_Tests.Examples.Moderate;
 
 public class ModerateDemonstrationTests
 {
     [Fact]
-    public async Task BasicValidator_Validate_ToJson()
+    public async Task Validation()
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new ModerateAlbumValidator());
-        var album = new ModerateAlbum(
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new ModerateDemonstration.AlbumValidator());
+        var album = new ModerateDemonstration.ModerateAlbum(
             "Disturbed",
-            "https://www.disturbed1.com/sites/g/files/g2000015236/files/inline-images/Divisive_Cover-FINAL_1.jpg",
-            DateTime.MinValue,
+            "Rock",
             new()
             {
+                new ModerateDemonstration.ModerateSong("Down With The Sickness", -1, "", 17, "Pop"),
                 null
             }
         );
@@ -32,10 +33,10 @@ public class ModerateDemonstrationTests
     }
 
     [Fact]
-    public void AlbumValidator_Describe_ToJson()
+    public void Description()
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new ModerateAlbumValidator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new ModerateDemonstration.AlbumValidator());
 
         // Act
         var results = runner.Describe();
@@ -43,5 +44,25 @@ public class ModerateDemonstrationTests
 
         // Assert
         Approvals.VerifyJson(json);
+    }
+
+    [Fact]
+    public async Task OpenApi()
+    {
+        // Arrange
+        var config = new WebApiConfig();
+        var setup = new TestSetup<
+               ModerateDemonstration.TestController,
+               ModerateDemonstration.AlbumValidator,
+               ModerateDemonstration.ModerateAlbum
+           >();
+
+        // Act
+        var helper = await setup.GetHelper(config);
+        JObject json = JObject.Parse(helper.Content);
+        var match = json["components"]["schemas"];//.FirstOrDefault();
+
+        // Assert
+        Approvals.VerifyJson(match?.ToString(Newtonsoft.Json.Formatting.None));
     }
 }

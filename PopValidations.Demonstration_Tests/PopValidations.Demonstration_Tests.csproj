@@ -62,21 +62,6 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
     </None>
-    <None Update="Examples\Moderate\ModerateDemonstrationTests.AlbumValidator_Describe_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
-    <None Update="Examples\Moderate\ModerateDemonstrationTests.BasicValidator_Describe_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
-    <None Update="Examples\Moderate\ModerateDemonstrationTests.BasicValidator_Validate_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
   </ItemGroup>
 
 </Project>
