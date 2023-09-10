@@ -1,6 +1,7 @@
 ﻿using PopValidations.Swashbuckle_Tests.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PopValidations.Demonstration_Tests.Examples.Advanced;
@@ -51,6 +52,7 @@ public static class AdvancedDemonstration
 
     public enum AlbumType
     {
+        Single,
         SingleArtist,
         Collaboration,
         Compilation
@@ -68,85 +70,161 @@ public static class AdvancedDemonstration
 
     public class AlbumValidator : AbstractSubValidator<Album>
     {
-        public AlbumValidator()
+        public AlbumValidator(AlbumVerificationService albumVerificationService)
         {
-            Describe(x => x.Title).Vitally().IsNotEmpty();
-            
-            Describe(x => x.Type).Vitally().IsNotNull();
-            
-            DescribeEnumerable(x => x.Artists).Vitally().IsNotNull()
-                .ForEach(x => x.Vitally().IsNotNull().SetValidator(new ArtistValidator()));
+            //Describe(x => x.Title).Vitally().IsNotEmpty();
 
-            Describe(x => x.CoverImageUrl).Vitally().IsNotEmpty();
+            //Describe(x => x.Type).Vitally().IsNotNull();
 
-            Describe(x => x.Created)
-                .Vitally().IsNotNull()
-                .IsGreaterThan(new DateTime(1700, 0, 0, 0, 0, 0, 0))
-                .IsLessThan(DateTime.Now);
+            //DescribeEnumerable(x => x.Artists).Vitally().IsNotNull()
+            //    .ForEach(x => x.Vitally().IsNotNull().SetValidator(new ArtistValidator()));
 
-            DescribeEnumerable(x => x.Songs)
-                .ForEach(song => song.SetValidator(new SongValidator()));
+            //Describe(x => x.CoverImageUrl).Vitally().IsNotEmpty();
 
-            DescribeEnumerable(x => x.Songs)
-                .ForEach(song => song.Vitally().IsNotNull().IsLengthInclusivelyBetween(3, 45));
+            //Describe(x => x.Created)
+            //    .Vitally().IsNotNull()
+            //    .IsGreaterThan(new DateTime(1700, 01, 01, 13, 0, 0, 0))
+            //    .IsLessThan(new DateTime(2024, 01, 01, 13, 0, 0, 0));
 
-            Scope("get X Data",
-                (album) => Task.FromResult<DesignedToBePatternMatched?>(new DesignedToBePatternMatched(album)),
-                (data) =>
+            //DescribeEnumerable(x => x.Songs)
+            //    .Vitally().IsNotNull()
+            //    .IsLengthInclusivelyBetween(3, 45)
+            //    .ForEach(song => song.Vitally().IsNotNull().SetValidator(new SongValidator()));
+
+            Scope("Validate Album",
+                async (album) => await albumVerificationService.GetAlbumChecker(album),
+                (albumChecker) =>
                 {
                     When(
-                        "Artist is not null",
-                        (album) => Task.FromResult(album.Artist != null),
+                        "Album is Compliation",
+                        (album) => Task.FromResult(album.Type == AlbumType.Compilation),
                         () =>
                         {
-                            Describe(x => x.Artist).SetValidator(new AdvancedArtistValidator());
-                            Describe(x => x.Artist!.Name)
-                                .IsEqualTo(
-                                    data.To("'artist' with Something appended", artist => Task.FromResult<string?>(artist + "Something")),
-                                    o => o.WithErrorMessage("{{value}} is ensured to be false by adding Something to the end.")
+                            Describe(x => x.Artists)
+                                .Is(
+                                    "Validated to {{value}}",
+                                    "Something",
+                                    albumChecker.To<bool>("have different artists", x => x is { IsAllTheSameArtist: true })
                                 );
                         });
 
-                    Describe(x => x.Created)
-                        .Is(
-                            "Has a SufficientlyLong Name",
-                            "Name is too short",
-                            c => data.To("", x => Task.FromResult(x is { HasSufficientlyLongName: true }))
-                        );
+                    When(
+                        "Album is Single Artist",
+                        (album) => Task.FromResult(album.Type == AlbumType.SingleArtist),
+                        () =>
+                        {
+                            Describe(x => x.Artists)
+                                .Is(
+                                    "Must {{value}}",
+                                    "Does not {{value}}",
+                                    albumChecker.To("have all the same artists", x => x is { IsAllTheSameArtist: false })
+                                );
+                        });
                 }
             );
 
-            ScopeWhen("Album constains songs we don't own the copyright to",
-                (album) => Task.FromResult(album.Created != null && album.Created?.Year > 1900),
-                "Collection of Song to Ownership",
-                (album) => fakeAlbumDetailsChecker.DoWeOwnRightsToSong(album.Songs),
-                (SongOwnedPair) =>
+            ScopeWhen(
+                "When Album is Collaboration",
+                (album) => Task.FromResult(album.Type == AlbumType.Collaboration),
+                "Get Complex Album Validator",
+                (album) => albumVerificationService.GetAlbumChecker(album),
+                (albumChecker) =>
                 {
                     DescribeEnumerable(x => x.Songs)
-                        .Vitally().ForEach((song) =>
-                        {
-                            song.IsNotNull()
-                            .Is(
-                                "{{value}} Was not found in list of songs we own the rights to",
-                                "Checks to ensure the song's rights are owned by us.",
-                                s => SongOwnedPair.To(
-                                    "Matches Track and Is Owned",
-                                    x => Task.FromResult(x.Any(u => u.Item1!.TrackName == s.TrackName && u.Item2)))
-                            );
-                        });
+                        .Vitally().Is(
+                            "All songs must contain atleast one album artist.",
+                            "The songs in this album, being collaboration, must contain atleast 1 album artist.",
+                            albumChecker.To("", i => i.AllSongsContainAlbumArtist is true)
+                        );
+                });
+
+            ScopeWhen(
+                "When Album is Single",
+                "Need the Database Checker to When",
+                async (album) => await albumVerificationService.GetAlbumChecker(album),
+                (album, albumChecker) => album.Type == AlbumType.Single,
+                (albumChecker) =>
+                {
+                    Describe(x => x.Songs)
+                        .Vitally().Is(
+                            "Album must match the rules for single.",
+                            "Must Abide by the rules for singles.",
+                            albumChecker.To("Album is Single", i => i.IsSingle is true)
+                        );
                 });
         }
     }
 
-    public record AlbumSubmission(List<Album>? Albums);
+    public record AlbumSubmission(List<Album?>? Albums);
 
     public class AlbumSubmissionValidator : AbstractValidator<AlbumSubmission>
     {
-        public AlbumSubmissionValidator()
+        public AlbumSubmissionValidator(AlbumVerificationService albumVerificationService)
         {
-            DescribeEnumerable(x => x.Albums).Vitally().IsNotNull()
-                .ForEach(x => x.Vitally().IsNotNull().SetValidator(new AlbumValidator()));
+            DescribeEnumerable(x => x.Albums)
+                //.Vitally().IsNotNull()
+                .ForEach(x => x
+                    //.Vitally().IsNotNull()
+                    .SetValidator(new AlbumValidator(albumVerificationService)));
+
+            //Scope("Validate Album In Submission",
+            //    (album) => album != null,
+            //    (albumChecker) =>
+            //    {
+            //        Describe(x => x.Albums[0]).SetValidator(new AlbumListValidator());
+            //    });
         }
+    }
+
+    public class AlbumListValidator : AbstractSubValidator<Album?>
+    {
+        public AlbumListValidator()
+        {
+            Scope("Validate Albumis list validator",
+                (album) => album != null,
+                (albumChecker) =>
+                {
+                    Describe(x => x.Type).IsEqualTo(AdvancedDemonstration.AlbumType.SingleArtist);
+                });
+        }
+    }
+
+    public class AlbumVerificationService
+    {
+        public Task<AlbumChecker> GetAlbumChecker(Album album)
+        {
+            return Task.FromResult(new AlbumChecker(album));
+        }
+    }
+
+    public class AlbumChecker
+    {
+        private readonly Album album;
+
+        public AlbumChecker(Album album)
+        {
+            this.album = album;
+        }
+
+        public bool IsAllTheSameArtist
+        {
+            get => album.Artists?.All(x => x?.Name == (album.Artists?.FirstOrDefault()?.Name ?? "")) ?? true;
+        }
+
+        public bool AllSongsContainAlbumArtist
+        {
+            get => album.Artists
+                ?.Any(a => 
+                    album?.Songs
+                        ?.All(song => 
+                            song?.Artists
+                                ?.Any(artist => artist.Name == a?.Name)
+                                ?? false
+                        ) ?? false
+                ) ?? false;
+        }
+
+        public bool IsSingle => album.Type == AlbumType.Single && album?.Songs?.Count <= 7;
     }
 
     public class TestController : ControllerBase<AlbumSubmission> { }

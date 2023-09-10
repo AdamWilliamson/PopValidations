@@ -10,7 +10,7 @@ public sealed class Scope<TScopedDataType> : ScopeBase
     private readonly Action<IScopedData<TScopedDataType?>> rules;
 
     public override bool IgnoreScope => true;
-    public override string Name => "";
+    public override string Name => scopedData.Describe();
 
     public Scope(
         ValidationConstructionStore validatorStore,
@@ -24,7 +24,11 @@ public sealed class Scope<TScopedDataType> : ScopeBase
 
     protected override async void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {
-        await scopedData.Init(value);
+        if (FieldDescriptor != null)
+            await scopedData.Init(FieldDescriptor.GetValue(value));
+        else
+            await scopedData.Init(value);
+
         rules.Invoke(scopedData);
     }
 

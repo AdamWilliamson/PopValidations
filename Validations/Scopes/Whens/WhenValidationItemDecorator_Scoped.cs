@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using PopValidations.Execution.Stores.Internal;
+using PopValidations.FieldDescriptors.Base;
 
 namespace PopValidations.Scopes.Whens;
 
@@ -9,8 +10,9 @@ public class WhenValidationItemDecorator_Scoped<TValidationType, TPassThrough> :
 
     public WhenValidationItemDecorator_Scoped(
         IValidatableStoreItem itemToDecorate,
-        WhenStringValidator_IfTruescoped<TValidationType, TPassThrough> ifTrue
-    ) : base(itemToDecorate)
+        WhenStringValidator_IfTruescoped<TValidationType, TPassThrough> ifTrue,
+        IFieldDescriptorOutline fieldDescriptor
+    ) : base(itemToDecorate, fieldDescriptor)
     {
         this.ifTrue = ifTrue;
     }

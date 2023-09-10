@@ -8,11 +8,26 @@ namespace PopValidations.Scopes.Whens;
 public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : ScopeBase
 {
     private readonly string whenDescription;
-    private readonly Func<TValidationType, Task<bool>> ifTrue;
+    //private readonly Func<TValidationType, Task<bool>> ifTrue;
     private readonly ScopedData<TValidationType, TPassThrough> scoped;
     private readonly Action<ScopedData<TValidationType, TPassThrough>> rules;
     public override string Name => whenDescription;
     WhenStringValidator_IfTrue<TValidationType> something;
+
+    public WhenScopedResultValidator(
+        ValidationConstructionStore validatorStore,
+        string whenDescription,
+        Func<TValidationType, bool> ifTrue,
+        ScopedData<TValidationType, TPassThrough> scopedData,
+        Action<ScopedData<TValidationType, TPassThrough>> rules
+    ) : this(
+        validatorStore,
+        whenDescription,
+        (x) => Task.FromResult(ifTrue.Invoke(x)),
+        scopedData,
+        rules
+        )
+    {}
 
     public WhenScopedResultValidator(
         ValidationConstructionStore validatorStore,
@@ -24,17 +39,20 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
     ) : base(validatorStore)
     {
         this.whenDescription = whenDescription;
-        this.ifTrue = ifTrue;
+        //this.ifTrue = ifTrue;
         this.scoped = scopedData;// new ScopedData<TValidationType, TPassThrough>(scoped);
         this.rules = rules;
 
         something = new WhenStringValidator_IfTrue<TValidationType>(ifTrue);
-        Decorator = (item) => new WhenValidationItemDecorator<TValidationType>(
+        Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
+            this,
             item,
             something,
-            this.scoped
+            this.scoped,
+            fieldDescriptor
             );
     }
+
 
     protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {

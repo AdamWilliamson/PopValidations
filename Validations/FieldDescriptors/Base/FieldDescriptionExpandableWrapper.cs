@@ -10,7 +10,7 @@ public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
     public bool IgnoreScope => false;
     private readonly IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor;
     private IExpandableEntity component;
-    public Func<IValidatableStoreItem, IValidatableStoreItem>? Decorator => null;
+    public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => null;
     object? RetrievedValue = null;
     bool ValueHasBeenRetrieved = false;
 

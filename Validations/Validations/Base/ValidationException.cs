@@ -12,3 +12,14 @@ public class ValidationException : Exception
         : base(message, ex)
     { }
 }
+
+public class InternalValidatorException : Exception
+{
+    public InternalValidatorException(string message)
+        : base(message)
+    { }
+
+    public InternalValidatorException(string message, Exception ex)
+        : base(message, ex)
+    { }
+}

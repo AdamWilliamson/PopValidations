@@ -29,6 +29,27 @@ public static class IsCustomValidationExtensions
         return fieldDescriptor;
     }
 
+    public static IFieldDescriptor<TValidationType, TFieldType> Is<
+        TValidationType,
+        TFieldType
+    >(
+        this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
+        string descriptionTemplate,
+        string errorTemplate,
+        IScopedData<bool> scopedValue,//Func<TFieldType?, bool> validationFunc,
+        Action<ValidationOptions>? optionsAction = null
+    )
+    {
+        var validation = new IsCustomValidation<TFieldType>(
+            descriptionTemplate,
+            errorTemplate,
+            scopedValue
+        );
+        optionsAction?.Invoke(new ValidationOptions(validation));
+        fieldDescriptor.AddValidation(validation);
+        return fieldDescriptor;
+    }
+
     public static IFieldDescriptor<TValidationType, TPropertyType?> Is<TValidationType, TPropertyType>(
          this IFieldDescriptor<TValidationType, TPropertyType?> fieldDescriptor,
          string errorTemplate,

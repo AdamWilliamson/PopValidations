@@ -32,14 +32,16 @@ public class FieldExecutor : IFieldDescriptorOutline
     { 
         get 
         {
-            if (Parent == null)
+            if (FieldDescriptor != null && Parent != null)
+                return FieldDescriptor.AddTo(Parent.PropertyName);
+            else if (FieldDescriptor != null)
                 return FieldDescriptor.PropertyName;
             else
-                return FieldDescriptor.AddTo(Parent.PropertyName);
+                return string.Empty;
                 //FieldDescriptor.PropertyName;
         } 
     } 
-    public string AddTo(string existing) => FieldDescriptor.AddTo(existing);
+    public string AddTo(string existing) => FieldDescriptor?.AddTo(existing) ?? existing;
     #endregion
 
 

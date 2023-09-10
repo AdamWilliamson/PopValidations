@@ -8,406 +8,33 @@ using PopValidations.Validations.Base;
 
 namespace PopValidations.Execution.Stores;
 
-public class StackedDepth
-{
-    public Func<IValidatableStoreItem, IValidatableStoreItem>? Decorator { get; init; }
-    public ScopeParent? ScopeParent { get; init; }
-    //public IFieldDescriptorOutline? FieldParent { get; init; }
-    public FieldExecutor? FieldExecutor { get; init; }
-
-    public StackedDepth(
-        ScopeParent? scopeParent,
-        //IFieldDescriptorOutline? fieldParent,
-        FieldExecutor? fieldExecutor,
-        Func<IValidatableStoreItem, IValidatableStoreItem>? decorator
-        )
-    {
-        ScopeParent = scopeParent;
-        //FieldParent = fieldParent;
-        FieldExecutor = fieldExecutor;
-        Decorator = decorator;
-    }
-}
-
-public class InfoStack
-{
-    private Stack<StackedDepth> InformationDepth = new();
-
-    //public void PushParent(IParentScope? parent)
-    //{
-    //    ScopeParent? previous = null;
-    //    if (ScopeParents.Any())
-    //        previous = ScopeParents.Peek();
-
-    //    ScopeParents.Push(new ScopeParent(parent, previous));
-    //}
-
-    public int PushAndParentScope(
-        IParentScope? scopeParent,
-        IFieldDescriptorOutline? fieldParent,
-        //FieldExecutor? fieldExecutor,
-        Func<IValidatableStoreItem, IValidatableStoreItem>? decorator
-        )
-    {
-        ScopeParent? previous = GetCurrentScopeParent();
-        //if (scopeParent != null)
-        //{
-            //previous = GetCurrentScopeParent();
-
-            //ScopeParents.Push(new ScopeParent(parent, previous));
-        //}
-
-        return Push(
-            new ScopeParent(scopeParent, previous), 
-            fieldParent, 
-            //fieldExecutor, 
-            decorator
-        );
-    }
-
-    public int Push(
-        ScopeParent? scopeParent,
-        IFieldDescriptorOutline? fieldParent,
-        Func<IValidatableStoreItem, IValidatableStoreItem>? decorator
-        )
-    {
-        return Push(
-            scopeParent,
-            fieldParent == null
-                ? null 
-                : new FieldExecutor(
-                    //null,//
-                    GetCurrentFieldExecutor(fieldParent),
-                    fieldParent!
-                ),
-            decorator
-        );
-    }
-
-    public int Push(
-        ScopeParent? scopeParent,
-        FieldExecutor? fieldExecutor,
-        Func<IValidatableStoreItem, IValidatableStoreItem>? decorator
-        )
-    {
-        var originalCount = InformationDepth.Count();
-        if (scopeParent != null)
-        {
-            InformationDepth.Push(
-                new StackedDepth(
-                    scopeParent,
-                    //null, //fieldParent,
-                    null, //fieldExecutor,
-                    null //decorator
-                )
-            );
-        }
-
-        if (fieldExecutor != null)
-        {
-            fieldExecutor.SetParent(GetCurrentFieldExecutor());
-
-            InformationDepth.Push(
-                new StackedDepth(
-                    null, //scopeParent,
-                    //fieldParent,
-                    fieldExecutor,
-                    null //decorator
-                )
-            );
-        }
-
-        if (decorator != null)
-        {
-            InformationDepth.Push(
-                new StackedDepth(
-                    null, //scopeParent,
-                    //null, //fieldParent,
-                    null, //fieldExecutor,
-                    decorator
-                )
-            );
-        }
-
-        return originalCount;
-    }
-
-    public void Pop()
-    {
-        InformationDepth.Pop();
-    }
-
-    public int Count() { return InformationDepth.Count; }
-
-    public void PopToCount(int count)
-    {
-        while (InformationDepth.Any() && InformationDepth.Count() > count)
-        {
-            InformationDepth.Pop();
-        }
-    }
-
-    //public void PopToScope(ScopeParent? scopeParent)
-    //{
-    //    while(InformationDepth.Any() && InformationDepth.Peek()?.ScopeParent != scopeParent)
-    //    {
-    //        InformationDepth.Pop();
-    //    }
-    //}
-
-    //public void PopToField(IFieldDescriptorOutline? fieldParent = null)
-    //{
-    //    if (fieldParent == null)
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldParent == null)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldParent != fieldParent)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //    }
-    //}
-
-    //public void PopToExecutor(FieldExecutor? fieldExecutor = null)
-    //{
-    //    if (fieldExecutor == null)
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldExecutor == null)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldExecutor != fieldExecutor)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //    }
-    //}
-
-    //public void PopToBeforeExecutor(FieldExecutor? fieldExecutor = null)
-    //{
-    //    if (fieldExecutor == null)
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldExecutor == null)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-
-    //        if (InformationDepth.Any())
-    //            InformationDepth.Pop();
-    //    }
-    //    else
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldExecutor != fieldExecutor)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //        if (InformationDepth.Any())
-    //            InformationDepth.Pop();
-    //    }
-    //}
-
-    //public void PopToBeforeDescriptor()
-    //{
-    //    while (InformationDepth.Any() && InformationDepth.Peek()?.FieldParent == null)
-    //    {
-    //        InformationDepth.Pop();
-    //    }
-
-    //    if (InformationDepth.Any())
-    //        InformationDepth.Pop();
-    //}
-
-    //public void PopToBeforeScopeParent()
-    //{
-    //    while (InformationDepth.Any() && InformationDepth.Peek()?.ScopeParent == null)
-    //    {
-    //        InformationDepth.Pop();
-    //    }
-
-    //    if (InformationDepth.Any())
-    //        InformationDepth.Pop();
-    //}
-
-    //public void PopAllScopedDecorators()
-    //{
-    //    while (InformationDepth.Any() && InformationDepth.Peek()?.Decorator != null)
-    //    {
-    //        InformationDepth.Pop();
-    //    }
-    //}
-
-    public List<Func<IValidatableStoreItem, IValidatableStoreItem>> GetScopedDecorators()
-    {
-        var decorators = new List<Func<IValidatableStoreItem,IValidatableStoreItem>>();
-
-        for(var x = 0; x < InformationDepth.Count; x++)
-        {
-            if (InformationDepth.ElementAt(x).Decorator == null)
-            {
-                continue;
-            }
-
-            decorators.Add(InformationDepth.ElementAt(x).Decorator!);
-        }
-
-        decorators.Reverse();
-        return decorators;
-    }
-
-    public FieldExecutor? GetCurrentFieldExecutor(IFieldDescriptorOutline? ignore = null)
-    {
-        if (InformationDepth.Any())
-            return InformationDepth
-                .Where(x => x is not null && x.FieldExecutor is not null)
-                .Where(x => x.FieldExecutor != ignore)
-                .FirstOrDefault()
-                ?.FieldExecutor;
-        return null;
-    }
-
-    public ScopeParent? GetCurrentScopeParent()
-    {
-        if (InformationDepth.Any())
-            return InformationDepth
-                .Where(x => x is not null && x.ScopeParent is not null)
-                .FirstOrDefault()
-                ?.ScopeParent;
-        return null;
-    }
-
-    //public List<IFieldDescriptorOutline> GetAllFieldParents()
-    //{
-    //    return InformationDepth.Where(x => x is not null && x.FieldParent is not null)
-    //        .Select(x => x.FieldParent!)
-    //        .ToList();
-    //}
-}
-
 public sealed class ValidationConstructionStore : IValidationCompilationStore
 {
     private InfoStack InformationDepth = new();
-
     public List<IStoreItem> unExpandedItems = new();
-    //private Stack<Func<IValidatableStoreItem, IValidatableStoreItem>?> Decorators = new();
-    //private Stack<ScopeParent> ScopeParents = new();
-    //private Stack<IFieldDescriptorOutline> FieldParents = new(); GetAllFieldParents
-    //private Stack<FieldExecutor> FieldExecutors = new();
-
-    //public FieldExecutor? GetCurrentFieldExecutor(IFieldDescriptorOutline? ignore = null)
-    //{
-    //    if (FieldExecutors.Any())
-    //        return FieldExecutors
-    //            .Where(x => x is not null)
-    //            .Where(x => x.FieldDescriptor != ignore)
-    //            .FirstOrDefault();
-    //    return null;
-    //}
-
-    //public void PushFieldDescriptor(IFieldDescriptorOutline fieldDescriptor)
-    //{
-    //    //FieldParents.Push(fieldDescriptor);
-    //    InformationDepth.Push(
-    //        null,
-    //        fieldDescriptor,
-    //        new FieldExecutor(
-    //            InformationDepth.GetCurrentFieldExecutor(fieldDescriptor),
-    //            fieldDescriptor
-    //        ),
-    //        (previous) => new ScopeChangeDecorator(fieldDescriptor, previous)
-    //    );
-    //    //FieldExecutors.Push(
-            
-    //    //);
-
-    //    //Decorators.Push((previous) => new ScopeChangeDecorator(fieldDescriptor, previous));
-    //    //InformationDepth.Push(
-    //    //    null,
-    //    //    null,
-    //    //    null, 
-    //    //    (previous) => new ScopeChangeDecorator(fieldDescriptor, previous)
-    //    //);
-    //}
-
-    //public void PopFieldDescriptor()
-    //{
-    //    //FieldParents.Pop();
-    //    //FieldExecutors.Pop();
-    //    //Decorators.Pop();
-    //    InformationDepth.PopToBeforeDescriptor();
-    //}
-
-    //public ScopeParent? GetCurrentScopeParent()
-    //{
-    //    if (!ScopeParents.Any()) return null;
-    //    return ScopeParents.Peek();
-    //}
-
-    //public void PushParent(IParentScope? parent)
-    //{
-    //    ScopeParent? previous = null;
-    //    if (ScopeParents.Any())
-    //        previous = ScopeParents.Peek();
-
-    //    ScopeParents.Push(new ScopeParent(parent, previous));
-    //}
-
-    //public void PopParent()
-    //{
-    //    //ScopeParents.Pop();
-    //    InformationDepth.PopToBeforeScopeParent();
-    //}
-
-    //public void PushDecorator(Func<IValidatableStoreItem, IValidatableStoreItem>? decorator)
-    //{
-    //    //Decorators.Push(decorator);
-    //    InformationDepth.Push(
-    //        null,
-    //        null,
-    //        null,
-    //        decorator
-    //    );
-    //}
-
-    //public void PopDecorator()
-    //{
-    //    Decorators.Pop();
-    //}
-
+    
     public void AddItem(IFieldDescriptorOutline? fieldDescriptor, IExpandableEntity component)
     {
         var scopeParent = new ScopeParent(component as IParentScope, InformationDepth.GetCurrentScopeParent());
-        IExpandableStoreItem decoratedItem = new ExpandableStoreItem(scopeParent, fieldDescriptor, component);
+        IExpandableStoreItem decoratedItem = new ExpandableStoreItem(
+            scopeParent, 
+            fieldDescriptor,// ?? InformationDepth.GetCurrentFieldExecutor(), 
+            component
+        );
         unExpandedItems.Add(decoratedItem);
     }
 
-    private int PushParentTree(ScopeParent? scopeParent)
+    private int PushParentTree(ScopeParent? scopeParent, IFieldDescriptorOutline? fieldDescriptor)
     {
         int value = InformationDepth.Count();
         if (scopeParent?.PreviousScope != null)
         {
-            PushParentTree(scopeParent.PreviousScope);
+            PushParentTree(scopeParent.PreviousScope, null);
         }
         //PushParent(scopeParent?.CurrentScope);
         InformationDepth.PushAndParentScope(scopeParent?.CurrentScope, null, null);
         return value;
     }
-
-    //private void PopCount(int x)
-    //{
-    //    for (int i = 0; i < x; i++)
-    //    {
-    //        //ScopeParents.Pop();
-    //        InformationDepth.PopToBeforeScopeParent();
-    //    }
-    //}
 
     public void AddExpandedItemsForDescription(ValidationConstructionStore store) 
     {
@@ -419,8 +46,15 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
         }
     }
 
+    private void IntegrateInformationStack(InfoStack stack) 
+    {
+        this.InformationDepth.MakeStackParent(stack);
+    }
+
     public void AddExpandedItemsForValidation(ValidationConstructionStore store, object? value)
     {
+        store.IntegrateInformationStack(this.InformationDepth);
+
         var expandedItems = store.ExpandToValidate(value);
         foreach (var item in expandedItems)
         {
@@ -428,13 +62,6 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
                 AddItemToCurrentScope(item);
         }
     }
-
-    //public void AddItemToCurrentScope(IFieldDescriptorOutline? fieldDescriptor, IExpandableEntity component)
-    //{
-    //    var scopeParent = new ScopeParent(component as IParentScope, InformationDepth.GetCurrentScopeParent());
-    //    IExpandableStoreItem decoratedItem = new ExpandableStoreItem(scopeParent, fieldDescriptor, component);
-    //    AddItemToCurrentScope(decoratedItem);
-    //}
 
     private void AddItemToCurrentScope(IStoreItem storeItem)
     {
@@ -457,7 +84,7 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
         {
             int infoCount = InformationDepth.Count();
             //int pushedParents = 
-                PushParentTree(validatable.ScopeParent);
+                PushParentTree(validatable.ScopeParent, null);
 
             var parentExecutor = InformationDepth.GetCurrentFieldExecutor();
             if (parentExecutor == null) 
@@ -485,10 +112,11 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
             //validatable.CurrentFieldExecutor = parentExecutor;
 
             IValidatableStoreItem decoratedItem = validatable;
-            foreach (var decorator in InformationDepth.GetScopedDecorators())// Decorators.Where(d => d is not null))
-            {
-                decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
-            }
+            decoratedItem = InformationDepth.Decorate(decoratedItem);
+            //foreach (var decorator in InformationDepth.GetScopedDecorators())// Decorators.Where(d => d is not null))
+            //{
+            //    decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
+            //}
 
             unExpandedItems.Add(decoratedItem);
 
@@ -519,10 +147,11 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
             component
         );
 
-        foreach (var decorator in InformationDepth.GetScopedDecorators()) //Decorators.Where(d => d is not null))
-        {
-            decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
-        }
+        //decoratedItem = InformationDepth.Decorate(decoratedItem);
+        //foreach (var decorator in InformationDepth.GetScopedDecorators()) //Decorators.Where(d => d is not null))
+        //{
+        //    decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
+        //}
 
         unExpandedItems.Add(decoratedItem);
     }
@@ -536,13 +165,22 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
             if (item is IExpandableStoreItem expandable && expandable is not null)
             {
                 AddItem(expandable.FieldDescriptor, expandable.Component);
+                //if (expandable != null && expandable.Component is IValidatorScope vscope) 
+                //{
+                //    vscope.SetCurrentFieldExecutor(
+                //        new FieldExecutor(
+                //            InformationDepth.GetCurrentFieldExecutor(), 
+                //            vscope.GetCurrentFieldExecutor()
+                //        )
+                //    );
+                //}
             }
             else if (item is IValidatableStoreItem validatable)
             {
-                var decorators = InformationDepth.GetScopedDecorators();
+                //var decorators = InformationDepth.GetScopedDecorators();
                 int infoCount = InformationDepth.Count();
                 //int pushedParents = 
-                    PushParentTree(validatable.ScopeParent);
+                    PushParentTree(validatable.ScopeParent, validatable.CurrentFieldExecutor);
 
                 if (validatable.CurrentFieldExecutor != null)
                     InformationDepth.Push(
@@ -564,10 +202,11 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
                 validatable.ScopeParent = scopeParent;
 
                 IValidatableStoreItem decoratedItem = validatable;
-                foreach (var decorator in decorators) //Decorators.Where(d => d is not null))
-                {
-                    decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
-                }
+                //decoratedItem = InformationDepth.Decorate(decoratedItem);
+                //foreach (var decorator in decorators) //Decorators.Where(d => d is not null))
+                //{
+                //    decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
+                //}
 
                 unExpandedItems.Add(decoratedItem);
 
@@ -704,18 +343,6 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
         return results;
     }
 
-    //private ValidationFieldDescriptorOutline GenerateName(IFieldDescriptorOutline outline)
-    //{
-    //    var fieldParent = InformationDepth.GetCurrentFieldExecutor();//.GetAllFieldParents();
-
-    //    //if (!fieldParents.Any())
-    //    if (fieldParent == null)
-    //        return new ValidationFieldDescriptorOutline(outline.PropertyName, outline);
-
-    //    //var ownerField = fieldParents.Last();// FieldParents.Where(x => x is not null).First();
-    //    return new ValidationFieldDescriptorOutline(outline.AddTo(fieldParent.PropertyName), outline);
-    //}
-
     internal List<IValidatableStoreItem> ExpandToValidateRecursive<TValidationType>(
         IStoreItem storeItem,
         TValidationType? instance
@@ -732,8 +359,8 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
                 converted.SetParent(attemptedScopeFieldDescriptor);
                 converted.ReHomeScopes(attemptedScopeFieldDescriptor);
             }
-
-            return new() { converted };
+            converted = InformationDepth.Decorate(converted);
+            results.Add(converted);
         }
         else if (storeItem is IExpandableStoreItem expandable)
         {
@@ -779,16 +406,7 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
             }
 
             InformationDepth.PopToCount(originalInformationDepth);
-            //if (!expandable.Component.IgnoreScope)
-            //{
-                
-            //    //if (storeItem.FieldDescriptor != null)
-            //    //    InformationDepth.PopToBeforeDescriptor(); //PopFieldDescriptor();
-
-            //    //InformationDepth.PopToBeforeScopeParent();//PopParent();
-            //    ////PopDecorator();
-            //    //InformationDepth.Pop();
-            //}
+            
         }
 
         return results;

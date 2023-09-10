@@ -26,7 +26,7 @@ public class ExpandableStoreItem : IExpandableStoreItem
     public ScopeParent? ScopeParent { get; set; }
     public IExpandableEntity Component { get; }
     public IFieldDescriptorOutline? FieldDescriptor { get; set; }
-    public Func<IValidatableStoreItem, IValidatableStoreItem>? Decorator => Component.Decorator;
+    public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => Component.Decorator;
     //public IParentScope Parent => Component.Parent;
 
     public void ExpandToValidate(ValidationConstructionStore store, object? value)

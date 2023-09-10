@@ -20,6 +20,21 @@ public sealed class WhenScopeToValidator<TValidationType, TPassThrough>
         ValidationConstructionStore validatorStore,
         string whenDescription,
         ScopedData<TValidationType, TPassThrough> scoped,
+        Func<TValidationType, TPassThrough, bool> ifTrue,
+        Action<ScopedData<TValidationType, TPassThrough>> rules
+    ) : this(
+            validatorStore,
+            whenDescription,
+            scoped,
+            (x, y) => Task.FromResult(ifTrue.Invoke(x,y)),
+            rules
+        )
+    {}
+
+    public WhenScopeToValidator(
+        ValidationConstructionStore validatorStore,
+        string whenDescription,
+        ScopedData<TValidationType, TPassThrough> scoped,
         Func<TValidationType, TPassThrough, Task<bool>> ifTrue,
         Action<ScopedData<TValidationType, TPassThrough>> rules
     ) : base(validatorStore)
@@ -32,11 +47,12 @@ public sealed class WhenScopeToValidator<TValidationType, TPassThrough>
             ifTrue,
             this.scoped
             );
-        Decorator = (item) => new WhenValidationItemDecorator_Scoped
+        Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator_Scoped
         <TValidationType, TPassThrough>
         (
             item,
-            something
+            something,
+            fieldDescriptor
         );
     }
 

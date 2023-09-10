@@ -1,6 +1,7 @@
 ﻿using System;
 using PopValidations.Execution.Stores;
 using PopValidations.Execution.Stores.Internal;
+using PopValidations.FieldDescriptors.Base;
 using PopValidations.ValidatorInternals;
 
 namespace PopValidations;
@@ -10,7 +11,7 @@ public abstract class AbstractSubValidator<TValidationType>
 {
     public virtual bool IgnoreScope => false;
     public override string Name => typeof(TValidationType).Name;
-    public Func<IValidatableStoreItem, IValidatableStoreItem>? Decorator => null;
+    public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => null;
 
     public virtual void AsVital() { }
 

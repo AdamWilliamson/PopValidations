@@ -16,7 +16,7 @@ public interface ITestSetup
 }
 
 public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetup
-    where TRequestValidator : IMainValidator<TRequest>, new()
+    where TRequestValidator : class, IMainValidator<TRequest> //, new()
 {
     internal ApiWebApplicationFactory Factory { get; } = new();
     private HttpClient Client { get; set; }
@@ -26,7 +26,8 @@ public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetu
 
     public Type ControllerType => typeof(TTestController);
     public Type ValidatorType => typeof(TRequestValidator);
-    public Type RequestType => typeof(TRequest); 
+    public Type RequestType => typeof(TRequest);
+    private TRequestValidator? instance;
 
     public string Scenario
     {
@@ -36,7 +37,9 @@ public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetu
         }
     }
 
-    public TestSetup() { }
+    public TestSetup(TRequestValidator? instance = null) {
+        instance = instance;
+    }
 
     private void Configure(OpenApiConfig config)
     {
@@ -56,7 +59,11 @@ public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetu
 
     private void Describe()
     {
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new TRequestValidator());
+        var validatorCreated = instance ?? Activator.CreateInstance(typeof(TRequestValidator)) as TRequestValidator;
+        if (validatorCreated == null)
+            throw new Exception("Validator unable to be constructed, please provide an instance");
+
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(validatorCreated);
 
         Description = runner.Describe();
     }

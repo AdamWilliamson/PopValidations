@@ -1,4 +1,5 @@
 ﻿using PopValidations.Validations.Base;
+using System;
 using System.Threading.Tasks;
 
 namespace PopValidations.Validations;
@@ -49,24 +50,31 @@ public class IsLengthInclusivelyBetweenValidation<TPropertyType>
             }
         }
 
-        switch (value)
+        try
         {
-            case TPropertyType converted:
-                if (
-                    Comparer.Compare(converted, start.Value) >= 0 && Comparer.Compare(converted, end.Value) <= 0
-                )
-                {
-                    return CreateValidationSuccessful();
-                }
-                else
-                {
-                    return CreateValidationError(
-                        ("startValue", start.ToString() ?? ""),
-                        ("endValue", end.ToString() ?? "")
-                    );
-                }
-            default:
-                throw new ValidationException("Type is invalid");
+            switch (value)
+            {
+                case TPropertyType converted:
+                    if (
+                        Comparer.Compare(converted, start.Value) >= 0 && Comparer.Compare(converted, end.Value) <= 0
+                    )
+                    {
+                        return CreateValidationSuccessful();
+                    }
+                    else
+                    {
+                        return CreateValidationError(
+                            ("startValue", start.ToString() ?? ""),
+                            ("endValue", end.ToString() ?? "")
+                        );
+                    }
+                default:
+                    throw new ValidationException("Type is invalid");
+            }
+        }
+        catch(Exception e)
+        {
+            throw new InternalValidatorException($"{typeof(IsLengthInclusivelyBetweenValidation<>).Name}", e);
         }
     }
 

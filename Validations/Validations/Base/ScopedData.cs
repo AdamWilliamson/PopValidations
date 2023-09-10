@@ -10,6 +10,10 @@ public interface IScopedData<TResponse> : IScopeData
         Func<TResponse, Task<TNewResponse>> passThroughFunction
     );
 
+    ScopedData<TResponse, TNewResponse> To<TNewResponse>(string newDescription,
+        Func<TResponse, TNewResponse> passThroughFunction
+    );
+
     TResponse? GetTypedValue();
 }
 
@@ -95,6 +99,14 @@ public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
     {
         return new ScopedData<TResponse, TNewResponse>(this, newDescription, passThroughFunction);
     }
+
+    public ScopedData<TResponse, TNewResponse> To<TNewResponse>(
+        string newDescription,
+        Func<TResponse, TNewResponse> passThroughFunction
+    )
+    {
+        return new ScopedData<TResponse, TNewResponse>(this, newDescription, passThroughFunction);
+    }
 }
 
 
@@ -118,11 +130,24 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
         PassThroughFunction = passThroughFunction;
     }
 
+    public ScopedData(string? description, Func<TPassThrough, TResponse> passThroughFunction)
+    {
+        Description = description;
+        PassThroughFunction = (TPassThrough v) => Task.FromResult(passThroughFunction.Invoke(v));
+    }
+
     public ScopedData(IScopeData parent, string newDescription, Func<TPassThrough, Task<TResponse>> passThroughFunction)
     {
         Parent = parent;
         Description = newDescription;
         PassThroughFunction = passThroughFunction;
+    }
+
+    public ScopedData(IScopeData parent, string newDescription, Func<TPassThrough, TResponse> passThroughFunction)
+    {
+        Parent = parent;
+        Description = newDescription;
+        PassThroughFunction = (TPassThrough v) => Task.FromResult(passThroughFunction.Invoke(v));
     }
 
     public void SetParent(IScopeData parent)
@@ -232,6 +257,14 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
     public ScopedData<TResponse, TNewResponse> To<TNewResponse>(
         string newDescription,
         Func<TResponse, Task<TNewResponse>> passThroughFunction
+    )
+    {
+        return new ScopedData<TResponse, TNewResponse>(this, newDescription, passThroughFunction);
+    }
+
+    public ScopedData<TResponse, TNewResponse> To<TNewResponse>(
+        string newDescription,
+        Func<TResponse, TNewResponse> passThroughFunction
     )
     {
         return new ScopedData<TResponse, TNewResponse>(this, newDescription, passThroughFunction);
