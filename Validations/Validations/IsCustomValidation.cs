@@ -1,4 +1,5 @@
 ﻿using System;
+using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
 namespace PopValidations.Validations;
@@ -34,6 +35,11 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
         DescriptionTemplate = descriptionTemplate;
         ErrorTemplate = errorTemplate;
         this.scopedValue = scopedValue;
+    }
+
+    public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
+    {
+        scopedValue.ReHome(attemptedScopeFieldDescriptor);
     }
 
     public override ValidationActionResult Validate(object? value)
@@ -73,17 +79,18 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
         {
             throw new ValidationException("Custom function exceptioned", ex);
         }
-       
-        //var valueAsString = value?.ToString() ?? "null";
 
         return CreateValidationError(
-            ("value", scopedValue?.Describe() ?? String.Empty)
+            ("value", value?.ToString() ?? ""),
+            ("is_value", scopedValue?.Describe() ?? String.Empty)
         );
     }
 
     public override DescribeActionResult Describe()
     {
-        return CreateDescription();
+        return CreateDescription(
+            ("is_value", scopedValue?.Describe() ?? String.Empty)
+        );
     }
 }
 

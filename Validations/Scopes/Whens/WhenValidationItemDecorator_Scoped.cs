@@ -19,10 +19,25 @@ public class WhenValidationItemDecorator_Scoped<TValidationType, TPassThrough> :
 
     public override Task<bool> CanValidate(object? instance)
     {
-        if (instance is not TValidationType)
+        if (instance is TValidationType converted)
         {
-            throw new System.Exception();
+            return ifTrue.CanValidate(converted);
         }
-        return ifTrue.CanValidate((TValidationType)instance);
+
+        if (this.WrappingLevelfieldDescriptor != null)
+        {
+            var fieldExecutorValue = WrappingLevelfieldDescriptor!.GetValue(instance);
+
+            if (fieldExecutorValue != null)
+            {
+                return ifTrue.CanValidate((TValidationType)fieldExecutorValue);
+            }
+            else
+            {
+                return ifTrue.CanValidate(default);
+            }
+        }
+
+        throw new System.Exception("When failure due to invalid parameter.");
     }
 }

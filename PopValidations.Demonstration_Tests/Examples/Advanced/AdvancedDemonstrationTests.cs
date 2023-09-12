@@ -31,30 +31,62 @@ public class AdvancedDemonstrationTests
                             4.38,
                             "Nu Metal"
                             ),
+                        new AdvancedDemonstration.Song(
+                            new() { new AdvancedDemonstration.Artist("Muse") },
+                            1,
+                            "Supremecy",
+                            4.51,
+                            "Progressive Rock"
+                            ),
                         null
                     },
                     new (){ "Rock", "Nu Metal" }
                 ),
-                //new AdvancedDemonstration.Album(
-                //    "",
-                //     AdvancedDemonstration.AlbumType.Collaboration,
-                //    new() { new AdvancedDemonstration.Artist("Disturbed") },
-                //    null,
-                //    null,
-                //    new()
-                //    {
-                //        new AdvancedDemonstration.Song(
-                //            new() { new AdvancedDemonstration.Artist("Fake-Disturbed") },
-                //            null,
-                //            "",
-                //            -1,
-                //            "Pop"
-                //            ),
-                //        null
-                //    },
-                //    new() { "Rock", "Nu Metal" }
-                //),
-                //null
+                new AdvancedDemonstration.Album(
+                    "",
+                     AdvancedDemonstration.AlbumType.Collaboration,
+                    new() { new AdvancedDemonstration.Artist("Disturbed") },
+                    null,
+                    null,
+                    new()
+                    {
+                        new AdvancedDemonstration.Song(
+                            new() { new AdvancedDemonstration.Artist("Fake-Disturbed") },
+                            null,
+                            "",
+                            -1,
+                            "Pop"
+                            ),
+                        null
+                    },
+                    new() { "Rock", "Nu Metal" }
+                ),
+                new AdvancedDemonstration.Album(
+                    "",
+                     AdvancedDemonstration.AlbumType.Compilation,
+                    new() { new AdvancedDemonstration.Artist("Disturbed") },
+                    null,
+                    null,
+                    new()
+                    {
+                        new AdvancedDemonstration.Song(
+                            new() { new AdvancedDemonstration.Artist("Disturbed") },
+                            null,
+                            "",
+                            -1,
+                            "Rock"
+                        ),
+                        new AdvancedDemonstration.Song(
+                            new() { new AdvancedDemonstration.Artist("Disturbed") },
+                            null,
+                            "",
+                            -1,
+                            "Country"
+                        ),
+                    },
+                    new() { "Pop" }
+                ),
+                null
             }
         );
 

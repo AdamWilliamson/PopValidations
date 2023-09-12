@@ -6,7 +6,12 @@
                 {
                     "validator": "IsCustomValidation",
                     "message": "Must be 'NString'",
-                    "values": []
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
                 }
             ],
             "validationGroups": []

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PopValidations.Execution.Stores;
+using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
 namespace PopValidations.Scopes.Whens;
@@ -10,7 +11,7 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
     private readonly string whenDescription;
     //private readonly Func<TValidationType, Task<bool>> ifTrue;
     private readonly ScopedData<TValidationType, TPassThrough> scoped;
-    private readonly Action<ScopedData<TValidationType, TPassThrough>> rules;
+    private readonly Action<IScopedData<TPassThrough>> rules;
     public override string Name => whenDescription;
     WhenStringValidator_IfTrue<TValidationType> something;
 
@@ -19,7 +20,7 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
         string whenDescription,
         Func<TValidationType, bool> ifTrue,
         ScopedData<TValidationType, TPassThrough> scopedData,
-        Action<ScopedData<TValidationType, TPassThrough>> rules
+        Action<IScopedData<TPassThrough>> rules
     ) : this(
         validatorStore,
         whenDescription,
@@ -35,7 +36,7 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
         Func<TValidationType, Task<bool>> ifTrue,
         ScopedData<TValidationType, TPassThrough> scopedData,
         //Func<TValidationType, Task<TPassThrough>> scoped,
-        Action<ScopedData<TValidationType, TPassThrough>> rules
+        Action<IScopedData<TPassThrough>> rules
     ) : base(validatorStore)
     {
         this.whenDescription = whenDescription;
@@ -53,6 +54,10 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
             );
     }
 
+    public override void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline)
+    {
+        scoped.ReHome(fieldDescriptorOutline);
+    }
 
     protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {

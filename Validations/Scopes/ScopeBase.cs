@@ -16,12 +16,15 @@ public abstract class ScopeBase : IValidatorScope //, IExpandableEntity
     protected bool IsVital = false;
     public void AsVital() { IsVital = true; }
     protected IFieldDescriptorOutline FieldDescriptor { get; set; }
+
     public ScopeBase(
         ValidationConstructionStore validatorStore
     )
     {
         this.validatorStore = validatorStore;
     }
+
+    public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
 
     //public void SetCurrentFieldExecutor(IFieldDescriptorOutline fieldDescriptor)
     //{

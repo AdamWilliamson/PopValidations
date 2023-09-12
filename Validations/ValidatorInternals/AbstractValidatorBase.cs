@@ -113,7 +113,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
         Func<TValidationType, Task<bool>> ifTrue,
         string scopedDescription,
         Func<TValidationType, Task<TPassThrough>> scoped,
-        Action<ScopedData<TValidationType, TPassThrough>> rules
+        Action<IScopedData<TPassThrough>> rules
     )
     {
         var context = new WhenScopedResultValidator<TValidationType, TPassThrough>(
@@ -132,7 +132,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
         Func<TValidationType, bool> ifTrue,
         string scopedDescription,
         Func<TValidationType, TPassThrough> scoped,
-        Action<ScopedData<TValidationType, TPassThrough>> rules
+        Action<IScopedData<TPassThrough>> rules
     )
     {
         var context = new WhenScopedResultValidator<TValidationType, TPassThrough>(

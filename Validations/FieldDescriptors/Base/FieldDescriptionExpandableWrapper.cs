@@ -27,6 +27,7 @@ public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
         this.component = component;
     }
 
+    public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline){}
     public bool IsVital { get; protected set; }
 
     public void ExpandToValidate(ValidationConstructionStore store, object? value)

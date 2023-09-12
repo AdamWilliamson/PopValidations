@@ -392,6 +392,7 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore
 
             var currentInstanceValue = InformationDepth.GetCurrentFieldExecutor()?.GetValue(instance) ?? instance;
 
+            expandable.ReHomeScopes(InformationDepth.GetCurrentFieldExecutor());
             expandable.ExpandToValidate(this, currentInstanceValue);
             var copyNewUnExpanded = unExpandedItems.ToList();
             unExpandedItems = new();

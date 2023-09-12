@@ -17,6 +17,8 @@ public abstract class AbstractSubValidator<TValidationType>
 
     protected AbstractSubValidator() : base(null, new()) { }
 
+    public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
+
     public virtual void ExpandToValidate(ValidationConstructionStore store, object? value)
     {
         store.AddExpandedItemsForValidation(Store, value);

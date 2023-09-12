@@ -1,5 +1,6 @@
 ﻿using System;
 using PopValidations.Execution.Stores;
+using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
 namespace PopValidations.Scopes.Whens;
@@ -20,6 +21,11 @@ public sealed class Scope<TScopedDataType> : ScopeBase
     {
         this.scopedData = scopedData;
         this.rules = rules;
+    }
+
+    public override void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) 
+    {
+        scopedData.ReHome(fieldDescriptorOutline);
     }
 
     protected override async void InvokeScopeContainer(ValidationConstructionStore store, object? value)

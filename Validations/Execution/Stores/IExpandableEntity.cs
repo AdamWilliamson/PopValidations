@@ -87,6 +87,7 @@ public class Decorator: IDecorator
 public interface IExpandableEntity
 {
     Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator { get; }
+    void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline);
     void ExpandToValidate(ValidationConstructionStore store, object? value);
     void ExpandToDescribe(ValidationConstructionStore store);
     void AsVital();

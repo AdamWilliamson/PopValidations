@@ -59,7 +59,7 @@ public class WhenValidationItemDecorator<TValidationType>
         }
 
         //var 
-        scopedData?.Init(instance);
+        //scopedData?.Init(instance);
 
         if (result)
             return await ItemToDecorate.CanValidate(instance);

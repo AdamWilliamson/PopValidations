@@ -23,6 +23,10 @@ public class ExpandableStoreItem : IExpandableStoreItem
         Component.AsVital();
     }
 
+    public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) {
+        Component.ReHomeScopes(fieldDescriptorOutline);
+    }
+
     public ScopeParent? ScopeParent { get; set; }
     public IExpandableEntity Component { get; }
     public IFieldDescriptorOutline? FieldDescriptor { get; set; }
