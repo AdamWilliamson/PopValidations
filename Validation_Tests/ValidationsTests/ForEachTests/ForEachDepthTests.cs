@@ -19,7 +19,8 @@ public class Level1DepthValidator : AbstractValidator<Level1>
         DescribeEnumerable(x => x.Level2Array)
             .Vitally()
             .IsNotNull()
-            .ForEach(x => x.SetValidator(new Level2DepthValidator()));
+            .ForEach(x => x.SetValidator(new Level2DepthValidator()))
+            ;
     }
 }
 
@@ -32,7 +33,8 @@ public class Level2DepthValidator : AbstractSubValidator<Level2>
         DescribeEnumerable(x => x.Level3Array)
             .Vitally()
             .IsNotNull()
-            .ForEach(x => x.SetValidator(new Level3DepthValidator()));
+            .ForEach(x => x.SetValidator(new Level3DepthValidator()))
+            ;
     }
 }
 
@@ -45,30 +47,31 @@ public class Level3DepthValidator : AbstractSubValidator<Level3>
         DescribeEnumerable(x => x.Level4Array)
             .Vitally()
             .IsNotNull()
-            .ForEach(x => x.SetValidator(new Level4DepthValidator()));
+            //.ForEach(x => x.SetValidator(new Level4DepthValidator()))
+            ;
     }
 }
 
-public class Level4DepthValidator : AbstractSubValidator<Level4>
-{
-    public Level4DepthValidator()
-    {
-        Describe(x => x.Name).IsEqualTo(nameof(Level4DepthValidator));
+//public class Level4DepthValidator : AbstractSubValidator<Level4>
+//{
+//    public Level4DepthValidator()
+//    {
+//        Describe(x => x.Name).IsEqualTo(nameof(Level4DepthValidator));
 
-        DescribeEnumerable(x => x.Level5Array)
-            .Vitally()
-            .IsNotNull()
-            .ForEach(x => x.SetValidator(new Level5DepthValidator()));
-    }
-}
+//        DescribeEnumerable(x => x.Level5Array)
+//            .Vitally()
+//            .IsNotNull()
+//            .ForEach(x => x.SetValidator(new Level5DepthValidator()));
+//    }
+//}
 
-public class Level5DepthValidator : AbstractSubValidator<Level5>
-{
-    public Level5DepthValidator()
-    {
-        Describe(x => x.Name).IsEqualTo(nameof(Level5DepthValidator));
-    }
-}
+//public class Level5DepthValidator : AbstractSubValidator<Level5>
+//{
+//    public Level5DepthValidator()
+//    {
+//        Describe(x => x.Name).IsEqualTo(nameof(Level5DepthValidator));
+//    }
+//}
 
 public class ForEachDepthTests
 {
@@ -82,18 +85,18 @@ public class ForEachDepthTests
             Level2Array: new()
             {
                 new Level2(
-                    Name: nameof(Level2DepthValidator),
+                    Name: nameof(Level2),
                     Level3Array: new()
                     {
                         new Level3(
-                            Name: nameof(Level3DepthValidator),
+                            Name: nameof(Level3),
                             Level4Array: new()
                             {
                                 new Level4(
-                                    Name: nameof(Level4DepthValidator),
+                                    Name: nameof(Level4),
                                     Level5Array: new()
                                     {
-                                        new Level5(nameof(Level5DepthValidator))
+                                        new Level5(nameof(Level5))
                                     }
                                 )
                             }

@@ -25,7 +25,7 @@ public static partial class IFieldValidatorExtensions
         ISubValidatorClass<TFieldType> validatorClass
     )
     {
-        fieldDescriptor.AddValidation(validatorClass);
+        fieldDescriptor.AddSubValidator(validatorClass);
         return fieldDescriptor;
     }
 

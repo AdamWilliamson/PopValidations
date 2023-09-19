@@ -15,7 +15,7 @@ public abstract class AbstractSubValidator<TValidationType>
 
     public virtual void AsVital() { }
 
-    protected AbstractSubValidator() : base(null, new()) { }
+    protected AbstractSubValidator() : base(null, new ValidationSubStore()) { }
 
     public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
 
@@ -39,6 +39,25 @@ public abstract class AbstractSubValidator<TValidationType>
         //    if (item != null)
         //        store.AddItemToCurrentScope(item);
         //}
+    }
+
+    public void ChangeStore(IValidationStore store)
+    {
+        //foreach (var item in Store.GetItems())
+        //{
+        //    //store.AddItem(fieldDescriptor, new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
+        //    //    this,
+        //    //    _NextValidationVital || _AlwaysVital,
+        //    //    component
+        //    //)item);
+        //    fieldDescriptor.
+        //}
+        //store.Merge(Store);
+        //store.AddItem
+        //ReplaceStore(store);
+        Store.ReplaceInternalStore(store);
+        //Store = store;
+        //ReplaceStore(store);
     }
 }
 

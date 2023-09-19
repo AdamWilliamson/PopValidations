@@ -43,4 +43,9 @@ public class ExpandableStoreItem : IExpandableStoreItem
     {
         Component.ExpandToDescribe(store);
     }
+
+    public void ChangeStore(IValidationStore store)
+    {
+        Component?.ChangeStore(store);
+    }
 }

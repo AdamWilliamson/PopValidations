@@ -14,7 +14,7 @@ public class PropertyExpressionToken<TInput, TOutput> : PropertyExpressionTokenB
         Expression<Func<TInput, TOutput?>> expression)
     {
         Expression = expression;
-        Name = ExpressionUtilities.GetPropertyPath(expression);
+        Name = ExpressionUtilities.GetPropertyPath(expression) ?? string.Empty;
     }
 
     public PropertyExpressionToken(

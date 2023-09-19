@@ -37,7 +37,7 @@ public class IndexedPropertyExpressionToken<TValidationType,TInput, TOutput>
         //this.parentPropertyToken = parentPropertyToken;
 
         //Expression = (input) => IndexExpression.Compile().Invoke(parentPropertyToken.Execute(input));
-        Name = name;
+        Name = name ?? string.Empty;
         Index = index;
     }
 

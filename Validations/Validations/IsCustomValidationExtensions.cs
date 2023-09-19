@@ -3,6 +3,7 @@ using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations;
 using PopValidations.Validations.Base;
 using System;
+using System.Threading.Tasks;
 
 namespace PopValidations;
 
@@ -36,7 +37,7 @@ public static class IsCustomValidationExtensions
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
         string descriptionTemplate,
         string errorTemplate,
-        IScopedData<bool> scopedValue,//Func<TFieldType?, bool> validationFunc,
+        IScopedData<TFieldType?, bool> scopedValue,//Func<TFieldType?, bool> validationFunc,
         Action<ValidationOptions>? optionsAction = null
     )
     {
@@ -54,7 +55,7 @@ public static class IsCustomValidationExtensions
          this IFieldDescriptor<TValidationType, TPropertyType?> fieldDescriptor,
          string errorTemplate,
          string descriptionTemplate,
-         Func<TPropertyType, IScopedData<bool>> scopedResult,
+         Func<TPropertyType, IScopedData<TPropertyType?, bool>> scopedResult,
          Action<ValidationOptions>? optionsAction = null
     )
     {

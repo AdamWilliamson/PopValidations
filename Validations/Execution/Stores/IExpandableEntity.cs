@@ -92,4 +92,5 @@ public interface IExpandableEntity
     void ExpandToDescribe(ValidationConstructionStore store);
     void AsVital();
     bool IgnoreScope { get; }
+    void ChangeStore(IValidationStore store);
 }

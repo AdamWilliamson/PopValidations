@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using PopValidations;
 using static PopValidations_Tests.Demonstration.Advanced.Validators.AdvancedSongValidator;
@@ -44,7 +46,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                     .Is(
                         "Has a SufficientlyLong Name",
                         "Name is too short",
-                        c => data.To("", x => Task.FromResult(x is { HasSufficientlyLongName: true }))
+                        data.To("", (DateTime? created, DesignedToBePatternMatched? x) => x is { HasSufficientlyLongName: true })
                     );
             }
         );
@@ -75,13 +77,13 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                     .Vitally().ForEach((song) =>
                     {
                         song.IsNotNull()
-                        .Is(
-                            "{{value}} Was not found in list of songs we own the rights to",
-                            "Checks to ensure the song's rights are owned by us.",
-                            s => SongOwnedPair.To(
-                                "Matches Track and Is Owned",
-                                x => Task.FromResult(x.Any(u => u.Item1!.TrackName == s.TrackName && u.Item2)))
-                        );
+                            .Is(
+                                "{{value}} Was not found in list of songs we own the rights to",
+                                "Checks to ensure the song's rights are owned by us.",
+                                SongOwnedPair.To(
+                                    "Matches Track and Is Owned",
+                                    (AdvancedSong? s, List<(AdvancedSong?, bool)>? x) => x?.Any(u => u.Item1!.TrackName == s.TrackName && u.Item2) ?? false)
+                            );
                     });
             });
 

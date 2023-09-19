@@ -13,16 +13,16 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
     private readonly ScopedData<TValidationType, TPassThrough> scoped;
     private readonly Action<IScopedData<TPassThrough>> rules;
     public override string Name => whenDescription;
-    WhenStringValidator_IfTrue<TValidationType> something;
+    //WhenStringValidator_IfTrue<TValidationType> something;
 
     public WhenScopedResultValidator(
-        ValidationConstructionStore validatorStore,
+        //IValidationStore validatorStore,
         string whenDescription,
         Func<TValidationType, bool> ifTrue,
         ScopedData<TValidationType, TPassThrough> scopedData,
         Action<IScopedData<TPassThrough>> rules
     ) : this(
-        validatorStore,
+        //validatorStore,
         whenDescription,
         (x) => Task.FromResult(ifTrue.Invoke(x)),
         scopedData,
@@ -31,27 +31,26 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
     {}
 
     public WhenScopedResultValidator(
-        ValidationConstructionStore validatorStore,
+        //IValidationStore validatorStore,
         string whenDescription,
         Func<TValidationType, Task<bool>> ifTrue,
         ScopedData<TValidationType, TPassThrough> scopedData,
         //Func<TValidationType, Task<TPassThrough>> scoped,
         Action<IScopedData<TPassThrough>> rules
-    ) : base(validatorStore)
+    )// : base(validatorStore)
     {
         this.whenDescription = whenDescription;
         //this.ifTrue = ifTrue;
         this.scoped = scopedData;// new ScopedData<TValidationType, TPassThrough>(scoped);
         this.rules = rules;
 
-        something = new WhenStringValidator_IfTrue<TValidationType>(ifTrue);
         Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
             this,
             item,
-            something,
+            new WhenStringValidator_IfTrue<TValidationType>(ifTrue),
             this.scoped,
             fieldDescriptor
-            );
+        );
     }
 
     public override void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline)
@@ -61,6 +60,7 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
 
     protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {
+        scoped.Init(value).Wait();
         rules.Invoke(scoped);
     }
 
@@ -68,4 +68,6 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
     {
         rules.Invoke(scoped);
     }
+
+    public override void ChangeStore(IValidationStore store) { }
 }

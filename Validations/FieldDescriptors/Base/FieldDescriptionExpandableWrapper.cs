@@ -53,4 +53,9 @@ public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
         }
         return RetrievedValue;
     }
+
+    public void ChangeStore(IValidationStore store)
+    {
+        component.ChangeStore(store);
+    }
 }

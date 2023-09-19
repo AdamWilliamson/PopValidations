@@ -14,6 +14,11 @@ public interface IScopedData<TResponse> : IScopeData
         Func<TResponse, TNewResponse> passThroughFunction
     );
 
+    ScopedData<TInput, TNewResponse> To<TInput, TNewResponse>(
+        string newDescription,
+        Func<TInput, TResponse?, TNewResponse> passThroughFunction
+    );
+
     TResponse? GetTypedValue();
 }
 
@@ -107,10 +112,20 @@ public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
     {
         return new ScopedData<TResponse, TNewResponse>(this, newDescription, passThroughFunction);
     }
+
+    public ScopedData<TInput, TNewResponse> To<TInput, TNewResponse>(
+        string newDescription,
+        Func<TInput, TResponse?, TNewResponse> passThroughFunction
+    )
+    {
+        var func = (TInput val) => passThroughFunction.Invoke(val, this.GetTypedValue() ?? default);
+        return new ScopedData<TInput, TNewResponse>(newDescription, func);
+    }
 }
 
 
-public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScopeData
+public interface IScopedData<TInput, TResponse> : IScopedData<TResponse> { }
+public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScopedData<TPassThrough, TResponse>, IScopeData
 {
     private Func<TPassThrough, Task<TResponse>>? PassThroughFunction { get; }
     protected IScopeData? Parent { get; set; } = null;
@@ -268,5 +283,14 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
     )
     {
         return new ScopedData<TResponse, TNewResponse>(this, newDescription, passThroughFunction);
+    }
+
+    public ScopedData<TInput, TNewResponse> To<TInput, TNewResponse>(
+         string newDescription,
+         Func<TInput, TResponse?, TNewResponse> passThroughFunction
+     )
+    {
+        var func = (TInput val) => passThroughFunction.Invoke(val, this.GetTypedValue() ?? default);
+        return new ScopedData<TInput, TNewResponse>(newDescription, func);
     }
 }

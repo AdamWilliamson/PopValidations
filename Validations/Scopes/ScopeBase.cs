@@ -8,7 +8,7 @@ namespace PopValidations.Scopes;
 public abstract class ScopeBase : IValidatorScope //, IExpandableEntity
 {
     public virtual bool IgnoreScope => false;
-    protected readonly ValidationConstructionStore validatorStore;
+    //protected readonly IValidationStore validatorStore;
     public Guid Id { get; } = Guid.NewGuid();
     public IParentScope? Parent => this;
     public abstract string Name { get; }
@@ -17,12 +17,12 @@ public abstract class ScopeBase : IValidatorScope //, IExpandableEntity
     public void AsVital() { IsVital = true; }
     protected IFieldDescriptorOutline FieldDescriptor { get; set; }
 
-    public ScopeBase(
-        ValidationConstructionStore validatorStore
-    )
-    {
-        this.validatorStore = validatorStore;
-    }
+    //public ScopeBase(
+    //    IValidationStore validatorStore
+    //)
+    //{
+    //    this.validatorStore = validatorStore;
+    //}
 
     public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
 
@@ -48,4 +48,6 @@ public abstract class ScopeBase : IValidatorScope //, IExpandableEntity
 
     protected abstract void InvokeScopeContainer(ValidationConstructionStore store, object? value);
     protected abstract void InvokeScopeContainerToDescribe(ValidationConstructionStore store);
+
+    public abstract void ChangeStore(IValidationStore store);
 }

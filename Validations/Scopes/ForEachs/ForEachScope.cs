@@ -102,7 +102,7 @@ internal class ForEachScope<TValidationType, TFieldType> : ScopeBase//, ISubVali
         IFieldDescriptor<TValidationType, IEnumerable<TFieldType?>?> fieldDescriptor,
         Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions
         //ValidationConstructionStore store
-    ) : base(fieldDescriptor.Store)
+    ) //: base(fieldDescriptor.Store)
     {
         this.fieldDescriptor = fieldDescriptor;
         this.actions = actions;
@@ -212,4 +212,6 @@ internal class ForEachScope<TValidationType, TFieldType> : ScopeBase//, ISubVali
 
         actions.Invoke(thingo);
     }
+
+    public override void ChangeStore(IValidationStore store) { }
 }

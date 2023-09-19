@@ -11,11 +11,11 @@ public sealed class WhenStringValidator<TValidationType> : ScopeBase
     public override string Name => whenDescription;
 
     public WhenStringValidator(
-        ValidationConstructionStore validatorStore,
+        //IValidationStore validatorStore,
         string whenDescription,
         Func<TValidationType, Task<bool>> ifTrue,
         Action rules
-    ) : base(validatorStore)
+    ) //: base(validatorStore)
     {
         this.whenDescription = whenDescription;
         this.rules = rules;
@@ -37,4 +37,6 @@ public sealed class WhenStringValidator<TValidationType> : ScopeBase
     {
         rules.Invoke();
     }
+
+    public override void ChangeStore(IValidationStore store) { }
 }

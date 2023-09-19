@@ -235,6 +235,21 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>IsEqualToValidation_RunnerTests.cs</DependentUpon>
     </None>
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeValidationTests\ScopeWhen_DemoTest.Description.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeValidationTests\ScopeWhen_DemoTest.OpenApi.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeValidationTests\ScopeWhen_DemoTest.Validation.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
   </ItemGroup>
 
 </Project>

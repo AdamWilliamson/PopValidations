@@ -1,6 +1,8 @@
 ﻿using PopValidations.Execution.Stores;
+using PopValidations.Execution.Stores.Internal;
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
+using PopValidations.ValidatorInternals;
 
 namespace PopValidations.FieldDescriptors;
 
@@ -10,7 +12,7 @@ public class FieldDescriptor<TValidationType, TFieldType>
     public IPropertyExpressionToken<TValidationType, TFieldType?> PropertyToken { get; }
     protected object? RetrievedValue = null;
     protected bool ValueHasBeenRetrieved = false;
-    public ValidationConstructionStore Store { get; }
+    public IValidationStore Store { get; }
     public string PropertyName => PropertyToken.Name;
 
     public virtual string AddTo(string existing)
@@ -33,23 +35,49 @@ public class FieldDescriptor<TValidationType, TFieldType>
 
     public FieldDescriptor(
         IPropertyExpressionToken<TValidationType, TFieldType?> propertyToken,
-        ValidationConstructionStore store
+        IValidationStore store
     )
     {
         PropertyToken = propertyToken;
         Store = store;
     }
 
-    public void AddValidation(IExpandableEntity component)
+    public void AddSubValidator(ISubValidatorClass<TFieldType> component)
     {
-        Store.AddItem(
-            this,
-            new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
-                this,
-                _NextValidationVital || _AlwaysVital,
-                component
-            )
-        );
+        foreach (var item in component.Store.GetItems())
+        {
+            Store.AddItemToCurrentScope(this, item);
+                //if (item.ScopeParent is IExpandableEntity expandable) 
+            //if (item is IExpandableStoreItem expandable && expandable is not null)
+            //{
+            //    Store.AddItem(this,
+            //        new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
+            //            this,
+            //            _NextValidationVital || _AlwaysVital,
+            //            //component
+            //            expandable
+            //        )
+            //    );
+            //}
+            //else if (item is IValidatableStoreItem validatable)
+            ////else if(item.ScopeParent is IValidationComponent validationComponent) 
+            //{
+            //    Store.AddItem(
+            //        _NextValidationVital || _AlwaysVital,
+            //        this,
+            //        validatable
+            //    );
+            //}
+        }
+        component.ChangeStore(Store);
+        //Store.AddItem(
+        //    this,
+        //    new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
+        //        this,
+        //        _NextValidationVital || _AlwaysVital,
+        //        component
+        //    )
+        //);
         _NextValidationVital = false;
     }
 

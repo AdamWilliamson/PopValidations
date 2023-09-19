@@ -14,10 +14,10 @@ public sealed class Scope<TScopedDataType> : ScopeBase
     public override string Name => scopedData.Describe();
 
     public Scope(
-        ValidationConstructionStore validatorStore,
+        //IValidationStore validatorStore,
         IScopedData<TScopedDataType?> scopedData,
         Action<IScopedData<TScopedDataType?>> rules
-    ) : base(validatorStore)
+    ) //: base(validatorStore)
     {
         this.scopedData = scopedData;
         this.rules = rules;
@@ -42,4 +42,6 @@ public sealed class Scope<TScopedDataType> : ScopeBase
     {
         rules.Invoke(scopedData);
     }
+
+    public override void ChangeStore(IValidationStore store) { }    
 }

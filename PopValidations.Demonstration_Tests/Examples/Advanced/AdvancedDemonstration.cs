@@ -91,67 +91,81 @@ public static class AdvancedDemonstration
             //    .IsLengthInclusivelyBetween(3, 45)
             //    .ForEach(song => song.Vitally().IsNotNull().SetValidator(new SongValidator()));
 
-            //Scope("Validate Album",
-            //    async (album) => await albumVerificationService.GetAlbumChecker(album),
-            //    (albumChecker) =>
-            //    {
-            //        When(
-            //            "Album is Compliation",
-            //            (album) => Task.FromResult(album.Type == AlbumType.Compilation),
-            //            () =>
-            //            {
-            //                Describe(x => x.Artists)
-            //                    .Is(
-            //                        "Validated to must {{is_value}}",
-            //                        "Failed to {{is_value}}",
-            //                        albumChecker.To("have different artists", x => x is { IsAllTheSameArtist: false })
-            //                    );
-            //            });
-
-            //        When(
-            //            "Album is Single Artist",
-            //            (album) => Task.FromResult(album.Type == AlbumType.SingleArtist),
-            //            () =>
-            //            {
-            //                Describe(x => x.Artists)
-            //                    .Is(
-            //                        "Must {{is_value}}",
-            //                        "Does not {{is_value}}",
-            //                        albumChecker.To("have all the same artists", x => x is not { IsAllTheSameArtist: true })
-            //                    );
-            //            });
-            //    }
-            //);
-
-            ScopeWhen(
-                "When Album is Collaboration",
-                (album) => Task.FromResult(album.Type == AlbumType.Collaboration),
-                "Get Complex Album Validator",
-                (album) => albumVerificationService.GetAlbumChecker(album),
+            Scope("Validate Album",
+                async (album) => await albumVerificationService.GetAlbumChecker(album),
                 (albumChecker) =>
                 {
-                    DescribeEnumerable(x => x.Songs)
-                        .Vitally().Is(
-                            "All songs must contain atleast one album artist.",
-                            "The songs in this album, being collaboration, must contain atleast 1 album artist.",
-                            albumChecker.To("", i => i.AllSongsContainAlbumArtist is true)
-                        );
-                });
+                    When(
+                        "Album is Compliation",
+                        (album) => Task.FromResult(album?.Type == AlbumType.Compilation),
+                        () =>
+                        {
+                            Describe(x => x.Artists)
+                                .Is(
+                                    "Validated to must {{is_value}}",
+                                    "Failed to {{is_value}}",
+                                    albumChecker.To(
+                                        "have different artists", 
+                                        (List<Artist>? x, AlbumChecker? i) 
+                                            => 
+                                                x?.Any() == true 
+                                                && i is { IsAllTheSameArtist: false }
+                                    )
+                                );
+                        });
+
+                    When(
+                        "Album is Single Artist",
+                        (album) => Task.FromResult(album?.Type == AlbumType.SingleArtist),
+                        () =>
+                        {
+                            Describe(x => x.Artists)
+                                .Is(
+                                    "Must {{is_value}}",
+                                    "Does not {{is_value}}",
+                                    albumChecker.To(
+                                        "have all the same artists", 
+                                        (List<Artist>? x, AlbumChecker? i) 
+                                            => 
+                                                x?.Any() == true
+                                                && i is not { IsAllTheSameArtist: true }
+                                    )
+                                );
+                        });
+                }
+            );
 
             //ScopeWhen(
-            //    "When Album is Single",
-            //    "Need the Database Checker to When",
-            //    async (album) => await albumVerificationService.GetAlbumChecker(album),
-            //    (album, albumChecker) => album.Type == AlbumType.Single,
+            //    "When Album is Collaboration",
+            //    (album) => Task.FromResult(album.Type == AlbumType.Collaboration),
+            //    "Get Complex Album Validator",
+            //    (album) => albumVerificationService.GetAlbumChecker(album),
             //    (albumChecker) =>
             //    {
-            //        Describe(x => x.Songs)
+            //        DescribeEnumerable(x => x.Songs)
             //            .Vitally().Is(
-            //                "Album must match the rules for single.",
-            //                "Must Abide by the rules for singles.",
-            //                albumChecker.To("Album is Single", i => i.IsSingle is true)
+            //                "All songs must contain atleast one album artist.",
+            //                "The songs in this album, being collaboration, must contain atleast 1 album artist.",
+            //                albumChecker.To("", (IEnumerable<Song?>? x, AlbumChecker? i) => i?.AllSongsContainAlbumArtist is true)
             //            );
             //    });
+
+            ScopeWhen(
+                "When Album is Single",
+                "Need the Database Checker to When",
+                async (album) => await albumVerificationService.GetAlbumChecker(album),
+                (album, albumChecker) => album?.Type == AlbumType.Single,
+                (albumChecker) =>
+                {
+                    Describe(x => x.Songs)
+                        .Vitally().Is(
+                            "Album must match the rules for single.",
+                            "Must Abide by the rules for singles.",
+                            albumChecker.To(
+                                "Album is Single",
+                                (List<Song?>? x, AlbumChecker? i) => i?.IsSingle is true)
+                        );
+                });
         }
     }
 

@@ -10,7 +10,7 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
     public override string ErrorTemplate { get; protected set; }
 
     private readonly Func<TFieldType?, bool> customValidationFunc;
-    private IScopedData<bool> scopedValue;
+    private IScopedData<TFieldType?, bool> scopedValue;
 
     public IsCustomValidation(
         string descriptionTemplate,
@@ -29,7 +29,7 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
     public IsCustomValidation(
         string descriptionTemplate,
         string errorTemplate,
-        IScopedData<bool> scopedValue
+        IScopedData<TFieldType?,bool> scopedValue
         )
     {
         DescriptionTemplate = descriptionTemplate;
@@ -96,12 +96,12 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
 
 public class IsCustomScopedValidation<TInputType> : ValidationComponentBase
 {
-    private readonly Func<TInputType, IScopedData<bool>> scopedTest;
+    private readonly Func<TInputType, IScopedData<TInputType?, bool>> scopedTest;
 
     public override string DescriptionTemplate { get; protected set; } = string.Empty;
     public override string ErrorTemplate { get; protected set; } = string.Empty;
 
-    public IsCustomScopedValidation(string error, string description, Func<TInputType, IScopedData<bool>> test)
+    public IsCustomScopedValidation(string error, string description, Func<TInputType, IScopedData<TInputType?, bool>> test)
     {
         ErrorTemplate = error;
         DescriptionTemplate = description;

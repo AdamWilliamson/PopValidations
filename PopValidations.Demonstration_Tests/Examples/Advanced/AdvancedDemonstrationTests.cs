@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using PopValidations.Swashbuckle_Tests.Helpers;
 using PopValidations_Tests.TestHelpers;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -84,6 +85,23 @@ public class AdvancedDemonstrationTests
                             "Country"
                         ),
                     },
+                    new() { "Pop" }
+                ),
+                new AdvancedDemonstration.Album(
+                    "",
+                     AdvancedDemonstration.AlbumType.Single,
+                    new() { new AdvancedDemonstration.Artist("Disturbed") },
+                    null,
+                    null, 
+                    Enumerable.Repeat(0, 8).Select<int, AdvancedDemonstration.Song?>(i => 
+                        new AdvancedDemonstration.Song(
+                            new() { new AdvancedDemonstration.Artist("Disturbed") },
+                            null,
+                            "",
+                            -1,
+                            "Rock"
+                        )
+                    ).ToList(),
                     new() { "Pop" }
                 ),
                 null
