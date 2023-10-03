@@ -11,6 +11,7 @@ public class WhenValidationItemDecorator<TValidationType>
     private readonly IValidatorScope scopeParent;
     private readonly WhenStringValidator_IfTrue<TValidationType> ifTrue;
     private readonly IScopeData? scopedData;
+    IFieldDescriptorOutline parentScopeFieldDescriptor;
 
     public WhenValidationItemDecorator(
         IValidatorScope scopeParent,
@@ -23,6 +24,19 @@ public class WhenValidationItemDecorator<TValidationType>
         this.scopeParent = scopeParent;
         this.ifTrue = ifTrue;
         this.scopedData = scopedData;
+    }
+
+    public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
+    {
+        base.ReHomeScopes(attemptedScopeFieldDescriptor);
+        //parentScopeFieldDescriptor = attemptedScopeFieldDescriptor;
+    }
+
+    public void SetParent(FieldExecutor fieldExecutor)
+    {
+        base.SetParent(fieldExecutor);
+        //ItemToDecorate.SetParent(fieldExecutor);
+        parentScopeFieldDescriptor = fieldExecutor;
     }
 
     public override async Task<bool> CanValidate(object? instance)
@@ -42,7 +56,7 @@ public class WhenValidationItemDecorator<TValidationType>
         }
         else if (WrappingLevelfieldDescriptor != null)
         {
-            var fieldExecutorValue = WrappingLevelfieldDescriptor!.GetValue(instance);
+            var fieldExecutorValue = WrappingLevelfieldDescriptor!.GetValue(parentScopeFieldDescriptor?.GetValue(instance) ?? instance);
 
             if (fieldExecutorValue != null)
             {

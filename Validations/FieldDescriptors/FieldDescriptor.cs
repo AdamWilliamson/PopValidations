@@ -47,7 +47,7 @@ public class FieldDescriptor<TValidationType, TFieldType>
         foreach (var item in component.Store.GetItems())
         {
             Store.AddItemToCurrentScope(this, item);
-                //if (item.ScopeParent is IExpandableEntity expandable) 
+            //if (item.ScopeParent is IExpandableEntity expandable) 
             //if (item is IExpandableStoreItem expandable && expandable is not null)
             //{
             //    Store.AddItem(this,

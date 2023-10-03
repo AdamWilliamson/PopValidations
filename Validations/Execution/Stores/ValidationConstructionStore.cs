@@ -148,27 +148,27 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
     {
         if (storeItem is IExpandableStoreItem expandable && expandable is not null)
         {
-            //var currentParent = InformationDepth.GetCurrentScopeParent();
-            //ValidationFieldDescriptorOutline? nextParent = null;
-            IFieldDescriptorOutline? nextParent = null;
 
-            if (expandable.FieldDescriptor != null && fieldDecorator == null)
-            {
-                //nextParent = GenerateName(expandable.FieldDescriptor);
-                nextParent = new FieldExecutor(InformationDepth.GetCurrentFieldExecutor(), expandable.FieldDescriptor);
-            }
-            else if (expandable.FieldDescriptor != null && fieldDecorator != null)
-            {
-                //nextParent = GenerateName(expandable.FieldDescriptor);
-                var joiningFieldExecutor = new FieldExecutor(InformationDepth.GetCurrentFieldExecutor(), fieldDecorator);
-                nextParent = new FieldExecutor(joiningFieldExecutor, expandable.FieldDescriptor);
-            }else if (fieldDecorator != null)
-            {
-                nextParent = new FieldExecutor(InformationDepth.GetCurrentFieldExecutor(), fieldDecorator);
-            }
+            //IFieldDescriptorOutline? nextParent = null;
 
-            AddItem(nextParent, expandable.Component);
+            //if (expandable.FieldDescriptor != null && fieldDecorator == null)
+            //{
+            //    //nextParent = GenerateName(expandable.FieldDescriptor);
+            //    nextParent = new FieldExecutor(InformationDepth.GetCurrentFieldExecutor(), expandable.FieldDescriptor);
+            //}
+            //else if (expandable.FieldDescriptor != null && fieldDecorator != null)
+            //{
+            //    //nextParent = GenerateName(expandable.FieldDescriptor);
+            //    var joiningFieldExecutor = new FieldExecutor(InformationDepth.GetCurrentFieldExecutor(), fieldDecorator);
+            //    nextParent = new FieldExecutor(joiningFieldExecutor, expandable.FieldDescriptor);
+            //}
+            //else if (fieldDecorator != null)
+            //{
+            //    nextParent = new FieldExecutor(InformationDepth.GetCurrentFieldExecutor(), fieldDecorator);
+            //}
 
+            //AddItem(nextParent, new WrappingExpandableStoreItem(null, fieldDecorator, expandable.Component));
+            AddItem(fieldDecorator, new WrappingExpandableStoreItem(null, expandable.FieldDescriptor, expandable.Component));
         }
         else if (storeItem is IValidatableStoreItem validatable)
         {
@@ -490,20 +490,22 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
                 ? currentFieldExecutor.GetValue(instance)
                 : instance;
 
-            expandable.ReHomeScopes(currentFieldExecutor);
-            expandable.ExpandToValidate(this, currentInstanceValue);
-            var copyNewUnExpanded = unExpandedItems.ToList();
-            unExpandedItems = new();
-
-            foreach (var item in copyNewUnExpanded)
+            if (currentInstanceValue != null)
             {
-                var recursiveResponse = ExpandToValidateRecursive(item, currentInstanceValue);
-                if (recursiveResponse?.Any() == true)
+                expandable.ReHomeScopes(currentFieldExecutor);
+                expandable.ExpandToValidate(this, currentInstanceValue);
+                var copyNewUnExpanded = unExpandedItems.ToList();
+                unExpandedItems = new();
+
+                foreach (var item in copyNewUnExpanded)
                 {
-                    results.AddRange(recursiveResponse);
+                    var recursiveResponse = ExpandToValidateRecursive(item, currentInstanceValue);
+                    if (recursiveResponse?.Any() == true)
+                    {
+                        results.AddRange(recursiveResponse);
+                    }
                 }
             }
-
             InformationDepth.PopToCount(originalInformationDepth);
 
         }

@@ -41,6 +41,20 @@ public class InfoStack
             //fieldExecutor, 
             decorator
         );
+
+        //var parentParent = scopeParent.Parent;
+        //while (parentParent != null)
+        //{
+        //    Push(
+        //    new ScopeParent(scopeParent, previous),
+        //    fieldParent,
+        //    //fieldExecutor, 
+        //    decorator
+        //);
+
+        //    parentParent = parentParent.Parent;
+        //}
+
     }
 
     public int Push(
@@ -68,7 +82,8 @@ public class InfoStack
 
         this.InformationDepth = new();
 
-        foreach (var item in stack.InformationDepth) {
+        foreach (var item in stack.InformationDepth) 
+        {
             InformationDepth.Push(item);
         }
 
@@ -92,6 +107,28 @@ public class InfoStack
         )
     {
         var originalCount = InformationDepth.Count();
+
+
+        if (fieldExecutor != null)
+        {
+            //if (fieldExecutor.Parent != null)
+            //{
+            //    Push(null, fieldExecutor.Parent, null);
+            //}
+
+            fieldExecutor.SetParent(GetCurrentFieldExecutor());
+
+            InformationDepth.Push(
+                new StackedDepth(
+                    null, //scopeParent,
+                          //fieldParent,
+                    fieldExecutor,
+                    null //decorator
+                )
+            );
+        }
+
+
         if (scopeParent != null)
         {
             InformationDepth.Push(
@@ -99,20 +136,6 @@ public class InfoStack
                     scopeParent,
                     //null, //fieldParent,
                     null, //fieldExecutor,
-                    null //decorator
-                )
-            );
-        }
-
-        if (fieldExecutor != null)
-        {
-            fieldExecutor.SetParent(GetCurrentFieldExecutor());
-
-            InformationDepth.Push(
-                new StackedDepth(
-                    null, //scopeParent,
-                    //fieldParent,
-                    fieldExecutor,
                     null //decorator
                 )
             );
@@ -129,12 +152,16 @@ public class InfoStack
             InformationDepth.Push(
                 new StackedDepth(
                     null, //scopeParent,
-                    //null, //fieldParent,
+                          //null, //fieldParent,
                     null, //fieldExecutor,
                     decorator
                 )
             );
         }
+
+
+        
+
 
         return originalCount;
     }
@@ -279,15 +306,17 @@ public class InfoStack
         //{
         //    decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
         //}
-        IFieldDescriptorOutline?  currentFieldDescriptor = null;
+        
         for (var decoratorIndex = InformationDepth.Count-1; decoratorIndex >= 0; decoratorIndex--)
         {
+            IFieldDescriptorOutline? currentFieldDescriptor = null;
             if (InformationDepth.ElementAt(decoratorIndex).Decorator == null)
             {
                 continue;
             }
+            DebugLogger.Log($"decoratorIndex = {decoratorIndex}");
 
-            for (var fdIndex = decoratorIndex; fdIndex < InformationDepth.Count; fdIndex++)
+            for (var fdIndex = decoratorIndex; fdIndex < InformationDepth.Count - 1; fdIndex++)
             {
                 if (InformationDepth.ElementAt(fdIndex).FieldExecutor == null)
                 {
@@ -295,11 +324,19 @@ public class InfoStack
                 }
 
                 currentFieldDescriptor = InformationDepth.ElementAt(fdIndex).FieldExecutor;
+                DebugLogger.Log($"fieldExecutorIndex = {fdIndex}");
+                break;
             }
 
             //decorators.Add(InformationDepth.ElementAt(x).Decorator!);
+            
+            
+            DebugLogger.Log($"fieldDescriptor = {currentFieldDescriptor?.PropertyName ?? "No fieldDescriptor"}");
             decoratedItem = InformationDepth.ElementAt(decoratorIndex).Decorator!.Invoke(decoratedItem, currentFieldDescriptor) ?? decoratedItem;
+            DebugLogger.Log($"decorator = {decoratedItem.GetType().FullName}");
         }
+
+
 
         return decoratedItem;
     }

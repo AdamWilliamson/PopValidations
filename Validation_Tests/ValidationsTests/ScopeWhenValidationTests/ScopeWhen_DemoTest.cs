@@ -28,19 +28,19 @@ public class ScopeWhen_DemoTest
                 Child: new Level2(
                     Check: true,
                     DependantField: "2",
-                    Child: null
-                    //Child: new Level3(
-                    //    Check: true,
-                    //    DependantField: "3",
-                    //    Child: new Level4(
-                    //        Check: true,
-                    //        DependantField: "4",
-                    //        Child: new Level5(
-                    //            Check: true,
-                    //            DependantField: "5"
-                    //        )
-                    //    )
-                    //)
+                    //Child: null
+                    Child: new Level3(
+                        Check: true,
+                        DependantField: "3",
+                        Child: new Level4(
+                            Check: true,
+                            DependantField: "4",
+                            Child: new Level5(
+                                Check: true,
+                                DependantField: "5"
+                            )
+                        )
+                    )
                 )
             )
         );
