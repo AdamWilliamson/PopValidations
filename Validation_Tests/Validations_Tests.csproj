@@ -235,20 +235,35 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>IsEqualToValidation_RunnerTests.cs</DependentUpon>
     </None>
-    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeValidationTests\ScopeWhen_DemoTest.Description.approved.json">
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeInsideForEachWhenValidationTests\ScopeWhen_IncludeForEachScopeTest.Description.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+      <DependentUpon>ScopeWhen_IncludeForEachScopeTest.cs</DependentUpon>
     </None>
-    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeValidationTests\ScopeWhen_DemoTest.OpenApi.approved.json">
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeInsideForEachWhenValidationTests\ScopeWhen_IncludeForEachScopeTest.Validation.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+      <DependentUpon>ScopeWhen_IncludeForEachScopeTest.cs</DependentUpon>
     </None>
-    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeValidationTests\ScopeWhen_DemoTest.Validation.approved.json">
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_ForEachValidationTests\ScopeWhen_ForEachTest.Description.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+      <DependentUpon>ScopeWhen_ForEachTest.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_ForEachValidationTests\ScopeWhen_ForEachTest.Validation.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>ScopeWhen_ForEachTest.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeValidationTests\ScopeWhen_IncludeTest.Description.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>ScopeWhen_IncludeTest.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\ScopeWhenValidationTests\ScopeWhen_IncludeValidationTests\ScopeWhen_IncludeTest.Validation.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>ScopeWhen_IncludeTest.cs</DependentUpon>
     </None>
   </ItemGroup>
 

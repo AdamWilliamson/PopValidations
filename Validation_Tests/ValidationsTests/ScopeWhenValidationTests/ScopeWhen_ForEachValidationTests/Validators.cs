@@ -1,7 +1,15 @@
 ﻿using PopValidations;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PopValidations_Tests.ValidationsTests.ScopeWhenValidationTests;
+namespace PopValidations_Tests.ValidationsTests.ScopeWhenValidationTests.ScopeWhen_ForEachValidationTests;
+
+public record Base(string? DependantField);
+public record Level1(bool Check, string? DependantField, List<Level2>? Child) : Base(DependantField);
+public record Level2(bool Check, string? DependantField, List<Level3>? Child) : Base(DependantField);
+public record Level3(bool Check, string? DependantField, List<Level4>? Child) : Base(DependantField);
+public record Level4(bool Check, string? DependantField, List<Level5>? Child) : Base(DependantField);
+public record Level5(bool Check, string? DependantField) : Base(DependantField);
 
 public class Level1Validator : AbstractValidator<Level1>
 {
@@ -29,7 +37,8 @@ public class Level1Validator : AbstractValidator<Level1>
                     }
                 );
 
-                Describe(x => x.Child).SetValidator(new Level2Validator());
+                DescribeEnumerable(x => x.Child)
+                    .ForEach(x => x.SetValidator(new Level2Validator()));
             }
         );
     }
@@ -61,7 +70,8 @@ public class Level2Validator : AbstractSubValidator<Level2>
                     }
                 );
 
-                Describe(x => x.Child).SetValidator(new Level3Validator());
+                DescribeEnumerable(x => x.Child)
+                    .ForEach(x => x.SetValidator(new Level3Validator()));
             }
         );
     }
@@ -93,7 +103,8 @@ public class Level3Validator : AbstractSubValidator<Level3>
                     }
                 );
 
-                Describe(x => x.Child).SetValidator(new Level4Validator());
+                DescribeEnumerable(x => x.Child)
+                    .ForEach(x => x.SetValidator(new Level4Validator()));
             }
         );
     }
@@ -125,7 +136,8 @@ public class Level4Validator : AbstractSubValidator<Level4>
                     }
                 );
 
-                Describe(x => x.Child).SetValidator(new Level5Validator());
+                DescribeEnumerable(x => x.Child)
+                    .ForEach(x => x.SetValidator(new Level5Validator()));
             }
         );
     }

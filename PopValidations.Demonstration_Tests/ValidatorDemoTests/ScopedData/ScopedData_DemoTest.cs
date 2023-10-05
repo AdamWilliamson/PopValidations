@@ -6,16 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.Scope;
+namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.ScopedData;
 
 public static class Scope
 {
     public record InputObject(string? Field);
 
+    public record ReturnedObject(string TestValue1, string TestValue2);
+
     public static class DataRetriever
     {
-        public static Task<string> GetValue() { return Task.FromResult("teststring"); }
-        public static Task<string> GetMoreValue(InputObject obj) { return Task.FromResult(obj?.Field + " teststring2"); }
+        public static Task<ReturnedObject> GetValue() { return Task.FromResult(new ReturnedObject("Test 1",  "Test 2")); }
     }
 
     public class Validator : AbstractValidator<InputObject>
@@ -27,25 +28,11 @@ public static class Scope
                 () => DataRetriever.GetValue(),
                 (retrievedData) =>
                 {
-                    Describe(x => x.Field).IsEqualTo(retrievedData);    
-                }
-            );
+                    Describe(x => x.Field)
+                        .IsEqualTo(retrievedData.To("Is the same as the database value", x => x.TestValue1));
 
-            Scope(
-                "Second Database Value",
-                (validationObject) => DataRetriever.GetMoreValue(validationObject),
-                (moreData) =>
-                {
-                    Describe(x => x.Field).IsEqualTo(moreData);
-                }
-            );
-
-            Scope(
-                "Third Database Value",
-                (validationobject) =>  (validationobject?.Field ?? "") + " additional value",
-                (moreData) =>
-                {
-                    Describe(x => x.Field).IsEqualTo(moreData);
+                    Describe(x => x.Field)
+                        .IsEqualTo(retrievedData.To("Is other value", x => x.TestValue2));
                 }
             );
         }
@@ -54,7 +41,7 @@ public static class Scope
     public class TestController : ControllerBase<InputObject> { }
 }
 
-public class Scope_DemoTest
+public class ScopedData_DemoTest
 {
     [Fact]
     public async Task Validation()

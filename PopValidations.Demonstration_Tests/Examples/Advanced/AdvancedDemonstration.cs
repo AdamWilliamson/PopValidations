@@ -151,9 +151,9 @@ public static class AdvancedDemonstration
             //    });
 
             ScopeWhen(
-                "When Album is Single",
                 "Need the Database Checker to When",
                 async (album) => await albumVerificationService.GetAlbumChecker(album),
+                "When Album is Single",
                 (album, albumChecker) => album?.Type == AlbumType.Single,
                 (albumChecker) =>
                 {

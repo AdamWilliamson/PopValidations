@@ -110,25 +110,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
 
     public void ScopeWhen<TPassThrough>(
         string whenDescription,
-        Func<TValidationType, Task<bool>> ifTrue,
-        string scopedDescription,
-        Func<TValidationType, Task<TPassThrough>> scoped,
-        Action<IScopedData<TPassThrough>> rules
-    )
-    {
-        var context = new WhenScopedResultValidator<TValidationType, TPassThrough>(
-            //Store,
-            whenDescription,
-            ifTrue,
-            new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
-            rules
-        );
-        Store.AddItem(
-            null, context);
-    }
-
-    public void ScopeWhen<TPassThrough>(
-        string whenDescription,
         Func<TValidationType, bool> ifTrue,
         string scopedDescription,
         Func<TValidationType, TPassThrough> scoped,
@@ -148,8 +129,29 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
 
     public void ScopeWhen<TPassThrough>(
         string whenDescription,
+        Func<TValidationType, Task<bool>> ifTrue,
         string scopedDescription,
         Func<TValidationType, Task<TPassThrough>> scoped,
+        Action<IScopedData<TPassThrough>> rules
+    )
+    {
+        var context = new WhenScopedResultValidator<TValidationType, TPassThrough>(
+            //Store,
+            whenDescription,
+            ifTrue,
+            new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
+            rules
+        );
+        Store.AddItem(
+            null, context);
+    }
+
+    
+
+    public void ScopeWhen<TPassThrough>(
+        string scopedDescription,
+        Func<TValidationType, Task<TPassThrough>> scoped,
+        string whenDescription,
         Func<TValidationType, TPassThrough, Task<bool>> ifTrue,
         Action<ScopedData<TValidationType, TPassThrough>> rules
     )
@@ -166,9 +168,9 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
     }
 
     public void ScopeWhen<TPassThrough>(
-       string whenDescription,
        string scopedDescription,
        Func<TValidationType, Task<TPassThrough>> scoped,
+       string whenDescription,
        Func<TValidationType, TPassThrough, bool> ifTrue,
        Action<ScopedData<TValidationType, TPassThrough>> rules
    )

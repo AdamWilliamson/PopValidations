@@ -1,0 +1,55 @@
+﻿{
+    "results": [
+        {
+            "property": "DependantField",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When Check is True",
+                    "description": "When Check is True",
+                    "children": [
+                        {
+                            "name": "When 10 == 10",
+                            "description": "When 10 == 10",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to 'Another DB Value'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "Another DB Value"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to 'Database Value'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "Database Value"
+                                }
+                            ]
+                        },
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to '0'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "0"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

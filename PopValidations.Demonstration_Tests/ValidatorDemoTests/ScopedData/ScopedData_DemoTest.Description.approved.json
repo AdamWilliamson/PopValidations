@@ -1,0 +1,30 @@
+﻿{
+    "results": [
+        {
+            "property": "Field",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Is the same as the database value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Is the same as the database value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Is other value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Is other value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

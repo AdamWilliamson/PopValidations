@@ -207,6 +207,30 @@ export default defineComponent({
           link
         ></v-list-item>
 
+        <v-list-item
+          color="secondary"
+          title="Scope"
+          value="Scope"
+          :to="{ name: 'Scope' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="ScopeWhen"
+          value="ScopeWhen"
+          :to="{ name: 'ScopeWhen' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="ScopedData"
+          value="ScopedData"
+          :to="{ name: 'ScopedData' }"
+          link
+        ></v-list-item>
+
         <v-list-subheader color="secondary">Localisation</v-list-subheader>
         <v-list-item
           color="secondary"

@@ -1,0 +1,13 @@
+﻿{
+    "errors": {
+        "albums[0].Artists": [
+            "Does not have all the same artists"
+        ],
+        "albums[2].Artists": [
+            "Failed to have different artists"
+        ],
+        "albums[3].Songs": [
+            "Must Abide by the rules for singles."
+        ]
+    }
+}

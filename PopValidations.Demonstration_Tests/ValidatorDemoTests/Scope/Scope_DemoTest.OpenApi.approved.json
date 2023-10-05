@@ -1,0 +1,20 @@
+﻿"InputObject": {
+    "type": "object",
+    "properties": {
+        "field": {
+            "enum": [
+                "Third Database Value"
+            ],
+            "type": "string",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "field": [
+            "Must equal to 'Database Value'.",
+            "Must equal to 'Second Database Value'.",
+            "Must equal to 'Third Database Value'."
+        ]
+    }
+}

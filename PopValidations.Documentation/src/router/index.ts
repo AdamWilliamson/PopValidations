@@ -39,6 +39,9 @@ import VitallyValidation from "@/features/validations/Vitally.vue";
 import SetValidation from "@/features/validations/SetValidation.vue";
 import Include from "@/features/validations/Include.vue";
 import When from "@/features/validations/When.vue";
+import Scope from "@/features/validations/Scope.vue";
+import ScopeWhen from "@/features/validations/ScopeWhen.vue";
+import ScopedData from "@/features/validations/ScopedData.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -207,6 +210,21 @@ const router = createRouter({
           path:"/validation/when",
           name:"When",
           component: When
+        },
+        {
+          path:"/validation/scope",
+          name:"Scope",
+          component: Scope
+        },
+        {
+          path:"/validation/scopewhen",
+          name:"ScopeWhen",
+          component: ScopeWhen
+        },
+        {
+          path:"/validation/scopeddata",
+          name:"ScopedData",
+          component: ScopedData
         }
       ]
     }

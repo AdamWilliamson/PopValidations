@@ -47,31 +47,31 @@ public class Level3DepthValidator : AbstractSubValidator<Level3>
         DescribeEnumerable(x => x.Level4Array)
             .Vitally()
             .IsNotNull()
-            //.ForEach(x => x.SetValidator(new Level4DepthValidator()))
+            .ForEach(x => x.SetValidator(new Level4DepthValidator()))
             ;
     }
 }
 
-//public class Level4DepthValidator : AbstractSubValidator<Level4>
-//{
-//    public Level4DepthValidator()
-//    {
-//        Describe(x => x.Name).IsEqualTo(nameof(Level4DepthValidator));
+public class Level4DepthValidator : AbstractSubValidator<Level4>
+{
+    public Level4DepthValidator()
+    {
+        Describe(x => x.Name).IsEqualTo(nameof(Level4DepthValidator));
 
-//        DescribeEnumerable(x => x.Level5Array)
-//            .Vitally()
-//            .IsNotNull()
-//            .ForEach(x => x.SetValidator(new Level5DepthValidator()));
-//    }
-//}
+        DescribeEnumerable(x => x.Level5Array)
+            .Vitally()
+            .IsNotNull()
+            .ForEach(x => x.SetValidator(new Level5DepthValidator()));
+    }
+}
 
-//public class Level5DepthValidator : AbstractSubValidator<Level5>
-//{
-//    public Level5DepthValidator()
-//    {
-//        Describe(x => x.Name).IsEqualTo(nameof(Level5DepthValidator));
-//    }
-//}
+public class Level5DepthValidator : AbstractSubValidator<Level5>
+{
+    public Level5DepthValidator()
+    {
+        Describe(x => x.Name).IsEqualTo(nameof(Level5DepthValidator));
+    }
+}
 
 public class ForEachDepthTests
 {
@@ -80,23 +80,24 @@ public class ForEachDepthTests
     {
         // Arrange
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1DepthValidator());
+
         var testSubject = new Level1(
             Name: nameof(Level1DepthValidator),
             Level2Array: new()
             {
                 new Level2(
-                    Name: nameof(Level2),
+                    Name: nameof(Level2DepthValidator),
                     Level3Array: new()
                     {
                         new Level3(
-                            Name: nameof(Level3),
+                            Name: nameof(Level3DepthValidator),
                             Level4Array: new()
                             {
                                 new Level4(
-                                    Name: nameof(Level4),
+                                    Name: nameof(Level4DepthValidator),
                                     Level5Array: new()
                                     {
-                                        new Level5(nameof(Level5))
+                                        new Level5(nameof(Level5DepthValidator))
                                     }
                                 )
                             }

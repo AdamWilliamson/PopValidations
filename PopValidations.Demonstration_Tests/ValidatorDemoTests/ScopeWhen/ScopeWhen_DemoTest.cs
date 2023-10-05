@@ -10,20 +10,15 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.ScopeWhen;
 
 public static class ScopeWhen
 {
-    public record Base(string? DependantField);
-    public record Level1(bool Check, string? DependantField, Level2? Child) : Base(DependantField);
-    public record Level2(bool Check, string? DependantField, Level3? Child) : Base(DependantField);
-    public record Level3(bool Check, string? DependantField, Level4? Child) : Base(DependantField);
-    public record Level4(bool Check, string? DependantField, Level5? Child) : Base(DependantField);
-    public record Level5(bool Check, string? DependantField);
+    public record Level1(bool Check, string? DependantField);
 
     public static class DataRetriever
     {
-        public static Task<string> GetValue(Base v) 
+        public static Task<string> GetValue(Level1 v) 
         { 
             return Task.FromResult(v?.DependantField + " GetValue"); 
         }
-        public static Task<string> GetMoreValue(Base v) 
+        public static Task<string> GetMoreValue(Level1 v) 
         { 
             return Task.FromResult(v?.DependantField + " GetMoreValue"); 
         }
@@ -33,37 +28,47 @@ public static class ScopeWhen
     {
         public Validator()
         {
-            Include(new SubValidator());
-        }
-    }
-
-    public class SubValidator : AbstractSubValidator<Level1>
-    {
-        public SubValidator()
-        {
-            Describe(x => x.DependantField).IsEqualTo("0");
-
             ScopeWhen(
-                "When Check is True",
-                x => Task.FromResult(x.Child != null),
-                "Database Value",
+                "When Check is True 1",
+                x => Task.FromResult(x.Check),
+                "Database Value 1",
                 (x) => DataRetriever.GetValue(x),
                 (retrievedData) =>
                 {
                     Describe(x => x.DependantField).IsEqualTo(retrievedData);
+                }
+            );
 
-                    ScopeWhen(
-                        "When 10 == 10",
-                        x => Task.FromResult(x.Check == true),
-                        "Another DB Value",
-                        (x) => DataRetriever.GetMoreValue(x),
-                        (moreData) =>
-                        {
-                            Describe(x => x.DependantField).IsEqualTo(moreData);
-                        }
-                    );
+            ScopeWhen(
+                "When Check is True 2",
+                x => x.Check,
+                "Database Value 2",
+                (x) => (x?.DependantField ?? "null value") + " thing 1",
+                (retrievedData) =>
+                {
+                    Describe(x => x.DependantField).IsEqualTo(retrievedData);
+                }
+            );
 
-                    //Describe(x => x.Child).SetValidator(new SubValidator());
+            ScopeWhen(
+                "When Check is True 3",
+                x => Task.FromResult(x.Check),
+                "Database Value 3",
+                (x) => DataRetriever.GetMoreValue(x),
+                (moreData) =>
+                {
+                    Describe(x => x.DependantField).IsEqualTo(moreData);
+                }
+            );
+
+            ScopeWhen(
+                "When Check is True 4",
+                x => x.Check,
+                "Database Value 4",
+                (x) => (x?.DependantField ?? "null value") + " thing 2",
+                (moreData) =>
+                {
+                    Describe(x => x.DependantField).IsEqualTo(moreData);
                 }
             );
         }
@@ -84,12 +89,7 @@ public class ScopeWhen_DemoTest
         var validationResult = await validationRunner.Validate(
             new ScopeWhen.Level1(
                 Check: true, 
-                DependantField: "1", 
-                Child: new ScopeWhen.Level2(
-                    Check: true,
-                    DependantField: "2",
-                    Child: null
-                )
+                DependantField: "1"
             )
         );
 

@@ -1,0 +1,39 @@
+﻿{
+    "errors": {
+        "child[0].Child[0].Child[0].Child[0].DependantField": [
+            "Is not equal to 'Level5'."
+        ],
+        "child[0].Child[0].Child[0].Child[1].DependantField": [
+            "Is not equal to 'Level5'.",
+            "Is not equal to '5.1 GetMoreValue'."
+        ],
+        "child[0].Child[0].Child[0].DependantField": [
+            "Is not equal to 'Level4'.",
+            "Is not equal to '4 GetValue'.",
+            "Is not equal to '4 GetMoreValue'."
+        ],
+        "child[0].Child[0].DependantField": [
+            "Is not equal to 'Level3'.",
+            "Is not equal to '3 GetValue'.",
+            "Is not equal to '3 GetMoreValue'."
+        ],
+        "child[0].Child[1].Child[0].DependantField": [
+            "Is not equal to 'Level4'."
+        ],
+        "child[0].Child[1].DependantField": [
+            "Is not equal to 'Level3'.",
+            "Is not equal to '3.1 GetValue'.",
+            "Is not equal to '3.1 GetMoreValue'."
+        ],
+        "child[0].DependantField": [
+            "Is not equal to 'Level2'.",
+            "Is not equal to '2 GetValue'.",
+            "Is not equal to '2 GetMoreValue'."
+        ],
+        "dependantField": [
+            "Is not equal to 'Level1'.",
+            "Is not equal to '1 GetValue'.",
+            "Is not equal to '1 GetMoreValue'."
+        ]
+    }
+}

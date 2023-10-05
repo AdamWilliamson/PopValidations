@@ -1,12 +1,10 @@
 ﻿using ApprovalTests;
-using Newtonsoft.Json.Linq;
 using PopValidations;
 using PopValidations_Tests.TestHelpers;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations_Tests.ValidationsTests.ScopeWhenValidationTests.ScopeWhen_IncludeValidationTests;
+namespace PopValidations_Tests.ValidationsTests.ScopeWhenValidationTests.ScopeWhen_IncludeInsideScopeWhenValidationTests;
 
 public static class DataRetriever
 {
@@ -32,7 +30,18 @@ public class Validator : AbstractValidator<Level1>
 {
     public Validator()
     {
-        Include(new SubValidator());
+        ScopeWhen(
+           "When Check is True",
+           x => Task.FromResult(x.Child != null),
+           "Database Value",
+           (x) => DataRetriever.GetValue(x),
+           (retrievedData) =>
+           {
+               Describe(x => x.DependantField).IsEqualTo(retrievedData);
+
+               Include(new SubValidator());
+           }
+        );
     }
 }
 
@@ -41,34 +50,21 @@ public class SubValidator : AbstractSubValidator<Level1>
     public SubValidator()
     {
         Describe(x => x.DependantField).IsEqualTo("0");
-
+        
         ScopeWhen(
-            "When Check is True",
-            x => Task.FromResult(x.Child != null),
-            "Database Value",
-            (x) => DataRetriever.GetValue(x),
-            (retrievedData) =>
+            "When 10 == 10",
+            x => Task.FromResult(x.Check == true),
+            "Another DB Value",
+            (x) => DataRetriever.GetMoreValue(x),
+            (moreData) =>
             {
-                Describe(x => x.DependantField).IsEqualTo(retrievedData);
-
-                ScopeWhen(
-                    "When 10 == 10",
-                    x => Task.FromResult(x.Check == true),
-                    "Another DB Value",
-                    (x) => DataRetriever.GetMoreValue(x),
-                    (moreData) =>
-                    {
-                        Describe(x => x.DependantField).IsEqualTo(moreData);
-                    }
-                );
-
-                //Describe(x => x.Child).SetValidator(new SubValidator());
+                Describe(x => x.DependantField).IsEqualTo(moreData);
             }
         );
     }
 }
 
-public class ScopeWhen_DemoTest
+public class ScopeWhen_IncludeInsideScopeTest
 {
     [Fact]
     public async Task Validation()
