@@ -1,0 +1,9 @@
+﻿{
+    "errors": {
+        "dependantField": [
+            "Is not equal to '0'.",
+            "Is not equal to '1'.",
+            "Is not equal to '2'."
+        ]
+    }
+}

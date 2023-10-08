@@ -4,7 +4,7 @@
       <v-col>
         <v-card>
           <v-card-title><h3>Basic Demonstration</h3></v-card-title>
-          <v-card-text></v-card-text>
+          <v-card-text>Just the basics, showing how to use the basics, so you can start quickly.</v-card-text>
         </v-card>
       </v-col>
     </v-row>

@@ -89,6 +89,13 @@ namespace PopValidations.Swashbuckle_Tests
         List<Type> AdditionalControllers = new();
         OpenApiConfig? Config;
         List<(Type, Type)> validators = new();
+        List<(Type, object)> registeredValues = new();
+
+        public ApiWebApplicationFactory Register(Type t, object o) 
+        {
+            registeredValues.Add((t, o));
+            return this;
+        }
 
         public ApiWebApplicationFactory WithConfig(OpenApiConfig config)
         {
@@ -131,7 +138,10 @@ namespace PopValidations.Swashbuckle_Tests
 
             builder.ConfigureTestServices(services => 
             { 
-
+                foreach(var item in registeredValues)
+                {
+                    services.AddSingleton(item.Item1, item.Item2);
+                }
                 // Override to specify custom configs for testing settings.
                 services.RegisterPopValidationsOpenApiDefaults(Config);
                 //services.AddTransient(

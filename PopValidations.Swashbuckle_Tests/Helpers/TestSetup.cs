@@ -38,7 +38,7 @@ public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetu
     }
 
     public TestSetup(TRequestValidator? instance = null) {
-        instance = instance;
+        this.instance = instance;
     }
 
     private void Configure(OpenApiConfig config)
@@ -49,6 +49,11 @@ public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetu
             .WithConfig(config);
 
         Client = Factory.CreateClient();
+    }
+
+    public void Register(Type t, object o)
+    {
+        Factory.Register(t, o);
     }
 
     private async Task GetSwagger()

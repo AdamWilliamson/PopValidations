@@ -1,0 +1,316 @@
+﻿{
+    "results": [
+        {
+            "property": "DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Level1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Level1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When Level1.Child is not null",
+                    "description": "When Level1.Child is not null",
+                    "children": [
+                        {
+                            "name": "When Level1.Check is true",
+                            "description": "When Level1.Check is true",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to '2'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "2"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to '1'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Child.DependantField",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When Level1.Child is not null",
+                    "description": "When Level1.Child is not null",
+                    "children": [
+                        {
+                            "name": "When Level2.Child is not null",
+                            "description": "When Level2.Child is not null",
+                            "children": [
+                                {
+                                    "name": "When Level2.Check is true",
+                                    "description": "When Level2.Check is true",
+                                    "children": [],
+                                    "outcomes": [
+                                        {
+                                            "validator": "IsEqualToValidation",
+                                            "message": "Must equal to '4'.",
+                                            "values": [
+                                                {
+                                                    "key": "value",
+                                                    "value": "4"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to '3'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "3"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to 'Level2'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "Level2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Child.Child.DependantField",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When Level1.Child is not null",
+                    "description": "When Level1.Child is not null",
+                    "children": [
+                        {
+                            "name": "When Level2.Child is not null",
+                            "description": "When Level2.Child is not null",
+                            "children": [
+                                {
+                                    "name": "When Level3.Child is not null",
+                                    "description": "When Level3.Child is not null",
+                                    "children": [
+                                        {
+                                            "name": "When Level3.Check is true",
+                                            "description": "When Level3.Check is true",
+                                            "children": [],
+                                            "outcomes": [
+                                                {
+                                                    "validator": "IsEqualToValidation",
+                                                    "message": "Must equal to '6'.",
+                                                    "values": [
+                                                        {
+                                                            "key": "value",
+                                                            "value": "6"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "outcomes": [
+                                        {
+                                            "validator": "IsEqualToValidation",
+                                            "message": "Must equal to '5'.",
+                                            "values": [
+                                                {
+                                                    "key": "value",
+                                                    "value": "5"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to 'Level3'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "Level3"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "Child.Child.Child.DependantField",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When Level1.Child is not null",
+                    "description": "When Level1.Child is not null",
+                    "children": [
+                        {
+                            "name": "When Level2.Child is not null",
+                            "description": "When Level2.Child is not null",
+                            "children": [
+                                {
+                                    "name": "When Level3.Child is not null",
+                                    "description": "When Level3.Child is not null",
+                                    "children": [
+                                        {
+                                            "name": "When Level4.Child is not null",
+                                            "description": "When Level4.Child is not null",
+                                            "children": [
+                                                {
+                                                    "name": "When Level4.Check is true",
+                                                    "description": "When Level4.Check is true",
+                                                    "children": [],
+                                                    "outcomes": [
+                                                        {
+                                                            "validator": "IsEqualToValidation",
+                                                            "message": "Must equal to '8'.",
+                                                            "values": [
+                                                                {
+                                                                    "key": "value",
+                                                                    "value": "8"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "outcomes": [
+                                                {
+                                                    "validator": "IsEqualToValidation",
+                                                    "message": "Must equal to '7'.",
+                                                    "values": [
+                                                        {
+                                                            "key": "value",
+                                                            "value": "7"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "outcomes": [
+                                        {
+                                            "validator": "IsEqualToValidation",
+                                            "message": "Must equal to 'Level4'.",
+                                            "values": [
+                                                {
+                                                    "key": "value",
+                                                    "value": "Level4"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "outcomes": []
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "Child.Child.Child.Child.DependantField",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When Level1.Child is not null",
+                    "description": "When Level1.Child is not null",
+                    "children": [
+                        {
+                            "name": "When Level2.Child is not null",
+                            "description": "When Level2.Child is not null",
+                            "children": [
+                                {
+                                    "name": "When Level3.Child is not null",
+                                    "description": "When Level3.Child is not null",
+                                    "children": [
+                                        {
+                                            "name": "When Level4.Child is not null",
+                                            "description": "When Level4.Child is not null",
+                                            "children": [
+                                                {
+                                                    "name": "When Level5.Check is true",
+                                                    "description": "When Level5.Check is true",
+                                                    "children": [],
+                                                    "outcomes": [
+                                                        {
+                                                            "validator": "IsEqualToValidation",
+                                                            "message": "Must equal to '9'.",
+                                                            "values": [
+                                                                {
+                                                                    "key": "value",
+                                                                    "value": "9"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "outcomes": [
+                                                {
+                                                    "validator": "IsEqualToValidation",
+                                                    "message": "Must equal to 'Level5'.",
+                                                    "values": [
+                                                        {
+                                                            "key": "value",
+                                                            "value": "Level5"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "outcomes": []
+                                }
+                            ],
+                            "outcomes": []
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        }
+    ]
+}

@@ -1,5 +1,4 @@
-﻿Copy FluentValidator as needed.
-::Validators Wanted::
+﻿::Validators Wanted::
 
 IsLengthInclusivelyBetween
 	Takes a string, or array. 
@@ -53,3 +52,8 @@ Switch
 
 **
 Ensure validators for string comparison allow Cultural Selection and String comparison settings.
+
+Aggregate Validators
+	Compare Each
+	CompareTo X
+	IsOrdered(IOrderer)

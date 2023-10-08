@@ -10,14 +10,6 @@ public static class AdvancedDemonstration
 {
     public record Artist(string? Name);
 
-    public class ArtistValidator : AbstractSubValidator<Artist>
-    {
-        public ArtistValidator()
-        {
-            Describe(x => x.Name).IsNotNull();
-        }
-    }
-
     public record Song(
         List<Artist>? Artists,
         int? TrackNumber,
@@ -25,6 +17,32 @@ public static class AdvancedDemonstration
         double? Duration,
         string? Genre
     );
+
+    public enum AlbumType
+    {
+        Single,
+        SingleArtist,
+        Collaboration,
+        Compilation
+    }
+
+    public record Album(
+        string? Title,
+        AlbumType? Type,
+        List<Artist>? Artists,
+        string? CoverImageUrl,
+        DateTime? Created,
+        List<Song?>? Songs,
+        List<string>? Genres
+    );
+
+    public class ArtistValidator : AbstractSubValidator<Artist>
+    {
+        public ArtistValidator()
+        {
+            Describe(x => x.Name).IsNotNull();
+        }
+    }
 
     public class SongValidator : AbstractSubValidator<Song>
     {
@@ -50,46 +68,28 @@ public static class AdvancedDemonstration
         }
     }
 
-    public enum AlbumType
-    {
-        Single,
-        SingleArtist,
-        Collaboration,
-        Compilation
-    }
-
-    public record Album(
-        string? Title,
-        AlbumType? Type,
-        List<Artist>? Artists,
-        string? CoverImageUrl,
-        DateTime? Created,
-        List<Song?>? Songs,
-        List<string>? Genres
-    );
-
     public class AlbumValidator : AbstractSubValidator<Album>
     {
         public AlbumValidator(AlbumVerificationService albumVerificationService)
         {
-            //Describe(x => x.Title).Vitally().IsNotEmpty();
+            Describe(x => x.Title).Vitally().IsNotEmpty();
 
-            //Describe(x => x.Type).Vitally().IsNotNull();
+            Describe(x => x.Type).Vitally().IsNotNull();
 
-            //DescribeEnumerable(x => x.Artists).Vitally().IsNotNull()
-            //    .ForEach(x => x.Vitally().IsNotNull().SetValidator(new ArtistValidator()));
+            DescribeEnumerable(x => x.Artists).Vitally().IsNotNull()
+                .ForEach(x => x.Vitally().IsNotNull().SetValidator(new ArtistValidator()));
 
-            //Describe(x => x.CoverImageUrl).Vitally().IsNotEmpty();
+            Describe(x => x.CoverImageUrl).Vitally().IsNotEmpty();
 
-            //Describe(x => x.Created)
-            //    .Vitally().IsNotNull()
-            //    .IsGreaterThan(new DateTime(1700, 01, 01, 13, 0, 0, 0))
-            //    .IsLessThan(new DateTime(2024, 01, 01, 13, 0, 0, 0));
+            Describe(x => x.Created)
+                .Vitally().IsNotNull()
+                .IsGreaterThan(new DateTime(1700, 01, 01, 13, 0, 0, 0))
+                .IsLessThan(new DateTime(2024, 01, 01, 13, 0, 0, 0));
 
-            //DescribeEnumerable(x => x.Songs)
-            //    .Vitally().IsNotNull()
-            //    .IsLengthInclusivelyBetween(3, 45)
-            //    .ForEach(song => song.Vitally().IsNotNull().SetValidator(new SongValidator()));
+            DescribeEnumerable(x => x.Songs)
+                .Vitally().IsNotNull()
+                .IsLengthInclusivelyBetween(3, 45)
+                .ForEach(song => song.Vitally().IsNotNull().SetValidator(new SongValidator()));
 
             Scope("Validate Album",
                 async (album) => await albumVerificationService.GetAlbumChecker(album),
@@ -105,10 +105,10 @@ public static class AdvancedDemonstration
                                     "Validated to must {{is_value}}",
                                     "Failed to {{is_value}}",
                                     albumChecker.To(
-                                        "have different artists", 
-                                        (List<Artist>? x, AlbumChecker? i) 
-                                            => 
-                                                x?.Any() == true 
+                                        "have different artists",
+                                        (List<Artist>? x, AlbumChecker? i)
+                                            =>
+                                                x?.Any() == true
                                                 && i is { IsAllTheSameArtist: false }
                                     )
                                 );
@@ -124,31 +124,30 @@ public static class AdvancedDemonstration
                                     "Must {{is_value}}",
                                     "Does not {{is_value}}",
                                     albumChecker.To(
-                                        "have all the same artists", 
-                                        (List<Artist>? x, AlbumChecker? i) 
-                                            => 
+                                        "have all the same artists",
+                                        (List<Artist>? x, AlbumChecker? i)
+                                            =>
                                                 x?.Any() == true
                                                 && i is not { IsAllTheSameArtist: true }
                                     )
                                 );
                         });
-                }
-            );
+                });
 
-            //ScopeWhen(
-            //    "When Album is Collaboration",
-            //    (album) => Task.FromResult(album.Type == AlbumType.Collaboration),
-            //    "Get Complex Album Validator",
-            //    (album) => albumVerificationService.GetAlbumChecker(album),
-            //    (albumChecker) =>
-            //    {
-            //        DescribeEnumerable(x => x.Songs)
-            //            .Vitally().Is(
-            //                "All songs must contain atleast one album artist.",
-            //                "The songs in this album, being collaboration, must contain atleast 1 album artist.",
-            //                albumChecker.To("", (IEnumerable<Song?>? x, AlbumChecker? i) => i?.AllSongsContainAlbumArtist is true)
-            //            );
-            //    });
+            ScopeWhen(
+                "When Album is Collaboration",
+                (album) => Task.FromResult(album.Type == AlbumType.Collaboration),
+                "Get Complex Album Validator",
+                (album) => albumVerificationService.GetAlbumChecker(album),
+                (albumChecker) =>
+                {
+                    DescribeEnumerable(x => x.Songs)
+                        .Is(
+                            "All songs must contain atleast one album artist.",
+                            "The songs in this album, being collaboration, must contain atleast 1 album artist.",
+                            albumChecker.To("", (IEnumerable<Song?>? x, AlbumChecker? i) => i?.AllSongsContainAlbumArtist is true)
+                        );
+                });
 
             ScopeWhen(
                 "Need the Database Checker to When",
@@ -158,7 +157,7 @@ public static class AdvancedDemonstration
                 (albumChecker) =>
                 {
                     Describe(x => x.Songs)
-                        .Vitally().Is(
+                        .Is(
                             "Album must match the rules for single.",
                             "Must Abide by the rules for singles.",
                             albumChecker.To(
@@ -176,9 +175,9 @@ public static class AdvancedDemonstration
         public AlbumSubmissionValidator(AlbumVerificationService albumVerificationService)
         {
             DescribeEnumerable(x => x.Albums)
-                //.Vitally().IsNotNull()
+                .Vitally().IsNotNull()
                 .ForEach(x => x
-                    //.Vitally().IsNotNull()
+                    .Vitally().IsNotNull()
                     .SetValidator(new AlbumValidator(albumVerificationService)));
 
             //Scope("Validate Album In Submission",

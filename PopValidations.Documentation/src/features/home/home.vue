@@ -140,7 +140,7 @@ public class BasicSongValidator : AbstractValidator
         </p>
         <p>
           This was designed to solve both of those issues. It is capable of
-          brining in Database and other external data, without immediate
+          bringing in Database and other external data, without immediate
           execution. And describe the validations that have would be executed,
           and when. Allowing for a rich integration with OpenApi, and an easy
           interaction with external sources for validating data.

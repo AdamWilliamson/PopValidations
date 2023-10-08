@@ -1,0 +1,174 @@
+﻿{
+    "results": [
+        {
+            "property": "DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Level1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Level1"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Child[n].DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Level2'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Level2"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Child[n].Child[n].DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Level3'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Level3"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Child[n].Child[n].Child[n].DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Level4'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Level4"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Child[n].Child[n].Child[n].Child[n].DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Level5'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Level5"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

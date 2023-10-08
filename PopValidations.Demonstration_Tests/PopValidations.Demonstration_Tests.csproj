@@ -27,31 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Examples\Advanced\AdvancedDemonstrationTests.AdvancedValidator_ValidateWithInValidCollaborationAlbum_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
-    <None Update="Examples\Advanced\AdvancedDemonstrationTests.AdvancedValidator_ValidateWithInValidSingleArtistAlbum_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
-    <None Update="Examples\Advanced\AdvancedDemonstrationTests.AdvancedValidator_ValidateWithValidCollaborationAlbum_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
-    <None Update="Examples\Advanced\AdvancedDemonstrationTests.AdvancedValidator_ValidateWithValidSingleArtistAlbum_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
-    <None Update="Examples\Advanced\AdvancedDemonstrationTests.BasicValidator_Describe_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
     <None Update="Examples\Basic\BasicDemonstrationTests.BasicValidator_Describe_ToJson.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>

@@ -8,6 +8,7 @@
         </v-card>
       </v-col>
     </v-row>
+    
     <v-row>
       <v-col>
         <CodeWindow
@@ -35,9 +36,7 @@ builder.Services.AddSwaggerGen(
     {
         // Register PopValidations Custom API decorations
         options.RegisterOpenApiModificationFilter();
-    });
-
-'
+    });'
         ></CodeWindow>
       </v-col>
     </v-row>

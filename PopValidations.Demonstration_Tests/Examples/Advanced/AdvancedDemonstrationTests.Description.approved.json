@@ -61,8 +61,30 @@
                     "outcomes": [
                         {
                             "validator": "IsCustomValidation",
-                            "message": "Validated to {{value}}",
-                            "values": []
+                            "message": "Validated to must have different artists",
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": "have different artists"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Album is Single Artist",
+                    "description": "Album is Single Artist",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsCustomValidation",
+                            "message": "Must have all the same artists",
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": "have all the same artists"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -164,7 +186,12 @@
                         {
                             "validator": "IsCustomValidation",
                             "message": "All songs must contain atleast one album artist.",
-                            "values": []
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": ""
+                                }
+                            ]
                         }
                     ]
                 },
@@ -176,7 +203,12 @@
                         {
                             "validator": "IsCustomValidation",
                             "message": "Album must match the rules for single.",
-                            "values": []
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": "Album is Single"
+                                }
+                            ]
                         }
                     ]
                 }

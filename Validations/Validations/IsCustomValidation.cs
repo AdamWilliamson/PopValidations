@@ -39,7 +39,7 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
 
     public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
     {
-        scopedValue.ReHome(attemptedScopeFieldDescriptor);
+        //scopedValue.ReHome(attemptedScopeFieldDescriptor);
     }
 
     public override ValidationActionResult Validate(object? value)

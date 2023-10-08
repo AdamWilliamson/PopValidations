@@ -1,43 +1,41 @@
-﻿*When scopes (Testing Needed)
+﻿Version 0.9
+Completed:
+*When scopes (Testing Needed)
 	Whens for all the different ways it can work.
 
 *Scope  (Testing Needed)
 	Allow accessing external data, while not interfering with Description
 
-**IFieldDescriptor Limitation
-	Make it more difficult for external users to see/use IFieldDescriptor Store only functions
-
 *Include (Testing Needed)
 	Need to be able to Include another validator to easily segregate rules (Must work inside when)
 
-*Depends On
-	Need a way to ensure another field is done first, and only if it succeeds is this item completed.
+
+Version 1.0
+**IFieldDescriptor Limitation
+	Make it more difficult for external users to see/use IFieldDescriptor Store only functions
 
 *Switch (Moved to _Checklist for Validations as design is completable as a Validation)
 	Pattern matching is super useful for complex validations.
 	need a way to emulate/use that, to produce succint but complex validations.
 
+** Aggregate Validators for Lists.
+	I want to be able to compare values in multiple list items against each other
+	Ie:
+	IsAllItemsUnique()
+	or
+	IsInOrder(IOrderer)
+
+
+
+Unknown If Will Develop:
+*Depends On
+	Need a way to ensure another field is done first, and only if it succeeds is this item completed.
+
+
 **AddError  ** Optional, may infact be a bad idea, may also be needed for switch.
 	Want a way to just say "Your here, error"
 	For example, multiple when's deep, Be able to just say Error on this field. 
 
-**ChildProperty
-	Allows validation of a child entities, property.
-	IE:  Within a ForEach you might want to scope tests to a property
-	IE: you might want to scope a section to describe properties of a subobject.
-	These may be different things.
 
 ** Where filter on ForEach or DescribeEnumerable
 	Potentially a way to filter which elements validators will by applied to.
-
-** Allow Field to Field data supply within every validator.
-
-** GetFieldValue for use in Validations.  But how?
-	I want to be able to compare values in multiple list items against each other
-	Like Aggregate, or Internal Self compare.
-
-
-
-
-* = V1
-** = V2

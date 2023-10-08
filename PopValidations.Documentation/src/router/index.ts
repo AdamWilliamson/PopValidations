@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory,  createWebHashHistory } from "vue-router";
 import Home from "@/features/home/home.vue";
 
 //== Geting Started
@@ -7,6 +7,8 @@ import MainValidators from "@/features/getting-started/MainValidators.vue";
 
 //== Demonstrations
 import BasicDemonstration from "@/features/demonstrations/basic.vue";
+import ModerateDemonstration from "@/features/demonstrations/moderate.vue";
+import AdvancedDemonstration from "@/features/demonstrations/advanced.vue";
 
 //== Integrations
 import SwashbuckleIntegration from "@/features/integrations/swashbuckle.vue";
@@ -44,7 +46,9 @@ import ScopeWhen from "@/features/validations/ScopeWhen.vue";
 import ScopedData from "@/features/validations/ScopedData.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),//null, // 'hash',
+  //history: false,
+  //history: '',// createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
@@ -75,7 +79,15 @@ const router = createRouter({
           path: "/demonstrations/basic",
           name: "BasicDemonstration",
           component: BasicDemonstration,
-        },
+        },{
+          path: "/demonstrations/moderate",
+          name: "ModerateDemonstration",
+          component: ModerateDemonstration,
+        },{
+          path: "/demonstrations/advanced",
+          name: "AdvancedDemonstration",
+          component: AdvancedDemonstration,
+        }
       ],
     },
     {

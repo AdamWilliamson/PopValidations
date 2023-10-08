@@ -63,6 +63,24 @@ export default defineComponent({
           density="compact"
         ></v-list-item>
 
+        <v-list-item
+          color="secondary"
+          title="Moderate"
+          value="Moderate"
+          :to="{ name: 'ModerateDemonstration' }"
+          link
+          density="compact"
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="Advanced"
+          value="Advanced"
+          :to="{ name: 'AdvancedDemonstration' }"
+          link
+          density="compact"
+        ></v-list-item>
+
         <v-list-subheader color="secondary">Integrations</v-list-subheader>
         <v-list-item
           color="secondary"
