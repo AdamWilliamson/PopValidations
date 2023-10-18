@@ -75,7 +75,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "string"
                         }
                     ]
                 }
@@ -100,7 +100,7 @@
                                 },
                                 {
                                     "key": "fieldType",
-                                    "value": "unknown"
+                                    "value": "string"
                                 }
                             ]
                         }
@@ -569,7 +569,7 @@
                                         },
                                         {
                                             "key": "fieldType",
-                                            "value": "unknown"
+                                            "value": "string"
                                         }
                                     ]
                                 }
@@ -591,7 +591,7 @@
                                 },
                                 {
                                     "key": "fieldType",
-                                    "value": "unknown"
+                                    "value": "string"
                                 }
                             ]
                         }
@@ -1127,7 +1127,7 @@
                                         },
                                         {
                                             "key": "fieldType",
-                                            "value": "unknown"
+                                            "value": "string"
                                         }
                                     ]
                                 }

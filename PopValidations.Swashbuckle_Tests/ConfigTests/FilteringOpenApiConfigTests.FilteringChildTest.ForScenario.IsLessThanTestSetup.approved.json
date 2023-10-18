@@ -72,8 +72,6 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "maximum": 6,
-                        "exclusiveMinimum": true,
                         "type": "integer",
                         "format": "int32",
                         "nullable": true
@@ -83,15 +81,7 @@
                         "nullable": true
                     }
                 },
-                "additionalProperties": false,
-                "x-validation": {
-                    "id": [
-                        "Must be less than '6'."
-                    ],
-                    "name": [
-                        "Must be less than 'Test2'."
-                    ]
-                }
+                "additionalProperties": false
             }
         }
     }

@@ -43,11 +43,19 @@
                 "type": "object",
                 "properties": {
                     "id": {
+                        "enum": [
+                            "0",
+                            "1"
+                        ],
                         "type": "integer",
                         "format": "int32",
                         "nullable": true
                     },
                     "name": {
+                        "enum": [
+                            "Value1",
+                            "Value2"
+                        ],
                         "type": "string",
                         "nullable": true
                     },
@@ -70,11 +78,19 @@
                 "type": "object",
                 "properties": {
                     "id": {
+                        "enum": [
+                            "0",
+                            "1"
+                        ],
                         "type": "integer",
                         "format": "int32",
                         "nullable": true
                     },
                     "name": {
+                        "enum": [
+                            "Value1",
+                            "Value2"
+                        ],
                         "type": "string",
                         "nullable": true
                     }

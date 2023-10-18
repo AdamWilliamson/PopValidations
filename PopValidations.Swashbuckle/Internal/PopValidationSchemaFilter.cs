@@ -57,7 +57,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
     private ValidationLevel CalculateOverride(ValidationLevel? validationLevelOverride, ValidationLevel objLevel)
     {
         if (validationLevelOverride == null) return objLevel;
-        if (validationLevelOverride < objLevel) return objLevel;
+        if (validationLevelOverride > objLevel) return objLevel;
 
         return validationLevelOverride.Value;
     }
@@ -95,7 +95,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
             var propType = GetPropertyType(config, childType ?? context.Type, parent);
             if (propType != null)
             {
-                PropertyValidationLevel = (config.TypeValidationLevel?.Invoke(propType!) ?? 0);
+                PropertyValidationLevel = (config.TypeValidationLevel?.Invoke(propType!) ?? ValidationLevel.FullDetails);
             }
 
             PropertyValidationLevel = CalculateOverride(validationLevelOverride, PropertyValidationLevel);

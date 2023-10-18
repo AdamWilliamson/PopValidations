@@ -5,7 +5,7 @@ using System;
 
 namespace PopValidations;
 
-public static class NotNullValidationExtensions
+public static class IsNotNullValidationExtensions
 {
     public static IFieldDescriptor<TValidationType, TFieldType?> IsNotNull<TValidationType, TFieldType>(
         this IFieldDescriptor<TValidationType, TFieldType?> fieldDescriptor,

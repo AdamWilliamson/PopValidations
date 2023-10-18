@@ -81,7 +81,7 @@ public class IsEnumValidation_Tests
                                 Enum.GetValues<TestEnum>().Cast<Enum>().Select(x => x.ToString("d")).ToArray()
                             )
                         ),
-                        new KeyValuePair<string, string>("fieldType", "number"),
+                        new KeyValuePair<string, string>("fieldType", "numeric"),
                     });
             descriptionResult.Message.Should().Be("Must be one of '{{enumNames}}' or '{{enumValues}}'.");
         }

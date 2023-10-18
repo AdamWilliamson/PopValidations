@@ -25,7 +25,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[0].ListOfLevel3[0].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[0].ListOfLevel3[0].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -64,7 +64,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[0].ListOfLevel3[1].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[0].ListOfLevel3[1].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -103,7 +103,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[0].ListOfLevel3[2].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[0].ListOfLevel3[2].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -150,8 +150,8 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[0].TestItem.IsLessThan": [
-            " 200 Is not less than '100'.",
-            " 200 Is not less than '100'."
+            "Is not less than '100'.",
+            "Is not less than '100'."
         ],
         "listOfLevel2[0].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'.",
@@ -194,7 +194,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[1].ListOfLevel3[0].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[1].ListOfLevel3[0].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -233,7 +233,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[1].ListOfLevel3[1].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[1].ListOfLevel3[1].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -272,7 +272,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[1].ListOfLevel3[2].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[1].ListOfLevel3[2].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -319,8 +319,8 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[1].TestItem.IsLessThan": [
-            " 200 Is not less than '100'.",
-            " 200 Is not less than '100'."
+            "Is not less than '100'.",
+            "Is not less than '100'."
         ],
         "listOfLevel2[1].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'.",
@@ -363,7 +363,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[2].ListOfLevel3[0].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[2].ListOfLevel3[0].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -402,7 +402,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[2].ListOfLevel3[1].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[2].ListOfLevel3[1].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -441,7 +441,7 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[2].ListOfLevel3[2].TestItem.IsLessThan": [
-            " 200 Is not less than '100'."
+            "Is not less than '100'."
         ],
         "listOfLevel2[2].ListOfLevel3[2].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'."
@@ -488,8 +488,8 @@
             "Is not between 6 and 7 inclusive."
         ],
         "listOfLevel2[2].TestItem.IsLessThan": [
-            " 200 Is not less than '100'.",
-            " 200 Is not less than '100'."
+            "Is not less than '100'.",
+            "Is not less than '100'."
         ],
         "listOfLevel2[2].TestItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'.",
@@ -540,8 +540,8 @@
             "Is not between 6 and 7 inclusive."
         ],
         "testItem.IsLessThan": [
-            " 200 Is not less than '100'.",
-            " 200 Is not less than '100'."
+            "Is not less than '100'.",
+            "Is not less than '100'."
         ],
         "testItem.IsLessThanOrEqualTo": [
             "Is not less than or equal to '100'.",

@@ -17,7 +17,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }
@@ -41,7 +41,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "string"
                         }
                     ]
                 }
@@ -65,7 +65,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }
@@ -89,7 +89,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }
@@ -113,7 +113,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }
@@ -137,7 +137,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }

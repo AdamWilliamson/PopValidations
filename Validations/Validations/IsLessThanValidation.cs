@@ -9,7 +9,7 @@ public class IsLessThanValidation : ValidationComponentBase
 {
     public override string DescriptionTemplate { get; protected set; } =
         "Must be less than '{{value}}'.";
-    public override string ErrorTemplate { get; protected set; } = " {{original_value}} Is not less than '{{value}}'.";
+    public override string ErrorTemplate { get; protected set; } = "Is not less than '{{value}}'.";
 
     private readonly IScopeData scopedData;
 
@@ -44,7 +44,6 @@ public class IsLessThanValidation : ValidationComponentBase
             var valueAsString = RealValue?.ToString() ?? "null";
 
             return CreateValidationError(
-                ("original_value", value?.ToString() ?? "null"),
                 ("value", valueAsString)
             );
 

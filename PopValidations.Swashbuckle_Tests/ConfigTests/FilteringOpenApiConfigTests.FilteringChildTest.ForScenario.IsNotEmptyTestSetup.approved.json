@@ -75,35 +75,19 @@
                 }
             },
             "SubRequest": {
-                "required": [
-                    "id",
-                    "name"
-                ],
                 "type": "object",
                 "properties": {
                     "id": {
-                        "minLength": 1,
-                        "minItems": 1,
                         "type": "integer",
                         "format": "int32",
                         "nullable": true
                     },
                     "name": {
-                        "minLength": 1,
-                        "minItems": 1,
                         "type": "string",
                         "nullable": true
                     }
                 },
-                "additionalProperties": false,
-                "x-validation": {
-                    "id": [
-                        "Must not be empty."
-                    ],
-                    "name": [
-                        "Must not be empty."
-                    ]
-                }
+                "additionalProperties": false
             }
         }
     }

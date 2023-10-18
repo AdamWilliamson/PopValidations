@@ -76,30 +76,16 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "enum": [
-                            "null"
-                        ],
                         "type": "integer",
                         "format": "int32",
                         "nullable": true
                     },
                     "name": {
-                        "enum": [
-                            "null"
-                        ],
                         "type": "string",
                         "nullable": true
                     }
                 },
-                "additionalProperties": false,
-                "x-validation": {
-                    "id": [
-                        "Must be null."
-                    ],
-                    "name": [
-                        "Must be null."
-                    ]
-                }
+                "additionalProperties": false
             }
         }
     }

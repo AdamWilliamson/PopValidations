@@ -74,28 +74,16 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "maxLength": 0,
-                        "maxItems": 0,
                         "type": "integer",
                         "format": "int32",
                         "nullable": true
                     },
                     "name": {
-                        "maxLength": 0,
-                        "maxItems": 0,
                         "type": "string",
                         "nullable": true
                     }
                 },
-                "additionalProperties": false,
-                "x-validation": {
-                    "id": [
-                        "Must be empty."
-                    ],
-                    "name": [
-                        "Must be empty."
-                    ]
-                }
+                "additionalProperties": false
             }
         }
     }

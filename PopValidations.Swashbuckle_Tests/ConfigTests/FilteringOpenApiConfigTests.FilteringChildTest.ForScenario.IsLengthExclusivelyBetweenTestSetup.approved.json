@@ -74,28 +74,16 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "maxLength": 19,
-                        "minLength": 5,
                         "type": "integer",
                         "format": "int32",
                         "nullable": true
                     },
                     "name": {
-                        "maxLength": 9,
-                        "minLength": 3,
                         "type": "string",
                         "nullable": true
                     }
                 },
-                "additionalProperties": false,
-                "x-validation": {
-                    "id": [
-                        "Must be between 4 and 20 exclusive."
-                    ],
-                    "name": [
-                        "Must be between 2 and 10 exclusive."
-                    ]
-                }
+                "additionalProperties": false
             }
         }
     }

@@ -1,4 +1,41 @@
 ﻿Version 0.9
+	requirements:
+		Tests All Validations		(completed, final checks to go)
+		Tests Scopes				(completed, final checks to go)
+		Tests for Depth				(completed, final checks to go)
+		Tests For ForEach			(completed, final checks to go)
+		Swashbuckle Integration	
+			Scopes					(completed, final checks to go)
+			Whens					(completed, final checks to go)
+			Foreach					(completed, final checks to go)
+			AllValidations			(completed, final checks to go)
+			Tests					(completed, final checks to go)
+			Demo					(completed, final checks to go)
+		Mediatr Integration			(completed, final checks to go)
+			Tests					(completed, final checks to go)
+			Demo					
+		Website
+			Running
+			Instructions
+			Validation Examples
+		Rename Main Validator
+
+Version 1.0
+	requirements
+		Tests to limit Interface access and limiting interfaces
+		Switch validation
+		Remove Lower DotNet versions 
+
+Version 1.0.*
+	IsJson
+	Scale Precision
+	IsOneOf
+	Matches (Regular Expression)
+	IsUri (may need to refine)
+
+Version 1.1
+	Per Function/End point, Object descriptions and parameter value descriptions.
+
 Completed:
 *When scopes (Testing Needed)
 	Whens for all the different ways it can work.

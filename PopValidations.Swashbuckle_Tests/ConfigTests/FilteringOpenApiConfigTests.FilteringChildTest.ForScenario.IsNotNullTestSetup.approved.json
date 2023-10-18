@@ -40,18 +40,18 @@
     "components": {
         "schemas": {
             "Request": {
+                "required": [
+                    "id",
+                    "name"
+                ],
                 "type": "object",
                 "properties": {
                     "id": {
-                        "maximum": 5,
-                        "exclusiveMaximum": false,
                         "type": "integer",
-                        "format": "int32",
-                        "nullable": true
+                        "format": "int32"
                     },
                     "name": {
-                        "type": "string",
-                        "nullable": true
+                        "type": "string"
                     },
                     "child": {
                         "$ref": "#/components/schemas/SubRequest"
@@ -60,10 +60,10 @@
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must be less than or equal to '5'."
+                        "Must not be null."
                     ],
                     "name": [
-                        "Must be less than or equal to 'Test'."
+                        "Must not be null."
                     ],
                     "child": []
                 }

@@ -40,18 +40,16 @@
     "components": {
         "schemas": {
             "Request": {
-                "required": [
-                    "id",
-                    "name"
-                ],
                 "type": "object",
                 "properties": {
                     "id": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "nullable": true
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "child": {
                         "$ref": "#/components/schemas/SubRequest"
@@ -60,36 +58,34 @@
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must not be null."
+                        "Will always fail"
                     ],
                     "name": [
-                        "Must not be null."
+                        "Will always fail"
                     ],
                     "child": []
                 }
             },
             "SubRequest": {
-                "required": [
-                    "id",
-                    "name"
-                ],
                 "type": "object",
                 "properties": {
                     "id": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "nullable": true
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     }
                 },
                 "additionalProperties": false,
                 "x-validation": {
                     "id": [
-                        "Must not be null."
+                        "Will always fail"
                     ],
                     "name": [
-                        "Must not be null."
+                        "Will always fail"
                     ]
                 }
             }

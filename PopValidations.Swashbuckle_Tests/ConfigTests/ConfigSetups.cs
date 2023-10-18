@@ -11,9 +11,17 @@ public class ConfigSetups : IEnumerable<object[]>
         yield return new object[]
         {
             new TestSetup<
-                NotNullTestSetup.TestController,
-                NotNullTestSetup.RequestValidator,
-                NotNullTestSetup.Request
+                IsCustomTestSetup.TestController,
+                IsCustomTestSetup.RequestValidator,
+                IsCustomTestSetup.Request
+            >()
+        };
+        yield return new object[]
+        {
+            new TestSetup<
+                IsNotNullTestSetup.TestController,
+                IsNotNullTestSetup.RequestValidator,
+                IsNotNullTestSetup.Request
             >()
         };
         yield return new object[]
@@ -27,9 +35,9 @@ public class ConfigSetups : IEnumerable<object[]>
         yield return new object[]
         {
             new TestSetup<
-                NotNullTestSetup.TestController,
-                NotNullTestSetup.RequestValidator,
-                NotNullTestSetup.Request
+                IsNotNullTestSetup.TestController,
+                IsNotNullTestSetup.RequestValidator,
+                IsNotNullTestSetup.Request
             >()
         };
         yield return new object[]

@@ -1,19 +1,37 @@
-﻿::Validators Wanted::
+﻿=========================================================================
+:: 0.9 Validators ::
+=========================================================================
 
-IsLengthInclusivelyBetween
-	Takes a string, or array. 
-HasExclusiveLengthBetween
-	Takes a string, or array. 
+Is Custom							(Working)
+Is Empty							(Working)
+Is Enum								(Working)
+Is equalTo							(Working)
+Is greater Than or Equal To			(Working)
+Is Greater Than						(Working)
+Is Length Exclusively Between		(Working)
+Is Length Inclusively Between		(Working)
+Is Less Than or Equal To			(Working)
+Is Less Than						(Working)
+Is Not Empty						(Working)
+Is Not Null							(Working)
+Is Null								(Working)
+
+When								(Working)
+Scope								(Working)
+Scope When							(Working)
+Foreach								(Working)
+
+Total: 17
+
+=========================================================================
+::Validators Wanted::
+=========================================================================
 
 Email Validator
 	Microsoft apprived email rules are sufficient
 
 MatchesRegularExpression
 	takes a regular Expression, string must match
-
-IsPolymorphic
-	Takes a list of types, incoming value must be convertible to this type
-	Can restrict to classes.
 
 IsConvertableTo
 	takes a string or object.  Proves the incoming value is convertable
@@ -49,6 +67,11 @@ Switch
 			"Field must not be null"
 		)
 	)
+
+
+IsPolymorphic
+	Some version that compares types?.Takes a list of types, incoming value must be convertible to this type
+	Can restrict to classes.
 
 **
 Ensure validators for string comparison allow Cultural Selection and String comparison settings.
