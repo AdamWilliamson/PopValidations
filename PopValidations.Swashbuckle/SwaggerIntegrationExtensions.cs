@@ -17,7 +17,6 @@ public static class SwaggerIntegrationExtensions
         Type? validationRunnerFactoryType = null
     )
     {
-        services.AddSwaggerGenNewtonsoftSupport();
         services.AddSingleton(config ?? new OpenApiConfig());
         services.AddTransient(typeof(IValidationRunnerFactory), validationRunnerFactoryType ?? typeof(ValidationRunnerFactory));
         return services;

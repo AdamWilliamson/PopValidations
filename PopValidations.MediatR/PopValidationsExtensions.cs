@@ -8,7 +8,9 @@ public static class PopValidationsExtensions
     public static MediatRServiceConfiguration AddPopValidations(this MediatRServiceConfiguration config)
     {
         config
-            .AddOpenBehavior(typeof(PopValidationBehavior<,>));
+            //.AddOpenBehavior(typeof(PopValidationUnitBehavior<>))
+            .AddOpenBehavior(typeof(PopValidationBehavior<,>))
+            ;
 
         return config;
     }
