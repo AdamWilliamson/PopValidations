@@ -19,6 +19,11 @@ public abstract class PropertyExpressionTokenBase<TInput, TOutput> : IPropertyEx
 
     public virtual string CombineWithParentProperty(string parentProperty)
     {
+        if (string.IsNullOrWhiteSpace(Name))
+        {
+            return parentProperty;
+        }
+
         return parentProperty + "." + Name;
     }
 }

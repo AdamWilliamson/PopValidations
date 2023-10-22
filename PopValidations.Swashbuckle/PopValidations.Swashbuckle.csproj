@@ -4,15 +4,43 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Product>PopValidations.Swashbuckle</Product>
+    <PackageId>PopValidations.Swashbuckle</PackageId>
+
+	<PackageTags>Validation;Fluent;FluentValidation;PopValidation;Database;API;WebAPI;Async;Scoped;MediatR;Swashbuckle;OpenApi;Json;</PackageTags>
+	<PackageReleaseNotes>Working towards V1. This contains the basics needed to Ouput PopValidations to Swashbuckle's OpenApi output.</PackageReleaseNotes>
+	<Version>0.9.0.0</Version>
+	<Authors>Mythos_TheProgrammer</Authors>
+	<Company>PopValidations</Company>
+	<Description>Swashbuckle Integration for PopValidations</Description>
+	<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+	<PackageProjectUrl>https://adamwilliamson.github.io/popvalidations/</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/AdamWilliamson/PopValidations</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<Copyright>Copyright (c) Adam Williamson 2023.</Copyright>
+    <NeutralLanguage>en</NeutralLanguage>
+    <FileVersion>0.9.0.0</FileVersion>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <PackageIcon>Icon.png</PackageIcon>
+	<IncludeContentInPack>true</IncludeContentInPack>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	<Content Include="Icon.png" Pack="true" PackagePath="" />
+	<Content Include="License.txt" Pack="true" PackagePath="" />
+	  <None Update="ReadMe.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+	  </None>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Validations\Validations.csproj" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\Validations\Validations.csproj" />
   </ItemGroup>
 
 </Project>

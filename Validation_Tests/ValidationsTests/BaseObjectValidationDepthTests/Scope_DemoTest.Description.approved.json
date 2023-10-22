@@ -1,0 +1,155 @@
+﻿{
+    "results": [
+        {
+            "property": "",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Child",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Child.Child",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Child.Child.Child",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Child.Child.Child.Child",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

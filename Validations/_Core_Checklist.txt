@@ -14,11 +14,11 @@
 		Mediatr Integration			(completed, final checks to go)
 			Tests					(completed, final checks to go)
 			Demo					
-		Website
+		Website						(Running)
 			Running
 			Instructions
-			Validation Examples
-		Rename Main Validator
+			Validation Examples		
+		Rename Main Validator		(Rejected)
 
 Version 1.0
 	requirements

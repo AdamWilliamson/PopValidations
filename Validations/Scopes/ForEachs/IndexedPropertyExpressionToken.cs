@@ -45,6 +45,10 @@ public class IndexedPropertyExpressionToken<TValidationType,TInput, TOutput>
 
     public override string CombineWithParentProperty(string parentProperty)
     {
+        if (string.IsNullOrEmpty(Name))
+        {
+            return parentProperty;
+        }
         if (Index < 0) return parentProperty + "." + Name;// + $"[n]";
         return parentProperty +"."+ Name;// parentProperty + $"[{Index}]";
     }

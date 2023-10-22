@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations.MediatR_Tests
+namespace PopValidations.MediatR_Tests.SingleValidator
 {
     public record TestCommand(int Id) : IRequest;
 
@@ -27,10 +27,10 @@ namespace PopValidations.MediatR_Tests
         }
     }
 
-    public class UnitTest1
+    public class SingleValidatorTests
     {
         [Fact]
-        public async Task Test1()
+        public async Task GivenASingleValidator_WhenSetupInCorrectly_ItCorrectlyFails()
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
@@ -42,12 +42,6 @@ namespace PopValidations.MediatR_Tests
                 (x) => x
                     .RegisterServicesFromAssembly(typeof(TestCommand).Assembly)
                     .AddPopValidations()
-                //cfg.AddBehavior<PingPongBehavior>();
-                //cfg.AddStreamBehavior<PingPongStreamBehavior>();
-                //cfg.AddRequestPreProcessor<PingPreProcessor>();
-                //cfg.AddRequestPostProcessor<PingPongPostProcessor>();
-                //cfg.AddOpenBehavior(typeof(GenericBehavior<,>));
-                .AddOpenBehavior(typeof(PopValidationBehavior<,>))
             );
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -59,6 +53,32 @@ namespace PopValidations.MediatR_Tests
 
             // Assert
             await act.Should().ThrowAsync<PopValidationHttpException>();
+        }
+
+        [Fact]
+        public async Task GivenASingleValidator_WhenSetupCorrectly_ItSucceeds()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            serviceCollection
+                .RegisterRunner()
+                .RegisterAllMainValidators(typeof(TestCommand).Assembly);
+
+            serviceCollection.AddMediatR(
+                (x) => x
+                    .RegisterServicesFromAssembly(typeof(TestCommand).Assembly)
+                    .AddPopValidations()
+            );
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            var mediator = serviceProvider.GetService<IMediator>();
+
+            // Act
+            Func<Task> act = () => mediator.Send(new TestCommand(10));
+
+            // Assert
+            await act.Should().NotThrowAsync();
         }
     }
 }
