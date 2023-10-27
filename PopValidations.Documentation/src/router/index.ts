@@ -6,7 +6,7 @@ import Installation from "@/features/getting-started/installation.vue";
 import MainValidators from "@/features/getting-started/MainValidators.vue";
 
 //== Demonstrations
-import BasicDemonstration from "@/features/demonstrations/basic.vue";
+
 import ModerateDemonstration from "@/features/demonstrations/moderate.vue";
 import AdvancedDemonstration from "@/features/demonstrations/advanced.vue";
 
@@ -24,31 +24,28 @@ import AddingALanguage from "@/features/localisation/addingalanguage.vue";
 import TestingExtensions from "@/features/testability/testingextensions.vue";
 
 //== Validations
-import IsNullValidation from "@/features/validations/IsNullValidation.vue";
-import IsEmptyValidation from "@/features/validations/IsEmptyValidation.vue";
-import IsEqualToValidation from "@/features/validations/IsEqualToValidation.vue";
-import IsValidation from "@/features/validations/IsValidation.vue";
-import IsLengthInclusivelyBetweenValidation from "@/features/validations/IsLengthInclusivelyBetweenValidation.vue";
-import IsLengthExclusivelyBetweenValidation from "@/features/validations/IsLengthExclusivelyBetweenValidation.vue";
-
-import IsGreaterThanValidation from "@/features/validations/IsGreaterThanValidation.vue";
-import IsGreaterThanOrEqualToValidation from "@/features/validations/IsGreaterThanOrEqualToValidation.vue";
-import IsLessThanValidation from "@/features/validations/IsLessThanValidation.vue";
-import IsLessThanOrEqualToValidation from "@/features/validations/IsLessThanOrEqualToValidation.vue";
-import IsNotNullValidation from "@/features/validations/IsNotNullValidation.vue";
-import IsNotEmptyValidation from "@/features/validations/IsNotEmptyValidation.vue";
-import VitallyValidation from "@/features/validations/Vitally.vue";
-import SetValidation from "@/features/validations/SetValidation.vue";
-import Include from "@/features/validations/Include.vue";
-import When from "@/features/validations/When.vue";
-import Scope from "@/features/validations/Scope.vue";
-import ScopeWhen from "@/features/validations/ScopeWhen.vue";
-import ScopedData from "@/features/validations/ScopedData.vue";
+// import IsNullValidation from "@/features/validations/IsNullValidation.vue";
+// import IsEmptyValidation from "@/features/validations/IsEmptyValidation.vue";
+// import IsEqualToValidation from "@/features/validations/IsEqualToValidation.vue";
+// import IsValidation from "@/features/validations/IsValidation.vue";
+// import IsLengthInclusivelyBetweenValidation from "@/features/validations/IsLengthInclusivelyBetweenValidation.vue";
+// import IsLengthExclusivelyBetweenValidation from "@/features/validations/IsLengthExclusivelyBetweenValidation.vue";
+// import IsGreaterThanValidation from "@/features/validations/IsGreaterThanValidation.vue";
+// import IsGreaterThanOrEqualToValidation from "@/features/validations/IsGreaterThanOrEqualToValidation.vue";
+// import IsLessThanValidation from "@/features/validations/IsLessThanValidation.vue";
+// import IsLessThanOrEqualToValidation from "@/features/validations/IsLessThanOrEqualToValidation.vue";
+// import IsNotNullValidation from "@/features/validations/IsNotNullValidation.vue";
+// import IsNotEmptyValidation from "@/features/validations/IsNotEmptyValidation.vue";
+// import VitallyValidation from "@/features/validations/Vitally.vue";
+// import SetValidator from "@/features/validations/SetValidator.vue";
+// import Include from "@/features/validations/Include.vue";
+// import When from "@/features/validations/When.vue";
+// import Scope from "@/features/validations/Scope.vue";
+// import ScopeWhen from "@/features/validations/ScopeWhen.vue";
+// import ScopedData from "@/features/validations/ScopedData.vue";
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),//null, // 'hash',
-  //history: false,
-  //history: '',// createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
@@ -78,7 +75,7 @@ const router = createRouter({
         {
           path: "/demonstrations/basic",
           name: "BasicDemonstration",
-          component: BasicDemonstration,
+          component: () => import("@/features/demonstrations/basic.vue")
         },{
           path: "/demonstrations/moderate",
           name: "ModerateDemonstration",
@@ -146,97 +143,102 @@ const router = createRouter({
         {
           path: "/validation/isnull",
           name: "IsNullValidation",
-          component: IsNullValidation,
+          component: () => import("@/features/validations/IsNullValidation.vue"),
         },
         {
           path: "/validation/isempty",
           name: "IsEmptyValidation",
-          component: IsEmptyValidation,
+          component: () => import("@/features/validations/IsEmptyValidation.vue"),
         },
         {
           path: "/validation/isequalto",
           name: "IsEqualToValidation",
-          component: IsEqualToValidation,
+          component: () => import("@/features/validations/IsEqualToValidation.vue"),
         },
         {
           path: "/validation/is",
           name: "IsValidation",
-          component: IsValidation,
+          component: () => import("@/features/validations/IsValidation.vue"),
         },
         {
           path: "/validation/islengthinclusivelybetween",
           name: "IsLengthInclusivelyBetweenValidation",
-          component: IsLengthInclusivelyBetweenValidation,
+          component: () => import("@/features/validations/IsLengthInclusivelyBetweenValidation.vue"),
         },
         {
           path: "/validation/islengthexclusivelybetween",
           name: "IsLengthExclusivelyBetweenValidation",
-          component: IsLengthExclusivelyBetweenValidation,
+          component: () => import("@/features/validations/IsLengthExclusivelyBetweenValidation.vue"),
         },
         {
           path: "/validation/isgreaterthan",
           name: "IsGreaterThanValidation",
-          component: IsGreaterThanValidation,
+          component: () => import("@/features/validations/IsGreaterThanValidation.vue"),
         },
         {
           path: "/validation/isgreaterthanorequalto",
           name: "IsGreaterThanOrEqualToValidation",
-          component: IsGreaterThanOrEqualToValidation,
+          component: () => import("@/features/validations/IsGreaterThanOrEqualToValidation.vue"),
         },
         {
           path: "/validation/islessthan",
           name: "IsLessThanValidation",
-          component: IsLessThanValidation,
+          component: () => import("@/features/validations/IsLessThanValidation.vue"),
         },
         {
           path: "/validation/islessthanorequalto",
           name: "IsLessThanOrEqualToValidation",
-          component: IsLessThanOrEqualToValidation,
+          component: () => import("@/features/validations/IsLessThanOrEqualToValidation.vue"),
         },
         {
           path: "/validation/isnotnull",
           name: "IsNotNullValidation",
-          component: IsNotNullValidation,
+          component: () => import("@/features/validations/IsNotNullValidation.vue"),
         },
         {
           path: "/validation/isnotempty",
           name: "IsNotEmptyValidation",
-          component: IsNotEmptyValidation,
+          component: () => import("@/features/validations/IsNotEmptyValidation.vue"),
         },
         {
           path: "/validation/vitally",
           name:"VitallyValidation",
-          component: VitallyValidation
+          component: () => import("@/features/validations/Vitally.vue")
         },
         {
-          path:"/validation/setvalidation",
-          name:"SetValidation",
-          component: SetValidation
+          path:"/validation/setvalidator",
+          name:"SetValidator",
+          component: () => import("@/features/validations/SetValidator.vue")
         },
         {
           path:"/validation/include",
           name:"Include",
-          component: Include
+          component: () => import("@/features/validations/Include.vue")
         },
         {
           path:"/validation/when",
           name:"When",
-          component: When
+          component: () => import("@/features/validations/When.vue")
         },
         {
           path:"/validation/scope",
           name:"Scope",
-          component: Scope
+          component: () => import("@/features/validations/Scope.vue")
         },
         {
           path:"/validation/scopewhen",
           name:"ScopeWhen",
-          component: ScopeWhen
+          component: () => import("@/features/validations/ScopeWhen.vue")
         },
         {
           path:"/validation/scopeddata",
           name:"ScopedData",
-          component: ScopedData
+          component: () => import("@/features/validations/ScopedData.vue")
+        },
+        {
+          path:"/validation/foreach",
+          name:"ForEach",
+          component: () => import("@/features/validations/ForEach.vue")
         }
       ]
     }

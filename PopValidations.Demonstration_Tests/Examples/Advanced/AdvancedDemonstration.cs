@@ -8,6 +8,7 @@ namespace PopValidations.Demonstration_Tests.Examples.Advanced;
 
 public static class AdvancedDemonstration
 {
+    //Begin-Request
     public record Artist(string? Name);
 
     public record Song(
@@ -36,6 +37,10 @@ public static class AdvancedDemonstration
         List<string>? Genres
     );
 
+    public record AlbumSubmission(List<Album?>? Albums);
+    //End-Request
+
+    //Begin-Validator
     public class ArtistValidator : AbstractSubValidator<Artist>
     {
         public ArtistValidator()
@@ -168,8 +173,6 @@ public static class AdvancedDemonstration
         }
     }
 
-    public record AlbumSubmission(List<Album?>? Albums);
-
     public class AlbumSubmissionValidator : AbstractValidator<AlbumSubmission>
     {
         public AlbumSubmissionValidator(AlbumVerificationService albumVerificationService)
@@ -179,13 +182,6 @@ public static class AdvancedDemonstration
                 .ForEach(x => x
                     .Vitally().IsNotNull()
                     .SetValidator(new AlbumValidator(albumVerificationService)));
-
-            //Scope("Validate Album In Submission",
-            //    (album) => album != null,
-            //    (albumChecker) =>
-            //    {
-            //        Describe(x => x.Albums[0]).SetValidator(new AlbumListValidator());
-            //    });
         }
     }
 
@@ -239,6 +235,7 @@ public static class AdvancedDemonstration
 
         public bool IsSingle => album.Type == AlbumType.Single && album?.Songs?.Count <= 7;
     }
+    //End-Validator
 
     public class TestController : ControllerBase<AlbumSubmission> { }
 }

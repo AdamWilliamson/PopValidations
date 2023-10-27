@@ -2,18 +2,7 @@
 
 using PopValidations.Swashbuckle;
 
-public class WebApiConfig : OpenApiConfig
-{
-    public WebApiConfig()
-    {
-        TypeValidationLevel = (Type t) => 
-            (
-                t == typeof(PopValidations.ExampleWebApi.Handlers.Song) 
-                    ? ValidationLevel.ValidationAttributeInBase 
-                    : ValidationLevel.FullDetails
-            );
-    }
-}
+public class WebApiConfig : OpenApiConfig{}
 
 //public static class WebApiConfig
 //{

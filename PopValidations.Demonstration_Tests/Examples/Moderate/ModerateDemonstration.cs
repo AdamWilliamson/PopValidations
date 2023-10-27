@@ -7,6 +7,7 @@ namespace PopValidations.Demonstration_Tests.Examples.Moderate;
 
 public static class ModerateDemonstration
 {
+    //Begin-Request
     public record ModerateSong(
         string Artist,
         int? TrackNumber,
@@ -20,7 +21,9 @@ public static class ModerateDemonstration
         string Genre,
         List<ModerateSong?> Songs
     );
+    //End-Request
 
+    //Begin-Validator
     public class AlbumValidator : AbstractValidator<ModerateAlbum>
     {
         public AlbumValidator()
@@ -152,6 +155,7 @@ public static class ModerateDemonstration
                 .IsLessThan(5);
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<ModerateAlbum> { }
 }

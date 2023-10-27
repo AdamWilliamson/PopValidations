@@ -1,0 +1,19 @@
+﻿"InputObject": {
+    "type": "object",
+    "properties": {
+        "field": {
+            "enum": [
+                "Is other value"
+            ],
+            "type": "string",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "field": [
+            "Must equal to 'Is the same as the database value'.",
+            "Must equal to 'Is other value'."
+        ]
+    }
+}

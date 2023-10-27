@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.Include;
 
 public static class Include
 {
+    //Begin-Request
     public record InputObject(string? NString);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -28,6 +31,7 @@ public static class Include
                 .IsNotNull();
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.When;
 
 public static class When
 {
+    //Begin-Request
     public record InputObject(bool Check, string? DependantField);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -46,6 +49,7 @@ public static class When
             Describe(x => x.DependantField).IsEqualTo("Test3");
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

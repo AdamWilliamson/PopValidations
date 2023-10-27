@@ -1,0 +1,18 @@
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            Include(new SecondaryValidator());
+        }
+    }
+
+    public class SecondaryValidator : AbstractSubValidator<InputObject>
+    {
+        public SecondaryValidator()
+        {
+            Describe(x => x.NString)
+                .IsNotNull();
+        }
+    }
+    

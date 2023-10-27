@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.IsNull;
 
 public static class IsNull
 {
+    //Begin-Request
     public record InputObject(int? NInteger);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -19,6 +22,7 @@ public static class IsNull
             Describe(x => x.NInteger).IsNull();
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

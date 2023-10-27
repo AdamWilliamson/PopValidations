@@ -1,14 +1,18 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("ScopeWhen");
 });
 </script>
+
 <template>
  <v-container fluid bg-color="surface">
     <v-row>
@@ -24,119 +28,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='public static class DataRetriever
-    {
-        public static Task<string> GetValue(Level1 v) 
-        { 
-            return Task.FromResult(v?.DependantField + " GetValue"); 
-        }
-        public static Task<string> GetMoreValue(Level1 v) 
-        { 
-            return Task.FromResult(v?.DependantField + " GetMoreValue"); 
-        }
-    }
-
-    public class Validator : AbstractValidator<Level1>
-    {
-        public Validator()
-        {
-            ScopeWhen(
-                "When Check is True 1",
-                x => Task.FromResult(x.Check),
-                "Database Value 1",
-                (x) => DataRetriever.GetValue(x),
-                (retrievedData) =>
-                {
-                    Describe(x => x.DependantField).IsEqualTo(retrievedData);
-                }
-            );
-
-            ScopeWhen(
-                "When Check is True 2",
-                x => x.Check,
-                "Database Value 2",
-                (x) => (x?.DependantField ?? "null value") + " thing 1",
-                (retrievedData) =>
-                {
-                    Describe(x => x.DependantField).IsEqualTo(retrievedData);
-                }
-            );
-
-            ScopeWhen(
-                "When Check is True 3",
-                x => Task.FromResult(x.Check),
-                "Database Value 3",
-                (x) => DataRetriever.GetMoreValue(x),
-                (moreData) =>
-                {
-                    Describe(x => x.DependantField).IsEqualTo(moreData);
-                }
-            );
-
-            ScopeWhen(
-                "When Check is True 4",
-                x => x.Check,
-                "Database Value 4",
-                (x) => (x?.DependantField ?? "null value") + " thing 2",
-                (moreData) =>
-                {
-                    Describe(x => x.DependantField).IsEqualTo(moreData);
-                }
-            );
-        }
-    }'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
 
       <template #request>
-        <CodeWindow
-              language="csharp"
-              source='public record Level1(bool Check, string? DependantField);'
-            ></CodeWindow>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
       </template>
 
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "dependantField": [
-            "Is not equal to `1 GetValue`.",
-            "Is not equal to `1 thing 1`.",
-            "Is not equal to `1 GetMoreValue`.",
-            "Is not equal to `1 thing 2`."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='"Level1": {
-    "type": "object",
-    "properties": {
-        "check": {
-            "type": "boolean"
-        },
-        "dependantField": {
-            "type": "string",
-            "nullable": true
-        }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-        "dependantField": [
-            "When Check is True 1 : Must equal to `Database Value 1`.",
-            "When Check is True 2 : Must equal to `Database Value 2`.",
-            "When Check is True 3 : Must equal to `Database Value 3`.",
-            "When Check is True 4 : Must equal to `Database Value 4`."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

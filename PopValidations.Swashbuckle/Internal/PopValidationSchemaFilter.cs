@@ -128,7 +128,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
 #pragma warning restore CS8604 // Possible null reference argument.
 
                 // Execute processes for Field and Array descriptors for the property.
-                foreach (var outcomeSet in new[] { fieldOutcomes, arrayOutcomes })
+                foreach (var outcomeSet in new[] { fieldOutcomes })
                 {
                     if (outcomeSet is null)
                         continue;
@@ -140,9 +140,35 @@ public class PopValidationSchemaFilter : ISchemaFilter
                         PropertyValidationLevel, 
                         fieldName, 
                         customRulesArray, 
-                        outcomeSet
+                        outcomeSet,
+                        false
                     );
 
+                }
+
+                if (arrayOutcomes?.Outcomes?.Any() == true || arrayOutcomes?.ValidationGroups?.Any() == true)
+                {
+#pragma warning disable CS8604 // Possible null reference argument.
+                    var customRulesArrayForArrays = InitExtensionsAndArray(model, openApiPropName + config.OrdinalIndicator/*, outcomeSet, ownedby*/);
+#pragma warning restore CS8604 // Possible null reference argument.
+
+                    foreach (var outcomeSet in new[] { arrayOutcomes })
+                    {
+                        if (outcomeSet is null)
+                            continue;
+
+                        ConvertValiatorsToOpenApiDescriptions(
+                            model,
+                            endPointObjectextention,
+                            openApiPropName,
+                            PropertyValidationLevel,
+                            fieldName,
+                            customRulesArrayForArrays,
+                            outcomeSet,
+                            true
+                        );
+
+                    }
                 }
 
                 //if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
@@ -258,7 +284,8 @@ public class PopValidationSchemaFilter : ISchemaFilter
         ValidationLevel PropertyValidationLevel, 
         string fieldName, 
         OpenApiArray customRulesArray, 
-        DescriptionItemResult? outcomeSet)
+        DescriptionItemResult? outcomeSet, 
+        bool isArray)
     {
 
         if (outcomeSet == null) return;
@@ -286,7 +313,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
                 if (converter.Supports(outcome))
                 {
                     //Incomplete
-                    if (string.IsNullOrWhiteSpace(owner) && PropertyValidationLevel.HasFlag(ValidationLevel.OpenApi))
+                    if (!isArray && string.IsNullOrWhiteSpace(owner) && PropertyValidationLevel.HasFlag(ValidationLevel.OpenApi))
                     {
                         converter.UpdateSchema(model, model.Properties[openApiPropName], openApiPropName, outcome);
                     }

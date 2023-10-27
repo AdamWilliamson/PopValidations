@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.Scope;
 
 public static class Scope
 {
+    //Begin-Request
     public record InputObject(string? Field);
+    //End-Request
 
+    //Begin-Validator
     public static class DataRetriever
     {
         public static Task<string> GetValue() { return Task.FromResult("teststring"); }
@@ -50,6 +53,7 @@ public static class Scope
             );
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

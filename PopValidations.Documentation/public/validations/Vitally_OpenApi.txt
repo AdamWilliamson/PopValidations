@@ -1,0 +1,24 @@
+﻿"InputObject": {
+    "required": [
+        "nString"
+    ],
+    "type": "object",
+    "properties": {
+        "nString": {
+            "minLength": 1,
+            "minItems": 1,
+            "enum": [
+                "Test"
+            ],
+            "type": "string",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nString": [
+            "Must not be empty.",
+            "Must equal to 'Test'."
+        ]
+    }
+}

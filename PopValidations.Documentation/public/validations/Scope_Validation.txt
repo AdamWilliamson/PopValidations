@@ -1,0 +1,9 @@
+﻿{
+    "errors": {
+        "field": [
+            "Is not equal to 'teststring'.",
+            "Is not equal to 'a value teststring2'.",
+            "Is not equal to 'a value additional value'."
+        ]
+    }
+}

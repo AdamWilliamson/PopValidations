@@ -1,0 +1,63 @@
+
+    public static class DataRetriever
+    {
+        public static Task<string> GetValue(Level1 v) 
+        { 
+            return Task.FromResult(v?.DependantField + " GetValue"); 
+        }
+        public static Task<string> GetMoreValue(Level1 v) 
+        { 
+            return Task.FromResult(v?.DependantField + " GetMoreValue"); 
+        }
+    }
+
+    public class Validator : AbstractValidator<Level1>
+    {
+        public Validator()
+        {
+            ScopeWhen(
+                "When Check is True 1",
+                x => Task.FromResult(x.Check),
+                "Database Value 1",
+                (x) => DataRetriever.GetValue(x),
+                (retrievedData) =>
+                {
+                    Describe(x => x.DependantField).IsEqualTo(retrievedData);
+                }
+            );
+
+            ScopeWhen(
+                "When Check is True 2",
+                x => x.Check,
+                "Database Value 2",
+                (x) => (x?.DependantField ?? "null value") + " thing 1",
+                (retrievedData) =>
+                {
+                    Describe(x => x.DependantField).IsEqualTo(retrievedData);
+                }
+            );
+
+            ScopeWhen(
+                "When Check is True 3",
+                x => Task.FromResult(x.Check),
+                "Database Value 3",
+                (x) => DataRetriever.GetMoreValue(x),
+                (moreData) =>
+                {
+                    Describe(x => x.DependantField).IsEqualTo(moreData);
+                }
+            );
+
+            ScopeWhen(
+                "When Check is True 4",
+                x => x.Check,
+                "Database Value 4",
+                (x) => (x?.DependantField ?? "null value") + " thing 2",
+                (moreData) =>
+                {
+                    Describe(x => x.DependantField).IsEqualTo(moreData);
+                }
+            );
+        }
+    }
+    

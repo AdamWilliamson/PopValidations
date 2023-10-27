@@ -1,0 +1,31 @@
+
+    public record Artist(string? Name);
+
+    public record Song(
+        List<Artist>? Artists,
+        int? TrackNumber,
+        string? TrackName,
+        double? Duration,
+        string? Genre
+    );
+
+    public enum AlbumType
+    {
+        Single,
+        SingleArtist,
+        Collaboration,
+        Compilation
+    }
+
+    public record Album(
+        string? Title,
+        AlbumType? Type,
+        List<Artist>? Artists,
+        string? CoverImageUrl,
+        DateTime? Created,
+        List<Song?>? Songs,
+        List<string>? Genres
+    );
+
+    public record AlbumSubmission(List<Album?>? Albums);
+    

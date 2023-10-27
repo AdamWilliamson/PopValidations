@@ -5,12 +5,15 @@ namespace PopValidations.Demonstration_Tests.Examples.Basic;
 
 public static class BasicDemonstration
 {
+    //Begin-Request
     public record BasicSong(
         int TrackNumber,
         string TrackName,
         double Duration
     );
+    //End-Request
 
+    //Begin-Validator
     public class BasicSongValidator : AbstractValidator<BasicSong>
     {
         public BasicSongValidator()
@@ -45,6 +48,7 @@ public static class BasicDemonstration
                 );
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<BasicSong> { }
 }

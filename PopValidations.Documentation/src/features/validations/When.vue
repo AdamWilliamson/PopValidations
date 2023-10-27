@@ -1,14 +1,18 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("When");
 });
 </script>
+
 <template>
  <v-container fluid bg-color="surface">
     <v-row>
@@ -24,93 +28,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='public class Validator : AbstractValidator<InputObject>
-    {
-        public Validator()
-        {
-            When(
-                "When Check is True",
-                x => Task.FromResult(x.Check == true),
-                () =>
-                {
-                    When(
-                        "When 10 == 10",
-                        x => Task.FromResult(true),
-                        () =>
-                        {
-                            Describe(x => x.DependantField).IsEqualTo("Test1");
-                        }
-                    );
-
-                    Describe(x => x.DependantField).Vitally().IsNotEmpty();
-
-                    When(
-                        "When 5 == 5",
-                        x => Task.FromResult(true),
-                        () =>
-                        {
-                            Describe(x => x.DependantField).IsEqualTo("Test2");
-                        }
-                    );
-                }
-            );
-
-            Describe(x => x.DependantField).IsEqualTo("Test3");
-        }
-    }'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
 
       <template #request>
-        <CodeWindow
-              language="csharp"
-              source='public record InputObject(bool Check, string? DependantField);'
-            ></CodeWindow>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
       </template>
 
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "dependantField": [
-            "Is not equal to `Test1`.",
-            "Is empty."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='"InputObject": {
-    "type": "object",
-    "properties": {
-        "check": {
-            "type": "boolean"
-        },
-        "dependantField": {
-            "enum": [
-                "Test3"
-            ],
-            "type": "string",
-            "nullable": true
-        }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-        "dependantField": [
-            "Must equal to `Test3`.",
-            "When Check is True : Must not be empty.",
-            "When Check is True & When 10 == 10 : Must equal to `Test1``.",
-            "When Check is True & When 5 == 5 : Must equal to `Test2`."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

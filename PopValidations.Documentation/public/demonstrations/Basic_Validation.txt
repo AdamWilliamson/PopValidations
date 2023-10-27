@@ -1,0 +1,11 @@
+﻿{
+    "errors": {
+        "duration": [
+            "Is not greater than '2'.",
+            "The 13th Song must be an intermission."
+        ],
+        "trackName": [
+            "Is empty."
+        ]
+    }
+}

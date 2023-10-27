@@ -1,14 +1,18 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("Scope");
 });
 </script>
+
 <template>
  <v-container fluid bg-color="surface">
     <v-row>
@@ -24,94 +28,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='    public static class DataRetriever
-    {
-        public static Task<string> GetValue() { return Task.FromResult("teststring"); }
-        public static Task<string> GetMoreValue(InputObject obj) { return Task.FromResult(obj?.Field + " teststring2"); }
-    }
-
-    public class Validator : AbstractValidator<InputObject>
-    {
-        public Validator()
-        {
-            Scope(
-                "Database Value",
-                () => DataRetriever.GetValue(),
-                (retrievedData) =>
-                {
-                    Describe(x => x.Field).IsEqualTo(retrievedData);    
-                }
-            );
-
-            Scope(
-                "Second Database Value",
-                (validationObject) => DataRetriever.GetMoreValue(validationObject),
-                (moreData) =>
-                {
-                    Describe(x => x.Field).IsEqualTo(moreData);
-                }
-            );
-
-            Scope(
-                "Third Database Value",
-                (validationobject) =>  (validationobject?.Field ?? "") + " additional value",
-                (moreData) =>
-                {
-                    Describe(x => x.Field).IsEqualTo(moreData);
-                }
-            );
-        }
-    }'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
 
       <template #request>
-        <CodeWindow
-              language="csharp"
-              source='public record InputObject(string? Field);'
-            ></CodeWindow>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
       </template>
 
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "field": [
-            "Is not equal to `teststring`.",
-            "Is not equal to `a value teststring2`.",
-            "Is not equal to `a value additional value`."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='"InputObject": {
-    "type": "object",
-    "properties": {
-        "field": {
-            "enum": [
-                "Third Database Value"
-            ],
-            "type": "string",
-            "nullable": true
-        }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-        "field": [
-            "Must equal to `Database Value`.",
-            "Must equal to `Second Database Value`.",
-            "Must equal to `Third Database Value`."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

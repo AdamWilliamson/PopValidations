@@ -19,14 +19,16 @@ An example
 ```c#
 using PopValidation;
 
-public record Song(string? Title, double? Duration);
+public record Song(string? Title, double Duration);
 
 public class SongValidator: AbstractValidator<Song> 
 {
     public SongValidator() 
     {
         RuleFor(x => x.Title).Vitally().NotEmpty();
-        RuleFor(x => x.Duration).Vitally().IsNotNull().IsLessThan(10.0, options => options.WithErrorMessage("Songs must be less than 10 minutes long."));
+        RuleFor(x => x.Duration)
+            .IsNotNull()
+            .IsLessThan(10.0, options => options.WithErrorMessage("Songs must be less than 10 minutes long."));
     }
 }
 

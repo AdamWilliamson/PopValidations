@@ -1,0 +1,10 @@
+﻿{
+    "errors": {
+        "array": [
+            "Is not between 1 and 5 inclusive."
+        ],
+        "nString": [
+            "Is not between 1 and 5 inclusive."
+        ]
+    }
+}

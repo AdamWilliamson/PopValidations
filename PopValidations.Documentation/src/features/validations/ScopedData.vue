@@ -1,14 +1,18 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("ScopedData");
 });
 </script>
+
 <template>
  <v-container fluid bg-color="surface">
     <v-row>
@@ -23,41 +27,22 @@ export default defineComponent({
       </v-col>
     </v-row>
 
-    <v-row>
-        <v-col>
-            <CodeWindow
-              language="csharp"
-              source='
-              public record InputObject(string? Field);
+    <PanelsOrTabs>
+      <template #code>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
+      </template>
 
-public record ReturnedObject(string TestValue1, string TestValue2);
+      <template #request>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
+      </template>
 
-public static class DataRetriever
-{
-    public static Task<ReturnedObject> GetValue() { return Task.FromResult(new ReturnedObject("Test 1",  "Test 2")); }
-}
-
-public class Validator : AbstractValidator<InputObject>
-{
-    public Validator()
-    {
-        Scope(
-            "Database Value",
-            () => DataRetriever.GetValue(),
-            (retrievedData) =>
-            {
-                Describe(x => x.Field)
-                    .IsEqualTo(retrievedData.To("Is the same as the database value", x => x.TestValue1));
-
-                Describe(x => x.Field)
-                    .IsEqualTo(retrievedData.To("Is other value", x => x.TestValue2));
-            }
-        );
-    }
-}'
-            ></CodeWindow>
-        </v-col>
-    </v-row>
+      <template #errorreport>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
+      </template>
+      <template #openapi>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
+      </template>
+    </PanelsOrTabs>
 
   </v-container>
 </template>

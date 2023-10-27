@@ -1,0 +1,13 @@
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            Describe(x => x.NString).Is(
+                "Must be 'NString'",
+                "'{{value}}' is an invalid option",
+                i => i == "NString"
+            );
+        }
+    }
+    

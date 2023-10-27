@@ -1,0 +1,9 @@
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            Describe(x => x.NInteger).IsLessThanOrEqualTo(5);
+        }
+    }
+    

@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.IsGreaterThan;
 
 public static class IsGreaterThan
 {
+    //Begin-Request
     public record InputObject(int? NInteger);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -19,6 +22,7 @@ public static class IsGreaterThan
             Describe(x => x.NInteger).IsGreaterThan(5);
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

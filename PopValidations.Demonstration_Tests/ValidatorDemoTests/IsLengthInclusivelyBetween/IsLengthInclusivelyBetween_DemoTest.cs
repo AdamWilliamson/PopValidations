@@ -11,8 +11,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.IsLengthInclusiv
 
 public static class IsLengthInclusivelyBetween
 {
+    //Begin-Request
     public record InputObject(string? NString, List<int> Array);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -21,6 +24,7 @@ public static class IsLengthInclusivelyBetween
             Describe(x => x.Array).IsLengthInclusivelyBetween(1, 5);
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

@@ -1,12 +1,4 @@
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  data() {
-    return {
-    };
-  },
-});
+<script setup lang="ts">
 </script>
 
 <template>
@@ -203,9 +195,9 @@ export default defineComponent({
 
         <v-list-item
           color="secondary"
-          title="SetValidation"
-          value="SetValidation"
-          :to="{ name: 'SetValidation' }"
+          title="SetValidator"
+          value="SetValidator"
+          :to="{ name: 'SetValidator' }"
           link
         ></v-list-item>
 
@@ -249,6 +241,14 @@ export default defineComponent({
           link
         ></v-list-item>
 
+        <v-list-item
+          color="secondary"
+          title="ForEach"
+          value="ForEach"
+          :to="{ name: 'ForEach' }"
+          link
+        ></v-list-item>
+
         <v-list-subheader color="secondary">Localisation</v-list-subheader>
         <v-list-item
           color="secondary"
@@ -270,7 +270,19 @@ export default defineComponent({
     </v-navigation-drawer>
 
     <v-main>
-      <RouterView />
+      <transition name="mode-fade" mode="out-in">
+        <RouterView />
+      </transition>
     </v-main>
   </v-app>
 </template>
+
+<style lang="scss">
+.mode-fade-enter-active, .mode-fade-leave-active {
+  transition: opacity .5s ease
+}
+
+.mode-fade-enter-from, .mode-fade-leave-to {
+  opacity: 0
+}
+</style>

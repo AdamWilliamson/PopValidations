@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.Is;
 
 public static class Is
 {
+    //Begin-Request
     public record InputObject(string? NString);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -23,6 +26,7 @@ public static class Is
             );
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

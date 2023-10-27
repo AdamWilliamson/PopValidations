@@ -1,0 +1,17 @@
+﻿"ChildInputObject": {
+    "required": [
+        "nString"
+    ],
+    "type": "object",
+    "properties": {
+        "nString": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nString": [
+            "Must not be null."
+        ]
+    }
+}

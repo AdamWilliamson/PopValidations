@@ -1,6 +1,6 @@
 using PopValidations;
-using PopValidations.ExampleWebApi.Controllers;
-using PopValidations.ExampleWebApi.Handlers;
+using PopValidations.ExampleWebApi.Features.AdvancedExample;
+using PopValidations.ExampleWebApi.Features.BasicExample;
 using PopValidations.MediatR;
 using PopValidations.Swashbuckle;
 
@@ -16,15 +16,15 @@ builder.Services.AddEndpointsApiExplorer();
 //== Swagger Setup Services
 builder.Services.AddMediatR(
     cfg => cfg
-        .RegisterServicesFromAssemblyContaining<HomeController>()
+        .RegisterServicesFromAssemblyContaining<BasicObjectController>()
         // Pop Validation Extension, that adds a MediatR Behaviour to validate all objects before executing the handlers.
         .AddPopValidations()
 );
 
 // PopValidations Extensions Function for Registering The Validation Runner
 builder.Services.RegisterRunner()
-    // And this extension and all the Validators in the same assembly as "AlbumValidator"
-    .RegisterAllMainValidators(typeof(AlbumValidator).Assembly);
+    // And this extension and all the Validators in the same assembly as "SongValidator"
+    .RegisterAllMainValidators(typeof(BasicObjectController).Assembly);
 
 // Register a Pop Validation Config that describes the configuration for describing the validations within OpenApi
 builder.Services.RegisterPopValidationsOpenApiDefaults(new WebApiConfig());
@@ -37,6 +37,10 @@ builder.Services.AddSwaggerGen(
         options.RegisterOpenApiModificationFilter();
     });
 //== End Swagger Setup
+
+//== Include Services for Validators and Handlers
+builder.Services.AddSingleton<AlbumVerificationService, AlbumVerificationService>();
+//== End Include
 
 var app = builder.Build();
 

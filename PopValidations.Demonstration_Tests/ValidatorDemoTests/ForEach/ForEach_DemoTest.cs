@@ -11,8 +11,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.ForEach;
 
 public static class ForEach
 {
+    //Begin-Request
     public record InputObject(List<string?> ArrayOfStrings);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -25,14 +28,17 @@ public static class ForEach
                     .IsNotEmpty() // Only run if Not Null
                 );
 
-            // Tests each item, but stops at the first item that fails. this effects the previous ForEach.
-            // This won't run the Tests if ArrayOfStrings is null, due to the previous .Vitally().IsNotNull() on this field
+            // Tests each item, but stops at the first item that
+            // fails. this effects the previous ForEach.
+            // This won't run the Tests if ArrayOfStrings is null,
+            // due to the previous .Vitally().IsNotNull() on this field
             DescribeEnumerable(x => x.ArrayOfStrings)
                 .Vitally().ForEach(x => x
                     .IsEqualTo("Test")
                 );
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

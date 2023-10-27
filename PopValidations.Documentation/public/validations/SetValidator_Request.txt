@@ -1,0 +1,4 @@
+
+    public record InputObject(ChildInputObject? Child);
+    public record ChildInputObject(string? NString);
+    

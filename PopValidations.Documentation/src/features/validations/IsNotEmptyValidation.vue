@@ -1,14 +1,18 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("IsNotEmpty");
 });
 </script>
+
 <template>
  <v-container fluid bg-color="surface">
     <v-row>
@@ -22,76 +26,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='
-public class Validator : AbstractValidator<InputObject>
-{
-    public Validator()
-    {
-        Describe(x => x.String).IsNotEmpty();
-        Describe(x => x.NString).IsNotEmpty();
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
 
       <template #request>
-        <CodeWindow
-              language="csharp"
-              source='public record InputObject(string String, string? NString);'
-            ></CodeWindow>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
       </template>
 
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "string": [
-            "Is empty."
-        ],
-        "nString": [
-            "Is empty."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='"InputObject": {
-    "required": [
-        "nString",
-        "string"
-    ],
-    "type": "object",
-    "properties": {
-        "string": {
-            "minLength": 1,
-            "minItems": 1,
-            "type": "string",
-            "nullable": true
-        },
-        "nString": {
-            "minLength": 1,
-            "minItems": 1,
-            "type": "string",
-            "nullable": true
-        }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-        "string": [
-            "Must not be empty."
-        ],
-        "nString": [
-            "Must not be empty."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

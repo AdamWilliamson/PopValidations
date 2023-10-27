@@ -1,15 +1,18 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-      tab: "one",
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("IsLengthExclusivelyBetween");
 });
 </script>
+
 <template>
  <v-container fluid bg-color="surface">
     <v-row>
@@ -25,76 +28,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='
-public class Validator : AbstractValidator<InputObject>
-{
-    public Validator()
-    {
-        Describe(x => x.NString).IsLengthExclusivelyBetween(1, 5);
-        Describe(x => x.Array).IsLengthExclusivelyBetween(1, 5);
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
 
       <template #request>
-        <CodeWindow
-              language="csharp"
-              source='public record InputObject(string? NString, List<int> Array);'
-            ></CodeWindow>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
       </template>
 
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "nString": [
-            "Is not between 1 and 5 exclusive."
-        ],
-        "array": [
-            "Is not between 1 and 5 exclusive."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='"InputObject": {
-    "type": "object",
-    "properties": {
-        "nString": {
-            "maxLength": 4,
-            "minLength": 2,
-            "type": "string",
-            "nullable": true
-        },
-        "array": {
-            "maxLength": 4,
-            "minLength": 2,
-            "type": "array",
-            "items": {
-                "type": "integer",
-                "format": "int32"
-            },
-            "nullable": true
-        }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-        "nString": [
-            "Must be between 1 and 5 exclusive."
-        ],
-        "array": [
-            "Must be between 1 and 5 exclusive."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

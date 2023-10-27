@@ -1,0 +1,7 @@
+
+    public record BasicSong(
+        int TrackNumber,
+        string TrackName,
+        double Duration
+    );
+    

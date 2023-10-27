@@ -22,6 +22,8 @@ public class PopValidationArray
     public void Add(string? item)
     {
         if (string.IsNullOrWhiteSpace(item)) return;
+        if (array.Cast<OpenApiString>().Any(x => x?.Value?.Equals(lineHeader + item) ?? false)) return;
+
         array.Add(new OpenApiString(lineHeader + item));
     }
 }

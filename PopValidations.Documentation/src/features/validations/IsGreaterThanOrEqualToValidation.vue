@@ -1,12 +1,15 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("IsGreaterThanOrEqualTo");
 });
 </script>
 <template>
@@ -22,60 +25,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='
-public class Validator : AbstractValidator<InputObject>
-{
-    public Validator()
-    {
-        Describe(x => x.NInteger).IsGreaterThanOrEqualTo(5);
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
 
       <template #request>
-        <CodeWindow
-              language="csharp"
-              source='public record InputObject(int? NInteger);'
-            ></CodeWindow>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
       </template>
 
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "nInteger": [
-            "Is not greater than or equal to `5`"
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='"InputObject": {
-    "type": "object",
-    "properties": {
-        "nInteger": {
-            "minimum": 5,
-            "exclusiveMinimum": false,
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-        }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-        "nInteger": [
-            "Must be greater than or equal to `5`"
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

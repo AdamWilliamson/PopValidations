@@ -7,7 +7,7 @@
             "Is not less than '1.7976931348623157E+308'."
         ],
         "integer": [
-            "Is not less than '2147483647'."
+            "This Integer is not less then MaxValue"
         ],
         "long": [
             "Is not less than '9223372036854775807'."

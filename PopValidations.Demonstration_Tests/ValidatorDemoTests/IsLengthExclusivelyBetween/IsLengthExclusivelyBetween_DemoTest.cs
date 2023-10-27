@@ -11,8 +11,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.IsLengthExclusiv
 
 public static class IsLengthExclusivelyBetween
 {
+    //Begin-Request
     public record InputObject(string? NString, List<int> Array);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -21,6 +24,7 @@ public static class IsLengthExclusivelyBetween
             Describe(x => x.Array).IsLengthExclusivelyBetween(1, 5);
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

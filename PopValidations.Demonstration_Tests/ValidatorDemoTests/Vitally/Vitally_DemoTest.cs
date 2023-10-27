@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.Vitally;
 
 public static class Vitally
 {
+    //Begin-Request
     public record InputObject(string? NString);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -19,11 +22,12 @@ public static class Vitally
             Describe(x => x.NString).Vitally().IsNotEmpty().IsEqualTo("Test");
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }
 
-public class IsEmpty_DemoTest
+public class Vitally_DemoTest
 {
     [Fact]
     public async Task Validation()

@@ -1,0 +1,10 @@
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            Describe(x => x.String).IsNotEmpty();
+            Describe(x => x.NString).IsNotEmpty();
+        }
+    }
+    

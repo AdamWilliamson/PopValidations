@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.ScopeWhen;
 
 public static class ScopeWhen
 {
+    //Begin-Request
     public record Level1(bool Check, string? DependantField);
+    //End-Request
 
+    //Begin-Validator
     public static class DataRetriever
     {
         public static Task<string> GetValue(Level1 v) 
@@ -73,6 +76,7 @@ public static class ScopeWhen
             );
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<Level1> { }
 }

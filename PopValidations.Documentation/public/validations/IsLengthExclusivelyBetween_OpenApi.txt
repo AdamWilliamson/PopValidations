@@ -1,0 +1,30 @@
+﻿"InputObject": {
+    "type": "object",
+    "properties": {
+        "nString": {
+            "maxLength": 4,
+            "minLength": 2,
+            "type": "string",
+            "nullable": true
+        },
+        "array": {
+            "maxLength": 4,
+            "minLength": 2,
+            "type": "array",
+            "items": {
+                "type": "integer",
+                "format": "int32"
+            },
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nString": [
+            "Must be between 1 and 5 exclusive."
+        ],
+        "array": [
+            "Must be between 1 and 5 exclusive."
+        ]
+    }
+}

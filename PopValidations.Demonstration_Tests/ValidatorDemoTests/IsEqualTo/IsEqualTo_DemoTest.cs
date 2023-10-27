@@ -10,8 +10,11 @@ namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.IsEqualTo;
 
 public static class IsNotEmpty
 {
+    //Begin-Request
     public record InputObject(string? NString);
+    //End-Request
 
+    //Begin-Validator
     public class Validator : AbstractValidator<InputObject>
     {
         public Validator()
@@ -19,6 +22,7 @@ public static class IsNotEmpty
             Describe(x => x.NString).IsEqualTo("Name");
         }
     }
+    //End-Validator
 
     public class TestController : ControllerBase<InputObject> { }
 }

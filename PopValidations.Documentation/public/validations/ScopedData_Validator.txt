@@ -1,0 +1,27 @@
+
+    public record ReturnedObject(string TestValue1, string TestValue2);
+
+    public static class DataRetriever
+    {
+        public static Task<ReturnedObject> GetValue() { return Task.FromResult(new ReturnedObject("Test 1",  "Test 2")); }
+    }
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            Scope(
+                "Database Value",
+                () => DataRetriever.GetValue(),
+                (retrievedData) =>
+                {
+                    Describe(x => x.Field)
+                        .IsEqualTo(retrievedData.To("Is the same as the database value", x => x.TestValue1));
+
+                    Describe(x => x.Field)
+                        .IsEqualTo(retrievedData.To("Is other value", x => x.TestValue2));
+                }
+            );
+        }
+    }
+    
