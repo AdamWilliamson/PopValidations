@@ -1,0 +1,88 @@
+﻿{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "PopValidations.ExampleWebApi",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/Test/test": {
+            "get": {
+                "tags": [
+                    "Test"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Request": {
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "child": {
+                        "$ref": "#/components/schemas/SubRequest"
+                    }
+                },
+                "additionalProperties": false,
+                "x-validation": {
+                    "id": [
+                        "Must not be null."
+                    ],
+                    "name": [
+                        "Must not be null."
+                    ],
+                    "child": []
+                }
+            },
+            "SubRequest": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    }
+}

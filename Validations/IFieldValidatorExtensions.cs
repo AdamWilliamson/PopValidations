@@ -8,31 +8,52 @@ namespace PopValidations;
 
 public static partial class IFieldValidatorExtensions
 {
-    public static IFieldDescriptor<TValidationType, TFieldType?> Vitally<TValidationType, TFieldType>(this IFieldDescriptor<TValidationType, TFieldType?> fieldDescriptor)
+    public static IFieldDescriptor<TValidationType, TFieldType?> Vitally<
+        TValidationType,
+        TFieldType
+    >(this IFieldDescriptor<TValidationType, TFieldType?> fieldDescriptor)
     {
         fieldDescriptor.NextValidationIsVital();
         return fieldDescriptor;
     }
 
-    public static IFieldDescriptor<TValidationType, TFieldType> SetValidator<TValidationType, TFieldType>(
+    public static IFieldDescriptor<TValidationType, TFieldType> SetValidator<
+        TValidationType,
+        TFieldType
+    >(
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
-        ISubValidatorClass validatorClass
+        ISubValidatorClass<TFieldType> validatorClass
     )
     {
-        fieldDescriptor.AddValidation(validatorClass);
+        fieldDescriptor.AddSubValidator(validatorClass);
         return fieldDescriptor;
     }
 
-    public static IFieldDescriptor<TClassType, IEnumerable<TPropertyType?>?> ForEach<TClassType, TPropertyType>(
-            this IFieldDescriptor<TClassType, IEnumerable<TPropertyType?>?> fieldDescriptor,
-            Action<IFieldDescriptor<IEnumerable<TPropertyType?>, TPropertyType?>> actions
-            )
+    public static IFieldDescriptor<TClassType, IEnumerable<TPropertyType?>?> ForEach<
+        TClassType,
+        TPropertyType
+    >(
+        this IFieldDescriptor<TClassType, IEnumerable<TPropertyType?>?> fieldDescriptor,
+        Action<IFieldDescriptor<IEnumerable<TPropertyType?>, TPropertyType?>> actions
+    )
+        where TClassType : class
     {
         var forEachScope = new ForEachScope<TClassType, TPropertyType>(
             fieldDescriptor,
             actions
         );
-        fieldDescriptor.AddValidation(forEachScope);
+        //fieldDescriptor.Store.AddItemToCurrentScope(null, forEachScope);
+        fieldDescriptor.AddSelfDescribingEntity(forEachScope);
+        //fieldDescriptor.AddValidation(forEachScope);
+
+        //==
+        //var subvalidator = new ForEachItemSubValidator<TClassType, TPropertyType>(
+        //    fieldDescriptor,
+        //    actions
+        //);
+
+        //fieldDescriptor.Store.AddItem(null, subvalidator);
+
         return fieldDescriptor;
     }
 }

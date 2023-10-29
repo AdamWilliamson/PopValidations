@@ -1,0 +1,47 @@
+
+    public static class DataRetriever
+    {
+        public static Task<string> GetValue() 
+        { 
+            return Task.FromResult("teststring"); 
+        }
+
+        public static Task<string> GetMoreValue(InputObject obj) 
+        { 
+            return Task.FromResult(obj?.Field + " teststring2"); 
+        }
+    }
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            Scope(
+                "Database Value",
+                () => DataRetriever.GetValue(),
+                (retrievedData) =>
+                {
+                    Describe(x => x.Field).IsEqualTo(retrievedData);    
+                }
+            );
+
+            Scope(
+                "Second Database Value",
+                (validationObject) => DataRetriever.GetMoreValue(validationObject),
+                (moreData) =>
+                {
+                    Describe(x => x.Field).IsEqualTo(moreData);
+                }
+            );
+
+            Scope(
+                "Third Database Value",
+                (validationobject) =>  (validationobject?.Field ?? "") + " additional value",
+                (moreData) =>
+                {
+                    Describe(x => x.Field).IsEqualTo(moreData);
+                }
+            );
+        }
+    }
+    

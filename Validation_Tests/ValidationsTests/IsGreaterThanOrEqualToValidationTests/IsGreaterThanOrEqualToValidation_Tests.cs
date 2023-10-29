@@ -64,14 +64,14 @@ public class IsGreaterThanOrEqualToValidation_Tests
         // Assert
         using (new AssertionScope())
         {
-            validationResult.Message.Should().Be("Is not greater than '{{value}}'");
+            validationResult.Message.Should().Be("Is not greater than '{{value}}'.");
             validationResult.KeyValues.Should()
                 .BeEquivalentTo(
                     new List<KeyValuePair<string, string>>()
                     {
                         new KeyValuePair<string, string>("value", 2.33.ToString())
                     });
-            descriptionResult.Message.Should().Be("Must be greater than '{{value}}'");
+            descriptionResult.Message.Should().Be("Must be greater than '{{value}}'.");
         }
     }
 
@@ -89,8 +89,8 @@ public class IsGreaterThanOrEqualToValidation_Tests
         // Assert
         using (new AssertionScope())
         {
-            validationResult.Message.Should().Be("Is not greater than '{{value}}'");
-            descriptionResult.Message.Should().Be("Must be greater than '{{value}}'");
+            validationResult.Message.Should().Be("Is not greater than '{{value}}'.");
+            descriptionResult.Message.Should().Be("Must be greater than '{{value}}'.");
         }
     }
 }

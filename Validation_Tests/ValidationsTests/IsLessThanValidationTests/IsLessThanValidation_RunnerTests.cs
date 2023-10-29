@@ -26,7 +26,7 @@ public class IsLessThan_AllErrored_TestingValidator : AbstractValidator<NonNullA
 {
     public IsLessThan_AllErrored_TestingValidator()
     {
-        Describe(x => x.Integer).IsLessThan(int.MaxValue);
+        Describe(x => x.Integer).IsLessThan(int.MaxValue, options => options.WithErrorMessage("This Integer is not less then MaxValue"));
         Describe(x => x.String).IsLessThan(new string(char.MaxValue, 100));
         Describe(x => x.Decimal).IsLessThan(decimal.MaxValue);
         Describe(x => x.Double).IsLessThan(double.MaxValue);

@@ -10,7 +10,7 @@ public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
     public bool IgnoreScope => false;
     private readonly IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor;
     private IExpandableEntity component;
-    public Func<IValidatableStoreItem, IValidatableStoreItem>? Decorator => null;
+    public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => null;
     object? RetrievedValue = null;
     bool ValueHasBeenRetrieved = false;
 
@@ -27,6 +27,7 @@ public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
         this.component = component;
     }
 
+    public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline){}
     public bool IsVital { get; protected set; }
 
     public void ExpandToValidate(ValidationConstructionStore store, object? value)
@@ -47,9 +48,14 @@ public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
 
         if (value is TValidationType result && result != null)
         {
-            RetrievedValue = fieldDescriptor.PropertyToken.Expression.Compile().Invoke(result);
+            RetrievedValue = fieldDescriptor.PropertyToken.Execute(result);
             ValueHasBeenRetrieved = true;
         }
         return RetrievedValue;
+    }
+
+    public void ChangeStore(IValidationStore store)
+    {
+        component.ChangeStore(store);
     }
 }

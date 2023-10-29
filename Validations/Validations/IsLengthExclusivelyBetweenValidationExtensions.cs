@@ -12,29 +12,8 @@ public static class IsLengthExclusivelyBetweenValidationExtensions
         TPropertyType
     >(
         this IFieldDescriptor<TValidationType, TPropertyType?> fieldDescriptor,
-        int start,
-        int end,
-        Action<BetweenValidationOptions<TPropertyType>>? optionsAction = null
-    )
-    {
-        var startScopedData = new ScopedData<int?>(start);
-        var endScopedData = new ScopedData<int?>(end);
-
-        return IsLengthExclusivelyBetween(
-            fieldDescriptor,
-            startScopedData,
-            endScopedData,
-            optionsAction
-        );
-    }
-
-    public static IFieldDescriptor<TValidationType, TPropertyType?> IsLengthExclusivelyBetween<
-        TValidationType,
-        TPropertyType
-    >(
-        this IFieldDescriptor<TValidationType, TPropertyType?> fieldDescriptor,
-        ScopedData<int?> start,
-        ScopedData<int?> end,
+        IScopedData<int?> start,
+        IScopedData<int?> end,
         Action<BetweenValidationOptions<TPropertyType>>? optionsAction = null
     )
     {
@@ -47,5 +26,26 @@ public static class IsLengthExclusivelyBetweenValidationExtensions
         );
         fieldDescriptor.AddValidation(validation);
         return fieldDescriptor;
+    }
+
+    public static IFieldDescriptor<TValidationType, TPropertyType?> IsLengthExclusivelyBetween<
+       TValidationType,
+       TPropertyType
+   >(
+       this IFieldDescriptor<TValidationType, TPropertyType?> fieldDescriptor,
+       int start,
+       int end,
+       Action<BetweenValidationOptions<TPropertyType>>? optionsAction = null
+   )
+    {
+        var startScopedData = new ScopedData<int?>(start);
+        var endScopedData = new ScopedData<int?>(end);
+
+        return IsLengthExclusivelyBetween(
+            fieldDescriptor,
+            startScopedData,
+            endScopedData,
+            optionsAction
+        );
     }
 }

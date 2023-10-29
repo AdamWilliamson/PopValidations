@@ -1,0 +1,44 @@
+﻿{
+    "results": [
+        {
+            "property": "NString",
+            "outcomes": [
+                {
+                    "validator": "IsLengthExclusivelyBetweenValidation",
+                    "message": "Must be between 1 and 5 exclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "1"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "5"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Array",
+            "outcomes": [
+                {
+                    "validator": "IsLengthExclusivelyBetweenValidation",
+                    "message": "Must be between 1 and 5 exclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "1"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "5"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

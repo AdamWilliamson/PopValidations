@@ -1,9 +1,15 @@
 ﻿{
     "errors": {
-        "integer": [
+        "allFieldTypesDictionary": [
             "Is null."
         ],
-        "string": [
+        "allFieldTypesIEnumerable": [
+            "Is null."
+        ],
+        "allFieldTypesLinkedList": [
+            "Is null."
+        ],
+        "allFieldTypesList": [
             "Is null."
         ],
         "decimal": [
@@ -12,31 +18,25 @@
         "double": [
             "Is null."
         ],
-        "short": [
+        "integer": [
             "Is null."
         ],
         "long": [
             "Is null."
         ],
-        "twoComponentTuple": [
+        "short": [
+            "Is null."
+        ],
+        "string": [
+            "Is null."
+        ],
+        "struct": [
             "Is null."
         ],
         "twoComponentNewTupple": [
             "Is null."
         ],
-        "allFieldTypesList": [
-            "Is null."
-        ],
-        "allFieldTypesLinkedList": [
-            "Is null."
-        ],
-        "allFieldTypesIEnumerable": [
-            "Is null."
-        ],
-        "allFieldTypesDictionary": [
-            "Is null."
-        ],
-        "struct": [
+        "twoComponentTuple": [
             "Is null."
         ]
     }

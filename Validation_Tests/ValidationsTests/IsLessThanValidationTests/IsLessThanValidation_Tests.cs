@@ -64,14 +64,14 @@ public class IsLessThanValidation_Tests
         // Assert
         using (new AssertionScope())
         {
-            validationResult.Message.Should().Be("Is not less than '{{value}}'");
+            validationResult.Message.Should().Be("Is not less than '{{value}}'.");
             validationResult.KeyValues.Should()
                 .BeEquivalentTo(
                     new List<KeyValuePair<string, string>>()
                     {
                         new KeyValuePair<string, string>("value", 0.ToString())
                     });
-            descriptionResult.Message.Should().Be("Must be less than '{{value}}'");
+            descriptionResult.Message.Should().Be("Must be less than '{{value}}'.");
         }
     }
 
@@ -89,8 +89,8 @@ public class IsLessThanValidation_Tests
         // Assert
         using (new AssertionScope())
         {
-            validationResult.Message.Should().Be("Is not less than '{{value}}'");
-            descriptionResult.Message.Should().Be("Must be less than '{{value}}'");
+            validationResult.Message.Should().Be("Is not less than '{{value}}'.");
+            descriptionResult.Message.Should().Be("Must be less than '{{value}}'.");
         }
     }
 }

@@ -1,0 +1,40 @@
+﻿{
+    "results": [
+        {
+            "property": "Field",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Second Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Second Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Third Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Third Database Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

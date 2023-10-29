@@ -7,8 +7,8 @@ namespace PopValidations.Validations;
 
 public class IsEqualToValidation : ValidationComponentBase
 {
-    public override string DescriptionTemplate { get; protected set; } = "Must equal to '{{value}}'";
-    public override string ErrorTemplate { get; protected set; } = "Is not equal to '{{value}}'";
+    public override string DescriptionTemplate { get; protected set; } = "Must equal to '{{value}}'.";
+    public override string ErrorTemplate { get; protected set; } = "Is not equal to '{{value}}'.";
 
     private readonly IScopeData scopedData;
 

@@ -1,0 +1,25 @@
+﻿{
+    "results": [
+        {
+            "property": "NString",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Test'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Test"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

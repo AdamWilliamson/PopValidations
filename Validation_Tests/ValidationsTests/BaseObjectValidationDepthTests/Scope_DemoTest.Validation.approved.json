@@ -1,0 +1,30 @@
+﻿{
+    "errors": {
+        "": [
+            "Is not null.",
+            "Is not equal to '1 GetMoreValue'."
+        ],
+        "child": [
+            "Is not null.",
+            "Is not equal to '2 GetValue'.",
+            "Is not equal to '2 GetMoreValue'."
+        ],
+        "child.Child": [
+            "Is not null.",
+            "Is not equal to '3 GetValue'.",
+            "Is not equal to '3 GetMoreValue'."
+        ],
+        "child.Child.Child": [
+            "Is not null.",
+            "Is not equal to '4 GetValue'.",
+            "Is not equal to '4 GetMoreValue'."
+        ],
+        "child.Child.Child.Child": [
+            "Is not null.",
+            "Is not equal to '5 GetMoreValue'."
+        ],
+        "dependantField": [
+            "Is not equal to '1 GetValue'."
+        ]
+    }
+}

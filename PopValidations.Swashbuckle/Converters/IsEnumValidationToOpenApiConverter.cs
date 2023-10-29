@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using PopValidations.Execution.Validations;
 using PopValidations.Swashbuckle.Converters.Base;
 using PopValidations.Swashbuckle.Helpers;
+using PopValidations.Swashbuckle.Internal;
 using PopValidations.Validations;
 
 namespace PopValidations.Swashbuckle.Converters;
@@ -36,5 +37,16 @@ public class IsEnumValidationToOpenApiConverter : IValidationToOpenApiConverter
             "numeric" => new List<IOpenApiAny>(numericValues.Select(v => new OpenApiString(v))),
             _ => new List<IOpenApiAny>()
         };
+    }
+
+    public void UpdateAttribute(
+        OpenApiSchema owningObjectSchema,
+        OpenApiSchema propertySchema,
+        string property,
+        DescriptionOutcome description,
+        PopValidationArray attributeDescription
+    )
+    {
+        attributeDescription.Add(description.Message);
     }
 }

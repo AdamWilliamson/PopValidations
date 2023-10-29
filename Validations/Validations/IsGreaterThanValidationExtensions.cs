@@ -26,7 +26,6 @@ public static class IsGreaterThanValidationExtensions
         IComparable value,
         Action<ValidationOptions>? optionsAction = null
     )
-        where TFieldType : IComparable
     {
         var scopedData = new ScopedData<TValidationType, IComparable>(value);
         var validation = new IsGreaterThanValidation(scopedData);
@@ -34,7 +33,7 @@ public static class IsGreaterThanValidationExtensions
         fieldDescriptor.AddValidation(validation);
         return fieldDescriptor;
     }
-
+    
     public static IFieldDescriptor<TValidationType, TFieldType> IsGreaterThan<TValidationType, TFieldType, TPassThrough>(
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
         IScopedData<TPassThrough?> scopedData,

@@ -1,0 +1,59 @@
+﻿{
+    "results": [
+        {
+            "property": "TrackName",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Duration",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '2'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "2"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '5'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "5"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When track is 13",
+                    "description": "When track is 13",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsLessThanValidation",
+                            "message": "The 13th song must be an intermission.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

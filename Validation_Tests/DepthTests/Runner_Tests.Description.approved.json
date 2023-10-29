@@ -1,0 +1,1435 @@
+﻿{
+    "results": [
+        {
+            "property": "TestItem.Is",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Is Description",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": "Is"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsCustomValidation",
+                            "message": "Is Description",
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": "Is"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsEmpty",
+            "outcomes": [
+                {
+                    "validator": "IsEmptyValidation",
+                    "message": "Must be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEmptyValidation",
+                            "message": "Must be empty.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsEnum",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'Value1' or '0'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "Value1"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "0"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "string"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEnumValidation",
+                            "message": "Must be one of 'Value1' or '0'.",
+                            "values": [
+                                {
+                                    "key": "enumNames",
+                                    "value": "Value1"
+                                },
+                                {
+                                    "key": "enumValues",
+                                    "value": "0"
+                                },
+                                {
+                                    "key": "fieldType",
+                                    "value": "string"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsEqualTo",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'IsEqualTo'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "IsEqualTo"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to 'IsEqualTo'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsEqualTo"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsGreaterThan",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than 'IsGreaterThan'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "IsGreaterThan"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsGreaterThanValidation",
+                            "message": "Must be greater than 'IsGreaterThan'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsGreaterThan"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsGreaterThanOrEqualTo",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanOrEqualToValidation",
+                    "message": "Must be greater than or equal to 'IsGreaterThanOrEqualTo'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "IsGreaterThanOrEqualTo"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsGreaterThanOrEqualToValidation",
+                            "message": "Must be greater than or equal to 'IsGreaterThanOrEqualTo'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsGreaterThanOrEqualTo"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsLengthExclusivelyBetween",
+            "outcomes": [
+                {
+                    "validator": "IsLengthExclusivelyBetweenValidation",
+                    "message": "Must be between IsLengthExclusivelyBetween and IsLengthExclusivelyBetween exclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "IsLengthExclusivelyBetween"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "IsLengthExclusivelyBetween"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsLengthExclusivelyBetweenValidation",
+                            "message": "Must be between IsLengthExclusivelyBetween and IsLengthExclusivelyBetween exclusive.",
+                            "values": [
+                                {
+                                    "key": "startValue",
+                                    "value": "IsLengthExclusivelyBetween"
+                                },
+                                {
+                                    "key": "endValue",
+                                    "value": "IsLengthExclusivelyBetween"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsLengthInclusivelyBetween",
+            "outcomes": [
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between IsLengthInclusivelyBetween and IsLengthInclusivelyBetween inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "IsLengthInclusivelyBetween"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "IsLengthInclusivelyBetween"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsLengthInclusivelyBetweenValidation",
+                            "message": "Must be between IsLengthInclusivelyBetween and IsLengthInclusivelyBetween inclusive.",
+                            "values": [
+                                {
+                                    "key": "startValue",
+                                    "value": "IsLengthInclusivelyBetween"
+                                },
+                                {
+                                    "key": "endValue",
+                                    "value": "IsLengthInclusivelyBetween"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsLessThan",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than 'IsLessThan'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "IsLessThan"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsLessThanValidation",
+                            "message": "Must be less than 'IsLessThan'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsLessThan"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsLessThanOrEqualTo",
+            "outcomes": [
+                {
+                    "validator": "IsLessThanOrEqualToValidation",
+                    "message": "Must be less than or equal to 'IsLessThanOrEqualTo'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "IsLessThanOrEqualTo"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsLessThanOrEqualToValidation",
+                            "message": "Must be less than or equal to 'IsLessThanOrEqualTo'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsLessThanOrEqualTo"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsNotEmpty",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsNotEmptyValidation",
+                            "message": "Must not be empty.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsNotNull",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsNotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "TestItem.IsNull",
+            "outcomes": [
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsNullValidation",
+                            "message": "Must be null.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsNotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n]",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsNotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.Is",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsCustomValidation",
+                                    "message": "Is Description",
+                                    "values": [
+                                        {
+                                            "key": "is_value",
+                                            "value": "Is"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsCustomValidation",
+                            "message": "Is Description",
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": "Is"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsEmpty",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEmptyValidation",
+                                    "message": "Must be empty.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsEmptyValidation",
+                            "message": "Must be empty.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsEnum",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEnumValidation",
+                                    "message": "Must be one of 'Value1' or '0'.",
+                                    "values": [
+                                        {
+                                            "key": "enumNames",
+                                            "value": "Value1"
+                                        },
+                                        {
+                                            "key": "enumValues",
+                                            "value": "0"
+                                        },
+                                        {
+                                            "key": "fieldType",
+                                            "value": "string"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsEnumValidation",
+                            "message": "Must be one of 'Value1' or '0'.",
+                            "values": [
+                                {
+                                    "key": "enumNames",
+                                    "value": "Value1"
+                                },
+                                {
+                                    "key": "enumValues",
+                                    "value": "0"
+                                },
+                                {
+                                    "key": "fieldType",
+                                    "value": "string"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsEqualTo",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to 'IsEqualTo'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsEqualTo"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to 'IsEqualTo'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsEqualTo"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsGreaterThan",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsGreaterThanValidation",
+                                    "message": "Must be greater than 'IsGreaterThan'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsGreaterThan"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsGreaterThanValidation",
+                            "message": "Must be greater than 'IsGreaterThan'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsGreaterThan"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsGreaterThanOrEqualTo",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsGreaterThanOrEqualToValidation",
+                                    "message": "Must be greater than or equal to 'IsGreaterThanOrEqualTo'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsGreaterThanOrEqualTo"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsGreaterThanOrEqualToValidation",
+                            "message": "Must be greater than or equal to 'IsGreaterThanOrEqualTo'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsGreaterThanOrEqualTo"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsLengthExclusivelyBetween",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsLengthExclusivelyBetweenValidation",
+                                    "message": "Must be between IsLengthExclusivelyBetween and IsLengthExclusivelyBetween exclusive.",
+                                    "values": [
+                                        {
+                                            "key": "startValue",
+                                            "value": "IsLengthExclusivelyBetween"
+                                        },
+                                        {
+                                            "key": "endValue",
+                                            "value": "IsLengthExclusivelyBetween"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsLengthExclusivelyBetweenValidation",
+                            "message": "Must be between IsLengthExclusivelyBetween and IsLengthExclusivelyBetween exclusive.",
+                            "values": [
+                                {
+                                    "key": "startValue",
+                                    "value": "IsLengthExclusivelyBetween"
+                                },
+                                {
+                                    "key": "endValue",
+                                    "value": "IsLengthExclusivelyBetween"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsLengthInclusivelyBetween",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsLengthInclusivelyBetweenValidation",
+                                    "message": "Must be between IsLengthInclusivelyBetween and IsLengthInclusivelyBetween inclusive.",
+                                    "values": [
+                                        {
+                                            "key": "startValue",
+                                            "value": "IsLengthInclusivelyBetween"
+                                        },
+                                        {
+                                            "key": "endValue",
+                                            "value": "IsLengthInclusivelyBetween"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsLengthInclusivelyBetweenValidation",
+                            "message": "Must be between IsLengthInclusivelyBetween and IsLengthInclusivelyBetween inclusive.",
+                            "values": [
+                                {
+                                    "key": "startValue",
+                                    "value": "IsLengthInclusivelyBetween"
+                                },
+                                {
+                                    "key": "endValue",
+                                    "value": "IsLengthInclusivelyBetween"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsLessThan",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsLessThanValidation",
+                                    "message": "Must be less than 'IsLessThan'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsLessThan"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsLessThanValidation",
+                            "message": "Must be less than 'IsLessThan'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsLessThan"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsLessThanOrEqualTo",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsLessThanOrEqualToValidation",
+                                    "message": "Must be less than or equal to 'IsLessThanOrEqualTo'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsLessThanOrEqualTo"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsLessThanOrEqualToValidation",
+                            "message": "Must be less than or equal to 'IsLessThanOrEqualTo'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "IsLessThanOrEqualTo"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsNotEmpty",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNotEmptyValidation",
+                                    "message": "Must not be empty.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsNotEmptyValidation",
+                            "message": "Must not be empty.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsNotNull",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNotNullValidation",
+                                    "message": "Must not be null.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsNotNullValidation",
+                            "message": "Must not be null.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].TestItem.IsNull",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNullValidation",
+                                    "message": "Must be null.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsNullValidation",
+                            "message": "Must be null.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNotNullValidation",
+                                    "message": "Must not be null.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n]",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNotNullValidation",
+                                    "message": "Must not be null.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.Is",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsCustomValidation",
+                                    "message": "Is Description",
+                                    "values": [
+                                        {
+                                            "key": "is_value",
+                                            "value": "Is"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsEmpty",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEmptyValidation",
+                                    "message": "Must be empty.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsEnum",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEnumValidation",
+                                    "message": "Must be one of 'Value1' or '0'.",
+                                    "values": [
+                                        {
+                                            "key": "enumNames",
+                                            "value": "Value1"
+                                        },
+                                        {
+                                            "key": "enumValues",
+                                            "value": "0"
+                                        },
+                                        {
+                                            "key": "fieldType",
+                                            "value": "string"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsEqualTo",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to 'IsEqualTo'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsEqualTo"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsGreaterThan",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsGreaterThanValidation",
+                                    "message": "Must be greater than 'IsGreaterThan'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsGreaterThan"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsGreaterThanOrEqualTo",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsGreaterThanOrEqualToValidation",
+                                    "message": "Must be greater than or equal to 'IsGreaterThanOrEqualTo'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsGreaterThanOrEqualTo"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsLengthExclusivelyBetween",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsLengthExclusivelyBetweenValidation",
+                                    "message": "Must be between IsLengthExclusivelyBetween and IsLengthExclusivelyBetween exclusive.",
+                                    "values": [
+                                        {
+                                            "key": "startValue",
+                                            "value": "IsLengthExclusivelyBetween"
+                                        },
+                                        {
+                                            "key": "endValue",
+                                            "value": "IsLengthExclusivelyBetween"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsLengthInclusivelyBetween",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsLengthInclusivelyBetweenValidation",
+                                    "message": "Must be between IsLengthInclusivelyBetween and IsLengthInclusivelyBetween inclusive.",
+                                    "values": [
+                                        {
+                                            "key": "startValue",
+                                            "value": "IsLengthInclusivelyBetween"
+                                        },
+                                        {
+                                            "key": "endValue",
+                                            "value": "IsLengthInclusivelyBetween"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsLessThan",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsLessThanValidation",
+                                    "message": "Must be less than 'IsLessThan'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsLessThan"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsLessThanOrEqualTo",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsLessThanOrEqualToValidation",
+                                    "message": "Must be less than or equal to 'IsLessThanOrEqualTo'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "IsLessThanOrEqualTo"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsNotEmpty",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNotEmptyValidation",
+                                    "message": "Must not be empty.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsNotNull",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNotNullValidation",
+                                    "message": "Must not be null.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsNull",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNullValidation",
+                                    "message": "Must be null.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        }
+    ]
+}

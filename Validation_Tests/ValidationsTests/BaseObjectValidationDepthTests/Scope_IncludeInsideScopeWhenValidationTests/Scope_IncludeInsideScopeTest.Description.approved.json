@@ -1,0 +1,35 @@
+﻿{
+    "results": [
+        {
+            "property": "",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsNullValidation",
+                    "message": "Must be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

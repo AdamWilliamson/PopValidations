@@ -1,0 +1,92 @@
+﻿{
+    "ModerateAlbum": {
+        "required": [
+            "artist",
+            "genre",
+            "songs"
+        ],
+        "type": "object",
+        "properties": {
+            "artist": {
+                "maxLength": 500,
+                "minLength": 3,
+                "minItems": 1,
+                "type": "string",
+                "nullable": true
+            },
+            "genre": {
+                "maxLength": 300,
+                "minLength": 3,
+                "minItems": 1,
+                "type": "string",
+                "nullable": true
+            },
+            "songs": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ModerateSong"
+                }
+            }
+        },
+        "additionalProperties": false,
+        "x-validation": {
+            "artist": [
+                "Must not be empty.",
+                "Must be between 3 and 500 inclusive."
+            ],
+            "genre": [
+                "Must not be empty.",
+                "Must be between 3 and 300 inclusive."
+            ],
+            "songs": [
+                "Must not be null.",
+                "When Genre is Rock : Must be between 6 and 15 exclusive."
+            ],
+            "songs[n]": [
+                "Must not be null."
+            ]
+        }
+    },
+    "ModerateSong": {
+        "type": "object",
+        "properties": {
+            "artist": {
+                "type": "string",
+                "nullable": true
+            },
+            "trackNumber": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+            },
+            "trackName": {
+                "type": "string",
+                "nullable": true
+            },
+            "duration": {
+                "type": "number",
+                "format": "double"
+            },
+            "genre": {
+                "type": "string",
+                "nullable": true
+            }
+        },
+        "additionalProperties": false,
+        "x-validation": {
+            "duration": [
+                "When Genre is Rock : Must be greater than '1'.",
+                "When Genre is Rock : Must be less than '5'.",
+                "When Genre is Rock & When Track count is greater than 20 treat it like an anthology : Must be greater than '1'.",
+                "When Genre is Rock & When Track count is greater than 20 treat it like an anthology : Must be less than '5'.",
+                "When Genre is Rock & When Track count is less than 20 : Must be greater than '1'.",
+                "When Genre is Rock & When Track count is less than 20 : Must be less than '5'."
+            ],
+            "genre": [
+                "When Genre is Rock : Songs need Titles.",
+                "When Genre is Rock & When Track count is greater than 20 treat it like an anthology : Songs need Titles.",
+                "When Genre is Rock & When Track count is less than 20 : Songs need Titles."
+            ]
+        }
+    }
+}

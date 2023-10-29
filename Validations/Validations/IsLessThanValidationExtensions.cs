@@ -26,7 +26,6 @@ public static class IsLessThanValidationExtensions
         IComparable value,
         Action<ValidationOptions>? optionsAction = null
     )
-        where TFieldType : IComparable
     {
         var scopedData = new ScopedData<TValidationType, IComparable>(value);
         var validation = new IsLessThanValidation(scopedData);

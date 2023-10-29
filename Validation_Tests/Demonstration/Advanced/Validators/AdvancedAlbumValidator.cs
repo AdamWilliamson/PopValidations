@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using PopValidations;
 using static PopValidations_Tests.Demonstration.Advanced.Validators.AdvancedSongValidator;
@@ -44,7 +46,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                     .Is(
                         "Has a SufficientlyLong Name",
                         "Name is too short",
-                        c => data.To("", x => Task.FromResult(x is { HasSufficientlyLongName: true }))
+                        data.To("", (DateTime? created, DesignedToBePatternMatched? x) => x is { HasSufficientlyLongName: true })
                     );
             }
         );
@@ -53,7 +55,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
             //.Vitally().NotEmpty()
             .ForEach(song =>
                 song
-                    .Vitally().NotNull()
+                    .Vitally().IsNotNull()
                     .SetValidator(new AdvancedSongValidator())
             );
 
@@ -62,7 +64,7 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
             () =>
             {
                 Include(new SingleArtistAlbumValidator());
-                Describe(x => x.Artist).NotNull();
+                Describe(x => x.Artist).IsNotNull();
             });
 
         ScopeWhen("Album constains songs we don't own the copyright to",
@@ -74,14 +76,14 @@ public class AdvancedAlbumValidator : AbstractValidator<AdvancedAlbum>
                 DescribeEnumerable(x => x.Songs)
                     .Vitally().ForEach((song) =>
                     {
-                        song.NotNull()
-                        .Is(
-                            "{{value}} Was not found in list of songs we own the rights to",
-                            "Checks to ensure the song's rights are owned by us.",
-                            s => SongOwnedPair.To(
-                                "Matches Track and Is Owned",
-                                x => Task.FromResult(x.Any(u => u.Item1!.TrackName == s.TrackName && u.Item2)))
-                        );
+                        song.IsNotNull()
+                            .Is(
+                                "{{value}} Was not found in list of songs we own the rights to",
+                                "Checks to ensure the song's rights are owned by us.",
+                                SongOwnedPair.To(
+                                    "Matches Track and Is Owned",
+                                    (AdvancedSong? s, List<(AdvancedSong?, bool)>? x) => x?.Any(u => u.Item1!.TrackName == s.TrackName && u.Item2) ?? false)
+                            );
                     });
             });
 

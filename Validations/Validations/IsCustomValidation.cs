@@ -1,4 +1,5 @@
 ﻿using System;
+using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
 namespace PopValidations.Validations;
@@ -9,15 +10,36 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
     public override string ErrorTemplate { get; protected set; }
 
     private readonly Func<TFieldType?, bool> customValidationFunc;
+    private IScopedData<TFieldType?, bool> scopedValue;
 
     public IsCustomValidation(
         string descriptionTemplate,
         string errorTemplate,
         Func<TFieldType?, bool> customValidationFunc)
+        : this(
+              descriptionTemplate, 
+              errorTemplate, 
+              new ScopedData<TFieldType?, bool>(string.Empty, customValidationFunc))
+    {
+        //DescriptionTemplate = descriptionTemplate;
+        //ErrorTemplate = errorTemplate;
+        //this.customValidationFunc = customValidationFunc;
+    }
+
+    public IsCustomValidation(
+        string descriptionTemplate,
+        string errorTemplate,
+        IScopedData<TFieldType?,bool> scopedValue
+        )
     {
         DescriptionTemplate = descriptionTemplate;
         ErrorTemplate = errorTemplate;
-        this.customValidationFunc = customValidationFunc;
+        this.scopedValue = scopedValue;
+    }
+
+    public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
+    {
+        //scopedValue.ReHome(attemptedScopeFieldDescriptor);
     }
 
     public override ValidationActionResult Validate(object? value)
@@ -26,14 +48,24 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
         {
             if (value == null)
             {
-                if (customValidationFunc.Invoke(default))
+                scopedValue?.SetParent(new ScopedData<TFieldType?>(default));
+                if (customValidationFunc != null && customValidationFunc.Invoke(default))
+                {
+                    return CreateValidationSuccessful();
+                } 
+                else if (scopedValue != null && scopedValue.GetValue()  is true)//(scopedValue.GetValue() as Func<TFieldType?, bool>)?.Invoke(default) is true)
                 {
                     return CreateValidationSuccessful();
                 }
             }
             else if (value is TFieldType converted)
             {
-                if (customValidationFunc.Invoke(converted))
+                scopedValue?.SetParent(new ScopedData<TFieldType?>(converted));
+                if (customValidationFunc != null && customValidationFunc.Invoke(converted))
+                {
+                    return CreateValidationSuccessful();
+                }
+                else if (scopedValue != null && scopedValue.GetValue() is true)
                 {
                     return CreateValidationSuccessful();
                 }
@@ -47,28 +79,29 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
         {
             throw new ValidationException("Custom function exceptioned", ex);
         }
-       
-        var valueAsString = value?.ToString() ?? "null";
 
         return CreateValidationError(
-            ("value", valueAsString)
+            ("value", value?.ToString() ?? ""),
+            ("is_value", scopedValue?.Describe() ?? String.Empty)
         );
     }
 
     public override DescribeActionResult Describe()
     {
-        return CreateDescription();
+        return CreateDescription(
+            ("is_value", scopedValue?.Describe() ?? String.Empty)
+        );
     }
 }
 
 public class IsCustomScopedValidation<TInputType> : ValidationComponentBase
 {
-    private readonly Func<TInputType, IScopedData<bool>> scopedTest;
+    private readonly Func<TInputType, IScopedData<TInputType?, bool>> scopedTest;
 
     public override string DescriptionTemplate { get; protected set; } = string.Empty;
     public override string ErrorTemplate { get; protected set; } = string.Empty;
 
-    public IsCustomScopedValidation(string error, string description, Func<TInputType, IScopedData<bool>> test)
+    public IsCustomScopedValidation(string error, string description, Func<TInputType, IScopedData<TInputType?, bool>> test)
     {
         ErrorTemplate = error;
         DescriptionTemplate = description;

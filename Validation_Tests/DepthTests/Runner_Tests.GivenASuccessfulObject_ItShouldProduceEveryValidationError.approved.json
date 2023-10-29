@@ -1,0 +1,563 @@
+﻿{
+    "errors": {
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[0].TestItem.Is": [
+            "Is Failed",
+            "Is Failed"
+        ],
+        "listOfLevel2[0].TestItem.IsEmpty": [
+            "Is not empty.",
+            "Is not empty."
+        ],
+        "listOfLevel2[0].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value.",
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[0].TestItem.IsEqualTo": [
+            "Is not equal to '554'.",
+            "Is not equal to '554'."
+        ],
+        "listOfLevel2[0].TestItem.IsGreaterThan": [
+            "Is not greater than '100'.",
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[0].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'.",
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[0].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive.",
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[0].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive.",
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[0].TestItem.IsLessThan": [
+            "Is not less than '100'.",
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[0].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'.",
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[0].TestItem.IsNotEmpty": [
+            "Is empty.",
+            "Is empty."
+        ],
+        "listOfLevel2[0].TestItem.IsNotNull": [
+            "Is null.",
+            "Is null."
+        ],
+        "listOfLevel2[0].TestItem.IsNull": [
+            "Is not null.",
+            "Is not null."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[1].TestItem.Is": [
+            "Is Failed",
+            "Is Failed"
+        ],
+        "listOfLevel2[1].TestItem.IsEmpty": [
+            "Is not empty.",
+            "Is not empty."
+        ],
+        "listOfLevel2[1].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value.",
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[1].TestItem.IsEqualTo": [
+            "Is not equal to '554'.",
+            "Is not equal to '554'."
+        ],
+        "listOfLevel2[1].TestItem.IsGreaterThan": [
+            "Is not greater than '100'.",
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[1].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'.",
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[1].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive.",
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[1].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive.",
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[1].TestItem.IsLessThan": [
+            "Is not less than '100'.",
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[1].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'.",
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[1].TestItem.IsNotEmpty": [
+            "Is empty.",
+            "Is empty."
+        ],
+        "listOfLevel2[1].TestItem.IsNotNull": [
+            "Is null.",
+            "Is null."
+        ],
+        "listOfLevel2[1].TestItem.IsNull": [
+            "Is not null.",
+            "Is not null."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.Is": [
+            "Is Failed"
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsEmpty": [
+            "Is not empty."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsEqualTo": [
+            "Is not equal to '555'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsGreaterThan": [
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsLessThan": [
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsNotEmpty": [
+            "Is empty."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsNotNull": [
+            "Is null."
+        ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsNull": [
+            "Is not null."
+        ],
+        "listOfLevel2[2].TestItem.Is": [
+            "Is Failed",
+            "Is Failed"
+        ],
+        "listOfLevel2[2].TestItem.IsEmpty": [
+            "Is not empty.",
+            "Is not empty."
+        ],
+        "listOfLevel2[2].TestItem.IsEnum": [
+            "'Not an enum value' Is not a valid value.",
+            "'Not an enum value' Is not a valid value."
+        ],
+        "listOfLevel2[2].TestItem.IsEqualTo": [
+            "Is not equal to '554'.",
+            "Is not equal to '554'."
+        ],
+        "listOfLevel2[2].TestItem.IsGreaterThan": [
+            "Is not greater than '100'.",
+            "Is not greater than '100'."
+        ],
+        "listOfLevel2[2].TestItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'.",
+            "Is not greater than or equal to '100'."
+        ],
+        "listOfLevel2[2].TestItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive.",
+            "Is not between 5 and 7 exclusive."
+        ],
+        "listOfLevel2[2].TestItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive.",
+            "Is not between 6 and 7 inclusive."
+        ],
+        "listOfLevel2[2].TestItem.IsLessThan": [
+            "Is not less than '100'.",
+            "Is not less than '100'."
+        ],
+        "listOfLevel2[2].TestItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'.",
+            "Is not less than or equal to '100'."
+        ],
+        "listOfLevel2[2].TestItem.IsNotEmpty": [
+            "Is empty.",
+            "Is empty."
+        ],
+        "listOfLevel2[2].TestItem.IsNotNull": [
+            "Is null.",
+            "Is null."
+        ],
+        "listOfLevel2[2].TestItem.IsNull": [
+            "Is not null.",
+            "Is not null."
+        ],
+        "testItem.Is": [
+            "Is Failed",
+            "Is Failed"
+        ],
+        "testItem.IsEmpty": [
+            "Is not empty.",
+            "Is not empty."
+        ],
+        "testItem.IsEnum": [
+            "'Not an enum value' Is not a valid value.",
+            "'Not an enum value' Is not a valid value."
+        ],
+        "testItem.IsEqualTo": [
+            "Is not equal to '553'.",
+            "Is not equal to '553'."
+        ],
+        "testItem.IsGreaterThan": [
+            "Is not greater than '100'.",
+            "Is not greater than '100'."
+        ],
+        "testItem.IsGreaterThanOrEqualTo": [
+            "Is not greater than or equal to '100'.",
+            "Is not greater than or equal to '100'."
+        ],
+        "testItem.IsLengthExclusivelyBetween": [
+            "Is not between 5 and 7 exclusive.",
+            "Is not between 5 and 7 exclusive."
+        ],
+        "testItem.IsLengthInclusivelyBetween": [
+            "Is not between 6 and 7 inclusive.",
+            "Is not between 6 and 7 inclusive."
+        ],
+        "testItem.IsLessThan": [
+            "Is not less than '100'.",
+            "Is not less than '100'."
+        ],
+        "testItem.IsLessThanOrEqualTo": [
+            "Is not less than or equal to '100'.",
+            "Is not less than or equal to '100'."
+        ],
+        "testItem.IsNotEmpty": [
+            "Is empty.",
+            "Is empty."
+        ],
+        "testItem.IsNotNull": [
+            "Is null.",
+            "Is null."
+        ],
+        "testItem.IsNull": [
+            "Is not null.",
+            "Is not null."
+        ]
+    }
+}

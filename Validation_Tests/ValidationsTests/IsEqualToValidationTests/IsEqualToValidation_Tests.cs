@@ -64,14 +64,14 @@ public class IsEqualToValidation_Tests
         // Assert
         using (new AssertionScope())
         {
-            validationResult.Message.Should().Be("Is not equal to '{{value}}'");
+            validationResult.Message.Should().Be("Is not equal to '{{value}}'.");
             validationResult.KeyValues.Should()
                 .BeEquivalentTo(
                     new List<KeyValuePair<string, string>>()
                     {
                         new KeyValuePair<string, string>("value", 2.33.ToString())
                     });
-            descriptionResult.Message.Should().Be("Must equal to '{{value}}'");
+            descriptionResult.Message.Should().Be("Must equal to '{{value}}'.");
         }
     }
 
@@ -89,8 +89,8 @@ public class IsEqualToValidation_Tests
         // Assert
         using (new AssertionScope())
         {
-            validationResult.Message.Should().Be("Is not equal to '{{value}}'");
-            descriptionResult.Message.Should().Be("Must equal to '{{value}}'");
+            validationResult.Message.Should().Be("Is not equal to '{{value}}'.");
+            descriptionResult.Message.Should().Be("Must equal to '{{value}}'.");
         }
     }
 }

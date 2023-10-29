@@ -89,7 +89,8 @@ public class IsCustomValidation_Tests
                 .BeEquivalentTo(
                     new List<KeyValuePair<string, string>>()
                     {
-                        new KeyValuePair<string, string>("value", 1.ToString())
+                        new KeyValuePair<string, string>("value", 1.ToString()),
+                        new KeyValuePair<string, string>("is_value", "")
                     });
             descriptionResult.Message.Should().Be("Description");
         }

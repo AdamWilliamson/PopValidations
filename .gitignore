@@ -4,3 +4,6 @@ obj
 net5.0
 PopValidations
 /PopValidations.ExampleWebApi/PopValidations.ExampleWebApi.csproj.user
+/PopValidations.MediatR/bin/Debug
+/Validations/bin/Debug
+*.nupkg

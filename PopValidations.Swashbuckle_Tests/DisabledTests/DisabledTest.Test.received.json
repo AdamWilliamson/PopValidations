@@ -1,0 +1,121 @@
+﻿{
+    
+  "openapi":  "3.0.1",
+    
+  "info":  {
+        
+    "title":  "PopValidations.ExampleWebApi",
+        
+    "version":  "1.0"
+  
+    },
+    
+  "paths":  {
+        
+    "/api/DisabledTest/test":  {
+            
+      "get":  {
+                
+        "tags":  [
+                    
+          "DisabledTest"
+        
+                ],
+                
+        "requestBody":  {
+                    
+          "content":  {
+                        
+            "application/json":  {
+                            
+              "schema":  {
+                                
+                "$ref":  "#/components/schemas/DisabledTestRequest"
+              
+                            }
+            
+                        },
+                        
+            "text/json":  {
+                            
+              "schema":  {
+                                
+                "$ref":  "#/components/schemas/DisabledTestRequest"
+              
+                            }
+            
+                        },
+                        
+            "application/*+json":  {
+                            
+              "schema":  {
+                                
+                "$ref":  "#/components/schemas/DisabledTestRequest"
+              
+                            }
+            
+                        }
+          
+                    }
+        
+                },
+                
+        "responses":  {
+                    
+          "200":  {
+                        
+            "description":  "Success"
+          
+                    }
+        
+                }
+      
+            }
+    
+        }
+  
+    },
+    
+  "components":  {
+        
+    "schemas":  {
+            
+      "DisabledTestRequest":  {
+                
+        "required":  [
+                    
+          "id"
+        
+                ],
+                
+        "type":  "object",
+                
+        "properties":  {
+                    
+          "id":  {
+                        
+            "type":  "string"
+          
+                    }
+        
+                },
+                
+        "additionalProperties":  false,
+                
+        "x-validation":  {
+                    
+          "id":  [
+                        
+            "Must not be null."
+          
+                    ]
+        
+                }
+      
+            }
+    
+        }
+  
+    }
+
+}

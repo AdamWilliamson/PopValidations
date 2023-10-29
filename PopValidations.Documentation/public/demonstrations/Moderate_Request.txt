@@ -1,0 +1,15 @@
+
+    public record ModerateSong(
+        string Artist,
+        int? TrackNumber,
+        string TrackName,
+        double Duration,
+        string Genre
+    );
+
+    public record ModerateAlbum(
+        string Artist,
+        string Genre,
+        List<ModerateSong?> Songs
+    );
+    

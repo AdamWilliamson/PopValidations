@@ -9,10 +9,12 @@ namespace PopValidations.Scopes.Whens;
 public abstract class WhenValidationItemDecoratorBase<TValidationType> : IValidatableStoreItem
 {
     public WhenValidationItemDecoratorBase(
-        IValidatableStoreItem itemToDecorate
+        IValidatableStoreItem itemToDecorate,
+        IFieldDescriptorOutline? wrappingLevelfieldDescriptor
     )
     {
         ItemToDecorate = itemToDecorate;
+        this.WrappingLevelfieldDescriptor = wrappingLevelfieldDescriptor;
     }
 
     public bool IsVital => ItemToDecorate.IsVital;
@@ -32,12 +34,13 @@ public abstract class WhenValidationItemDecoratorBase<TValidationType> : IValida
     public IFieldDescriptorOutline? FieldDescriptor
     {
         get { return ItemToDecorate.FieldDescriptor; }
-        set { ItemToDecorate.FieldDescriptor = value; }
+        //set { ItemToDecorate.FieldDescriptor = value; }
     }
 
     public IValidationComponent Component => ItemToDecorate.Component;
 
     public IValidatableStoreItem ItemToDecorate { get; }
+    protected IFieldDescriptorOutline? WrappingLevelfieldDescriptor { get; }
 
     public virtual DescribeActionResult Describe()
     {

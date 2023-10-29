@@ -1,14 +1,18 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("IsNotEmpty");
 });
 </script>
+
 <template>
  <v-container fluid bg-color="surface">
     <v-row>
@@ -22,81 +26,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='
-public class BasicSongValidator : AbstractValidator
-{
-    public BasicSongValidator()
-    {
-        Describe(x => x.TrackName).IsNotEmpty();
-        Describe(x => x.TrackNumber).IsNotEmpty();
-        Describe(x => x.Artist)
-          .Vitally().IsNotEmpty(options =>
-            options
-              .WithErrorMessage("Non Empty Fields are Invalid.")
-              .WithDescription("This Field must be Empty.")
-          );
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
+
+      <template #request>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
+      </template>
+
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "trackName": [
-            "Is empty"
-        ],
-        "trackNumber": [
-            "Is empty"
-        ],
-        "artist": [
-            "Empty Fields are Invalid."
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='{
-  "Song": {
-    "type": "object",
-    "properties": {
-      "trackName": {
-        "minLength": 1,
-        "minItems": 1,
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      },
-      "trackNumber": {
-        "minLength": 1,
-        "minItems": 1,
-        "type": "integer",
-        "format": "int32"
-      }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-      "trackName": [
-        "Must not be empty"
-      ],
-      "artist": [
-        "This Field must not be Empty."
-      ],
-      "trackNumber": [
-        "Must not be empty"
-      ]
-    }
-  }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

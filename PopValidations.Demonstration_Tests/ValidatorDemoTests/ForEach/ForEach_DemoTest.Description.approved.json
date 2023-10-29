@@ -1,0 +1,41 @@
+﻿{
+    "results": [
+        {
+            "property": "ArrayOfStrings",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "ArrayOfStrings[n]",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Test'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Test"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

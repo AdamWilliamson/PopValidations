@@ -1,0 +1,20 @@
+﻿{
+    "results": [
+        {
+            "property": "NString",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be 'NString'",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

@@ -5,7 +5,7 @@
             "outcomes": [
                 {
                     "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
                     "values": [
                         {
                             "key": "enumNames",
@@ -17,7 +17,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }
@@ -29,7 +29,7 @@
             "outcomes": [
                 {
                     "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
                     "values": [
                         {
                             "key": "enumNames",
@@ -41,7 +41,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "string"
                         }
                     ]
                 }
@@ -53,7 +53,7 @@
             "outcomes": [
                 {
                     "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
                     "values": [
                         {
                             "key": "enumNames",
@@ -65,7 +65,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }
@@ -77,7 +77,7 @@
             "outcomes": [
                 {
                     "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
                     "values": [
                         {
                             "key": "enumNames",
@@ -89,7 +89,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }
@@ -101,7 +101,7 @@
             "outcomes": [
                 {
                     "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
                     "values": [
                         {
                             "key": "enumNames",
@@ -113,7 +113,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }
@@ -125,7 +125,7 @@
             "outcomes": [
                 {
                     "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
                     "values": [
                         {
                             "key": "enumNames",
@@ -137,7 +137,7 @@
                         },
                         {
                             "key": "fieldType",
-                            "value": "unknown"
+                            "value": "numeric"
                         }
                     ]
                 }

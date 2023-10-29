@@ -1,0 +1,206 @@
+﻿{
+    "errors": {
+        "albums[0].Artists": [
+            "Does not have all the same artists"
+        ],
+        "albums[0].Songs[0].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[0].Songs[1].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[0].Songs[2]": [
+            "Is null."
+        ],
+        "albums[1].CoverImageUrl": [
+            "Is empty."
+        ],
+        "albums[1].Created": [
+            "Is null."
+        ],
+        "albums[1].Songs": [
+            "Is not between 3 and 45 inclusive.",
+            "The songs in this album, being collaboration, must contain atleast 1 album artist."
+        ],
+        "albums[1].Songs[0].Artists": [
+            "Is null."
+        ],
+        "albums[1].Songs[0].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[1].Songs[0].TrackName": [
+            "Is empty."
+        ],
+        "albums[1].Songs[0].TrackNumber": [
+            "Is null."
+        ],
+        "albums[1].Songs[1]": [
+            "Is null."
+        ],
+        "albums[1].Title": [
+            "Is empty."
+        ],
+        "albums[2].Artists": [
+            "Failed to have different artists"
+        ],
+        "albums[2].CoverImageUrl": [
+            "Is empty."
+        ],
+        "albums[2].Created": [
+            "Is null."
+        ],
+        "albums[2].Songs": [
+            "Is not between 3 and 45 inclusive."
+        ],
+        "albums[2].Songs[0].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[2].Songs[0].TrackName": [
+            "Is empty."
+        ],
+        "albums[2].Songs[0].TrackNumber": [
+            "Is null."
+        ],
+        "albums[2].Songs[1].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[2].Songs[1].TrackName": [
+            "Is empty."
+        ],
+        "albums[2].Songs[1].TrackNumber": [
+            "Is null."
+        ],
+        "albums[2].Title": [
+            "Is empty."
+        ],
+        "albums[3].CoverImageUrl": [
+            "Is empty."
+        ],
+        "albums[3].Created": [
+            "Is null."
+        ],
+        "albums[3].Songs": [
+            "Must Abide by the rules for singles."
+        ],
+        "albums[3].Songs[0].Artists": [
+            "Is null."
+        ],
+        "albums[3].Songs[0].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[3].Songs[0].TrackName": [
+            "Is empty."
+        ],
+        "albums[3].Songs[0].TrackNumber": [
+            "Is null."
+        ],
+        "albums[3].Songs[1].Artists": [
+            "Is null."
+        ],
+        "albums[3].Songs[1].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[3].Songs[1].TrackName": [
+            "Is empty."
+        ],
+        "albums[3].Songs[1].TrackNumber": [
+            "Is null."
+        ],
+        "albums[3].Songs[2].Artists": [
+            "Is null."
+        ],
+        "albums[3].Songs[2].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[3].Songs[2].TrackName": [
+            "Is empty."
+        ],
+        "albums[3].Songs[2].TrackNumber": [
+            "Is null."
+        ],
+        "albums[3].Songs[3].Artists": [
+            "Is null."
+        ],
+        "albums[3].Songs[3].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[3].Songs[3].TrackName": [
+            "Is empty."
+        ],
+        "albums[3].Songs[3].TrackNumber": [
+            "Is null."
+        ],
+        "albums[3].Songs[4].Artists": [
+            "Is null."
+        ],
+        "albums[3].Songs[4].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[3].Songs[4].TrackName": [
+            "Is empty."
+        ],
+        "albums[3].Songs[4].TrackNumber": [
+            "Is null."
+        ],
+        "albums[3].Songs[5].Artists": [
+            "Is null."
+        ],
+        "albums[3].Songs[5].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[3].Songs[5].TrackName": [
+            "Is empty."
+        ],
+        "albums[3].Songs[5].TrackNumber": [
+            "Is null."
+        ],
+        "albums[3].Songs[6].Artists": [
+            "Is null."
+        ],
+        "albums[3].Songs[6].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[3].Songs[6].TrackName": [
+            "Is empty."
+        ],
+        "albums[3].Songs[6].TrackNumber": [
+            "Is null."
+        ],
+        "albums[3].Songs[7].Artists": [
+            "Is null."
+        ],
+        "albums[3].Songs[7].Duration": [
+            "Song does not have a duration."
+        ],
+        "albums[3].Songs[7].TrackName": [
+            "Is empty."
+        ],
+        "albums[3].Songs[7].TrackNumber": [
+            "Is null."
+        ],
+        "albums[3].Title": [
+            "Is empty."
+        ],
+        "albums[4].Artists": [
+            "Is null."
+        ],
+        "albums[4].CoverImageUrl": [
+            "Is empty."
+        ],
+        "albums[4].Created": [
+            "Is null."
+        ],
+        "albums[4].Songs": [
+            "Is null."
+        ],
+        "albums[4].Title": [
+            "Is empty."
+        ],
+        "albums[4].Type": [
+            "Is null."
+        ],
+        "albums[5]": [
+            "Is null."
+        ]
+    }
+}

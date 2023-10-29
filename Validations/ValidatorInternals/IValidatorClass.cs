@@ -10,6 +10,7 @@ public interface IMainValidator<TValidationType> : IValidatorClass
     ValidationConstructionStore Store { get; }
 }
 
-public interface ISubValidatorClass : IParentScope, IExpandableEntity
+public interface ISubValidatorClass<TValidationType> : IParentScope, IExpandableEntity
 {
+    IValidationStore Store { get; }
 }

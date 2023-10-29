@@ -20,7 +20,7 @@
         <CodeWindow
           language="csharp"
           source='
-  public class BasicSongValidator : AbstractValidator
+  public class BasicSongValidator : AbstractValidator<InputObject>
   {
       public BasicSongValidator()
       {

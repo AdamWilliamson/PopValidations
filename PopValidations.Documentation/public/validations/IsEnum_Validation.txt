@@ -1,0 +1,13 @@
+﻿{
+    "errors": {
+        "nDouble": [
+            "'3.3' Is not a valid value."
+        ],
+        "nInt": [
+            "'3' Is not a valid value."
+        ],
+        "nString": [
+            "'3' Is not a valid value."
+        ]
+    }
+}

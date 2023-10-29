@@ -1,5 +1,6 @@
 ﻿using System;
 using PopValidations.Execution.Stores;
+using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
 namespace PopValidations.Scopes.Whens;
@@ -10,21 +11,30 @@ public sealed class Scope<TScopedDataType> : ScopeBase
     private readonly Action<IScopedData<TScopedDataType?>> rules;
 
     public override bool IgnoreScope => true;
-    public override string Name => "";
+    public override string Name => scopedData.Describe();
 
     public Scope(
-        ValidationConstructionStore validatorStore,
+        //IValidationStore validatorStore,
         IScopedData<TScopedDataType?> scopedData,
         Action<IScopedData<TScopedDataType?>> rules
-    ) : base(validatorStore)
+    ) //: base(validatorStore)
     {
         this.scopedData = scopedData;
         this.rules = rules;
     }
 
+    public override void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) 
+    {
+        scopedData.ReHome(fieldDescriptorOutline);
+    }
+
     protected override async void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {
-        await scopedData.Init(value);
+        if (FieldDescriptor != null)
+            await scopedData.Init(FieldDescriptor.GetValue(value));
+        else
+            await scopedData.Init(value);
+
         rules.Invoke(scopedData);
     }
 
@@ -32,4 +42,6 @@ public sealed class Scope<TScopedDataType> : ScopeBase
     {
         rules.Invoke(scopedData);
     }
+
+    public override void ChangeStore(IValidationStore store) { }    
 }

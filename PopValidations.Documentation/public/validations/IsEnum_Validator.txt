@@ -1,0 +1,11 @@
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            Describe(x => x.NString).IsEnum(typeof(TestEnumeration));
+            Describe(x => x.NInt).IsEnum(typeof(TestEnumeration));
+            Describe(x => x.NDouble).IsEnum(typeof(TestEnumeration));
+        }
+    }
+    

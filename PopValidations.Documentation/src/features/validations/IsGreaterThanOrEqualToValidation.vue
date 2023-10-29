@@ -1,12 +1,15 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("IsGreaterThanOrEqualTo");
 });
 </script>
 <template>
@@ -22,77 +25,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='
-public class BasicSongValidator : AbstractValidator
-{
-    public BasicSongValidator()
-    {
-        Describe(x => x.TrackNumber)
-            .IsGreaterThanOrEqualTo(
-                new ScopedData<int>(int.MinValue));
-        Describe(x => x.Duration)
-            .IsGreaterThanOrEqualTo(
-                new ScopedData<double>(3));
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
+
+      <template #request>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
+      </template>
+
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "trackNumber": [
-            "Is not greater than or equal to &#39;-2147483648&#39;"
-        ],
-        "duration": [
-            "Is not greater than or equal to &#39;3&#39;"
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='{
-  "Song": {
-    "type": "object",
-    "properties": {
-      "trackName": {
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      },
-      "trackNumber": {
-        "minimum": -2147483648,
-        "exclusiveMinimum": false,
-        "type": "integer",
-        "format": "int32"
-      },
-      "duration": {
-        "minimum": 3,
-        "exclusiveMinimum": false,
-        "type": "number",
-        "format": "double"
-      }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-      "trackNumber": [
-        "Must be greater than or equal to &#39;-2147483648&#39;"
-      ],
-      "duration": [
-        "Must be greater than or equal to &#39;3&#39;"
-      ]
-    }
-  }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

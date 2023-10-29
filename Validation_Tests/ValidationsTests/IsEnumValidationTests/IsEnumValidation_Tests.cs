@@ -32,6 +32,7 @@ public class IsEnumValidation_Tests
 
         // Assert
         result.Success.Should().BeTrue();
+        result.KeyValues.Select(x => x.Value).Should().NotContain("unknown");
     }
 
     [Theory]
@@ -54,6 +55,22 @@ public class IsEnumValidation_Tests
         result.Success.Should().BeFalse();
     }
 
+    [Theory]
+    [InlineData(typeof(Object))]
+    [InlineData(null)]
+    public void WhenValidatingWithOddTypes_TheyAllFail(object value)
+    {
+        // Arrange
+        var validator = new IsEnumValidation<object>(typeof(TestEnum));
+
+        // Act
+        var result = validator.Validate(value);
+
+        // Assert
+        result.Success.Should().BeFalse();
+        result.KeyValues.Select(x => x.Value).Should().Contain("unknown");
+    }
+    
     [Fact]
     public void TheValidationAndDescriptionValues_AreCorrect()
     {
@@ -81,9 +98,9 @@ public class IsEnumValidation_Tests
                                 Enum.GetValues<TestEnum>().Cast<Enum>().Select(x => x.ToString("d")).ToArray()
                             )
                         ),
-                        new KeyValuePair<string, string>("fieldType", "number"),
+                        new KeyValuePair<string, string>("fieldType", "numeric"),
                     });
-            descriptionResult.Message.Should().Be("Must be one of '{{enumNames}}' or '{{enumValues}}'");
+            descriptionResult.Message.Should().Be("Must be one of '{{enumNames}}' or '{{enumValues}}'.");
         }
     }
 }

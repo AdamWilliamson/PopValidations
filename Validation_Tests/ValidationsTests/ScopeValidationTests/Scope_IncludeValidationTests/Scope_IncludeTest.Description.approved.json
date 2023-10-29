@@ -1,0 +1,40 @@
+﻿{
+    "results": [
+        {
+            "property": "DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '0'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "0"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

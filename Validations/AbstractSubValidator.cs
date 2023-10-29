@@ -1,39 +1,63 @@
 ﻿using System;
 using PopValidations.Execution.Stores;
 using PopValidations.Execution.Stores.Internal;
+using PopValidations.FieldDescriptors.Base;
 using PopValidations.ValidatorInternals;
 
 namespace PopValidations;
 
 public abstract class AbstractSubValidator<TValidationType>
-    : AbstractValidatorBase<TValidationType>, ISubValidatorClass
+    : AbstractValidatorBase<TValidationType>, ISubValidatorClass<TValidationType>
 {
-    public bool IgnoreScope => false;
+    public virtual bool IgnoreScope => false;
     public override string Name => typeof(TValidationType).Name;
-    public Func<IValidatableStoreItem, IValidatableStoreItem>? Decorator => null;
+    public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => null;
 
     public virtual void AsVital() { }
 
-    protected AbstractSubValidator() : base(null, new()) { }
+    protected AbstractSubValidator() : base(null, new ValidationSubStore()) { }
 
-    public void ExpandToValidate(ValidationConstructionStore store, object? value)
+    public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
+
+    public virtual void ExpandToValidate(ValidationConstructionStore store, object? value)
     {
-        var expandedItems = Store.ExpandToValidate(value);
-        foreach (var item in expandedItems)
-        {
-            if (item != null)
-                store.AddItemToCurrentScope(item);
-        }
+        store.AddExpandedItemsForValidation(Store, value);
+        //var expandedItems = Store.ExpandToValidate(value);
+        //foreach (var item in expandedItems)
+        //{
+        //    if (item != null)
+        //        store.AddItemToCurrentScope(item);
+        //}
     }
 
-    public void ExpandToDescribe(ValidationConstructionStore store)
+    public virtual void ExpandToDescribe(ValidationConstructionStore store)
     {
-        var expandedItems = Store.ExpandToDescribe();
-        foreach (var item in expandedItems)
-        {
-            if (item != null)
-                store.AddItemToCurrentScope(item);
-        }
+        store.AddExpandedItemsForDescription(Store);
+        //var expandedItems = Store.ExpandToDescribe();
+        //foreach (var item in expandedItems)
+        //{
+        //    if (item != null)
+        //        store.AddItemToCurrentScope(item);
+        //}
+    }
+
+    public void ChangeStore(IValidationStore store)
+    {
+        //foreach (var item in Store.GetItems())
+        //{
+        //    //store.AddItem(fieldDescriptor, new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
+        //    //    this,
+        //    //    _NextValidationVital || _AlwaysVital,
+        //    //    component
+        //    //)item);
+        //    fieldDescriptor.
+        //}
+        //store.Merge(Store);
+        //store.AddItem
+        //ReplaceStore(store);
+        Store.ReplaceInternalStore(store);
+        //Store = store;
+        //ReplaceStore(store);
     }
 }
 

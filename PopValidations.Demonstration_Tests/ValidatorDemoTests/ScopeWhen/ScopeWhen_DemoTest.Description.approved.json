@@ -1,0 +1,78 @@
+﻿{
+    "results": [
+        {
+            "property": "DependantField",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When Check is True 1",
+                    "description": "When Check is True 1",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to 'Database Value 1'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "Database Value 1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "When Check is True 2",
+                    "description": "When Check is True 2",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to 'Database Value 2'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "Database Value 2"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "When Check is True 3",
+                    "description": "When Check is True 3",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to 'Database Value 3'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "Database Value 3"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "When Check is True 4",
+                    "description": "When Check is True 4",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to 'Database Value 4'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "Database Value 4"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

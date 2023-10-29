@@ -83,10 +83,10 @@ public class IsEmptyValidation_Tests
         // Assert
         using (new AssertionScope())
         {
-            validationResult.Message.Should().Be("Is not empty");
+            validationResult.Message.Should().Be("Is not empty.");
             validationResult.KeyValues.Should()
                 .BeEquivalentTo(new List<KeyValuePair<string, string>>());
-            descriptionResult.Message.Should().Be("Must be empty");
+            descriptionResult.Message.Should().Be("Must be empty.");
         }
     }
 }

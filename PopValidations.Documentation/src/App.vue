@@ -1,12 +1,4 @@
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  data() {
-    return {
-    };
-  },
-});
+<script setup lang="ts">
 </script>
 
 <template>
@@ -44,6 +36,13 @@ export default defineComponent({
           :to="{ name: 'Installation' }"
           link
         ></v-list-item>
+        <v-list-item
+          color="secondary"
+          title="Main Validators"
+          value="MainValidators"
+          :to="{ name: 'MainValidators' }"
+          link
+        ></v-list-item>
 
         <v-list-subheader color="secondary">Demonstrations</v-list-subheader>
 
@@ -52,6 +51,24 @@ export default defineComponent({
           title="Basic"
           value="Basic"
           :to="{ name: 'BasicDemonstration' }"
+          link
+          density="compact"
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="Moderate"
+          value="Moderate"
+          :to="{ name: 'ModerateDemonstration' }"
+          link
+          density="compact"
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="Advanced"
+          value="Advanced"
+          :to="{ name: 'AdvancedDemonstration' }"
           link
           density="compact"
         ></v-list-item>
@@ -82,6 +99,7 @@ export default defineComponent({
         ></v-list-item>
 
         <v-list-subheader color="secondary">Validations</v-list-subheader>
+        
         <v-list-item
           color="secondary"
           title="Is Null"
@@ -167,7 +185,71 @@ export default defineComponent({
           link
         ></v-list-item>
 
-        <v-list-subheader color="secondary">Localisation</v-list-subheader>
+        <v-list-item
+          color="secondary"
+          title="Vitally"
+          value="Vitally"
+          :to="{ name: 'VitallyValidation' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="SetValidator"
+          value="SetValidator"
+          :to="{ name: 'SetValidator' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="Include"
+          value="Include"
+          :to="{ name: 'Include' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="When"
+          value="When"
+          :to="{ name: 'When' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="Scope"
+          value="Scope"
+          :to="{ name: 'Scope' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="ScopeWhen"
+          value="ScopeWhen"
+          :to="{ name: 'ScopeWhen' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="ScopedData"
+          value="ScopedData"
+          :to="{ name: 'ScopedData' }"
+          link
+        ></v-list-item>
+
+        <v-list-item
+          color="secondary"
+          title="ForEach"
+          value="ForEach"
+          :to="{ name: 'ForEach' }"
+          link
+        ></v-list-item>
+
+        <!-- <v-list-subheader color="secondary">Localisation</v-list-subheader>
         <v-list-item
           color="secondary"
           title="Adding A Language"
@@ -183,12 +265,24 @@ export default defineComponent({
           value="Testing Extensions"
           :to="{ name: 'TestingExtensions' }"
           link
-        ></v-list-item>
+        ></v-list-item> -->
       </v-list>
     </v-navigation-drawer>
 
     <v-main>
-      <RouterView />
+      <transition name="mode-fade" mode="out-in">
+        <RouterView />
+      </transition>
     </v-main>
   </v-app>
 </template>
+
+<style lang="scss">
+.mode-fade-enter-active, .mode-fade-leave-active {
+  transition: opacity .5s ease
+}
+
+.mode-fade-enter-from, .mode-fade-leave-to {
+  opacity: 0
+}
+</style>

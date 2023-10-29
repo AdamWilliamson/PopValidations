@@ -1,0 +1,7 @@
+﻿{
+    "errors": {
+        "nInteger": [
+            "Is not less than '5'."
+        ]
+    }
+}

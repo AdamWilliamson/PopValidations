@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using PopValidations.Execution.Description;
@@ -49,13 +50,17 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
         }
 
         var groupedItems = allItems
-            .GroupBy(x => new { x.PropertyName });
+            .GroupBy(x => new { x.PropertyName })
+            .OrderBy(x => x.Key.PropertyName);
 
         var vitallyFailedFields = new List<string>();
+        
         foreach (var validationObjectGroup in groupedItems)
         {
+            Debug.WriteLine(validationObjectGroup.Key.PropertyName);
             foreach (var propertyGroup in validationObjectGroup)
             {
+                Debug.WriteLine("--" + propertyGroup.FullAddressableName);
                 if (vitallyFailedFields.Any(f => propertyGroup.PropertyName.StartsWith(f)))
                 {
                     continue;

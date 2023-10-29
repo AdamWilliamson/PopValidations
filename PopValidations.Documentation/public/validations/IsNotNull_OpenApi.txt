@@ -1,0 +1,18 @@
+﻿"InputObject": {
+    "required": [
+        "nInteger"
+    ],
+    "type": "object",
+    "properties": {
+        "nInteger": {
+            "type": "integer",
+            "format": "int32"
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nInteger": [
+            "Must not be null."
+        ]
+    }
+}

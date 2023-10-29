@@ -1,15 +1,18 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { GetFiles } from "@/services/LoadValidationsService";
 
-export default defineComponent({
-  components: {},
-  data() {
-    return {
-      tab: "one",
-    };
-  },
+const Validator = ref("");
+const Request = ref("");
+const OpenApi = ref("");
+const Validation = ref("");
+
+onMounted(async () => {
+  [Validator.value, Request.value, OpenApi.value, Validation.value] =
+    await GetFiles("IsEqualTo");
 });
 </script>
+
 <template>
  <v-container fluid bg-color="surface">
     <v-row>
@@ -23,58 +26,18 @@ export default defineComponent({
 
     <PanelsOrTabs>
       <template #code>
-        <CodeWindow
-              language="csharp"
-              source='
-public class BasicSongValidator : AbstractValidator
-{
-  public BasicSongValidator()
-    {
-        Describe(x => x.TrackName)
-            .IsEqualTo("Mind numbing boredom");
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validator" language="csharp" :source="Validator" />
       </template>
+
+      <template #request>
+        <CodeWindow v-if="Request" language="csharp" :source="Request" />
+      </template>
+
       <template #errorreport>
-        <CodeWindow
-              language="json"
-              source='{
-    "errors": {
-        "trackName": [
-            "Is not equal to &#39;Mind numbing boredom&#39;"
-        ]
-    }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="Validation" language="csharp" :source="Validation" />
       </template>
       <template #openapi>
-        <CodeWindow
-              language="json"
-              source='{
-  "Song": {
-    "type": "object",
-    "properties": {
-      "trackName": {
-        "enum": [
-          "Mind numbing boredom"
-        ],
-        "type": "string",
-        "nullable": true
-      },
-      "artist": {
-        "$ref": "#/components/schemas/Artist"
-      }
-    },
-    "additionalProperties": false,
-    "x-validation": {
-      "trackName": [
-        "Must equal to &#39;Mind numbing boredom&#39;"
-      ]
-    }
-  }
-}'
-            ></CodeWindow>
+        <CodeWindow v-if="OpenApi" language="csharp" :source="OpenApi" />
       </template>
     </PanelsOrTabs>
 

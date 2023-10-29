@@ -1,0 +1,201 @@
+﻿{
+    "Album": {
+        "required": [
+            "artists",
+            "coverImageUrl",
+            "created",
+            "songs",
+            "title",
+            "type"
+        ],
+        "type": "object",
+        "properties": {
+            "title": {
+                "minLength": 1,
+                "minItems": 1,
+                "type": "string",
+                "nullable": true
+            },
+            "type": {
+                "$ref": "#/components/schemas/AlbumType"
+            },
+            "artists": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Artist"
+                }
+            },
+            "coverImageUrl": {
+                "minLength": 1,
+                "minItems": 1,
+                "type": "string",
+                "nullable": true
+            },
+            "created": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "songs": {
+                "maxLength": 45,
+                "minLength": 3,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Song"
+                }
+            },
+            "genres": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "nullable": true
+            }
+        },
+        "additionalProperties": false,
+        "x-validation": {
+            "title": [
+                "Must not be empty."
+            ],
+            "type": [
+                "Must not be null."
+            ],
+            "artists": [
+                "Must not be null.",
+                "Album is Compliation : Validated to must have different artists",
+                "Album is Single Artist : Must have all the same artists"
+            ],
+            "artists[n]": [
+                "Must not be null."
+            ],
+            "coverImageUrl": [
+                "Must not be empty."
+            ],
+            "created": [
+                "Must not be null.",
+                "Must be greater than '1/01/1700 1:00:00 PM'.",
+                "Must be less than '1/01/2024 1:00:00 PM'."
+            ],
+            "songs": [
+                "Must not be null.",
+                "Must be between 3 and 45 inclusive.",
+                "When Album is Collaboration : All songs must contain atleast one album artist.",
+                "When Album is Single : Album must match the rules for single."
+            ],
+            "songs[n]": [
+                "Must not be null."
+            ]
+        }
+    },
+    "AlbumSubmission": {
+        "required": [
+            "albums"
+        ],
+        "type": "object",
+        "properties": {
+            "albums": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Album"
+                }
+            }
+        },
+        "additionalProperties": false,
+        "x-validation": {
+            "albums": [
+                "Must not be null."
+            ],
+            "albums[n]": [
+                "Must not be null."
+            ]
+        }
+    },
+    "AlbumType": {
+        "enum": [
+            0,
+            1,
+            2,
+            3
+        ],
+        "type": "integer",
+        "format": "int32"
+    },
+    "Artist": {
+        "required": [
+            "name"
+        ],
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string"
+            }
+        },
+        "additionalProperties": false,
+        "x-validation": {
+            "name": [
+                "Must not be null."
+            ]
+        }
+    },
+    "Song": {
+        "required": [
+            "artists",
+            "duration",
+            "genre",
+            "trackName",
+            "trackNumber"
+        ],
+        "type": "object",
+        "properties": {
+            "artists": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Artist"
+                }
+            },
+            "trackNumber": {
+                "type": "integer",
+                "format": "int32"
+            },
+            "trackName": {
+                "minLength": 1,
+                "minItems": 1,
+                "type": "string",
+                "nullable": true
+            },
+            "duration": {
+                "minimum": 0,
+                "exclusiveMinimum": true,
+                "type": "number",
+                "format": "double"
+            },
+            "genre": {
+                "minLength": 1,
+                "minItems": 1,
+                "type": "string",
+                "nullable": true
+            }
+        },
+        "additionalProperties": false,
+        "x-validation": {
+            "artists": [
+                "Must not be null."
+            ],
+            "artists[n]": [
+                "Must not be null."
+            ],
+            "trackNumber": [
+                "Must not be null."
+            ],
+            "trackName": [
+                "Must not be empty."
+            ],
+            "duration": [
+                "Must not be null.",
+                "Songs must have a positive duration."
+            ],
+            "genre": [
+                "Must not be empty."
+            ]
+        }
+    }
+}

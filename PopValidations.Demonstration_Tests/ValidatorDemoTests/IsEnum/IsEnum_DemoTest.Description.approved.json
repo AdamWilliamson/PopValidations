@@ -1,0 +1,76 @@
+﻿{
+    "results": [
+        {
+            "property": "NString",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'Value1,Value2' or '1,2'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "Value1,Value2"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "1,2"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "string"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "NInt",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'Value1,Value2' or '1,2'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "Value1,Value2"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "1,2"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "numeric"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "NDouble",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'Value1,Value2' or '1,2'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "Value1,Value2"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "1,2"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "numeric"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            // If ArrayOfStrings is Not Null, then Check each item
+            DescribeEnumerable(x => x.ArrayOfStrings)
+                .Vitally().IsNotNull()
+                .ForEach(x => x
+                    .Vitally().IsNotNull()
+                    .IsNotEmpty() // Only run if Not Null
+                );
+
+            // Tests each item, but stops at the first item that
+            // fails. this effects the previous ForEach.
+            // This won't run the Tests if ArrayOfStrings is null,
+            // due to the previous .Vitally().IsNotNull() on this field
+            DescribeEnumerable(x => x.ArrayOfStrings)
+                .Vitally().ForEach(x => x
+                    .IsEqualTo("Test")
+                );
+        }
+    }
+    

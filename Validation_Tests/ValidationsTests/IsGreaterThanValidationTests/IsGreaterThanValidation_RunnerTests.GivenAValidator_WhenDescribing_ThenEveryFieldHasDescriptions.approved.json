@@ -5,7 +5,7 @@
             "outcomes": [
                 {
                     "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '-2147483648'",
+                    "message": "Must be greater than '-2147483648'.",
                     "values": [
                         {
                             "key": "value",
@@ -21,7 +21,7 @@
             "outcomes": [
                 {
                     "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000'",
+                    "message": "Must be greater than '\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000'.",
                     "values": [
                         {
                             "key": "value",
@@ -37,7 +37,7 @@
             "outcomes": [
                 {
                     "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '-79228162514264337593543950335'",
+                    "message": "Must be greater than '-79228162514264337593543950335'.",
                     "values": [
                         {
                             "key": "value",
@@ -53,7 +53,7 @@
             "outcomes": [
                 {
                     "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '-1.7976931348623157E+308'",
+                    "message": "Must be greater than '-1.7976931348623157E+308'.",
                     "values": [
                         {
                             "key": "value",
@@ -69,7 +69,7 @@
             "outcomes": [
                 {
                     "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '-32768'",
+                    "message": "Must be greater than '-32768'.",
                     "values": [
                         {
                             "key": "value",
@@ -85,7 +85,7 @@
             "outcomes": [
                 {
                     "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '-9223372036854775808'",
+                    "message": "Must be greater than '-9223372036854775808'.",
                     "values": [
                         {
                             "key": "value",

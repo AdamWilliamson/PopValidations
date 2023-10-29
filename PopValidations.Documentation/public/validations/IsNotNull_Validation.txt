@@ -1,0 +1,7 @@
+﻿{
+    "errors": {
+        "nInteger": [
+            "Is null."
+        ]
+    }
+}

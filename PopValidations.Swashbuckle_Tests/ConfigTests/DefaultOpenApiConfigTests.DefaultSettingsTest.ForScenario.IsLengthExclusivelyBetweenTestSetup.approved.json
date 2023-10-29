@@ -1,0 +1,102 @@
+﻿{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "PopValidations.ExampleWebApi",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/Test/test": {
+            "get": {
+                "tags": [
+                    "Test"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Request": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "maxLength": 9,
+                        "minLength": 6,
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "name": {
+                        "maxLength": 19,
+                        "minLength": 1,
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "child": {
+                        "$ref": "#/components/schemas/SubRequest"
+                    }
+                },
+                "additionalProperties": false,
+                "x-validation": {
+                    "id": [
+                        "Must be between 5 and 10 exclusive."
+                    ],
+                    "name": [
+                        "Must be between 0 and 20 exclusive."
+                    ],
+                    "child": []
+                }
+            },
+            "SubRequest": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "maxLength": 19,
+                        "minLength": 5,
+                        "type": "integer",
+                        "format": "int32",
+                        "nullable": true
+                    },
+                    "name": {
+                        "maxLength": 9,
+                        "minLength": 3,
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false,
+                "x-validation": {
+                    "id": [
+                        "Must be between 4 and 20 exclusive."
+                    ],
+                    "name": [
+                        "Must be between 2 and 10 exclusive."
+                    ]
+                }
+            }
+        }
+    }
+}

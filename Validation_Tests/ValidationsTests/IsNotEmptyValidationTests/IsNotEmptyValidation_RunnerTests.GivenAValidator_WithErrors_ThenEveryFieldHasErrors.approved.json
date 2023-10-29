@@ -1,43 +1,43 @@
 ﻿{
     "errors": {
-        "integer": [
-            "Is empty"
-        ],
-        "string": [
-            "Is empty"
-        ],
-        "decimal": [
-            "Is empty"
-        ],
-        "double": [
-            "Is empty"
-        ],
-        "short": [
-            "Is empty"
-        ],
-        "long": [
-            "Is empty"
-        ],
-        "twoComponentTuple": [
-            "Is empty"
-        ],
-        "twoComponentNewTupple": [
-            "Is empty"
-        ],
-        "allFieldTypesList": [
-            "Is empty"
-        ],
-        "allFieldTypesLinkedList": [
-            "Is empty"
+        "allFieldTypesDictionary": [
+            "Is empty."
         ],
         "allFieldTypesIEnumerable": [
-            "Is empty"
+            "Is empty."
         ],
-        "allFieldTypesDictionary": [
-            "Is empty"
+        "allFieldTypesLinkedList": [
+            "Is empty."
+        ],
+        "allFieldTypesList": [
+            "Is empty."
+        ],
+        "decimal": [
+            "Is empty."
+        ],
+        "double": [
+            "Is empty."
+        ],
+        "integer": [
+            "Is empty."
+        ],
+        "long": [
+            "Is empty."
+        ],
+        "short": [
+            "Is empty."
+        ],
+        "string": [
+            "Is empty."
         ],
         "struct": [
-            "Is empty"
+            "Is empty."
+        ],
+        "twoComponentNewTupple": [
+            "Is empty."
+        ],
+        "twoComponentTuple": [
+            "Is empty."
         ]
     }
 }

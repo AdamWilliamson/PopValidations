@@ -1,0 +1,37 @@
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            When(
+                "When Check is True",
+                x => Task.FromResult(x.Check == true),
+                () =>
+                {
+                    When(
+                        "When 10 == 10",
+                        x => Task.FromResult(true),
+                        () =>
+                        {
+                            Describe(x => x.DependantField).IsEqualTo("Test1");
+                        }
+                    );
+
+                    // All other validations won't execute if this fails.
+                    Describe(x => x.DependantField).Vitally().IsNotEmpty();
+
+                    When(
+                        "When 5 == 5",
+                        x => Task.FromResult(true),
+                        () =>
+                        {
+                            Describe(x => x.DependantField).IsEqualTo("Test2");
+                        }
+                    );
+                }
+            );
+
+            Describe(x => x.DependantField).IsEqualTo("Test3");
+        }
+    }
+    

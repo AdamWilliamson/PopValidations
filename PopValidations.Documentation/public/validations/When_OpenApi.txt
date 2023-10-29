@@ -1,0 +1,24 @@
+﻿"InputObject": {
+    "type": "object",
+    "properties": {
+        "check": {
+            "type": "boolean"
+        },
+        "dependantField": {
+            "enum": [
+                "Test3"
+            ],
+            "type": "string",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "dependantField": [
+            "Must equal to 'Test3'.",
+            "When Check is True : Must not be empty.",
+            "When Check is True & When 10 == 10 : Must equal to 'Test1'.",
+            "When Check is True & When 5 == 5 : Must equal to 'Test2'."
+        ]
+    }
+}

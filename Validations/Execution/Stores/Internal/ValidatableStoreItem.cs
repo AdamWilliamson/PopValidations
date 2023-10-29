@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using PopValidations.FieldDescriptors;
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
@@ -10,7 +12,7 @@ public class ValidatableStoreItem : IValidatableStoreItem
     public ValidatableStoreItem(
         bool isVital,
         FieldExecutor? currentFieldExecutor,
-        IFieldDescriptorOutline fieldDescriptor,
+        //IFieldDescriptorOutline fieldDescriptor,
         ScopeParent? scopeParent,
         IValidationComponent component
     )
@@ -27,22 +29,22 @@ public class ValidatableStoreItem : IValidatableStoreItem
 
         IsVital = isVital;
         CurrentFieldExecutor = currentFieldExecutor;
-        FieldDescriptor = fieldDescriptor;
+        //FieldDescriptor = fieldDescriptor;
         ScopeParent = scopeParent;
         Component = component;
     }
 
     public bool IsVital { get; }
     public FieldExecutor? CurrentFieldExecutor { get; set; }
-    public IFieldDescriptorOutline? FieldDescriptor { get; set; }
+    public IFieldDescriptorOutline? FieldDescriptor => CurrentFieldExecutor;
     public ScopeParent? ScopeParent { get; set; }
 
     public void SetParent(FieldExecutor fieldExecutor)
     {
         if (CurrentFieldExecutor == null)
         {
-            if (FieldDescriptor == null) throw new Exception("ValidatableStoreItem should not have Null FieldDescriptor");
-            CurrentFieldExecutor = new FieldExecutor(fieldExecutor, FieldDescriptor);
+            //if (FieldDescriptor == null) throw new Exception("ValidatableStoreItem should not have Null FieldDescriptor");
+            CurrentFieldExecutor = fieldExecutor; //new FieldExecutor(fieldExecutor, FieldDescriptor);
         }
         else
         {
@@ -60,11 +62,12 @@ public class ValidatableStoreItem : IValidatableStoreItem
 
     public object? GetValue(object? value)
     {
-        if (CurrentFieldExecutor != null)
-        {
-            return FieldDescriptor?.GetValue(CurrentFieldExecutor.GetValue(value));
-        }
-        return FieldDescriptor?.GetValue(value);
+        Debug.Assert(CurrentFieldExecutor != null, "CurrentFieldExecutor should never be null");
+        //if (CurrentFieldExecutor != null)
+        //{
+        //    return FieldDescriptor?.GetValue(CurrentFieldExecutor.GetValue(value));
+        //}
+        return CurrentFieldExecutor?.GetValue(value);
     }
 
     public void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
@@ -74,8 +77,10 @@ public class ValidatableStoreItem : IValidatableStoreItem
             ChildStoreItem.ReHomeScopes(attemptedScopeFieldDescriptor);
             return;
         }
-
-        Component?.ReHomeScopes(attemptedScopeFieldDescriptor);
+        else
+        {
+            Component?.ReHomeScopes(attemptedScopeFieldDescriptor);
+        }
     }
 
     public Task InitScopes(object? instance)

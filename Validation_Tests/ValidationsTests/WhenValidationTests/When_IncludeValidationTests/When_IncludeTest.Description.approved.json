@@ -1,0 +1,56 @@
+﻿{
+    "results": [
+        {
+            "property": "DependantField",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '0'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "0"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When Check is True",
+                    "description": "When Check is True",
+                    "children": [
+                        {
+                            "name": "When 10 == 10",
+                            "description": "When 10 == 10",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEqualToValidation",
+                                    "message": "Must equal to '2'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "2"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsEqualToValidation",
+                            "message": "Must equal to '1'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,316 @@
+﻿{
+    "results": [
+        {
+            "property": "Albums",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n]",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Title",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Type",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Artists",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "Album is Compliation",
+                    "description": "Album is Compliation",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsCustomValidation",
+                            "message": "Validated to must have different artists",
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": "have different artists"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Album is Single Artist",
+                    "description": "Album is Single Artist",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsCustomValidation",
+                            "message": "Must have all the same artists",
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": "have all the same artists"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Albums[n].Artists[n]",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Artists[n].Name",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].CoverImageUrl",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Created",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '1/01/1700 1:00:00 PM'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1/01/1700 1:00:00 PM"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsLessThanValidation",
+                    "message": "Must be less than '1/01/2024 1:00:00 PM'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1/01/2024 1:00:00 PM"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Songs",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 3 and 45 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "3"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "45"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When Album is Collaboration",
+                    "description": "When Album is Collaboration",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsCustomValidation",
+                            "message": "All songs must contain atleast one album artist.",
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "When Album is Single",
+                    "description": "When Album is Single",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsCustomValidation",
+                            "message": "Album must match the rules for single.",
+                            "values": [
+                                {
+                                    "key": "is_value",
+                                    "value": "Album is Single"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Albums[n].Songs[n]",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Songs[n].TrackNumber",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Songs[n].TrackName",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Songs[n].Duration",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Songs must have a positive duration.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "0"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Songs[n].Genre",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Songs[n].Artists",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Songs[n].Artists[n]",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Albums[n].Songs[n].Artists[n].Name",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

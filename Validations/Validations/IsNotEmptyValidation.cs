@@ -6,8 +6,8 @@ namespace PopValidations.Validations;
 
 public class IsNotEmptyValidation : ValidationComponentBase
 {
-    public override string DescriptionTemplate { get; protected set; } = $"Must not be empty";
-    public override string ErrorTemplate { get; protected set; } = $"Is empty";
+    public override string DescriptionTemplate { get; protected set; } = $"Must not be empty.";
+    public override string ErrorTemplate { get; protected set; } = $"Is empty.";
 
     public IsNotEmptyValidation() { }
 

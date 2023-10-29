@@ -1,0 +1,10 @@
+﻿{
+    "errors": {
+        "nString": [
+            "Is empty."
+        ],
+        "string": [
+            "Is empty."
+        ]
+    }
+}

@@ -1,0 +1,229 @@
+﻿{
+    "results": [
+        {
+            "property": "Artist",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                },
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 3 and 500 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "3"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "500"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Genre",
+            "outcomes": [
+                {
+                    "validator": "IsNotEmptyValidation",
+                    "message": "Must not be empty.",
+                    "values": []
+                },
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 3 and 300 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "3"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "300"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Songs",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When Genre is Rock",
+                    "description": "When Genre is Rock",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsLengthExclusivelyBetweenValidation",
+                            "message": "Must be between 6 and 15 exclusive.",
+                            "values": [
+                                {
+                                    "key": "startValue",
+                                    "value": "6"
+                                },
+                                {
+                                    "key": "endValue",
+                                    "value": "15"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Songs[n]",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Songs[n].Genre",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When Genre is Rock",
+                    "description": "When Genre is Rock",
+                    "children": [
+                        {
+                            "name": "When Track count is greater than 20 treat it like an anthology",
+                            "description": "When Track count is greater than 20 treat it like an anthology",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNotEmptyValidation",
+                                    "message": "Songs need Titles.",
+                                    "values": []
+                                }
+                            ]
+                        },
+                        {
+                            "name": "When Track count is less than 20",
+                            "description": "When Track count is less than 20",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsNotEmptyValidation",
+                                    "message": "Songs need Titles.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsNotEmptyValidation",
+                            "message": "Songs need Titles.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "property": "Songs[n].Duration",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When Genre is Rock",
+                    "description": "When Genre is Rock",
+                    "children": [
+                        {
+                            "name": "When Track count is greater than 20 treat it like an anthology",
+                            "description": "When Track count is greater than 20 treat it like an anthology",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsGreaterThanValidation",
+                                    "message": "Must be greater than '1'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "validator": "IsLessThanValidation",
+                                    "message": "Must be less than '5'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "5"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "When Track count is less than 20",
+                            "description": "When Track count is less than 20",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsGreaterThanValidation",
+                                    "message": "Must be greater than '1'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "validator": "IsLessThanValidation",
+                                    "message": "Must be less than '5'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "5"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsGreaterThanValidation",
+                            "message": "Must be greater than '1'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "validator": "IsLessThanValidation",
+                            "message": "Must be less than '5'.",
+                            "values": [
+                                {
+                                    "key": "value",
+                                    "value": "5"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

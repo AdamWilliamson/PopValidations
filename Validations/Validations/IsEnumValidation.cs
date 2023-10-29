@@ -8,7 +8,7 @@ public class IsEnumValidation<TFieldType> : ValidationComponentBase
 {
     private readonly Type enumType;
 
-    public override string DescriptionTemplate { get; protected set; } = "Must be one of '{{enumNames}}' or '{{enumValues}}'";
+    public override string DescriptionTemplate { get; protected set; } = "Must be one of '{{enumNames}}' or '{{enumValues}}'.";
     public override string ErrorTemplate { get; protected set; } = "'{{value}}' Is not a valid value.";
 
     public IsEnumValidation(Type enumType)
@@ -46,15 +46,26 @@ public class IsEnumValidation<TFieldType> : ValidationComponentBase
                         Enum.GetValues(enumType).Cast<Enum>().Select(x => x.ToString("d")).ToArray()
                     )
                 ),
-                ("fieldType", typeof(TFieldType) switch
-                {
-                    Type t when t.IsEnum => "enum",
-                    Type t when Type.GetTypeCode(t.GetType()) == TypeCode.String => "string",
-                    Type t when IsNumericType(t) => "number",
-                    _ => "unknown"
-                })
+                ("fieldType", GetType())
             );
         }
+    }
+
+    private string GetType()
+    {
+        var type = typeof(TFieldType);
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+        {
+            type = type.GetGenericArguments()[0];
+        }
+
+        return type switch
+        {
+            Type t when t.IsEnum => "enum",
+            Type t when type == typeof(string) => "string",
+            Type t when IsNumericType(t) => "numeric",
+            _ => "unknown"
+        };
     }
 
     public override DescribeActionResult Describe()
@@ -68,13 +79,7 @@ public class IsEnumValidation<TFieldType> : ValidationComponentBase
                     Enum.GetValues(enumType).Cast<Enum>().Select(x => x.ToString("d")).ToArray()
                 )
             ),
-             ("fieldType", typeof(TFieldType) switch
-             {
-                 Type t when t.IsEnum => "enum",
-                 Type t when Type.GetTypeCode(t.GetType()) == TypeCode.String => "string",
-                 Type t when IsNumericType(t) => "number",
-                 _ => "unknown"
-             })
+            ("fieldType", GetType())
         );
     }
 

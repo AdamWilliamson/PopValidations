@@ -1,19 +1,21 @@
 ﻿using PopValidations.Execution.Stores;
+using PopValidations.Execution.Stores.Internal;
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
+using PopValidations.ValidatorInternals;
 
 namespace PopValidations.FieldDescriptors;
 
 public class FieldDescriptor<TValidationType, TFieldType>
     : IFieldDescriptor<TValidationType, TFieldType>
 {
-    public PropertyExpressionTokenBase<TValidationType, TFieldType?> PropertyToken { get; }
-    object? RetrievedValue = null;
-    bool ValueHasBeenRetrieved = false;
-    public ValidationConstructionStore Store { get; }
+    public IPropertyExpressionToken<TValidationType, TFieldType?> PropertyToken { get; }
+    protected object? RetrievedValue = null;
+    protected bool ValueHasBeenRetrieved = false;
+    public IValidationStore Store { get; }
     public string PropertyName => PropertyToken.Name;
 
-    public string AddTo(string existing)
+    public virtual string AddTo(string existing)
     {
         return PropertyToken.CombineWithParentProperty(existing);
     }
@@ -32,24 +34,66 @@ public class FieldDescriptor<TValidationType, TFieldType>
     }
 
     public FieldDescriptor(
-        PropertyExpressionTokenBase<TValidationType, TFieldType?> propertyToken,
-        ValidationConstructionStore store
+        IPropertyExpressionToken<TValidationType, TFieldType?> propertyToken,
+        IValidationStore store
     )
     {
         PropertyToken = propertyToken;
         Store = store;
     }
 
-    public void AddValidation(IExpandableEntity component)
+    public void AddSubValidator(ISubValidatorClass<TFieldType> component)
     {
+        foreach (var item in component.Store.GetItems())
+        {
+            Store.AddItemToCurrentScope(this, item);
+            //if (item.ScopeParent is IExpandableEntity expandable) 
+            //if (item is IExpandableStoreItem expandable && expandable is not null)
+            //{
+            //    Store.AddItem(this,
+            //        new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
+            //            this,
+            //            _NextValidationVital || _AlwaysVital,
+            //            //component
+            //            expandable
+            //        )
+            //    );
+            //}
+            //else if (item is IValidatableStoreItem validatable)
+            ////else if(item.ScopeParent is IValidationComponent validationComponent) 
+            //{
+            //    Store.AddItem(
+            //        _NextValidationVital || _AlwaysVital,
+            //        this,
+            //        validatable
+            //    );
+            //}
+        }
+        component.ChangeStore(Store);
+        //Store.AddItem(
+        //    this,
+        //    new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
+        //        this,
+        //        _NextValidationVital || _AlwaysVital,
+        //        component
+        //    )
+        //);
+        _NextValidationVital = false;
+    }
+
+    public void AddSelfDescribingEntity(IExpandableEntity component)
+    {
+        if (_NextValidationVital || _AlwaysVital) component.AsVital();
+
         Store.AddItem(
-            this,
-            new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
-                this,
-                _NextValidationVital || _AlwaysVital,
-                component
-            )
-        );
+            null,
+            component
+            //new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
+            //    null,
+            //    _NextValidationVital || _AlwaysVital,
+            //    component
+            //)
+        );    
         _NextValidationVital = false;
     }
 
@@ -59,14 +103,14 @@ public class FieldDescriptor<TValidationType, TFieldType>
         _NextValidationVital = false;
     }
 
-    public object? GetValue(object? value)
+    public virtual object? GetValue(object? value)
     {
         if (ValueHasBeenRetrieved)
             return RetrievedValue;
 
         if (value is TValidationType result && result != null)
         {
-            RetrievedValue = PropertyToken.Expression.Compile().Invoke(result);
+            RetrievedValue = PropertyToken.Execute(result);
             ValueHasBeenRetrieved = true;
         }
         return RetrievedValue;

@@ -1,0 +1,36 @@
+﻿"BasicSong": {
+    "required": [
+        "trackName"
+    ],
+    "type": "object",
+    "properties": {
+        "trackNumber": {
+            "type": "integer",
+            "format": "int32"
+        },
+        "trackName": {
+            "minLength": 1,
+            "minItems": 1,
+            "type": "string",
+            "nullable": true
+        },
+        "duration": {
+            "maximum": 5,
+            "minimum": 2,
+            "exclusiveMinimum": true,
+            "type": "number",
+            "format": "double"
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "trackName": [
+            "Must not be empty."
+        ],
+        "duration": [
+            "Must be greater than '2'.",
+            "Must be less than '5'.",
+            "When track is 13 : The 13th song must be an intermission."
+        ]
+    }
+}

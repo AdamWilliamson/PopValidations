@@ -1,0 +1,19 @@
+
+    public class Validator : AbstractValidator<InputObject>
+    {
+        public Validator()
+        {
+            Describe(x => x.Child)
+                .SetValidator(new ChildValidator());
+        }
+    }
+
+    public class ChildValidator : AbstractSubValidator<ChildInputObject>
+    {
+        public ChildValidator()
+        {
+            Describe(x => x.NString)
+                .IsNotNull();
+        }
+    }
+    

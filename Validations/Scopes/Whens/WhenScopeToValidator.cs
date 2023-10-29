@@ -17,12 +17,27 @@ public sealed class WhenScopeToValidator<TValidationType, TPassThrough>
     WhenStringValidator_IfTruescoped<TValidationType, TPassThrough> something;
 
     public WhenScopeToValidator(
-        ValidationConstructionStore validatorStore,
+        //IValidationStore validatorStore,
+        string whenDescription,
+        ScopedData<TValidationType, TPassThrough> scoped,
+        Func<TValidationType, TPassThrough, bool> ifTrue,
+        Action<ScopedData<TValidationType, TPassThrough>> rules
+    ) : this(
+            //validatorStore,
+            whenDescription,
+            scoped,
+            (x, y) => Task.FromResult(ifTrue.Invoke(x,y)),
+            rules
+        )
+    {}
+
+    public WhenScopeToValidator(
+        //IValidationStore validatorStore,
         string whenDescription,
         ScopedData<TValidationType, TPassThrough> scoped,
         Func<TValidationType, TPassThrough, Task<bool>> ifTrue,
         Action<ScopedData<TValidationType, TPassThrough>> rules
-    ) : base(validatorStore)
+    ) //: base(validatorStore)
     {
         this.whenDescription = whenDescription;
         this.scoped = scoped;
@@ -32,11 +47,12 @@ public sealed class WhenScopeToValidator<TValidationType, TPassThrough>
             ifTrue,
             this.scoped
             );
-        Decorator = (item) => new WhenValidationItemDecorator_Scoped
+        Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator_Scoped
         <TValidationType, TPassThrough>
         (
             item,
-            something
+            something,
+            fieldDescriptor
         );
     }
 
@@ -49,4 +65,6 @@ public sealed class WhenScopeToValidator<TValidationType, TPassThrough>
     {
         rules.Invoke(scoped);
     }
+
+    public override void ChangeStore(IValidationStore store) { }
 }
