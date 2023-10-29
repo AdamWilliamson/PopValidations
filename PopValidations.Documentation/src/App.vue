@@ -249,7 +249,7 @@
           link
         ></v-list-item>
 
-        <v-list-subheader color="secondary">Localisation</v-list-subheader>
+        <!-- <v-list-subheader color="secondary">Localisation</v-list-subheader>
         <v-list-item
           color="secondary"
           title="Adding A Language"
@@ -265,7 +265,7 @@
           value="Testing Extensions"
           :to="{ name: 'TestingExtensions' }"
           link
-        ></v-list-item>
+        ></v-list-item> -->
       </v-list>
     </v-navigation-drawer>
 

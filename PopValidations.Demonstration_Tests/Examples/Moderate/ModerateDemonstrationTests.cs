@@ -19,7 +19,9 @@ public class ModerateDemonstrationTests
             "Rock",
             new()
             {
-                new ModerateDemonstration.ModerateSong("Down With The Sickness", -1, "", 17, "Pop"),
+                new ModerateDemonstration.ModerateSong("Down With The Sickness", -1, "", 17, "Rock"),
+                new ModerateDemonstration.ModerateSong("Down With The Sickness", -1, "", 1, "Pop"),
+                new ModerateDemonstration.ModerateSong(null, null, null, 25, null),
                 null
             }
         );

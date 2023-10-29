@@ -43,7 +43,7 @@
                     "outcomes": [
                         {
                             "validator": "IsLessThanValidation",
-                            "message": "The 13th song must be a shorter than 1 minute long intermission.",
+                            "message": "The 13th song must be an intermission.",
                             "values": [
                                 {
                                     "key": "value",

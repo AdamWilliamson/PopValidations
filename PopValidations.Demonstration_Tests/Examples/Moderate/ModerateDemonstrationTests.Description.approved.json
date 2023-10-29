@@ -101,18 +101,6 @@
                 {
                     "name": "When Genre is Rock",
                     "description": "When Genre is Rock",
-                    "children": [],
-                    "outcomes": [
-                        {
-                            "validator": "IsNotEmptyValidation",
-                            "message": "Songs need Titles.",
-                            "values": []
-                        }
-                    ]
-                },
-                {
-                    "name": "When Genre is Not Rock",
-                    "description": "When Genre is Not Rock",
                     "children": [
                         {
                             "name": "When Track count is greater than 20 treat it like an anthology",
@@ -139,7 +127,13 @@
                             ]
                         }
                     ],
-                    "outcomes": []
+                    "outcomes": [
+                        {
+                            "validator": "IsNotEmptyValidation",
+                            "message": "Songs need Titles.",
+                            "values": []
+                        }
+                    ]
                 }
             ]
         },
@@ -150,7 +144,62 @@
                 {
                     "name": "When Genre is Rock",
                     "description": "When Genre is Rock",
-                    "children": [],
+                    "children": [
+                        {
+                            "name": "When Track count is greater than 20 treat it like an anthology",
+                            "description": "When Track count is greater than 20 treat it like an anthology",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsGreaterThanValidation",
+                                    "message": "Must be greater than '1'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "validator": "IsLessThanValidation",
+                                    "message": "Must be less than '5'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "5"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "When Track count is less than 20",
+                            "description": "When Track count is less than 20",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsGreaterThanValidation",
+                                    "message": "Must be greater than '1'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "validator": "IsLessThanValidation",
+                                    "message": "Must be less than '5'.",
+                                    "values": [
+                                        {
+                                            "key": "value",
+                                            "value": "5"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
                     "outcomes": [
                         {
                             "validator": "IsGreaterThanValidation",
@@ -173,67 +222,6 @@
                             ]
                         }
                     ]
-                },
-                {
-                    "name": "When Genre is Not Rock",
-                    "description": "When Genre is Not Rock",
-                    "children": [
-                        {
-                            "name": "When Track count is greater than 20 treat it like an anthology",
-                            "description": "When Track count is greater than 20 treat it like an anthology",
-                            "children": [],
-                            "outcomes": [
-                                {
-                                    "validator": "IsGreaterThanValidation",
-                                    "message": "Must be greater than '1'.",
-                                    "values": [
-                                        {
-                                            "key": "value",
-                                            "value": "1"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "validator": "IsLessThanValidation",
-                                    "message": "Must be less than '5'.",
-                                    "values": [
-                                        {
-                                            "key": "value",
-                                            "value": "5"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "name": "When Track count is less than 20",
-                            "description": "When Track count is less than 20",
-                            "children": [],
-                            "outcomes": [
-                                {
-                                    "validator": "IsGreaterThanValidation",
-                                    "message": "Must be greater than '1'.",
-                                    "values": [
-                                        {
-                                            "key": "value",
-                                            "value": "1"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "validator": "IsLessThanValidation",
-                                    "message": "Must be less than '5'.",
-                                    "values": [
-                                        {
-                                            "key": "value",
-                                            "value": "5"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    "outcomes": []
                 }
             ]
         }

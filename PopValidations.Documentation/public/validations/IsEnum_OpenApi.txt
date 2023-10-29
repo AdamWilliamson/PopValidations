@@ -1,0 +1,43 @@
+﻿"InputObject": {
+    "type": "object",
+    "properties": {
+        "nString": {
+            "enum": [
+                "Value1",
+                "Value2"
+            ],
+            "type": "string",
+            "nullable": true
+        },
+        "nInt": {
+            "enum": [
+                "1",
+                "2"
+            ],
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+        },
+        "nDouble": {
+            "enum": [
+                "1",
+                "2"
+            ],
+            "type": "number",
+            "format": "double",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nString": [
+            "Must be one of 'Value1,Value2' or '1,2'."
+        ],
+        "nInt": [
+            "Must be one of 'Value1,Value2' or '1,2'."
+        ],
+        "nDouble": [
+            "Must be one of 'Value1,Value2' or '1,2'."
+        ]
+    }
+}

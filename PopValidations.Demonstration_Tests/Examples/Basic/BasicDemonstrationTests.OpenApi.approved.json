@@ -30,7 +30,7 @@
         "duration": [
             "Must be greater than '2'.",
             "Must be less than '5'.",
-            "When track is 13 : The 13th song must be a shorter than 1 minute long intermission."
+            "When track is 13 : The 13th song must be an intermission."
         ]
     }
 }

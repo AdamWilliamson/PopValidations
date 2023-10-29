@@ -35,6 +35,7 @@ const CodeToCopy = [
     ...GetValidationFilesFor("Include"),
     ...GetValidationFilesFor("Is"),
     ...GetValidationFilesFor("IsEmpty"),
+    ...GetValidationFilesFor("IsEnum"),
     ...GetValidationFilesFor("IsEqualTo"),
     ...GetValidationFilesFor("IsGreaterThan"),
     ...GetValidationFilesFor("IsGreaterThanOrEqualTo"),
@@ -53,11 +54,7 @@ const CodeToCopy = [
     ...GetValidationFilesFor("When"),
     ...GetDemonstrationFilesFor("Basic"),
     ...GetDemonstrationFilesFor("Moderate"),
-    ...GetDemonstrationFilesFor("Advanced"),
-    // { inputFile: validatorBasePath + "/ForEach/ForEach_DemoTest.cs", ident: identValidator, outputFile: validatorOutputBasePath + "ForEach_Validator.txt" },
-    // { inputFile: validatorBasePath + "/ForEach/ForEach_DemoTest.cs", ident: identRequest, outputFile: validatorOutputBasePath + "ForEach_Request.txt" },
-    // { inputFile: validatorBasePath + "/ForEach/ForEach_DemoTest.OpenApi.approved.json", ident: null, outputFile: validatorOutputBasePath + "ForEach_OpenApi.txt" },
-    // { inputFile: validatorBasePath + "/ForEach/ForEach_DemoTest.Validation.approved.json", ident: null, outputFile: validatorOutputBasePath + "ForEach_Validation.txt" }
+    ...GetDemonstrationFilesFor("Advanced")
 ];
 
 for(const copyItem of CodeToCopy){

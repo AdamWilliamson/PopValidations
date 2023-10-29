@@ -17,7 +17,10 @@
       <v-col>
         <CodeWindow
           language="csharp"
-          source='builder.Services.AddMediatR(
+          source='using PopValidations;
+using PopValidations.MediatR;
+          
+builder.Services.AddMediatR(
     cfg => cfg
         .RegisterServicesFromAssemblyContaining<HomeController>()
         // Pop Validation Extension, that adds a MediatR Behaviour to validate all objects before executing the handlers.

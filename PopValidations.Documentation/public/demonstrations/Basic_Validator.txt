@@ -29,7 +29,7 @@
                     1.0,
                     o => o
                         .WithErrorMessage("The 13th Song must be an intermission.")
-                        .WithDescription("The 13th song must be a shorter than 1 minute long intermission.")
+                        .WithDescription("The 13th song must be an intermission.")
                 );
         }
     }

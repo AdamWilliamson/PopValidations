@@ -6,12 +6,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.IsEmpty;
+namespace PopValidations.Demonstration_Tests.ValidatorDemoTests.IsEnum;
 
-public static class IsEmpty
+public static class IsEnum
 {
     //Begin-Request
-    public record InputObject(string? NString);
+    public enum TestEnumeration
+    {
+        Value1 = 1,
+        Value2 = 2
+    }
+
+    public record InputObject(string? NString, int? NInt, double? NDouble);
     //End-Request
 
     //Begin-Validator
@@ -19,7 +25,9 @@ public static class IsEmpty
     {
         public Validator()
         {
-            Describe(x => x.NString).IsEmpty();
+            Describe(x => x.NString).IsEnum(typeof(TestEnumeration));
+            Describe(x => x.NInt).IsEnum(typeof(TestEnumeration));
+            Describe(x => x.NDouble).IsEnum(typeof(TestEnumeration));
         }
     }
     //End-Validator
@@ -27,17 +35,17 @@ public static class IsEmpty
     public class TestController : ControllerBase<InputObject> { }
 }
 
-public class IsEmpty_DemoTest
+public class IsEnum_DemoTest
 {
     [Fact]
     public async Task Validation()
     {
         // Arrange
-        var validationRunner = ValidationRunnerHelper.BasicRunnerSetup(new IsEmpty.Validator());
+        var validationRunner = ValidationRunnerHelper.BasicRunnerSetup(new IsEnum.Validator());
 
         // Act
         var validationResult = await validationRunner.Validate(
-            new IsEmpty.InputObject(NString: "NotEmpty")
+            new IsEnum.InputObject(NString: "3", NInt: 3, NDouble: 3.3)
         );
 
         // Assert
@@ -48,7 +56,7 @@ public class IsEmpty_DemoTest
     public void Description()
     {
         // Arrange
-        var descriptionRunner = ValidationRunnerHelper.BasicRunnerSetup(new IsEmpty.Validator());
+        var descriptionRunner = ValidationRunnerHelper.BasicRunnerSetup(new IsEnum.Validator());
 
         // Act
         var descriptionResult = descriptionRunner.Describe();
@@ -63,9 +71,9 @@ public class IsEmpty_DemoTest
         // Arrange
         var config = new WebApiConfig();
         var setup = new TestSetup<
-               IsEmpty.TestController,
-               IsEmpty.Validator,
-               IsEmpty.InputObject
+               IsEnum.TestController,
+               IsEnum.Validator,
+               IsEnum.InputObject
            >();
 
         // Act

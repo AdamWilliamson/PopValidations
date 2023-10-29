@@ -62,7 +62,9 @@
             "artists": [
                 "Must not be null.",
                 "Album is Compliation : Validated to must have different artists",
-                "Album is Single Artist : Must have all the same artists",
+                "Album is Single Artist : Must have all the same artists"
+            ],
+            "artists[n]": [
                 "Must not be null."
             ],
             "coverImageUrl": [
@@ -77,7 +79,9 @@
                 "Must not be null.",
                 "Must be between 3 and 45 inclusive.",
                 "When Album is Collaboration : All songs must contain atleast one album artist.",
-                "When Album is Single : Album must match the rules for single.",
+                "When Album is Single : Album must match the rules for single."
+            ],
+            "songs[n]": [
                 "Must not be null."
             ]
         }
@@ -98,7 +102,9 @@
         "additionalProperties": false,
         "x-validation": {
             "albums": [
-                "Must not be null.",
+                "Must not be null."
+            ],
+            "albums[n]": [
                 "Must not be null."
             ]
         }
@@ -126,7 +132,6 @@
         "additionalProperties": false,
         "x-validation": {
             "name": [
-                "Must not be null.",
                 "Must not be null."
             ]
         }
@@ -173,7 +178,9 @@
         "additionalProperties": false,
         "x-validation": {
             "artists": [
-                "Must not be null.",
+                "Must not be null."
+            ],
+            "artists[n]": [
                 "Must not be null."
             ],
             "trackNumber": [

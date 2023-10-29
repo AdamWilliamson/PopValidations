@@ -2,25 +2,32 @@
 :: 0.9 Validators ::
 =========================================================================
 
-Is Custom							(Working)
-Is Empty							(Working)
+Is Custom							(Working)		(Website: Correct)
+Is Empty							(Working)		(Website: Correct)
 Is Enum								(Working)
-Is equalTo							(Working)
-Is greater Than or Equal To			(Working)
-Is Greater Than						(Working)
-Is Length Exclusively Between		(Working)
-Is Length Inclusively Between		(Working)
-Is Less Than or Equal To			(Working)
-Is Less Than						(Working)
-Is Not Empty						(Working)
-Is Not Null							(Working)
-Is Null								(Working)
+Is EqualTo							(Working)		(Website: Correct)
+Is Greater Than or Equal To			(Working)		(Website: Correct)
+Is Greater Than						(Working)		(Website: Correct)
+Is Length Exclusively Between		(Working)		(Website: Correct)
+Is Length Inclusively Between		(Working)		(Website: Correct)
+Is Less Than or Equal To			(Working)		(Website: Correct)
+Is Less Than						(Working)		(Website: Correct)
+Is Not Empty						(Working)		(Website: Correct)
+Is Not Null							(Working)		(Website: Correct)
+Is Null								(Working)		(Website: Correct)
 
+Include								(Working)		(Website: Correct)
 When								(Working)
 Scope								(Working)
 Scope When							(Working)
 Foreach								(Working)
 
+Basic
+Moderate
+Advanced
+
+Vitally								(Working)		(Website: Correct)
+SetValidator						(Working)		(Website: Correct)
 Total: 17
 
 =========================================================================

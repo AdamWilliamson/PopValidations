@@ -49,13 +49,7 @@ public static class ModerateDemonstration
                 () =>
                 {
                     Include(new RockAlbumValidator());
-                });
 
-            When(
-                "When Genre is Not Rock",
-                (album) => Task.FromResult(album?.Genre != "Rock"),
-                () =>
-                {
                     When(
                         "When Track count is greater than 20 treat it like an anthology",
                         (album) => Task.FromResult((album.Songs?.Count ?? 0) > 20), 
@@ -69,7 +63,7 @@ public static class ModerateDemonstration
                         (album) => Task.FromResult((album.Songs?.Count ?? 0) > 20), 
                         () =>
                         {
-                            Include(new NotRockOrAnthologyAlbumValidator());
+                            Include(new RockNotAnthologyAlbumValidator());
                         });
                 });
         }
@@ -98,9 +92,9 @@ public static class ModerateDemonstration
         }
     }
 
-    public class NotRockOrAnthologyAlbumValidator : AbstractSubValidator<ModerateAlbum>
+    public class RockNotAnthologyAlbumValidator : AbstractSubValidator<ModerateAlbum>
     {
-        public NotRockOrAnthologyAlbumValidator()
+        public RockNotAnthologyAlbumValidator()
         {
             DescribeEnumerable(x => x.Songs)
                 .ForEach(song =>

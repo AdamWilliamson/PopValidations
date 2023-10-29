@@ -6,3 +6,4 @@ PopValidations
 /PopValidations.ExampleWebApi/PopValidations.ExampleWebApi.csproj.user
 /PopValidations.MediatR/bin/Debug
 /Validations/bin/Debug
+*.nupkg

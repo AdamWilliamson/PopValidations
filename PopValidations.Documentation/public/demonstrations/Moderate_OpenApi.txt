@@ -40,7 +40,9 @@
             ],
             "songs": [
                 "Must not be null.",
-                "When Genre is Rock : Must be between 6 and 15 exclusive.",
+                "When Genre is Rock : Must be between 6 and 15 exclusive."
+            ],
+            "songs[n]": [
                 "Must not be null."
             ]
         }
@@ -75,15 +77,15 @@
             "duration": [
                 "When Genre is Rock : Must be greater than '1'.",
                 "When Genre is Rock : Must be less than '5'.",
-                "When Genre is Not Rock & When Track count is greater than 20 treat it like an anthology : Must be greater than '1'.",
-                "When Genre is Not Rock & When Track count is greater than 20 treat it like an anthology : Must be less than '5'.",
-                "When Genre is Not Rock & When Track count is less than 20 : Must be greater than '1'.",
-                "When Genre is Not Rock & When Track count is less than 20 : Must be less than '5'."
+                "When Genre is Rock & When Track count is greater than 20 treat it like an anthology : Must be greater than '1'.",
+                "When Genre is Rock & When Track count is greater than 20 treat it like an anthology : Must be less than '5'.",
+                "When Genre is Rock & When Track count is less than 20 : Must be greater than '1'.",
+                "When Genre is Rock & When Track count is less than 20 : Must be less than '5'."
             ],
             "genre": [
                 "When Genre is Rock : Songs need Titles.",
-                "When Genre is Not Rock & When Track count is greater than 20 treat it like an anthology : Songs need Titles.",
-                "When Genre is Not Rock & When Track count is less than 20 : Songs need Titles."
+                "When Genre is Rock & When Track count is greater than 20 treat it like an anthology : Songs need Titles.",
+                "When Genre is Rock & When Track count is less than 20 : Songs need Titles."
             ]
         }
     }

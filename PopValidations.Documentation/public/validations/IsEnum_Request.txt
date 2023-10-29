@@ -1,0 +1,9 @@
+
+    public enum TestEnumeration
+    {
+        Value1 = 1,
+        Value2 = 2
+    }
+
+    public record InputObject(string? NString, int? NInt, double? NDouble);
+    

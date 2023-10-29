@@ -7,7 +7,18 @@
             "Is not greater than '1'.",
             "Is not less than '5'."
         ],
-        "songs[1]": [
+        "songs[1].Duration": [
+            "Is not greater than '1'.",
+            "Is not less than '5'."
+        ],
+        "songs[2].Duration": [
+            "Is not greater than '1'.",
+            "Is not less than '5'."
+        ],
+        "songs[2].Genre": [
+            "Song does not have a Title."
+        ],
+        "songs[3]": [
             "Is null."
         ]
     }

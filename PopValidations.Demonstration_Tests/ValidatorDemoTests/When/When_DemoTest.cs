@@ -33,6 +33,7 @@ public static class When
                         }
                     );
 
+                    // All other validations won't execute if this fails.
                     Describe(x => x.DependantField).Vitally().IsNotEmpty();
 
                     When(

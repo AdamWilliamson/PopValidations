@@ -17,8 +17,15 @@ public static class Scope
     //Begin-Validator
     public static class DataRetriever
     {
-        public static Task<string> GetValue() { return Task.FromResult("teststring"); }
-        public static Task<string> GetMoreValue(InputObject obj) { return Task.FromResult(obj?.Field + " teststring2"); }
+        public static Task<string> GetValue() 
+        { 
+            return Task.FromResult("teststring"); 
+        }
+
+        public static Task<string> GetMoreValue(InputObject obj) 
+        { 
+            return Task.FromResult(obj?.Field + " teststring2"); 
+        }
     }
 
     public class Validator : AbstractValidator<InputObject>
