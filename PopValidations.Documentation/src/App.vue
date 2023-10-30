@@ -116,6 +116,13 @@
         ></v-list-item>
         <v-list-item
           color="secondary"
+          title="Is Email"
+          value="Is Email"
+          :to="{ name: 'IsEmailValidation' }"
+          link
+        ></v-list-item>
+        <v-list-item
+          color="secondary"
           title="Is Empty"
           value="Is Empty"
           :to="{ name: 'IsEmptyValidation' }"

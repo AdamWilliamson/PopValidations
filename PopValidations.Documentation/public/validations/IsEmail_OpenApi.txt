@@ -1,0 +1,16 @@
+﻿"InputObject": {
+    "type": "object",
+    "properties": {
+        "nString": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "nString": [
+            "Must be a valid email."
+        ]
+    }
+}

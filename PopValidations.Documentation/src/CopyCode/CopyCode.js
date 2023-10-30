@@ -34,6 +34,7 @@ const CodeToCopy = [
     ...GetValidationFilesFor("ForEach"),
     ...GetValidationFilesFor("Include"),
     ...GetValidationFilesFor("Is"),
+    ...GetValidationFilesFor("IsEmail"),
     ...GetValidationFilesFor("IsEmpty"),
     ...GetValidationFilesFor("IsEnum"),
     ...GetValidationFilesFor("IsEqualTo"),

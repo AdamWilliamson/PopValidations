@@ -3,6 +3,9 @@
         "listOfLevel2[0].ListOfLevel3[0].TestItem.Is": [
             "Is Failed"
         ],
+        "listOfLevel2[0].ListOfLevel3[0].TestItem.IsEmail": [
+            "Is not a valid email."
+        ],
         "listOfLevel2[0].ListOfLevel3[0].TestItem.IsEmpty": [
             "Is not empty."
         ],
@@ -41,6 +44,9 @@
         ],
         "listOfLevel2[0].ListOfLevel3[1].TestItem.Is": [
             "Is Failed"
+        ],
+        "listOfLevel2[0].ListOfLevel3[1].TestItem.IsEmail": [
+            "Is not a valid email."
         ],
         "listOfLevel2[0].ListOfLevel3[1].TestItem.IsEmpty": [
             "Is not empty."
@@ -81,6 +87,9 @@
         "listOfLevel2[0].ListOfLevel3[2].TestItem.Is": [
             "Is Failed"
         ],
+        "listOfLevel2[0].ListOfLevel3[2].TestItem.IsEmail": [
+            "Is not a valid email."
+        ],
         "listOfLevel2[0].ListOfLevel3[2].TestItem.IsEmpty": [
             "Is not empty."
         ],
@@ -120,6 +129,10 @@
         "listOfLevel2[0].TestItem.Is": [
             "Is Failed",
             "Is Failed"
+        ],
+        "listOfLevel2[0].TestItem.IsEmail": [
+            "Is not a valid email.",
+            "Is not a valid email."
         ],
         "listOfLevel2[0].TestItem.IsEmpty": [
             "Is not empty.",
@@ -172,6 +185,9 @@
         "listOfLevel2[1].ListOfLevel3[0].TestItem.Is": [
             "Is Failed"
         ],
+        "listOfLevel2[1].ListOfLevel3[0].TestItem.IsEmail": [
+            "Is not a valid email."
+        ],
         "listOfLevel2[1].ListOfLevel3[0].TestItem.IsEmpty": [
             "Is not empty."
         ],
@@ -210,6 +226,9 @@
         ],
         "listOfLevel2[1].ListOfLevel3[1].TestItem.Is": [
             "Is Failed"
+        ],
+        "listOfLevel2[1].ListOfLevel3[1].TestItem.IsEmail": [
+            "Is not a valid email."
         ],
         "listOfLevel2[1].ListOfLevel3[1].TestItem.IsEmpty": [
             "Is not empty."
@@ -250,6 +269,9 @@
         "listOfLevel2[1].ListOfLevel3[2].TestItem.Is": [
             "Is Failed"
         ],
+        "listOfLevel2[1].ListOfLevel3[2].TestItem.IsEmail": [
+            "Is not a valid email."
+        ],
         "listOfLevel2[1].ListOfLevel3[2].TestItem.IsEmpty": [
             "Is not empty."
         ],
@@ -289,6 +311,10 @@
         "listOfLevel2[1].TestItem.Is": [
             "Is Failed",
             "Is Failed"
+        ],
+        "listOfLevel2[1].TestItem.IsEmail": [
+            "Is not a valid email.",
+            "Is not a valid email."
         ],
         "listOfLevel2[1].TestItem.IsEmpty": [
             "Is not empty.",
@@ -341,6 +367,9 @@
         "listOfLevel2[2].ListOfLevel3[0].TestItem.Is": [
             "Is Failed"
         ],
+        "listOfLevel2[2].ListOfLevel3[0].TestItem.IsEmail": [
+            "Is not a valid email."
+        ],
         "listOfLevel2[2].ListOfLevel3[0].TestItem.IsEmpty": [
             "Is not empty."
         ],
@@ -379,6 +408,9 @@
         ],
         "listOfLevel2[2].ListOfLevel3[1].TestItem.Is": [
             "Is Failed"
+        ],
+        "listOfLevel2[2].ListOfLevel3[1].TestItem.IsEmail": [
+            "Is not a valid email."
         ],
         "listOfLevel2[2].ListOfLevel3[1].TestItem.IsEmpty": [
             "Is not empty."
@@ -419,6 +451,9 @@
         "listOfLevel2[2].ListOfLevel3[2].TestItem.Is": [
             "Is Failed"
         ],
+        "listOfLevel2[2].ListOfLevel3[2].TestItem.IsEmail": [
+            "Is not a valid email."
+        ],
         "listOfLevel2[2].ListOfLevel3[2].TestItem.IsEmpty": [
             "Is not empty."
         ],
@@ -458,6 +493,10 @@
         "listOfLevel2[2].TestItem.Is": [
             "Is Failed",
             "Is Failed"
+        ],
+        "listOfLevel2[2].TestItem.IsEmail": [
+            "Is not a valid email.",
+            "Is not a valid email."
         ],
         "listOfLevel2[2].TestItem.IsEmpty": [
             "Is not empty.",
@@ -510,6 +549,10 @@
         "testItem.Is": [
             "Is Failed",
             "Is Failed"
+        ],
+        "testItem.IsEmail": [
+            "Is not a valid email.",
+            "Is not a valid email."
         ],
         "testItem.IsEmpty": [
             "Is not empty.",

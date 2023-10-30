@@ -32,6 +32,7 @@ internal class FieldObjectValidator : AbstractSubValidator<FieldObject>
         Describe(x => x.IsNotEmpty).IsNotEmpty();
         Describe(x => x.IsNotNull).IsNotNull();
         Describe(x => x.IsNull).IsNull();
+        Describe(x => x.IsEmail).IsEmail();
     }
 }
 

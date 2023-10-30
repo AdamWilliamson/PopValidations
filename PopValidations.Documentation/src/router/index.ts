@@ -146,6 +146,11 @@ const router = createRouter({
           component: () => import("@/features/validations/IsNullValidation.vue"),
         },
         {
+          path: "/validation/isemail",
+          name: "IsEmailValidation",
+          component: () => import("@/features/validations/IsEmailValidation.vue"),
+        },
+        {
           path: "/validation/isempty",
           name: "IsEmptyValidation",
           component: () => import("@/features/validations/IsEmptyValidation.vue"),
