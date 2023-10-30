@@ -1,0 +1,15 @@
+﻿{
+    "results": [
+        {
+            "property": "NString",
+            "outcomes": [
+                {
+                    "validator": "IsEmailValidation",
+                    "message": "Must be a valid email.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

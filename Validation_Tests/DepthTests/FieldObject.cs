@@ -10,6 +10,7 @@ public enum FieldObjectEnum
 
 internal record FieldObject(
     int Is,
+    string IsEmail,
     string IsEmpty,
     string IsEnum,
     int IsEqualTo,
@@ -42,6 +43,7 @@ internal static class FieldObjectBuilder
 
         return new FieldObject(
             Is: 5,
+            IsEmail: "Test@Email.com",
             IsEmpty: "",
             IsEnum: nameof(FieldObjectEnum.Value1),
             IsEqualTo: intValue,
@@ -63,6 +65,7 @@ internal static class FieldObjectBuilder
         
         return new FieldObject(
             Is: 5,
+            IsEmail: "Test@Email.com",
             IsEmpty: "",
             IsEnum: nameof(FieldObjectEnum.Value1),
             IsEqualTo: intValue,
@@ -84,6 +87,7 @@ internal static class FieldObjectBuilder
 
         return new FieldObject(
             Is: 10,
+            IsEmail: "NotAnEmail",
             IsEmpty: "NotEmpty",
             IsEnum: "Not an enum value",
             IsEqualTo: intValue + 1,

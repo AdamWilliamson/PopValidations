@@ -15,6 +15,18 @@
 
     <v-row>
       <v-col>
+        <v-card>
+          <v-card-text>
+            <a href="https://www.nuget.org/packages/PopValidations.MediatR">https://www.nuget.org/packages/PopValidations.MediatR</a><br />
+            Or via CLI<br />
+            dotnet add package PopValidations.MediatR --version 0.9.0
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
         <CodeWindow
           language="csharp"
           source='using PopValidations;

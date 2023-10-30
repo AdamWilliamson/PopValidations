@@ -38,7 +38,8 @@ public class OpenApiConfig
         new IsLessThanOrEqualToValidationToOpenApiConverter(),
         new IsEmptyValidationToOpenApiConverter(),
         new IsNotEmptyValidationToOpenApiConverter(),
-        new IsCustomValidationToOpenApiConverter()
+        new IsCustomValidationToOpenApiConverter(),
+        new IsEmailValidationToOpenApiConverter(),
     };
 
     public Func<Type, ValidationLevel> TypeValidationLevel { get; set; } 

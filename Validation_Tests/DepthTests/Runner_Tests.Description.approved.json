@@ -435,6 +435,30 @@
             ]
         },
         {
+            "property": "TestItem.IsEmail",
+            "outcomes": [
+                {
+                    "validator": "IsEmailValidation",
+                    "message": "Must be a valid email.",
+                    "values": []
+                }
+            ],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [],
+                    "outcomes": [
+                        {
+                            "validator": "IsEmailValidation",
+                            "message": "Must be a valid email.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "property": "ListOfLevel2",
             "outcomes": [],
             "validationGroups": [
@@ -996,6 +1020,37 @@
             ]
         },
         {
+            "property": "ListOfLevel2[n].TestItem.IsEmail",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEmailValidation",
+                                    "message": "Must be a valid email.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": [
+                        {
+                            "validator": "IsEmailValidation",
+                            "message": "Must be a valid email.",
+                            "values": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "property": "ListOfLevel2[n].ListOfLevel3",
             "outcomes": [],
             "validationGroups": [
@@ -1422,6 +1477,31 @@
                                 {
                                     "validator": "IsNullValidation",
                                     "message": "Must be null.",
+                                    "values": []
+                                }
+                            ]
+                        }
+                    ],
+                    "outcomes": []
+                }
+            ]
+        },
+        {
+            "property": "ListOfLevel2[n].ListOfLevel3[n].TestItem.IsEmail",
+            "outcomes": [],
+            "validationGroups": [
+                {
+                    "name": "When ListOfLevel2 is Not Null",
+                    "description": "When ListOfLevel2 is Not Null",
+                    "children": [
+                        {
+                            "name": "When ListOfLevel2 is Not Null",
+                            "description": "When ListOfLevel2 is Not Null",
+                            "children": [],
+                            "outcomes": [
+                                {
+                                    "validator": "IsEmailValidation",
+                                    "message": "Must be a valid email.",
                                     "values": []
                                 }
                             ]

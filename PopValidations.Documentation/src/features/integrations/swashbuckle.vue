@@ -4,11 +4,28 @@
       <v-col>
         <v-card>
           <v-card-title><h3>Swashbuckle</h3></v-card-title>
-          <v-card-text>Pop Validations, using the PopValidations.Swashbuckle library, can convert validators into OpenApi descriptions.</v-card-text>
+          <v-card-text>Pop Validations, using the PopValidations.Swashbuckle library, can convert validators into OpenApi descriptions.
+          <br/>
+          The Swashbuckle integration, once activated correctly, will automatically add the conversions for any object registered with a AbstractValidator.<br />
+          There is a potential thing to watch for, due to OpenApi. It doesn't support very well, describing the same object with different validations dependant on the api end point.
+          It is recommended to use this correctly, you ensure you use unique objects for each end point, or that they must share validation.
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
     
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-text>
+            <a href="https://www.nuget.org/packages/PopValidations.Swashbuckle">https://www.nuget.org/packages/PopValidations.Swashbuckle</a><br />
+            Or via CLI<br />
+            dotnet add package PopValidations.Swashbuckle --version 0.9.0
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col>
         <CodeWindow
