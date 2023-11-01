@@ -3,8 +3,9 @@
 =========================================================================
 
 Is Custom							(Working)		(Website: Correct)
+Is Email							(Working)		(Website: Correct)
 Is Empty							(Working)		(Website: Correct)
-Is Enum								(Working)
+Is Enum								(Working)		(Website: Correct)
 Is EqualTo							(Working)		(Website: Correct)
 Is Greater Than or Equal To			(Working)		(Website: Correct)
 Is Greater Than						(Working)		(Website: Correct)
@@ -34,9 +35,6 @@ Total: 17
 ::Validators Wanted::
 =========================================================================
 
-Email Validator
-	Microsoft apprived email rules are sufficient
-
 MatchesRegularExpression
 	takes a regular Expression, string must match
 
@@ -60,7 +58,6 @@ MatchesJsonSchema
 
 IsUrl
 	takes string, checks if valid url format.
-
 
 Switch
 	Example:

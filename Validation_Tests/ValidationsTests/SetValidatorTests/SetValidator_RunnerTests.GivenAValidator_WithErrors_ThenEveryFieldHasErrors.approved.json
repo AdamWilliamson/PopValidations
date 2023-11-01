@@ -1,0 +1,19 @@
+﻿{
+    "errors": {
+        "allFieldTypesDictionary": [
+            "Is not empty."
+        ],
+        "allFieldTypesIEnumerable": [
+            "Is not empty."
+        ],
+        "allFieldTypesLinkedList": [
+            "Is not empty."
+        ],
+        "allFieldTypesList": [
+            "Is not empty."
+        ],
+        "string": [
+            "Is not empty."
+        ]
+    }
+}
