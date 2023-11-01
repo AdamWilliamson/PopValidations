@@ -56,50 +56,50 @@ public class PopValidationHttpException : HttpResponseException
 
 
 
-public class PopValidationEceptionHandlingMiddleware : IExceptionHandler
-{
-    public Task HandleAsync(ExceptionHandlerContext context, CancellationToken cancellationToken)
-    {
-        if (context.Exception is PopValidationHttpException exception)
-        {
-            context.Result = new PopValidationEceptionHandlingResult(exception, context.Request);
-            //new HttpResponseMessage(HttpStatusCode.UnprocessableEntity)
-            //{
-            //    Content = new StringContent(JsonConvert.SerializeObject(exception.Errors), Encoding.Unicode)
-            //};
-            //context.Result = new ObjectResult(exception.Errors)
-            //{
-            //    StatusCode = (int)HttpStatusCode.UnprocessableEntity
-            //};
-            //context.Exce
-            //context.ExceptionHandled = true;
-        }
+//public class PopValidationEceptionHandlingMiddleware : IExceptionHandler
+//{
+//    public Task HandleAsync(ExceptionHandlerContext context, CancellationToken cancellationToken)
+//    {
+//        if (context.Exception is PopValidationHttpException exception)
+//        {
+//            context.Result = new PopValidationEceptionHandlingResult(exception, context.Request);
+//            //new HttpResponseMessage(HttpStatusCode.UnprocessableEntity)
+//            //{
+//            //    Content = new StringContent(JsonConvert.SerializeObject(exception.Errors), Encoding.Unicode)
+//            //};
+//            //context.Result = new ObjectResult(exception.Errors)
+//            //{
+//            //    StatusCode = (int)HttpStatusCode.UnprocessableEntity
+//            //};
+//            //context.Exce
+//            //context.ExceptionHandled = true;
+//        }
 
-        return Task.CompletedTask;
-    }
-}
+//        return Task.CompletedTask;
+//    }
+//}
 
-public class PopValidationEceptionHandlingResult : IHttpActionResult
-{
-    PopValidationHttpException exception;
-    HttpRequestMessage _request;
+//public class PopValidationEceptionHandlingResult : IHttpActionResult
+//{
+//    PopValidationHttpException exception;
+//    HttpRequestMessage _request;
 
-    public PopValidationEceptionHandlingResult(PopValidationHttpException exception, HttpRequestMessage request)
-    {
-        this.exception = exception;
-        _request = request;
-    }
+//    public PopValidationEceptionHandlingResult(PopValidationHttpException exception, HttpRequestMessage request)
+//    {
+//        this.exception = exception;
+//        _request = request;
+//    }
 
-    public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-    {
-        var response = new HttpResponseMessage()
-        {
-            Content = new StringContent(JsonConvert.SerializeObject(exception.Errors, Formatting.Indented)),
-            RequestMessage = _request
-        };
-        return Task.FromResult(response);
-    }
-}
+//    public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+//    {
+//        var response = new HttpResponseMessage()
+//        {
+//            Content = new StringContent(JsonConvert.SerializeObject(exception.Errors, Formatting.Indented)),
+//            RequestMessage = _request
+//        };
+//        return Task.FromResult(response);
+//    }
+//}
 
 //public static class PopValidationEceptionHandlingExtensions
 //{

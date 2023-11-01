@@ -1,23 +1,15 @@
-using Microsoft.AspNetCore.Diagnostics;
-using Newtonsoft.Json;
 using PopValidations;
 using PopValidations.ExampleWebApi.Features.AdvancedExample;
 using PopValidations.ExampleWebApi.Features.BasicExample;
 using PopValidations.MediatR;
 using PopValidations.Swashbuckle;
-using System.Net;
-using static System.Net.Mime.MediaTypeNames;
+using PopValidations.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // When Adding Controllers, You can convert exceptions caused by Validations, into WebApi Validation Errors.
 // This Filter provided by PopValidations converts exceptions into 422 Validation Errors for WebApi.
 builder.Services.AddControllers();
-
-//    // This Filter provided by PopValidations converts exceptions into 422 Validation Errors for WebApi.
-//    options => options.Filters.Add<PopValidationExceptionFilter>()
-//);
-
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -50,41 +42,9 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddSingleton<AlbumVerificationService, AlbumVerificationService>();
 //== End Include
 
-//builder.Services.AddExceptionHandler<PopValidationEceptionHandlingMiddleware>((o, t) => { });
-
 var app = builder.Build();
 
-//if (!app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Error");
-//}
-//else { }
-
-//app.UseExceptionHandler(exceptionHandlerApp =>
-//{
-//    exceptionHandlerApp.Run(async context =>
-//    {
-//        var exceptionHandlerPathFeature =
-//            context.Features.Get<IExceptionHandlerPathFeature>();
-
-
-//        if (exceptionHandlerPathFeature?.Error is PopValidationHttpException exception)
-//        {
-//            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
-//        // using static System.Net.Mime.MediaTypeNames;
-//        context.Response.ContentType = Text.Plain;
-
-//        //await context.Response.WriteAsync("An exception was thrown.");
-//        context.Response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
-
-        
-//            await context.Response.WriteAsync(JsonConvert.SerializeObject(exception.Errors));
-//        }
-
-//    });
-
-//});
+app.UseMediatRToHttpErrorMiddleware();
 
 app.UseStaticFiles();
 
