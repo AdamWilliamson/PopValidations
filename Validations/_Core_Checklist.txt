@@ -4,7 +4,7 @@
 		Tests Scopes				(completed, final checks to go)
 		Tests for Depth				(completed, final checks to go)
 		Tests For ForEach			(completed, final checks to go)
-		Swashbuckle Integration	
+		Swashbuckle Integration		(completed)
 			Scopes					(completed, final checks to go)
 			Whens					(completed, final checks to go)
 			Foreach					(completed, final checks to go)
@@ -13,11 +13,11 @@
 			Demo					(completed, final checks to go)
 		Mediatr Integration			(completed, final checks to go)
 			Tests					(completed, final checks to go)
-			Demo					
+			Demo					(completed)
 		Website						(Running)
-			Running
-			Instructions
-			Validation Examples		
+			Running					(completed)
+			Instructions			(completed)
+			Validation Examples		(completed)
 		Rename Main Validator		(Rejected)
 
 Version 1.0

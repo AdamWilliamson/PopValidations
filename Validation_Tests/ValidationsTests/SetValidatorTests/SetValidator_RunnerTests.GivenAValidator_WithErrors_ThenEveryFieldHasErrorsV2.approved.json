@@ -1,0 +1,10 @@
+﻿{
+    "errors": {
+        "depth2List[0].Depth3List[0].TestInt": [
+            "Is not greater than '5'."
+        ],
+        "depth2List[1].Depth3List[0].TestInt": [
+            "Is not greater than '5'."
+        ]
+    }
+}

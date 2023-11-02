@@ -43,6 +43,61 @@ builder.Services.AddMediatR(
 builder.Services.RegisterRunner()
     // And this extension and all the Validators in the same assembly as "AlbumValidator"
     .RegisterAllMainValidators(typeof(AlbumValidator).Assembly);
+
+// If you want to auto-convert MediatR PopValidation errors into http status code errors,
+// you can include the code below, and use it my building the app
+// and call on the WebApplication in the Program.cs file
+// app.UseMediatRToHttpErrorMiddleware();
+
+'
+        ></CodeWindow>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+      <h3>MediatR results to WebApi error response helper</h3>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <CodeWindow
+          language="csharp"
+          source='namespace PopValidations.WebApi;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using PopValidations.MediatR;
+using System.Net;
+using static System.Net.Mime.MediaTypeNames;
+
+public static class PopValidationsWebApiExtenstions
+{
+    public static void UseMediatRToHttpErrorMiddleware(this WebApplication? app)
+    {
+        app.UseExceptionHandler(exceptionHandlerApp =>
+        {
+            exceptionHandlerApp.Run(async context =>
+            {
+                var exceptionHandlerPathFeature =
+                    context.Features.Get<IExceptionHandlerPathFeature>();
+
+                if (exceptionHandlerPathFeature?.Error is PopValidationHttpException exception)
+                {
+                    context.Response.ContentType = Text.Plain;
+                    context.Response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
+
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(exception.Errors));
+                }
+            });
+        });
+    }
+}
+
+
 '
         ></CodeWindow>
       </v-col>

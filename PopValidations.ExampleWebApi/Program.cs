@@ -3,14 +3,14 @@ using PopValidations.ExampleWebApi.Features.AdvancedExample;
 using PopValidations.ExampleWebApi.Features.BasicExample;
 using PopValidations.MediatR;
 using PopValidations.Swashbuckle;
+using PopValidations.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // When Adding Controllers, You can convert exceptions caused by Validations, into WebApi Validation Errors.
-builder.Services.AddControllers(
-    // This Filter provided by PopValidations converts exceptions into 422 Validation Errors for WebApi.
-    options => options.Filters.Add<PopValidationExceptionFilter>()
-);
+// This Filter provided by PopValidations converts exceptions into 422 Validation Errors for WebApi.
+builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 
 //== Swagger Setup Services
@@ -44,16 +44,13 @@ builder.Services.AddSingleton<AlbumVerificationService, AlbumVerificationService
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-}
+app.UseMediatRToHttpErrorMiddleware();
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 if (app.Environment.IsDevelopment())
