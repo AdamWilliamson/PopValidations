@@ -19,31 +19,23 @@ as well as, or instead of, modifying the OpenApi in-built validation options.
 An example
 ```c#
 using PopValidation;
+using PopValidations.Swashbuckle;
 
-public record Song(string? Title, double Duration);
+// PopValidations Extensions Function for Registering The Validation Runner
+builder.Services.RegisterRunner()
+    // And this extension and all the Validators in the same assembly as "SongValidator"
+    .RegisterAllMainValidators(typeof(BasicObjectController).Assembly);
 
-public class SongValidator: AbstractValidator<Song> 
-{
-    public SongValidator() 
+// Register a Pop Validation Config that describes the configuration for describing the validations within OpenApi
+builder.Services.RegisterPopValidationsOpenApiDefaults(new WebApiConfig());
+
+// Inside the Swagger generator, you now just need to Add the PopValidation Filter, that will modify the OpenApi Schema
+builder.Services.AddSwaggerGen(
+    options =>
     {
-        RuleFor(x => x.Title).Vitally().NotEmpty();
-        RuleFor(x => x.Duration)
-            .IsNotNull()
-            .IsLessThan(10.0, options => options.WithErrorMessage("Songs must be less than 10 minutes long."));
-    }
-}
-
-// Instantiate the Validation Runner.
-var runner = new ValidationRunner<Song>(
-    new () { new SongValidator() },
-    new MessageProcessor()
-);
-
-// Run the Validation System.
-var results = await runner.Validate(new Song("A Song", 5.5));
-
-// Determine failures;
-var isFailure = results.Errors.Any();
+        // Register PopValidation's Custom API decorations
+        options.RegisterOpenApiModificationFilter();
+    });
 ```
 
 ### Full Documentation
