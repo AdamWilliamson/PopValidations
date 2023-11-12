@@ -340,6 +340,16 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>Scope_IncludeTest.cs</DependentUpon>
     </None>
+    <None Update="ValidationsTests\SwitchValidationTests\SwitchValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>SwitchValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\SwitchValidationTests\SwitchValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>SwitchValidation_RunnerTests.cs</DependentUpon>
+    </None>
     <None Update="ValidationsTests\WhenValidationTests\When_DemoTest.Description.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>

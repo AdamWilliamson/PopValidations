@@ -1,0 +1,19 @@
+﻿{
+    "errors": {}
+}
+OR
+{
+    "errors": {
+        "bool": [
+            "TestCheck1 and TestCheck2 were not true"
+        ]
+    }
+}
+OR
+{
+    "errors": {
+        "bool": [
+            "TestCheck1 must be true and TestCheck2 must not be true"
+        ]
+    }
+}

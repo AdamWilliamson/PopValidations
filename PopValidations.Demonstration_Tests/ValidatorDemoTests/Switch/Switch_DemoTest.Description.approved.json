@@ -1,0 +1,30 @@
+﻿{
+    "results": [
+        {
+            "property": "Bool",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Check 1 and Check 2 should be true",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Check 1 must be true, but check 2 is false",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

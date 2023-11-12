@@ -4,6 +4,12 @@ using PopValidations.FieldDescriptors.Base;
 
 namespace PopValidations.Validations.Base;
 
+public class ScopedDataException : Exception
+{
+    public ScopedDataException() : base("ScopedData did somethng unexpected") { }
+    public ScopedDataException(string message) : base(message) { }
+}
+
 public interface IScopedData<TResponse> : IScopeData 
 {
     ScopedData<TResponse, TNewResponse> To<TNewResponse>(string newDescription,
@@ -57,7 +63,7 @@ public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
         if (HasRetrievedValue) return;
 
         if (PassThroughFunction == null)
-            throw new Exception("Passthrough should NOT be null");
+            throw new ScopedDataException("Passthrough should NOT be null");
 
         RetrievedValue = await PassThroughFunction.Invoke();
         HasRetrievedValue = true;
@@ -188,7 +194,7 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
                     var result = fieldDescriptorOutline.GetValue(instance);
                     if (result is not TPassThrough)
                     {
-                        throw new Exception();
+                        throw new ScopedDataException();
                     }
                     return Task.FromResult((TPassThrough)result);
                 }
@@ -205,27 +211,40 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
             await Parent.Init(instance);
             var parentValue = Parent.GetValue();
 
-            if (parentValue is not TPassThrough)
+            if (parentValue is not TPassThrough 
+                && !(parentValue == null && typeof(TPassThrough).IsGenericType && typeof(TPassThrough).GetGenericTypeDefinition() == typeof(Nullable<>))
+                && typeof(TPassThrough).IsValueType
+            )
             {
-                throw new Exception();
+                throw new ScopedDataException();
             }
 
             if (PassThroughFunction == null)
-                throw new Exception("Passthrough should NOT be null");
+                throw new ScopedDataException("Passthrough should NOT be null");
 
-            RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)parentValue);
+            if (parentValue == null)
+                RetrievedValue = await PassThroughFunction.Invoke(default);
+            else
+                RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)parentValue);
         }
         else
         {
-            if (instance is not TPassThrough)
+            if (instance is not TPassThrough
+                && !(typeof(TPassThrough).IsGenericType && typeof(TPassThrough).GetGenericTypeDefinition() == typeof(Nullable<>))
+                && typeof(TPassThrough).IsValueType)
             {
-                throw new Exception("Invalid Data Type.");
+                throw new ScopedDataException("Invalid Data Type.");
             }
 
             if (PassThroughFunction == null)
-                throw new Exception("Passthrough should NOT be null");
+                throw new ScopedDataException("Passthrough should NOT be null");
 
-            RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)instance);
+            //RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)instance);
+
+            if (instance == null)
+                RetrievedValue = await PassThroughFunction.Invoke(default);
+            else
+                RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)instance);
         }
 
         HasRetrievedValue = true;

@@ -256,6 +256,14 @@
           link
         ></v-list-item>
 
+        <v-list-item
+          color="secondary"
+          title="Switch"
+          value="Switch"
+          :to="{ name: 'Switch' }"
+          link
+        ></v-list-item>
+
         <!-- <v-list-subheader color="secondary">Localisation</v-list-subheader>
         <v-list-item
           color="secondary"

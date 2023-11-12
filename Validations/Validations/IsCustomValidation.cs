@@ -49,6 +49,7 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
             if (value == null)
             {
                 scopedValue?.SetParent(new ScopedData<TFieldType?>(default));
+                
                 if (customValidationFunc != null && customValidationFunc.Invoke(default))
                 {
                     return CreateValidationSuccessful();
@@ -61,6 +62,7 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
             else if (value is TFieldType converted)
             {
                 scopedValue?.SetParent(new ScopedData<TFieldType?>(converted));
+
                 if (customValidationFunc != null && customValidationFunc.Invoke(converted))
                 {
                     return CreateValidationSuccessful();

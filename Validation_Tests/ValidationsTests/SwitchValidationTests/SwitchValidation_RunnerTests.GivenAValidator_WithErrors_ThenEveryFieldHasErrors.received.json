@@ -1,0 +1,46 @@
+﻿{
+    "errors": {
+        "arrayOfLevel2[0].ArrayOfLevel3[0].ArrayOfLevel4[0].NIntegerLevel4": [
+            "Is too big."
+        ],
+        "arrayOfLevel2[0].ArrayOfLevel3[0].ArrayOfLevel4[1].NIntegerLevel4": [
+            "Is null."
+        ],
+        "arrayOfLevel2[0].ArrayOfLevel3[0].NIntegerLevel3": [
+            "Is null."
+        ],
+        "arrayOfLevel2[0].ArrayOfLevel3[1].NIntegerLevel3": [
+            "Is too big."
+        ],
+        "arrayOfLevel2[0].NIntegerLevel2": [
+            "Is null."
+        ],
+        "arrayOfLevel2[1].NIntegerLevel2": [
+            "Is too big."
+        ],
+        "level2.ArrayOfLevel3[0].NIntegerLevel3": [
+            "Is null."
+        ],
+        "level2.ArrayOfLevel3[1].NIntegerLevel3": [
+            "Is null."
+        ],
+        "level2.Level3.ArrayOfLevel4[0].NIntegerLevel4": [
+            "Is too big."
+        ],
+        "level2.Level3.ArrayOfLevel4[1].NIntegerLevel4": [
+            "Is null."
+        ],
+        "level2.Level3.Level4.NIntegerLevel4": [
+            "Is too big."
+        ],
+        "level2.Level3.NIntegerLevel3": [
+            "Is null."
+        ],
+        "level2.NIntegerLevel2": [
+            "Is too big."
+        ],
+        "nIntegerLevel1": [
+            "Is too big."
+        ]
+    }
+}

@@ -51,6 +51,7 @@ const CodeToCopy = [
     ...GetValidationFilesFor("ScopedData"),
     ...GetValidationFilesFor("ScopeWhen"),
     ...GetValidationFilesFor("SetValidator"),
+    ...GetValidationFilesFor("Switch"),
     ...GetValidationFilesFor("Vitally"),
     ...GetValidationFilesFor("When"),
     ...GetDemonstrationFilesFor("Basic"),
