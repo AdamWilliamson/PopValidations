@@ -1,0 +1,19 @@
+﻿"Level1": {
+    "type": "object",
+    "properties": {
+        "bool": {
+            "type": "boolean"
+        },
+        "nString": {
+            "type": "string",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "bool": [
+            "Check 1 and Check 2 should be true",
+            "Check 1 must be true, but check 2 is false"
+        ]
+    }
+}

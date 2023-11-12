@@ -1,0 +1,21 @@
+﻿"Level1": {
+    "type": "object",
+    "properties": {
+        "check": {
+            "type": "boolean"
+        },
+        "dependantField": {
+            "type": "string",
+            "nullable": true
+        }
+    },
+    "additionalProperties": false,
+    "x-validation": {
+        "dependantField": [
+            "When Check is True 1 : Must equal to 'Database Value 1'.",
+            "When Check is True 2 : Must equal to 'Database Value 2'.",
+            "When Check is True 3 : Must equal to 'Database Value 3'.",
+            "When Check is True 4 : Must equal to 'Database Value 4'."
+        ]
+    }
+}

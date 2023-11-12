@@ -1,0 +1,10 @@
+﻿{
+    "errors": {
+        "dependantField": [
+            "Is not equal to '1 GetValue'.",
+            "Is not equal to '1 thing 1'.",
+            "Is not equal to '1 GetMoreValue'.",
+            "Is not equal to '1 thing 2'."
+        ]
+    }
+}

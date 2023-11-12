@@ -7,6 +7,7 @@ using PopValidations.FieldDescriptors;
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Scopes;
 using PopValidations.Scopes.Whens;
+using PopValidations.Validations;
 using PopValidations.Validations.Base;
 
 namespace PopValidations.ValidatorInternals;
@@ -146,8 +147,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
             null, context);
     }
 
-    
-
     public void ScopeWhen<TPassThrough>(
         string scopedDescription,
         Func<TValidationType, Task<TPassThrough>> scoped,
@@ -192,6 +191,38 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
         subValidator.Store.ReplaceInternalStore(Store);
         //subValidator.ReplaceStore(Store);
     }
+
+    public ISwitchValidator<TValidationType, TPassThrough> Switch<TPassThrough>(
+        string scopedDataDecsription,
+        Func<TValidationType, Task<TPassThrough?>> dataRetrievalFunc
+    )
+    {
+        var switchScope = new SwitchScope<TValidationType, TPassThrough>(
+            this,
+            new ScopedData<TValidationType, TPassThrough?>(scopedDataDecsription, dataRetrievalFunc)
+        );
+
+        Store.AddItem(null, switchScope);
+
+        return switchScope;
+    }
+
+    public ISwitchValidator<TValidationType, TPassThrough> Switch<TPassThrough>(
+        string scopedDataDecsription,
+        Func<TValidationType, TPassThrough?> dataRetrievalFunc
+    )
+    {
+        var switchScope = new SwitchScope<TValidationType, TPassThrough>(
+            this,
+            new ScopedData<TValidationType, TPassThrough?>(scopedDataDecsription, dataRetrievalFunc)
+        );
+
+        Store.AddItem(null, switchScope);
+
+        return switchScope;
+    }
+
+
 
     public IValidationStore Store { get; private set; }
 

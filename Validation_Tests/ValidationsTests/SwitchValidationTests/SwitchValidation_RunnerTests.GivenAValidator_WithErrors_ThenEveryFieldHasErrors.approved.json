@@ -1,0 +1,46 @@
+﻿{
+    "errors": {
+        "arrayOfLevel2[0].ArrayOfLevel3[0].ArrayOfLevel4[0].NIntegerLevel4": [
+            "Is not null."
+        ],
+        "arrayOfLevel2[0].ArrayOfLevel3[0].ArrayOfLevel4[1].NIntegerLevel4": [
+            "Is not null."
+        ],
+        "arrayOfLevel2[0].ArrayOfLevel3[0].NIntegerLevel3": [
+            "Is not null."
+        ],
+        "arrayOfLevel2[0].ArrayOfLevel3[1].NIntegerLevel3": [
+            "Is not null."
+        ],
+        "arrayOfLevel2[0].NIntegerLevel2": [
+            "Is not null."
+        ],
+        "arrayOfLevel2[1].NIntegerLevel2": [
+            "Is not null."
+        ],
+        "level2.ArrayOfLevel3[0].NIntegerLevel3": [
+            "Is not null."
+        ],
+        "level2.ArrayOfLevel3[1].NIntegerLevel3": [
+            "Is not null."
+        ],
+        "level2.Level3.ArrayOfLevel4[0].NIntegerLevel4": [
+            "Is not null."
+        ],
+        "level2.Level3.ArrayOfLevel4[1].NIntegerLevel4": [
+            "Is not null."
+        ],
+        "level2.Level3.Level4.NIntegerLevel4": [
+            "Is not null."
+        ],
+        "level2.Level3.NIntegerLevel3": [
+            "Is not null."
+        ],
+        "level2.NIntegerLevel2": [
+            "Is not null."
+        ],
+        "nIntegerLevel1": [
+            "Is not null."
+        ]
+    }
+}

@@ -216,6 +216,11 @@ const router = createRouter({
           component: () => import("@/features/validations/SetValidator.vue")
         },
         {
+          path:"/validation/switch",
+          name:"Switch",
+          component: () => import("@/features/validations/Switch.vue")
+        },
+        {
           path:"/validation/include",
           name:"Include",
           component: () => import("@/features/validations/Include.vue")
