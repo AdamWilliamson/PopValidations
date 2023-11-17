@@ -23,8 +23,8 @@
 Version 1.0
 	requirements
 		Tests to limit Interface access and limiting interfaces
-		Switch validation
-		Remove Lower DotNet versions 
+		Switch validation  (done)
+		Remove Lower DotNet versions  (done)
 
 Version 1.0.*
 	IsJson

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using PopValidations.Execution.Stores;
 using PopValidations.FieldDescriptors;
 using PopValidations.FieldDescriptors.Base;
-using PopValidations.ValidatorInternals;
 
 namespace PopValidations.Scopes.ForEachs;
 
@@ -49,62 +48,21 @@ public class ForEachFieldDescriptor<TValidationType, TEnumeratedFieldType, TFiel
     }
 }
 
-//internal class ForEachItemSubValidator<TValidationType, TFieldType> : AbstractSubValidator<TFieldType> 
-//    where TValidationType : class
-//{
-//    private readonly IFieldDescriptor<TValidationType, IEnumerable<TFieldType?>?> fieldDescriptor;
-
-//    //public override bool IgnoreScope => true;
-//    public ForEachItemSubValidator(
-//        IFieldDescriptor<TValidationType, IEnumerable<TFieldType?>?> fieldDescriptor,
-//        Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions
-//        )
-//    {
-//        fieldDescriptor.Store.AddItemToCurrentScope(null, new ForEachScope<TValidationType, TFieldType>(fieldDescriptor, actions, Store));
-//        this.fieldDescriptor = fieldDescriptor;
-//    }
-
-//    public override void ExpandToValidate(ValidationConstructionStore store, object? value)
-//    {
-//        if ((value is not TValidationType valiationType)
-//            || (fieldDescriptor.PropertyToken.Execute(valiationType) is not IEnumerable<TFieldType?> more))
-//        {
-//            return;
-//        }
-//        var expandedItems = Store.ExpandToValidate(more);
-//        foreach (var item in expandedItems)
-//        {
-//            if (item != null)
-//                store.AddItemToCurrentScope(item);
-//        }
-//    }
-
-//    //public void ExpandToDescribe(ValidationConstructionStore store)
-//    //{
-//    //    var expandedItems = Store.ExpandToDescribe();
-//    //    foreach (var item in expandedItems)
-//    //    {
-//    //        if (item != null)
-//    //            store.AddItemToCurrentScope(item);
-//    //    }
-//    //}
-//}
-
 internal class ForEachScope<TValidationType, TFieldType> : ScopeBase//, ISubValidatorClass
     where TValidationType : class
 {
-    private readonly IFieldDescriptor<TValidationType, IEnumerable<TFieldType?>?> fieldDescriptor;
+    private readonly IFieldDescripor_Internal<TValidationType, IEnumerable<TFieldType?>?> fieldDescriptor;
     private Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions;
 
     public override bool IgnoreScope => true;
 
     public ForEachScope(
-        IFieldDescriptor<TValidationType, IEnumerable<TFieldType?>?> fieldDescriptor,
+        IFieldDescripor_Internal<TValidationType, IEnumerable<TFieldType?>?> fieldDescriptor,
         Action<IFieldDescriptor<IEnumerable<TFieldType?>, TFieldType?>> actions
         //ValidationConstructionStore store
     ) //: base(fieldDescriptor.Store)
     {
-        this.fieldDescriptor = fieldDescriptor;
+        this.fieldDescriptor = fieldDescriptor ?? throw new Exception("Wrong type of field descriptor");
         this.actions = actions;
     }
 

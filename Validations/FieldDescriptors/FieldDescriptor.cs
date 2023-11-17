@@ -1,5 +1,4 @@
 ﻿using PopValidations.Execution.Stores;
-using PopValidations.Execution.Stores.Internal;
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 using PopValidations.ValidatorInternals;
@@ -7,7 +6,7 @@ using PopValidations.ValidatorInternals;
 namespace PopValidations.FieldDescriptors;
 
 public class FieldDescriptor<TValidationType, TFieldType>
-    : IFieldDescriptor<TValidationType, TFieldType>
+    : IFieldDescripor_Internal<TValidationType, TFieldType>
 {
     public IPropertyExpressionToken<TValidationType, TFieldType?> PropertyToken { get; }
     protected object? RetrievedValue = null;

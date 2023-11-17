@@ -4,11 +4,11 @@ using PopValidations.Execution.Stores.Internal;
 
 namespace PopValidations.FieldDescriptors.Base;
 
-public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
+internal class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
     : IExpandableEntity
 {
     public bool IgnoreScope => false;
-    private readonly IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor;
+    private readonly IFieldDescripor_Internal<TValidationType, TFieldType> fieldDescriptor;
     private IExpandableEntity component;
     public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => null;
     object? RetrievedValue = null;
@@ -17,7 +17,7 @@ public class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
     public void AsVital() { IsVital = true; }
 
     public FieldDescriptionExpandableWrapper(
-        IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
+        IFieldDescripor_Internal<TValidationType, TFieldType> fieldDescriptor,
         bool isVital,
         IExpandableEntity component
     )
