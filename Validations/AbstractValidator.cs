@@ -7,8 +7,8 @@ namespace PopValidations;
 public abstract class AbstractValidator<TValidationType> 
     : AbstractValidatorBase<TValidationType>, IMainValidator<TValidationType>
 {
-    public override string Name => typeof(TValidationType).Name;
+    //override string AbstractValidatorBase<TValidationType>.Name => typeof(TValidationType).Name;
     protected AbstractValidator(IParentScope? parent = null) : base(parent,new ValidationConstructionStore()) {}
 
-    public new ValidationConstructionStore Store { get { return (ValidationConstructionStore)base.Store; } }
+    ValidationConstructionStore IMainValidator<TValidationType>.Store { get { return (ValidationConstructionStore)((IStoreContainer)this).Store; } }
 }

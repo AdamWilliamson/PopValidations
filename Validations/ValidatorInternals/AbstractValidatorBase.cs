@@ -12,19 +12,25 @@ using PopValidations.Validations.Base;
 
 namespace PopValidations.ValidatorInternals;
 
-public abstract class AbstractValidatorBase<TValidationType> : IParentScope
+public interface IStoreContainer
 {
-    public IParentScope? Parent { get; }
-    public abstract string Name { get; }
-    public Guid Id { get; } = Guid.NewGuid();
+    IValidationStore Store { get; }
+}
+
+public abstract class AbstractValidatorBase<TValidationType> : IParentScope, IStoreContainer
+{
+    private IParentScope? _Parent;
+    IParentScope? IParentScope.Parent => _Parent;
+    string IParentScope.Name => typeof(TValidationType).Name;
+    Guid IParentScope.Id { get; } = Guid.NewGuid();
 
     protected AbstractValidatorBase(IParentScope? parent, IValidationStore store)
     {
-        Parent = parent;
-        Store = store;
+        _Parent = parent;
+        _Store = store;
     }
 
-    protected IFieldDescriptor<
+    public IFieldDescriptor<
         TValidationType,
         IEnumerable<TFieldType?>?
     > DescribeEnumerable<TFieldType>(
@@ -33,7 +39,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
     {
         var fieldDescriptor = new FieldDescriptor<TValidationType, IEnumerable<TFieldType?>?>(
             new PropertyExpressionToken<TValidationType, IEnumerable<TFieldType?>?>(expr),
-            Store
+            _Store
         );
         return fieldDescriptor;
     }
@@ -44,7 +50,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
     {
         var fieldDescriptor = new FieldDescriptor<TValidationType, TFieldType?>(
             new PropertyExpressionToken<TValidationType, TFieldType?>(expr),
-            Store
+            _Store
         );
         return fieldDescriptor;
     }
@@ -55,7 +61,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
         Action<IScopedData<TData?>> action
     )
     {
-        Store.AddItem(
+        _Store.AddItem(
             null,
             new Scope<TData>(
                 //Store,
@@ -71,7 +77,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
         Action<IScopedData<TData?>> action
     )
     {
-        Store.AddItem(
+        _Store.AddItem(
             null,
             new Scope<TData>(
                 //Store,
@@ -87,7 +93,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
         Action<IScopedData<TData?>> action
     )
     {
-        Store.AddItem(
+        _Store.AddItem(
             null,
             new Scope<TData>(
                 //Store,
@@ -105,8 +111,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
             ifTrue,
             rules
         );
-        Store.AddItem(
-            null, context);
+        _Store.AddItem(null, context);
     }
 
     public void ScopeWhen<TPassThrough>(
@@ -124,8 +129,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
             new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
             rules
         );
-        Store.AddItem(
-            null, context);
+        _Store.AddItem(null, context);
     }
 
     public void ScopeWhen<TPassThrough>(
@@ -143,8 +147,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
             new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
             rules
         );
-        Store.AddItem(
-            null, context);
+        _Store.AddItem(null, context);
     }
 
     public void ScopeWhen<TPassThrough>(
@@ -162,8 +165,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
             ifTrue,
             rules
         );
-        Store.AddItem(
-            null, context);
+        _Store.AddItem(null, context);
     }
 
     public void ScopeWhen<TPassThrough>(
@@ -181,14 +183,13 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
             ifTrue,
             rules
         );
-        Store.AddItem(
-            null, context);
+        _Store.AddItem(null, context);
     }
 
     public void Include(AbstractSubValidator<TValidationType> subValidator)
     {
-        Store.Merge(subValidator.Store);
-        subValidator.Store.ReplaceInternalStore(Store);
+        _Store.Merge(((IStoreContainer)subValidator).Store);
+        ((IStoreContainer)subValidator).Store.ReplaceInternalStore(_Store);
         //subValidator.ReplaceStore(Store);
     }
 
@@ -202,7 +203,7 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
             new ScopedData<TValidationType, TPassThrough?>(scopedDataDecsription, dataRetrievalFunc)
         );
 
-        Store.AddItem(null, switchScope);
+        _Store.AddItem(null, switchScope);
 
         return switchScope;
     }
@@ -217,17 +218,18 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope
             new ScopedData<TValidationType, TPassThrough?>(scopedDataDecsription, dataRetrievalFunc)
         );
 
-        Store.AddItem(null, switchScope);
+        _Store.AddItem(null, switchScope);
 
         return switchScope;
     }
 
 
 
-    public IValidationStore Store { get; private set; }
+    IValidationStore IStoreContainer.Store => _Store;
+    private IValidationStore _Store;
 
-    public void ReplaceStore(IValidationStore store)
-    {
-        Store.ReplaceInternalStore(store);
-    }
+    //public void ReplaceStore(IValidationStore store)
+    //{
+    //    Store.ReplaceInternalStore(store);
+    //}
 }

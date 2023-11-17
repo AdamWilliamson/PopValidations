@@ -39,7 +39,7 @@ public static partial class IFieldValidatorExtensions
         where TClassType : class
     {
         var forEachScope = new ForEachScope<TClassType, TPropertyType>(
-            fieldDescriptor,
+            fieldDescriptor as IFieldDescripor_Internal<TClassType, IEnumerable<TPropertyType?>?>,
             actions
         );
         //fieldDescriptor.Store.AddItemToCurrentScope(null, forEachScope);

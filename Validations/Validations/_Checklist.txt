@@ -18,18 +18,19 @@ Is Not Null							(Working)		(Website: Correct)
 Is Null								(Working)		(Website: Correct)
 
 Include								(Working)		(Website: Correct)
-When								(Working)
-Scope								(Working)
-Scope When							(Working)
-Foreach								(Working)
+When								(Working)		(Website: Correct)
+Scope								(Working)		(Website: Correct)
+Scope When							(Working)		(Website: Correct)
+Foreach								(Working)		(Website: Correct)
+Switch								(Working)		(Website: Correct)
 
-Basic
-Moderate
-Advanced
+Basic								(Working)		(Website: Correct)
+Moderate							(Working)		(Website: Correct)
+Advanced							(Working)		(Website: Correct)
 
 Vitally								(Working)		(Website: Correct)
 SetValidator						(Working)		(Website: Correct)
-Total: 17
+Total: 18
 
 =========================================================================
 ::Validators Wanted::
@@ -58,20 +59,6 @@ MatchesJsonSchema
 
 IsUrl
 	takes string, checks if valid url format.
-
-Switch
-	Example:
-	.Switch(s => s
-		.Case(
-			field => field is string {length: > 0},
-			"Field must be greater than 0 length"
-		)
-		.Case(
-			scopedData.To(data => data is not null),
-			"Field must not be null"
-		)
-	)
-
 
 IsPolymorphic
 	Some version that compares types?.Takes a list of types, incoming value must be convertible to this type

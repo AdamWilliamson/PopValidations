@@ -2,6 +2,7 @@
 using PopValidations.Execution.Stores;
 using PopValidations.Execution.Stores.Internal;
 using PopValidations.FieldDescriptors.Base;
+using PopValidations.Scopes;
 using PopValidations.ValidatorInternals;
 
 namespace PopValidations;
@@ -9,19 +10,19 @@ namespace PopValidations;
 public abstract class AbstractSubValidator<TValidationType>
     : AbstractValidatorBase<TValidationType>, ISubValidatorClass<TValidationType>
 {
-    public virtual bool IgnoreScope => false;
-    public override string Name => typeof(TValidationType).Name;
-    public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => null;
+    bool IExpandableEntity.IgnoreScope => false;
+    //public new string Name => typeof(TValidationType).Name;
+    Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? IExpandableEntity.Decorator => null;
 
-    public virtual void AsVital() { }
+    void IExpandableEntity.AsVital() { }
 
     protected AbstractSubValidator() : base(null, new ValidationSubStore()) { }
 
-    public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
+    void IExpandableEntity.ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
 
-    public virtual void ExpandToValidate(ValidationConstructionStore store, object? value)
+    void IExpandableEntity.ExpandToValidate(ValidationConstructionStore store, object? value)
     {
-        store.AddExpandedItemsForValidation(Store, value);
+        store.AddExpandedItemsForValidation(((IStoreContainer)this).Store, value);
         //var expandedItems = Store.ExpandToValidate(value);
         //foreach (var item in expandedItems)
         //{
@@ -30,9 +31,9 @@ public abstract class AbstractSubValidator<TValidationType>
         //}
     }
 
-    public virtual void ExpandToDescribe(ValidationConstructionStore store)
+    void IExpandableEntity.ExpandToDescribe(ValidationConstructionStore store)
     {
-        store.AddExpandedItemsForDescription(Store);
+        store.AddExpandedItemsForDescription(((IStoreContainer)this).Store);
         //var expandedItems = Store.ExpandToDescribe();
         //foreach (var item in expandedItems)
         //{
@@ -41,7 +42,7 @@ public abstract class AbstractSubValidator<TValidationType>
         //}
     }
 
-    public void ChangeStore(IValidationStore store)
+    void IExpandableEntity.ChangeStore(IValidationStore store)
     {
         //foreach (var item in Store.GetItems())
         //{
@@ -55,7 +56,7 @@ public abstract class AbstractSubValidator<TValidationType>
         //store.Merge(Store);
         //store.AddItem
         //ReplaceStore(store);
-        Store.ReplaceInternalStore(store);
+        ((IStoreContainer)this).Store.ReplaceInternalStore(store);
         //Store = store;
         //ReplaceStore(store);
     }

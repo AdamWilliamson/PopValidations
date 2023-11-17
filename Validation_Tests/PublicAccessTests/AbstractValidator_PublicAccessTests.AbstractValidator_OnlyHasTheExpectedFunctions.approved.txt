@@ -1,0 +1,27 @@
+﻿------------ Ignore -------------
+-Equals
+-ReferenceEquals
+-GetType
+-ToString
+-GetHashCode
+-MemberwiseClone
+-Finalize
+------------- Public Methods -------------
+-DescribeEnumerable | PrivateScope, Public, HideBySig
+-Describe | PrivateScope, Public, HideBySig
+-Scope | PrivateScope, Public, HideBySig
+-Scope | PrivateScope, Public, HideBySig
+-Scope | PrivateScope, Public, HideBySig
+-When | PrivateScope, Public, HideBySig
+-ScopeWhen | PrivateScope, Public, HideBySig
+-ScopeWhen | PrivateScope, Public, HideBySig
+-ScopeWhen | PrivateScope, Public, HideBySig
+-ScopeWhen | PrivateScope, Public, HideBySig
+-Include | PrivateScope, Public, HideBySig
+-Switch | PrivateScope, Public, HideBySig
+-Switch | PrivateScope, Public, HideBySig
+------------- Protected Methods -------------
+------------- Public Properties -------------
+------------- Protected Properties -------------
+------------- Public Fields -------------
+------------- Protected Fields -------------
