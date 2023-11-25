@@ -15,7 +15,7 @@ public class IsEmailValidation : ValidationComponentBase
     {
         try
         {
-            MailAddress email = new((string?)value);
+            MailAddress email = new(value as string ?? "");
 
             return CreateValidationSuccessful();
         }

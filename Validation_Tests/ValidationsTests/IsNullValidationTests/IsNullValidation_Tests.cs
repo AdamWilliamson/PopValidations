@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using PopValidations.Validations;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -20,6 +21,30 @@ public class IsNullValidation_Tests
         // Assert
         result.Success.Should().BeTrue();
     }
+
+    [Theory]
+    [MemberData(nameof(NonNullValues))]
+    public void WhenSupplyingANonNullValue_ItValidatesAsFailure(object? value)
+    {
+        // Arrange
+        var validator = new IsNullValidation();
+
+        // Act
+        var result = validator.Validate(value);
+
+        // Assert
+        result.Success.Should().BeFalse();
+    }
+
+    public static IEnumerable<object[]> NonNullValues()
+    {
+        yield return new object[] { "" };
+        yield return new object[] { "   " };
+        yield return new object[] { Array.Empty<int>() };
+        yield return new object[] { new object() };
+        yield return new object[] { new List<string>() };
+    }
+
 
     [Fact]
     public void TheValidationAndDescriptionValues_AreCorrect()

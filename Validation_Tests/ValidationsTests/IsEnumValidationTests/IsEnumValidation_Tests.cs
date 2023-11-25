@@ -17,11 +17,12 @@ public enum TestEnum
 public class IsEnumValidation_Tests
 {
     [Theory]
-    [InlineData(1)]
+    [InlineData(1l)]
     [InlineData(1.0d)]
     [InlineData('1')]
-    [InlineData("1")]
+    [InlineData("2")]
     [InlineData(1.0f)]
+    [InlineData(2.0f)]
     public void WhenValidatingWithConvertableValues_TheyAllPass(object value)
     {
         // Arrange

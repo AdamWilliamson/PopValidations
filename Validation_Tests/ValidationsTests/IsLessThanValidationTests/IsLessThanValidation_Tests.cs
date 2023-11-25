@@ -19,6 +19,7 @@ public class IsLessThanValidation_Tests
     [InlineData(long.MaxValue, long.MinValue)]
     [InlineData(short.MaxValue, short.MinValue)]
     [InlineData(null, null)]
+    [InlineData(1, 0)]
     public void WhenValidatingWithHigherValues_TheyAllPass(IComparable testValue, IComparable incomingValue)
     {
         // Arrange
@@ -39,6 +40,9 @@ public class IsLessThanValidation_Tests
     [InlineData(long.MaxValue, short.MinValue)]
     [InlineData(short.MaxValue, int.MinValue)]
     [InlineData(short.MaxValue, null)]
+    [InlineData(-2, -1)]
+    [InlineData(-1, -1)]
+    [InlineData(1, 1)]
     public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable incomingValue)
     {
         // Arrange

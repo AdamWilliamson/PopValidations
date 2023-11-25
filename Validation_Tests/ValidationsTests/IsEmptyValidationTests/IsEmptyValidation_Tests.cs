@@ -34,6 +34,8 @@ public class IsEmptyValidation_Tests
             new object?[] { " " },
             new object?[] { new Dictionary<object, object>() },
             new object?[] { null },
+            new object?[] { new HashSet<object>() },
+            new object?[] { new SortedList<object,object>() }
         };
 
         return allData;
