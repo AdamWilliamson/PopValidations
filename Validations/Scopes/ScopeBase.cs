@@ -5,10 +5,9 @@ using PopValidations.FieldDescriptors.Base;
 
 namespace PopValidations.Scopes;
 
-public abstract class ScopeBase : IValidatorScope //, IExpandableEntity
+public abstract class ScopeBase : IValidatorScope
 {
     public virtual bool IgnoreScope => false;
-    //protected readonly IValidationStore validatorStore;
     public Guid Id { get; } = Guid.NewGuid();
     public IParentScope? Parent => this;
     public abstract string Name { get; }
@@ -17,24 +16,7 @@ public abstract class ScopeBase : IValidatorScope //, IExpandableEntity
     public void AsVital() { IsVital = true; }
     protected IFieldDescriptorOutline FieldDescriptor { get; set; }
 
-    //public ScopeBase(
-    //    IValidationStore validatorStore
-    //)
-    //{
-    //    this.validatorStore = validatorStore;
-    //}
-
     public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
-
-    //public void SetCurrentFieldExecutor(IFieldDescriptorOutline fieldDescriptor)
-    //{
-    //    FieldDescriptor = fieldDescriptor;
-    //}
-
-    //public IFieldDescriptorOutline GetCurrentFieldExecutor()
-    //{
-    //    return FieldDescriptor;
-    //}
 
     public virtual void ExpandToValidate(ValidationConstructionStore store, object? value)
     {

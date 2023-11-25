@@ -50,12 +50,10 @@ public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
 
     public void SetParent(IScopeData parent)
     {
-        // Unnecessary
     }
 
     public void ReHome(IFieldDescriptorOutline fieldDescriptorOutline)
     {
-        // Unnecessary
     }
 
     public async Task Init(object? instance)
@@ -238,8 +236,6 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
 
             if (PassThroughFunction == null)
                 throw new ScopedDataException("Passthrough should NOT be null");
-
-            //RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)instance);
 
             if (instance == null)
                 RetrievedValue = await PassThroughFunction.Invoke(default);

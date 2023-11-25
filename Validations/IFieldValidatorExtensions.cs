@@ -42,18 +42,8 @@ public static partial class IFieldValidatorExtensions
             fieldDescriptor as IFieldDescripor_Internal<TClassType, IEnumerable<TPropertyType?>?>,
             actions
         );
-        //fieldDescriptor.Store.AddItemToCurrentScope(null, forEachScope);
+
         fieldDescriptor.AddSelfDescribingEntity(forEachScope);
-        //fieldDescriptor.AddValidation(forEachScope);
-
-        //==
-        //var subvalidator = new ForEachItemSubValidator<TClassType, TPropertyType>(
-        //    fieldDescriptor,
-        //    actions
-        //);
-
-        //fieldDescriptor.Store.AddItem(null, subvalidator);
-
         return fieldDescriptor;
     }
 }

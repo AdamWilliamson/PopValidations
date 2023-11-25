@@ -16,9 +16,4 @@ public static class HelperExtensions
     {
         return (JArray?)parent.GetValidationAttribute(schemaObject)?.SelectToken(propertyName);
     }
-
-    //public static JToken? GetValidationAttribute(this OpenApiHelper parent, string schemaObject)
-    //{
-    //    return parent.Get($"components.schemas.{schemaObject}.{parent.Config.CustomValidationAttribute}");
-    //}
 }

@@ -11,11 +11,10 @@ public sealed class WhenStringValidator<TValidationType> : ScopeBase
     public override string Name => whenDescription;
 
     public WhenStringValidator(
-        //IValidationStore validatorStore,
         string whenDescription,
         Func<TValidationType, Task<bool>> ifTrue,
         Action rules
-    ) //: base(validatorStore)
+    )
     {
         this.whenDescription = whenDescription;
         this.rules = rules;

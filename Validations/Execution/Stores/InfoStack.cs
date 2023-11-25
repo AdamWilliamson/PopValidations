@@ -11,50 +11,19 @@ public class InfoStack
 {
     private Stack<StackedDepth> InformationDepth = new();
 
-    //public void PushParent(IParentScope? parent)
-    //{
-    //    ScopeParent? previous = null;
-    //    if (ScopeParents.Any())
-    //        previous = ScopeParents.Peek();
-
-    //    ScopeParents.Push(new ScopeParent(parent, previous));
-    //}
-
     public int PushAndParentScope(
         IParentScope? scopeParent,
         IFieldDescriptorOutline? fieldParent,
-        //FieldExecutor? fieldExecutor,
         Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? decorator
         )
     {
         ScopeParent? previous = GetCurrentScopeParent();
-        //if (scopeParent != null)
-        //{
-            //previous = GetCurrentScopeParent();
-
-            //ScopeParents.Push(new ScopeParent(parent, previous));
-        //}
-
+        
         return Push(
             new ScopeParent(scopeParent, previous), 
             fieldParent, 
-            //fieldExecutor, 
             decorator
         );
-
-        //var parentParent = scopeParent.Parent;
-        //while (parentParent != null)
-        //{
-        //    Push(
-        //    new ScopeParent(scopeParent, previous),
-        //    fieldParent,
-        //    //fieldExecutor, 
-        //    decorator
-        //);
-
-        //    parentParent = parentParent.Parent;
-        //}
-
     }
 
     public int Push(
@@ -68,7 +37,6 @@ public class InfoStack
             fieldParent == null
                 ? null 
                 : new FieldExecutor(
-                    //null,//
                     GetCurrentFieldExecutor(fieldParent),
                     fieldParent!
                 ),
@@ -111,19 +79,13 @@ public class InfoStack
 
         if (fieldExecutor != null)
         {
-            //if (fieldExecutor.Parent != null)
-            //{
-            //    Push(null, fieldExecutor.Parent, null);
-            //}
-
             fieldExecutor.SetParent(GetCurrentFieldExecutor());
 
             InformationDepth.Push(
                 new StackedDepth(
-                    null, //scopeParent,
-                          //fieldParent,
+                    null,
                     fieldExecutor,
-                    null //decorator
+                    null
                 )
             );
         }
@@ -134,34 +96,22 @@ public class InfoStack
             InformationDepth.Push(
                 new StackedDepth(
                     scopeParent,
-                    //null, //fieldParent,
-                    null, //fieldExecutor,
-                    null //decorator
+                    null,
+                    null
                 )
             );
         }
 
         if (decorator != null)
         {
-            //var historicalFieldEecutor = GetCurrentFieldExecutor();
-            //Func<IValidatableStoreItem, IValidatableStoreItem>? fieldExpanedDecorator = decorator;
-
-            //if (historicalFieldEecutor != null)
-            //    fieldExpanedDecorator  = (input) => decorator.Invoke(historicalFieldEecutor.GetValue(input));
-
             InformationDepth.Push(
                 new StackedDepth(
-                    null, //scopeParent,
-                          //null, //fieldParent,
-                    null, //fieldExecutor,
+                    null,
+                    null,
                     decorator
                 )
             );
         }
-
-
-        
-
 
         return originalCount;
     }
@@ -180,103 +130,6 @@ public class InfoStack
             InformationDepth.Pop();
         }
     }
-
-    //public void PopToScope(ScopeParent? scopeParent)
-    //{
-    //    while(InformationDepth.Any() && InformationDepth.Peek()?.ScopeParent != scopeParent)
-    //    {
-    //        InformationDepth.Pop();
-    //    }
-    //}
-
-    //public void PopToField(IFieldDescriptorOutline? fieldParent = null)
-    //{
-    //    if (fieldParent == null)
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldParent == null)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldParent != fieldParent)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //    }
-    //}
-
-    //public void PopToExecutor(FieldExecutor? fieldExecutor = null)
-    //{
-    //    if (fieldExecutor == null)
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldExecutor == null)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldExecutor != fieldExecutor)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //    }
-    //}
-
-    //public void PopToBeforeExecutor(FieldExecutor? fieldExecutor = null)
-    //{
-    //    if (fieldExecutor == null)
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldExecutor == null)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-
-    //        if (InformationDepth.Any())
-    //            InformationDepth.Pop();
-    //    }
-    //    else
-    //    {
-    //        while (InformationDepth.Any() && InformationDepth.Peek()?.FieldExecutor != fieldExecutor)
-    //        {
-    //            InformationDepth.Pop();
-    //        }
-    //        if (InformationDepth.Any())
-    //            InformationDepth.Pop();
-    //    }
-    //}
-
-    //public void PopToBeforeDescriptor()
-    //{
-    //    while (InformationDepth.Any() && InformationDepth.Peek()?.FieldParent == null)
-    //    {
-    //        InformationDepth.Pop();
-    //    }
-
-    //    if (InformationDepth.Any())
-    //        InformationDepth.Pop();
-    //}
-
-    //public void PopToBeforeScopeParent()
-    //{
-    //    while (InformationDepth.Any() && InformationDepth.Peek()?.ScopeParent == null)
-    //    {
-    //        InformationDepth.Pop();
-    //    }
-
-    //    if (InformationDepth.Any())
-    //        InformationDepth.Pop();
-    //}
-
-    //public void PopAllScopedDecorators()
-    //{
-    //    while (InformationDepth.Any() && InformationDepth.Peek()?.Decorator != null)
-    //    {
-    //        InformationDepth.Pop();
-    //    }
-    //}
 
     public List<Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>> GetScopedDecorators()
     {
@@ -299,13 +152,6 @@ public class InfoStack
     public IValidatableStoreItem Decorate(IValidatableStoreItem original)
     {
         var decoratedItem = original;
-
-        // Need to run through all the decorators, ad get the field executor for that decorator
-
-        //foreach (var decorator in GetScopedDecorators())// Decorators.Where(d => d is not null))
-        //{
-        //    decoratedItem = decorator?.Invoke(decoratedItem) ?? decoratedItem;
-        //}
         
         for (var decoratorIndex = InformationDepth.Count-1; decoratorIndex >= 0; decoratorIndex--)
         {
@@ -328,9 +174,6 @@ public class InfoStack
                 break;
             }
 
-            //decorators.Add(InformationDepth.ElementAt(x).Decorator!);
-            
-            
             DebugLogger.Log($"fieldDescriptor = {currentFieldDescriptor?.PropertyName ?? "No fieldDescriptor"}");
             decoratedItem = InformationDepth.ElementAt(decoratorIndex).Decorator!.Invoke(decoratedItem, currentFieldDescriptor) ?? decoratedItem;
             DebugLogger.Log($"decorator = {decoratedItem.GetType().FullName}");
@@ -361,11 +204,4 @@ public class InfoStack
                 ?.ScopeParent;
         return null;
     }
-
-    //public List<IFieldDescriptorOutline> GetAllFieldParents()
-    //{
-    //    return InformationDepth.Where(x => x is not null && x.FieldParent is not null)
-    //        .Select(x => x.FieldParent!)
-    //        .ToList();
-    //}
 }

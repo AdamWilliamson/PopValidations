@@ -64,7 +64,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
         _Store.AddItem(
             null,
             new Scope<TData>(
-                //Store,
                 new ScopedData<TData?>(scopedDataDecsription, dataRetrievalFunc),
                 action
             )
@@ -80,7 +79,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
         _Store.AddItem(
             null,
             new Scope<TData>(
-                //Store,
                 new ScopedData<TValidationType, TData?>(scopedDataDecsription, dataRetrievalFunc),
                 action
             )
@@ -96,7 +94,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
         _Store.AddItem(
             null,
             new Scope<TData>(
-                //Store,
                 new ScopedData<TValidationType, TData?>(scopedDataDecsription, dataRetrievalFunc),
                 action
             )
@@ -106,7 +103,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
     public void When(string whenDescription, Func<TValidationType, Task<bool>> ifTrue, Action rules)
     {
         var context = new WhenStringValidator<TValidationType>(
-            //Store,
             whenDescription,
             ifTrue,
             rules
@@ -123,7 +119,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
     )
     {
         var context = new WhenScopedResultValidator<TValidationType, TPassThrough>(
-            //Store,
             whenDescription,
             ifTrue,
             new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
@@ -141,7 +136,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
     )
     {
         var context = new WhenScopedResultValidator<TValidationType, TPassThrough>(
-            //Store,
             whenDescription,
             ifTrue,
             new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
@@ -159,7 +153,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
     )
     {
         var context = new WhenScopeToValidator<TValidationType, TPassThrough>(
-            //Store,
             whenDescription,
             new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
             ifTrue,
@@ -177,7 +170,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
    )
     {
         var context = new WhenScopeToValidator<TValidationType, TPassThrough>(
-            //Store,
             whenDescription,
             new ScopedData<TValidationType, TPassThrough>(scopedDescription, scoped),
             ifTrue,
@@ -190,7 +182,6 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
     {
         _Store.Merge(((IStoreContainer)subValidator).Store);
         ((IStoreContainer)subValidator).Store.ReplaceInternalStore(_Store);
-        //subValidator.ReplaceStore(Store);
     }
 
     public ISwitchValidator<TValidationType, TPassThrough> Switch<TPassThrough>(
@@ -227,9 +218,4 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
 
     IValidationStore IStoreContainer.Store => _Store;
     private IValidationStore _Store;
-
-    //public void ReplaceStore(IValidationStore store)
-    //{
-    //    Store.ReplaceInternalStore(store);
-    //}
 }

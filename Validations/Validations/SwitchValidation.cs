@@ -36,20 +36,7 @@ public sealed class SwitchScope<TValidationType, TScopedDataType> : ScopeBase, I
     {
         this.parent = parent;
         this.scopedData = scopedData;
-        //new ScopedData<TValidationType, TScopedDataType?>(
-        //    scopedData, 
-        //    scopedData.Describe(), 
-        //    (x) => Task.FromResult(x));
     }
-
-    //public SwitchScope(
-    //    AbstractValidatorBase<TValidationType> parent,
-    //    IScopedData<Task<TScopedDataType?>> scopedData
-    //)
-    //{
-    //    this.parent = parent;
-    //    this.scopedData = scopedData;
-    //}
 
     public override void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline)
     {

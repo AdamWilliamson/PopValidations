@@ -29,26 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Demonstration\Moderate\ModerateDemonstrationTests.BasicValidator_Describe_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>ModerateDemonstrationTests.cs</DependentUpon>
-    </None>
-    <None Update="Demonstration\Moderate\ModerateDemonstrationTests.BasicValidator_Validate_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>ModerateDemonstrationTests.cs</DependentUpon>
-    </None>
-    <None Update="Demonstration\ValidatorDemoTests\NotNull_DemoTest.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>NotNull_DemoTest.cs</DependentUpon>
-    </None>
-    <None Update="Demonstration\ValidatorDemoTests\NotNull_DemoTest.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>NotNull_DemoTest.cs</DependentUpon>
-    </None>
     <None Update="ValidationsTests\ForEachTests\ForEachVitallyTests.Given5LevelsDeepForeachValidations_ItShowsErrorsAtEachDepth.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>

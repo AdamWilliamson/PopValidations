@@ -29,13 +29,11 @@ public class WhenValidationItemDecorator<TValidationType>
     public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
     {
         base.ReHomeScopes(attemptedScopeFieldDescriptor);
-        //parentScopeFieldDescriptor = attemptedScopeFieldDescriptor;
     }
 
     public void SetParent(FieldExecutor fieldExecutor)
     {
         base.SetParent(fieldExecutor);
-        //ItemToDecorate.SetParent(fieldExecutor);
         parentScopeFieldDescriptor = fieldExecutor;
     }
 
@@ -45,8 +43,6 @@ public class WhenValidationItemDecorator<TValidationType>
         {
             throw new System.Exception("Type validating against, is incorrect and no FieldExecutor has been assigned");
         }
-
-        //TValidationType convertedInstance;
 
         bool result = false;
 
@@ -71,9 +67,6 @@ public class WhenValidationItemDecorator<TValidationType>
         {
             throw new System.Exception("Not a valid instance type, or not correct type");
         }
-
-        //var 
-        //scopedData?.Init(instance);
 
         if (result)
             return await ItemToDecorate.CanValidate(instance);

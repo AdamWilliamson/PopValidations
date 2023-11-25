@@ -38,7 +38,6 @@ public class FieldExecutor : IFieldDescriptorOutline
                 return FieldDescriptor.PropertyName;
             else
                 return string.Empty;
-                //FieldDescriptor.PropertyName;
         } 
     } 
     public string AddTo(string existing) => FieldDescriptor?.AddTo(existing) ?? existing;

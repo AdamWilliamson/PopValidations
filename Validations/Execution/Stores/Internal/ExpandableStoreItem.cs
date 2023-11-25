@@ -31,7 +31,6 @@ public class ExpandableStoreItem : IExpandableStoreItem
     public IExpandableEntity Component { get; }
     public IFieldDescriptorOutline? FieldDescriptor { get; set; }
     public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => Component.Decorator;
-    //public IParentScope Parent => Component.Parent;
 
     public void ExpandToValidate(ValidationConstructionStore store, object? value)
     {
@@ -78,19 +77,15 @@ public class WrappingExpandableStoreItem : IExpandableStoreItem
     public ScopeParent? ScopeParent { get; set; }
     public IExpandableEntity Component { get; }
     public IFieldDescriptorOutline? FieldDescriptor { get; set; }
-    public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => null;//Component.Decorator;
-    //public IParentScope Parent => Component.Parent;
+    public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator => null;
 
     public void ExpandToValidate(ValidationConstructionStore store, object? value)
     {
         store.AddItem(FieldDescriptor, Component);
-        //var newValue = FieldDescriptor?.GetValue(value) ?? value;
-        //Component.ExpandToValidate(store, newValue);
     }
 
     public void ExpandToDescribe(ValidationConstructionStore store)
     {
-        //Component.ExpandToDescribe(store);
         store.AddItem(FieldDescriptor, Component);
     }
 

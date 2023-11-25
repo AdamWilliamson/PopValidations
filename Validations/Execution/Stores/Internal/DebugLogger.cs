@@ -18,8 +18,5 @@ public static class DebugLogger
         {
             Debug.WriteLine($"{sourceFilePath}::{memberName}(Ln#{sourceLineNumber}) message: {message}");
         }
-        //Debug.WriteLine("member name: " + memberName);
-        //Debug.WriteLine("source file path: " + sourceFilePath);
-        //Debug.WriteLine("source line number: " + sourceLineNumber);
     }
 }

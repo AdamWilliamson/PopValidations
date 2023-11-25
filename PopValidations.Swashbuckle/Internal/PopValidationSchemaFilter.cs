@@ -332,29 +332,6 @@ public class PopValidationSchemaFilter : ISchemaFilter
                 }
             }
         }
-
-        //foreach (
-        //    var (owner, outcome) in FlattenOutcomes(outcomeSet)
-        //)
-        //{
-        //    foreach (var converter in config.Converters)
-        //    {
-        //        // Check if it supports the descriptor outcome
-        //        if (converter.Supports(outcome))
-        //        {
-        //            if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttribute))
-        //            {
-        //                converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, customRulesArray);
-        //            }
-
-        //            if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
-        //            {
-        //                var array = InitArray(endPointObjectextention, fieldName);
-        //                converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, array);
-        //            }
-        //        }
-        //    }
-        //}
     }
 
     public static bool IsGenericList(Type oType)
@@ -380,12 +357,6 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
         var realProp = propName.Split(new char[] { '.' }).Last();
 
-        //if (propName.Contains("."))//complex type nested
-        //{
-        //    var temp = propName.Split(new char[] { '.' }, 2);
-        //    return GetPropertyType(config, GetPropertyType(config, src, temp[0]), temp[1]);
-        //}
-        //else
         {
             if (realProp.Contains(config.OrdinalIndicator))
             {
@@ -450,29 +421,12 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
     private OpenApiArray InitExtensionsAndArray(
         OpenApiSchema modelSchema,
-        string key//,
-        //DescriptionItemResult outcome,
-        //string? ownedBy
+        string key
     )
     {
         var modelValidations = InitExtension(modelSchema);
 
         return InitArray(modelValidations, key);
-
-        //foreach (var group in outcome.ValidationGroups)
-        //{
-        //    array.Add(
-        //        new OpenApiString(
-        //            (ownedBy
-        //                + RecursiveGroupDescriber(group, string.Empty, string.Empty)).Trim()
-        //        )
-        //    );
-        //}
-
-        //foreach (var description in outcome.Outcomes)
-        //{
-        //    array.Add(new OpenApiString(description.Message?.Trim()));
-        //}
     }
 
     private string RecursiveGroupDescriber(

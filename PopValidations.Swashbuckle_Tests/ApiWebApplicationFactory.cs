@@ -53,7 +53,6 @@ namespace PopValidations.Swashbuckle_Tests
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            //builder.WithAdditionalControllers(typeof(MvcOptionsTestController));
             if (AdditionalControllers?.Any() == true)
             {
                 builder.WithAdditionalControllers(AdditionalControllers.ToArray());
@@ -70,9 +69,6 @@ namespace PopValidations.Swashbuckle_Tests
                 }
                 // Override to specify custom configs for testing settings.
                 services.RegisterPopValidationsOpenApiDefaults(Config);
-                //services.AddTransient(
-                //    typeof(IMainValidator<NotNullTests.NotNullBaseTests.Request>),
-                //    typeof(RequestValidator));
 
                 foreach (var val in validators) 
                 {

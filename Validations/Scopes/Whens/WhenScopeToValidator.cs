@@ -17,13 +17,11 @@ public sealed class WhenScopeToValidator<TValidationType, TPassThrough>
     WhenStringValidator_IfTruescoped<TValidationType, TPassThrough> something;
 
     public WhenScopeToValidator(
-        //IValidationStore validatorStore,
         string whenDescription,
         ScopedData<TValidationType, TPassThrough> scoped,
         Func<TValidationType, TPassThrough, bool> ifTrue,
         Action<ScopedData<TValidationType, TPassThrough>> rules
     ) : this(
-            //validatorStore,
             whenDescription,
             scoped,
             (x, y) => Task.FromResult(ifTrue.Invoke(x,y)),
@@ -32,12 +30,11 @@ public sealed class WhenScopeToValidator<TValidationType, TPassThrough>
     {}
 
     public WhenScopeToValidator(
-        //IValidationStore validatorStore,
         string whenDescription,
         ScopedData<TValidationType, TPassThrough> scoped,
         Func<TValidationType, TPassThrough, Task<bool>> ifTrue,
         Action<ScopedData<TValidationType, TPassThrough>> rules
-    ) //: base(validatorStore)
+    )
     {
         this.whenDescription = whenDescription;
         this.scoped = scoped;

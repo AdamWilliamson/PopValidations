@@ -46,37 +46,10 @@ public class FieldDescriptor<TValidationType, TFieldType>
         foreach (var item in component.Store.GetItems())
         {
             Store.AddItemToCurrentScope(this, item);
-            //if (item.ScopeParent is IExpandableEntity expandable) 
-            //if (item is IExpandableStoreItem expandable && expandable is not null)
-            //{
-            //    Store.AddItem(this,
-            //        new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
-            //            this,
-            //            _NextValidationVital || _AlwaysVital,
-            //            //component
-            //            expandable
-            //        )
-            //    );
-            //}
-            //else if (item is IValidatableStoreItem validatable)
-            ////else if(item.ScopeParent is IValidationComponent validationComponent) 
-            //{
-            //    Store.AddItem(
-            //        _NextValidationVital || _AlwaysVital,
-            //        this,
-            //        validatable
-            //    );
-            //}
         }
+        
         component.ChangeStore(Store);
-        //Store.AddItem(
-        //    this,
-        //    new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
-        //        this,
-        //        _NextValidationVital || _AlwaysVital,
-        //        component
-        //    )
-        //);
+        
         _NextValidationVital = false;
     }
 
@@ -87,11 +60,6 @@ public class FieldDescriptor<TValidationType, TFieldType>
         Store.AddItem(
             null,
             component
-            //new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
-            //    null,
-            //    _NextValidationVital || _AlwaysVital,
-            //    component
-            //)
         );    
         _NextValidationVital = false;
     }

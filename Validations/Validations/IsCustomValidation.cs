@@ -21,9 +21,6 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
               errorTemplate, 
               new ScopedData<TFieldType?, bool>(string.Empty, customValidationFunc))
     {
-        //DescriptionTemplate = descriptionTemplate;
-        //ErrorTemplate = errorTemplate;
-        //this.customValidationFunc = customValidationFunc;
     }
 
     public IsCustomValidation(
@@ -39,7 +36,6 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
 
     public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
     {
-        //scopedValue.ReHome(attemptedScopeFieldDescriptor);
     }
 
     public override ValidationActionResult Validate(object? value)
@@ -54,7 +50,7 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
                 {
                     return CreateValidationSuccessful();
                 } 
-                else if (scopedValue != null && scopedValue.GetValue()  is true)//(scopedValue.GetValue() as Func<TFieldType?, bool>)?.Invoke(default) is true)
+                else if (scopedValue != null && scopedValue.GetValue()  is true)
                 {
                     return CreateValidationSuccessful();
                 }

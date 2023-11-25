@@ -37,7 +37,7 @@ public static class IsCustomValidationExtensions
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
         string descriptionTemplate,
         string errorTemplate,
-        IScopedData<TFieldType?, bool> scopedValue,//Func<TFieldType?, bool> validationFunc,
+        IScopedData<TFieldType?, bool> scopedValue,
         Action<ValidationOptions>? optionsAction = null
     )
     {
