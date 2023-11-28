@@ -10,7 +10,7 @@
 
 	<PackageTags>Validation;Fluent;FluentValidation;PopValidation;Database;API;WebAPI;Async;Scoped;MediatR;Swashbuckle;OpenApi;Json;</PackageTags>
 	<PackageReleaseNotes>Working towards V1. This contains the basics needed to Ouput PopValidations to Swashbuckle's OpenApi output.</PackageReleaseNotes>
-	<Version>0.9.0.1</Version>
+	<Version>1.0.0.0</Version>
 	<Authors>Mythos_TheProgrammer</Authors>
 	<Company>PopValidations</Company>
 	<Description>Swashbuckle Integration for PopValidations</Description>
@@ -20,7 +20,7 @@
 	<RepositoryType>git</RepositoryType>
 	<Copyright>Copyright (c) Adam Williamson 2023.</Copyright>
     <NeutralLanguage>en</NeutralLanguage>
-    <FileVersion>0.9.0.1</FileVersion>
+    <FileVersion>1.0.0.0</FileVersion>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <PackageIcon>Icon.png</PackageIcon>
 	<IncludeContentInPack>true</IncludeContentInPack>

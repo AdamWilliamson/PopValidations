@@ -22,9 +22,9 @@ export default defineComponent({
     <v-card>
       <v-card-text>
         <p>
-          Pop Validations helps users describe their objects, with enforcable rules, for .Net.
+          Pop Validations helps users describe their objects, with enforceable rules, for .Net.
         </p>
-        <p>With Automated validation, compatible with ASP.Net and MediatR</p>
+        <p>With automated validation, compatible with ASP.Net, Swashbuckle and MediatR</p>
       </v-card-text>
     </v-card>
 
@@ -137,13 +137,16 @@ public class BasicSongValidator : AbstractValidator
           There are other validators out there, a personal favorite of mine has
           been FluentValidation, I've used it for years. But I kept repeatedly
           hitting 2 important issues for me. 
+          Describing the validation for external deliverables like OpenApi, or a data dictionary, 
+          needed to be seperate from the implementation of the rules.  
+          And integrating external data sources into the validation, to check existing values, is extremely difficult.
         </p>
         <p>
           This was designed to solve both of those issues. It is capable of
-          bringing in Database and other external data, without immediate
-          execution. And describe the validations that have would be executed,
+          bringing in Database and other external data, without immediate or multiple 
+          execution. And describe the validations that have would be executed, without executing them,
           and when. Allowing for a rich integration with OpenApi, and an easy
-          interaction with external sources for validating data.
+          interaction with external sources for validating data, without querying those external data sources.
         </p>
       </v-card-text>
     </v-card>
