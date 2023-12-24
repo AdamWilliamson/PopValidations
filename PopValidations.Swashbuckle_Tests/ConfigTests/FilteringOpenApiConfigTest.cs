@@ -32,7 +32,7 @@ public class FilteringOpenApiConfigTests
     public async Task FilteringChildTest(ITestSetup setup)
     {
         // Arrange
-        var config = new SimpleFilterConfig(setup.RequestType.GetProperty("Child").PropertyType);
+        var config = new SimpleFilterConfig(setup.RequestType.GetProperty("Child")!.PropertyType);
 
         // Act
         var helper = await setup.GetHelper(config);

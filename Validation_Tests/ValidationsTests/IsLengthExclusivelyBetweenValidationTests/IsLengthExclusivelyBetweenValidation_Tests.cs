@@ -10,13 +10,17 @@ namespace PopValidations_Tests.ValidationsTests.IsLengthExclusivelyBetweenValida
 public class IsLengthExclusivelyBetweenValidation_Tests
 {
     [Theory]
-    [MemberData(nameof(GetPassingData))]
-    public void WhenSupplyingAPassingValue_ItValidatesAsSuccessful(int value)
+    [InlineData(1, 0, 10)]
+    [InlineData(70, 50, 100)]
+    [InlineData(9, 0, 10)]
+    [InlineData(-1, -10, 0)]
+    [InlineData(-9, -10, 0)]
+    public void WhenSupplyingAPassingValue_ItValidatesAsSuccessful(int value, int min, int max)
     {
         // Arrange
         var validator = new IsLengthExclusivelyBetweenValidation<int>(
-            new ScopedData<int?>(0),
-            new ScopedData<int?>(10)
+            new ScopedData<int?>(min),
+            new ScopedData<int?>(max)
         );
 
         // Act
@@ -26,22 +30,20 @@ public class IsLengthExclusivelyBetweenValidation_Tests
         result.Success.Should().BeTrue();
     }
 
-    public static IEnumerable<object[]> GetPassingData()
-    {
-        for (int i = 1; i < 10; i++)
-        {
-            yield return new object[] { i };
-        }
-    }
-
     [Theory]
-    [MemberData(nameof(GetFailingData))]
-    public void WhenSupplyingANonNullValue_ItValidatesAsUnsuccessful(int value)
+    [InlineData(0, 0, 10)]
+    [InlineData(100, 50, 100)]
+    [InlineData(10, 0, 10)]
+    [InlineData(100, 0, 10)]
+    [InlineData(-100, 0, 10)]
+    [InlineData(-11, -10, 0)]
+    [InlineData(1, -10, 0)]
+    public void WhenSupplyingANonNullValue_ItValidatesAsUnsuccessful(int value, int min, int max)
     {
         // Arrange
         var validator = new IsLengthExclusivelyBetweenValidation<int>(
-            new ScopedData<int?>(0),
-            new ScopedData<int?>(10)
+            new ScopedData<int?>(min),
+            new ScopedData<int?>(max)
         );
 
         // Act
@@ -49,19 +51,6 @@ public class IsLengthExclusivelyBetweenValidation_Tests
 
         // Assert
         result.Success.Should().BeFalse();
-    }
-
-    public static IEnumerable<object[]> GetFailingData()
-    {
-        for (int i = -10; i < 1; i++)
-        {
-            yield return new object[] { i };
-        }
-
-        for (int x = 10; x < 20; x++)
-        {
-            yield return new object[] { x };
-        }
     }
 
     [Fact]

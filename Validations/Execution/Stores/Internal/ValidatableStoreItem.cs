@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using PopValidations.FieldDescriptors;
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
@@ -12,7 +11,6 @@ public class ValidatableStoreItem : IValidatableStoreItem
     public ValidatableStoreItem(
         bool isVital,
         FieldExecutor? currentFieldExecutor,
-        //IFieldDescriptorOutline fieldDescriptor,
         ScopeParent? scopeParent,
         IValidationComponent component
     )
@@ -22,14 +20,8 @@ public class ValidatableStoreItem : IValidatableStoreItem
             throw new Exception();
         }
 
-        //if (currentFieldExecutor == null)
-        //{
-        //    throw new Exception();
-        //}
-
         IsVital = isVital;
         CurrentFieldExecutor = currentFieldExecutor;
-        //FieldDescriptor = fieldDescriptor;
         ScopeParent = scopeParent;
         Component = component;
     }
@@ -43,8 +35,7 @@ public class ValidatableStoreItem : IValidatableStoreItem
     {
         if (CurrentFieldExecutor == null)
         {
-            //if (FieldDescriptor == null) throw new Exception("ValidatableStoreItem should not have Null FieldDescriptor");
-            CurrentFieldExecutor = fieldExecutor; //new FieldExecutor(fieldExecutor, FieldDescriptor);
+            CurrentFieldExecutor = fieldExecutor;
         }
         else
         {
@@ -63,10 +54,7 @@ public class ValidatableStoreItem : IValidatableStoreItem
     public object? GetValue(object? value)
     {
         Debug.Assert(CurrentFieldExecutor != null, "CurrentFieldExecutor should never be null");
-        //if (CurrentFieldExecutor != null)
-        //{
-        //    return FieldDescriptor?.GetValue(CurrentFieldExecutor.GetValue(value));
-        //}
+
         return CurrentFieldExecutor?.GetValue(value);
     }
 

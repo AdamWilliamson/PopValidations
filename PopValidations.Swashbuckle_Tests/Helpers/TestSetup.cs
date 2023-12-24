@@ -19,10 +19,10 @@ public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetu
     where TRequestValidator : class, IMainValidator<TRequest> //, new()
 {
     internal ApiWebApplicationFactory Factory { get; } = new();
-    private HttpClient Client { get; set; }
-    public DescriptionResult Description { get; private set; }
-    private string Content { get; set; }
-    private OpenApiHelper Helper { get; set; }
+    private HttpClient? Client { get; set; }
+    public DescriptionResult? Description { get; private set; }
+    private string? Content { get; set; }
+    private OpenApiHelper? Helper { get; set; }
 
     public Type ControllerType => typeof(TTestController);
     public Type ValidatorType => typeof(TRequestValidator);
@@ -33,7 +33,7 @@ public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetu
     {
         get
         {
-            return $"{typeof(TTestController).FullName.Split(".").Last().Split("+").First()}";
+            return $"{typeof(TTestController).FullName?.Split(".").Last().Split("+").First()}";
         }
     }
 
@@ -58,8 +58,11 @@ public class TestSetup<TTestController, TRequestValidator, TRequest> : ITestSetu
 
     private async Task GetSwagger()
     {
-        var json = await Client.GetAsync("/swagger/v1/swagger.json");
-        Content = await json.Content.ReadAsStringAsync();
+        if (Client is not null)
+        {
+            var json = await Client.GetAsync("/swagger/v1/swagger.json");
+            Content = await json.Content.ReadAsStringAsync();
+        }
     }
 
     private void Describe()

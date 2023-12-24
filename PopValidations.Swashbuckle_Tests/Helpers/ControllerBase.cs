@@ -7,7 +7,7 @@ namespace PopValidations.Swashbuckle_Tests.Helpers;
 public abstract class ControllerBase<TRequest> : Controller
 {
     [HttpGet("test")]
-    public object Get(TRequest request)
+    public object? Get(TRequest request)
     {
         return request;
     }

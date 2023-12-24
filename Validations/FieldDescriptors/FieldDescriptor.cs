@@ -2,13 +2,22 @@
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 using PopValidations.ValidatorInternals;
+using System.Collections.Generic;
 
 namespace PopValidations.FieldDescriptors;
+
+public class EnumerableFieldDescriptor<TValidationType, TFieldType> : FieldDescriptor<TValidationType, IEnumerable<TFieldType>?> 
+{
+    public EnumerableFieldDescriptor(
+        IPropertyExpressionToken<TValidationType, IEnumerable<TFieldType>?> propertyToken,
+        IValidationStore store
+    ) : base(propertyToken, store) { }
+}
 
 public class FieldDescriptor<TValidationType, TFieldType>
     : IFieldDescripor_Internal<TValidationType, TFieldType>
 {
-    public IPropertyExpressionToken<TValidationType, TFieldType?> PropertyToken { get; }
+    public IPropertyExpressionToken<TValidationType, TFieldType> PropertyToken { get; }
     protected object? RetrievedValue = null;
     protected bool ValueHasBeenRetrieved = false;
     public IValidationStore Store { get; }
@@ -27,13 +36,13 @@ public class FieldDescriptor<TValidationType, TFieldType>
         _NextValidationVital = true;
     }
 
-    public void IsAlwaysVital()
+    public void SetAlwaysVital()
     {
         _AlwaysVital = true;
     }
 
     public FieldDescriptor(
-        IPropertyExpressionToken<TValidationType, TFieldType?> propertyToken,
+        IPropertyExpressionToken<TValidationType, TFieldType> propertyToken,
         IValidationStore store
     )
     {
@@ -46,37 +55,10 @@ public class FieldDescriptor<TValidationType, TFieldType>
         foreach (var item in component.Store.GetItems())
         {
             Store.AddItemToCurrentScope(this, item);
-            //if (item.ScopeParent is IExpandableEntity expandable) 
-            //if (item is IExpandableStoreItem expandable && expandable is not null)
-            //{
-            //    Store.AddItem(this,
-            //        new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
-            //            this,
-            //            _NextValidationVital || _AlwaysVital,
-            //            //component
-            //            expandable
-            //        )
-            //    );
-            //}
-            //else if (item is IValidatableStoreItem validatable)
-            ////else if(item.ScopeParent is IValidationComponent validationComponent) 
-            //{
-            //    Store.AddItem(
-            //        _NextValidationVital || _AlwaysVital,
-            //        this,
-            //        validatable
-            //    );
-            //}
         }
+        
         component.ChangeStore(Store);
-        //Store.AddItem(
-        //    this,
-        //    new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
-        //        this,
-        //        _NextValidationVital || _AlwaysVital,
-        //        component
-        //    )
-        //);
+        
         _NextValidationVital = false;
     }
 
@@ -87,11 +69,6 @@ public class FieldDescriptor<TValidationType, TFieldType>
         Store.AddItem(
             null,
             component
-            //new FieldDescriptionExpandableWrapper<TValidationType, TFieldType>(
-            //    null,
-            //    _NextValidationVital || _AlwaysVital,
-            //    component
-            //)
         );    
         _NextValidationVital = false;
     }

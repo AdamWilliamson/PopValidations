@@ -8,19 +8,6 @@ namespace PopValidations;
 
 public static class IsLessThanOrEqualToValidationExtensions
 {
-    public static IFieldDescriptor<TValidationType, string?> IsLessThanOrEqualTo<TValidationType>(
-        this IFieldDescriptor<TValidationType, string?> fieldDescriptor,
-        string value,
-        Action<ValidationOptions>? optionsAction = null
-    )
-    {
-        var scopedData = new ScopedData<TValidationType, string>(value);
-        var validation = new IsLessThanOrEqualToValidation(scopedData);
-        optionsAction?.Invoke(new ValidationOptions(validation));
-        fieldDescriptor.AddValidation(validation);
-        return fieldDescriptor;
-    }
-
     public static IFieldDescriptor<TValidationType, TFieldType> IsLessThanOrEqualTo<TValidationType, TFieldType>(
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
         IComparable value,

@@ -57,8 +57,6 @@ public class DescriptionResult
                     
                     if (foundGroup is not null)
                         foundGroup.Children.Add(newfoundGroup);
-                    //else
-
                     else if (scope == tempScopes.First())
                     {
                         existingProperty.ValidationGroups.Add(newfoundGroup);

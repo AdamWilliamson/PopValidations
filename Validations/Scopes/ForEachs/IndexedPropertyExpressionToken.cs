@@ -8,35 +8,18 @@ namespace PopValidations.Scopes.ForEachs;
 
 public class IndexedPropertyExpressionToken<TValidationType,TInput, TOutput>
     : PropertyExpressionTokenBase<TInput, TOutput>
-    where TInput : IEnumerable<TOutput?>
+    where TInput : IEnumerable<TOutput>
 {
-    //private readonly IPropertyExpressionToken<TInput, TInput> parentPropertyToken;
-
-    protected override Expression<Func<TInput, TOutput?>> Expression { get; }
-    public IFieldDescriptor<TValidationType, TInput> ParentDescriptor { get; }
-
-    //protected Expression<Func<TInput?, TOutput?>> IndexExpression { get; }
+    protected override Expression<Func<TInput, TOutput>> Expression { get; }
+    //public IFieldDescriptor<TValidationType, TInput> ParentDescriptor { get; }
     public override string Name { get; }
 
-    //public string ExpressionAsString() { return "[n]"; }
-
-    //public override TOutput? Execute(TInput value)
-    //{
-    //    var iEnumerable = parentPropertyToken.Execute(value);
-    //    return IndexExpression.Compile().Invoke(iEnumerable);
-    //}
-
     public IndexedPropertyExpressionToken(
-        //IPropertyExpressionToken<TInput, TInput> parentPropertyToken,
-        //IFieldDescriptor<TValidationType, TInput> parentDescriptor,
         string name, 
         int index)
     {
-        Expression = (input) => input != null? input.ElementAt(index) : default(TOutput);
-        //ParentDescriptor = parentDescriptor;
-        //this.parentPropertyToken = parentPropertyToken;
+        Expression = (input) => input.ElementAt(index);
 
-        //Expression = (input) => IndexExpression.Compile().Invoke(parentPropertyToken.Execute(input));
         Name = name ?? string.Empty;
         Index = index;
     }
@@ -49,7 +32,7 @@ public class IndexedPropertyExpressionToken<TValidationType,TInput, TOutput>
         {
             return parentProperty;
         }
-        if (Index < 0) return parentProperty + "." + Name;// + $"[n]";
-        return parentProperty +"."+ Name;// parentProperty + $"[{Index}]";
+        if (Index < 0) return parentProperty + "." + Name;
+        return parentProperty +"."+ Name;
     }
 }

@@ -30,6 +30,7 @@ public class IsNotEmptyValidation_Tests
         yield return new object[] { "    b  " };
         yield return new object[] { new[] { 1 } };
         yield return new object[] { new NonNullAllFieldTypesDto() };
+        yield return new object[] { new List<string>() { "" } };
     }
 
     [Theory]
@@ -54,6 +55,7 @@ public class IsNotEmptyValidation_Tests
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         yield return new object[] { null };
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        yield return new object[] { new List<string>() };
     }
 
     [Fact]

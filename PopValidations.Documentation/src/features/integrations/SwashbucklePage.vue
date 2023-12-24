@@ -20,7 +20,7 @@
           <v-card-text>
             <a href="https://www.nuget.org/packages/PopValidations.Swashbuckle">https://www.nuget.org/packages/PopValidations.Swashbuckle</a><br />
             Or via CLI<br />
-            dotnet add package PopValidations.Swashbuckle --version 0.9.0
+            dotnet add package PopValidations.Swashbuckle --version 1.0.0
           </v-card-text>
         </v-card>
       </v-col>

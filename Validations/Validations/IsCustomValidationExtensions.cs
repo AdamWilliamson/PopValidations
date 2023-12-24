@@ -16,7 +16,7 @@ public static class IsCustomValidationExtensions
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
         string descriptionTemplate,
         string errorTemplate,
-        Func<TFieldType?, bool> validationFunc,
+        Func<TFieldType, bool> validationFunc,
         Action<ValidationOptions>? optionsAction = null
     )
     {
@@ -37,7 +37,7 @@ public static class IsCustomValidationExtensions
         this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
         string descriptionTemplate,
         string errorTemplate,
-        IScopedData<TFieldType?, bool> scopedValue,//Func<TFieldType?, bool> validationFunc,
+        IScopedData<TFieldType, bool> scopedValue,
         Action<ValidationOptions>? optionsAction = null
     )
     {
@@ -51,11 +51,11 @@ public static class IsCustomValidationExtensions
         return fieldDescriptor;
     }
 
-    public static IFieldDescriptor<TValidationType, TPropertyType?> Is<TValidationType, TPropertyType>(
-         this IFieldDescriptor<TValidationType, TPropertyType?> fieldDescriptor,
+    public static IFieldDescriptor<TValidationType, TPropertyType> Is<TValidationType, TPropertyType>(
+         this IFieldDescriptor<TValidationType, TPropertyType> fieldDescriptor,
          string errorTemplate,
          string descriptionTemplate,
-         Func<TPropertyType, IScopedData<TPropertyType?, bool>> scopedResult,
+         Func<TPropertyType, IScopedData<TPropertyType, bool>> scopedResult,
          Action<ValidationOptions>? optionsAction = null
     )
     {

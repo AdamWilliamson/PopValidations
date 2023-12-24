@@ -7,11 +7,11 @@ namespace PopValidations;
 
 public static class IsLengthExclusivelyBetweenValidationExtensions
 {
-    public static IFieldDescriptor<TValidationType, TPropertyType?> IsLengthExclusivelyBetween<
+    public static IFieldDescriptor<TValidationType, TPropertyType> IsLengthExclusivelyBetween<
         TValidationType,
         TPropertyType
     >(
-        this IFieldDescriptor<TValidationType, TPropertyType?> fieldDescriptor,
+        this IFieldDescriptor<TValidationType, TPropertyType> fieldDescriptor,
         IScopedData<int?> start,
         IScopedData<int?> end,
         Action<BetweenValidationOptions<TPropertyType>>? optionsAction = null
@@ -28,11 +28,11 @@ public static class IsLengthExclusivelyBetweenValidationExtensions
         return fieldDescriptor;
     }
 
-    public static IFieldDescriptor<TValidationType, TPropertyType?> IsLengthExclusivelyBetween<
+    public static IFieldDescriptor<TValidationType, TPropertyType> IsLengthExclusivelyBetween<
        TValidationType,
        TPropertyType
    >(
-       this IFieldDescriptor<TValidationType, TPropertyType?> fieldDescriptor,
+       this IFieldDescriptor<TValidationType, TPropertyType> fieldDescriptor,
        int start,
        int end,
        Action<BetweenValidationOptions<TPropertyType>>? optionsAction = null

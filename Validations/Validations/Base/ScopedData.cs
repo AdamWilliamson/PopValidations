@@ -25,14 +25,16 @@ public interface IScopedData<TResponse> : IScopeData
         Func<TInput, TResponse?, TNewResponse> passThroughFunction
     );
 
-    TResponse? GetTypedValue();
+    TResponse GetTypedValue();
 }
 
 public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
 {
     private Func<Task<TResponse>>? PassThroughFunction { get; }
-    
-    private TResponse? RetrievedValue = default(TResponse);
+
+#pragma warning disable CS8601 // Possible null reference assignment.
+    private TResponse RetrievedValue = default;
+#pragma warning restore CS8601 // Possible null reference assignment.
     private bool HasRetrievedValue = false;
     private string? Description = null;
 
@@ -50,12 +52,10 @@ public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
 
     public void SetParent(IScopeData parent)
     {
-        // Unnecessary
     }
 
     public void ReHome(IFieldDescriptorOutline fieldDescriptorOutline)
     {
-        // Unnecessary
     }
 
     public async Task Init(object? instance)
@@ -78,7 +78,7 @@ public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
         return RetrievedValue;
     }
 
-    public TResponse? GetTypedValue()
+    public TResponse GetTypedValue()
     {
         try 
         {
@@ -135,7 +135,9 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
 {
     private Func<TPassThrough, Task<TResponse>>? PassThroughFunction { get; }
     protected IScopeData? Parent { get; set; } = null;
-    private TResponse? RetrievedValue = default(TResponse);
+#pragma warning disable CS8601 // Possible null reference assignment.
+    private TResponse RetrievedValue = default;
+#pragma warning restore CS8601 // Possible null reference assignment.
     private bool HasRetrievedValue = false;
     private string? Description = null;
 
@@ -223,7 +225,9 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
                 throw new ScopedDataException("Passthrough should NOT be null");
 
             if (parentValue == null)
+#pragma warning disable CS8604 // Possible null reference argument.
                 RetrievedValue = await PassThroughFunction.Invoke(default);
+#pragma warning restore CS8604 // Possible null reference argument.
             else
                 RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)parentValue);
         }
@@ -239,10 +243,10 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
             if (PassThroughFunction == null)
                 throw new ScopedDataException("Passthrough should NOT be null");
 
-            //RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)instance);
-
             if (instance == null)
+#pragma warning disable CS8604 // Possible null reference argument.
                 RetrievedValue = await PassThroughFunction.Invoke(default);
+#pragma warning restore CS8604 // Possible null reference argument.
             else
                 RetrievedValue = await PassThroughFunction.Invoke((TPassThrough)instance);
         }
@@ -261,7 +265,7 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
         return RetrievedValue;
     }
 
-    public TResponse? GetTypedValue()
+    public TResponse GetTypedValue()
     {
         try
         {
@@ -306,10 +310,10 @@ public class ScopedData<TPassThrough, TResponse> : IScopedData<TResponse>, IScop
 
     public ScopedData<TInput, TNewResponse> To<TInput, TNewResponse>(
          string newDescription,
-         Func<TInput, TResponse?, TNewResponse> passThroughFunction
+         Func<TInput, TResponse, TNewResponse> passThroughFunction
      )
     {
-        var func = (TInput val) => passThroughFunction.Invoke(val, this.GetTypedValue() ?? default);
+        var func = (TInput val) => passThroughFunction.Invoke(val, this.GetTypedValue());
         return new ScopedData<TInput, TNewResponse>(newDescription, func);
     }
 }

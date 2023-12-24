@@ -46,12 +46,27 @@ public class IsEnumValidation<TFieldType> : ValidationComponentBase
                         Enum.GetValues(enumType).Cast<Enum>().Select(x => x.ToString("d")).ToArray()
                     )
                 ),
-                ("fieldType", GetType())
+                ("fieldType", GetFieldType())
             );
         }
     }
 
-    private string GetType()
+    public override DescribeActionResult Describe()
+    {
+        return CreateDescription(
+            ("enumNames", string.Join(',', Enum.GetNames(enumType))),
+            (
+                "enumValues",
+                string.Join(
+                    ',',
+                    Enum.GetValues(enumType).Cast<Enum>().Select(x => x.ToString("d")).ToArray()
+                )
+            ),
+            ("fieldType", GetFieldType())
+        );
+    }
+
+    private string GetFieldType()
     {
         var type = typeof(TFieldType);
         if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
@@ -66,21 +81,6 @@ public class IsEnumValidation<TFieldType> : ValidationComponentBase
             Type t when IsNumericType(t) => "numeric",
             _ => "unknown"
         };
-    }
-
-    public override DescribeActionResult Describe()
-    {
-        return CreateDescription(
-            ("enumNames", string.Join(',', Enum.GetNames(enumType))),
-            (
-                "enumValues",
-                string.Join(
-                    ',',
-                    Enum.GetValues(enumType).Cast<Enum>().Select(x => x.ToString("d")).ToArray()
-                )
-            ),
-            ("fieldType", GetType())
-        );
     }
 
     public static bool IsNumericType(Type type)

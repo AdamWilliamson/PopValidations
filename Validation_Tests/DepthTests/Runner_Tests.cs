@@ -1,11 +1,9 @@
 ﻿using ApprovalTests;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using PopValidations.Validations.Base;
 using PopValidations_Tests.TestHelpers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,50 +21,49 @@ namespace PopValidations_Tests.DepthTests
             var validationResult = await validationRunner.Validate(
                 new Level1(
                     FieldObjectBuilder.CreateValidTestObject(nameof(Level1)),
-                    null, null)
-            //new Level2(
-            //    FieldObjectBuilder.CreateValidTestObject(nameof(Level2)),
-            //    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //    new List<Level3>()
-            //    {
-            //        new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //        new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //        new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3)))
-            //    }),
-            //new List<Level2>()
-            //    {
-            //        new Level2(
-            //            FieldObjectBuilder.CreateValidTestObject(nameof(Level2)),
-            //            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //            new List<Level3>()
-            //                {
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3)))
-            //                }
-            //        ),
-            //        new Level2(
-            //              FieldObjectBuilder.CreateValidTestObject(nameof(Level2)),
-            //            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //            new List<Level3>()
-            //                {
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3)))
-            //                }
-            //        ),
-            //        new Level2(
-            //              FieldObjectBuilder.CreateValidTestObject(nameof(Level2)),
-            //            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //            new List<Level3>()
-            //                {
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
-            //                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3)))
-            //                }
-            //        ),
-            //    }
-            //);
+                    new Level2(
+                        FieldObjectBuilder.CreateValidTestObject(nameof(Level2)),
+                        new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                        new List<Level3>()
+                        {
+                            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3)))
+                        }),
+                    new List<Level2>()
+                    {
+                        new Level2(
+                            FieldObjectBuilder.CreateValidTestObject(nameof(Level2)),
+                            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                            new List<Level3>()
+                                {
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3)))
+                                }
+                        ),
+                        new Level2(
+                                FieldObjectBuilder.CreateValidTestObject(nameof(Level2)),
+                            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                            new List<Level3>()
+                                {
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3)))
+                                }
+                        ),
+                        new Level2(
+                                FieldObjectBuilder.CreateValidTestObject(nameof(Level2)),
+                            new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                            new List<Level3>()
+                                {
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3))),
+                                    new Level3(FieldObjectBuilder.CreateValidTestObject(nameof(Level3)))
+                                }
+                        ),
+                    }
+                )
             );
 
             // Assert

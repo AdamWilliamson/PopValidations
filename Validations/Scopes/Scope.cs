@@ -7,17 +7,16 @@ namespace PopValidations.Scopes.Whens;
 
 public sealed class Scope<TScopedDataType> : ScopeBase
 {
-    private readonly IScopedData<TScopedDataType?> scopedData;
-    private readonly Action<IScopedData<TScopedDataType?>> rules;
+    private readonly IScopedData<TScopedDataType> scopedData;
+    private readonly Action<IScopedData<TScopedDataType>> rules;
 
     public override bool IgnoreScope => true;
     public override string Name => scopedData.Describe();
 
     public Scope(
-        //IValidationStore validatorStore,
-        IScopedData<TScopedDataType?> scopedData,
-        Action<IScopedData<TScopedDataType?>> rules
-    ) //: base(validatorStore)
+        IScopedData<TScopedDataType> scopedData,
+        Action<IScopedData<TScopedDataType>> rules
+    )
     {
         this.scopedData = scopedData;
         this.rules = rules;

@@ -10,9 +10,7 @@ using Xunit;
 
 namespace PopValidations_Tests.ValidationsTests.ForEachTests;
 
-public record VitallyModel(List<string> ArrayOfStrings);
-
-
+public record VitallyModel(List<string?>? ArrayOfStrings);
 
 public class ForEachValidator : AbstractValidator<VitallyModel>
 {
@@ -26,7 +24,6 @@ public class ForEachValidator : AbstractValidator<VitallyModel>
             );
     }
 }
-
 
 public class ForEachMultipleErrorsValidator : AbstractValidator<VitallyModel>
 {

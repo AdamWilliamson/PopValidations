@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+	<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
 	<PackageTags>Validation;Fluent;FluentValidation;PopValidation;Database;API;WebAPI;Async;Scoped;MediatR;Swashbuckle;OpenApi;Json;</PackageTags>
 	<PackageReleaseNotes>Working towards V1. This contains the basics needed to run PopValidations before MediatR Handlers, and fail or continue dependant on their success.</PackageReleaseNotes>
-	<Version>0.9.0.1</Version>
+	<Version>1.0.0.0</Version>
 	<Authors>Mythos_TheProgrammer</Authors>
 	<Company>PopValidations</Company>
 	<Description>MediatR Integration for PopValidations</Description>
@@ -17,25 +17,25 @@
 	<RepositoryType>git</RepositoryType>
 	<Copyright>Copyright (c) Adam Williamson 2023.</Copyright>
 	<NeutralLanguage>en</NeutralLanguage>
-	<FileVersion>0.9.0.1</FileVersion>
+	<FileVersion>1.0.0.0</FileVersion>
 	<PackageLicenseFile>License.txt</PackageLicenseFile>
 	<PackageIcon>Icon.png</PackageIcon>
 	<IncludeContentInPack>true</IncludeContentInPack>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<OutputType>Library</OutputType>
 </PropertyGroup>
 
   <ItemGroup>
 	  <Content Include="Icon.png" Pack="true" PackagePath="" />
 	  <Content Include="License.txt" Pack="true" PackagePath="" />
-	  <None Update="ReadMe.md">
+	  <Content Include="ReadMe.md">
 		  <Pack>True</Pack>
 		  <PackagePath>\</PackagePath>
-	  </None>
+	  </Content>	  
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.1.1" />
-    <PackageReference Include="Microsoft.AspNet.WebApi" Version="5.2.9" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 

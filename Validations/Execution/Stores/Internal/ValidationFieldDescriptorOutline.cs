@@ -26,7 +26,7 @@ class ValidationFieldDescriptorOutline : IFieldDescriptorOutline
 
     public string AddTo(string existing)
     {
-        return existing + "." + PropertyName;// outline.PropertyName;
+        return existing + "." + PropertyName;
     }
 
     public object? GetValue(object? input)

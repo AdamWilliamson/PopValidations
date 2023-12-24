@@ -12,5 +12,4 @@ public interface IMainValidator<TValidationType> : IValidatorClass
 
 public interface ISubValidatorClass<TValidationType> : IParentScope, IExpandableEntity, IStoreContainer
 {
-    //IValidationStore Store { get; }
 }

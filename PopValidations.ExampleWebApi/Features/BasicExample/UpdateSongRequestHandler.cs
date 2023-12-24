@@ -5,7 +5,7 @@ namespace PopValidations.ExampleWebApi.Features.BasicExample;
 public class UpdateSongRequest : IRequest<UpdateSongResponse>
 {
     public int Id { get; set; }
-    public BasicSong Song { get; set; }
+    public BasicSong? Song { get; set; }
 }
 
 public class EditAlbumRequestValidator : AbstractValidator<UpdateSongRequest>

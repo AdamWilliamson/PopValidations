@@ -33,7 +33,7 @@ public class IsEmailValidation_Tests
     [InlineData(true)]
     [InlineData(1)]
     [InlineData(null)]
-    public void WhenValidatingWithBadValues_TheyAllFail(object value)
+    public void WhenValidatingWithBadValues_TheyAllFail(object? value)
     {
         // Arrange
         var validator = new IsEmailValidation();

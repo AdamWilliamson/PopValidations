@@ -7,8 +7,8 @@ namespace PopValidations;
 
 public static class IsNotEmptyValidationExtensions
 {
-    public static IFieldDescriptor<TValidationType, TFieldType?> IsNotEmpty<TValidationType, TFieldType>(
-        this IFieldDescriptor<TValidationType, TFieldType?> fieldDescriptor,
+    public static IFieldDescriptor<TValidationType, TFieldType> IsNotEmpty<TValidationType, TFieldType>(
+        this IFieldDescriptor<TValidationType, TFieldType> fieldDescriptor,
         Action<ValidationOptions>? optionsAction = null
     )
     {

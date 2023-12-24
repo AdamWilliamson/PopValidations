@@ -22,9 +22,16 @@ export default defineComponent({
     <v-card>
       <v-card-text>
         <p>
-          Pop Validations helps users describe their objects, with enforcable rules, for .Net.
+          Pop Validations helps users describe their objects, with enforceable
+          rules, for .Net.
         </p>
-        <p>With Automated validation, compatible with ASP.Net and MediatR</p>
+        <p class="mt-2">
+          With automated validation, compatible with ASP.Net, Swashbuckle and
+          MediatR.
+        </p>
+        <p class="mt-2">
+          PopValidations attempts to provide concise, fluent validations for objects, with 100% describability without execution. This allows you to fully describe the validation applied to any object.  This addition provides, especially when integrated with OpenApi, to fully describe the allowances, and invalidities of objects passed between api's.
+        </p>
       </v-card-text>
     </v-card>
 
@@ -65,7 +72,7 @@ public class BasicSongValidator : AbstractValidator
             "Is null."
         ],
         "trackName": [
-            "Is not equal to &quot;Definitely Not The Correct Song Name.&quot;"
+            "Is not equal to "Definitely Not The Correct Song Name.""
         ],
         "duration": [
             "Song must have a negative duration."
@@ -95,7 +102,7 @@ public class BasicSongValidator : AbstractValidator
             "outcomes": [
                 {
                     "validator": "IsEqualToValidation",
-                    "message": "Must equal to &quot;Definitely Not The Correct Song Name.&quot;",
+                    "message": "Must equal to "Definitely Not The Correct Song Name."",
                     "values": [
                         {
                             "key": "value",
@@ -136,14 +143,20 @@ public class BasicSongValidator : AbstractValidator
         <p>
           There are other validators out there, a personal favorite of mine has
           been FluentValidation, I've used it for years. But I kept repeatedly
-          hitting 2 important issues for me. 
+          hitting 2 important issues for me. Describing the validation for
+          external deliverables like OpenApi, or a data dictionary, needed to be
+          seperate from the implementation of the rules. And integrating
+          external data sources into the validation, to check existing values,
+          is extremely difficult.
         </p>
         <p>
           This was designed to solve both of those issues. It is capable of
-          bringing in Database and other external data, without immediate
-          execution. And describe the validations that have would be executed,
-          and when. Allowing for a rich integration with OpenApi, and an easy
-          interaction with external sources for validating data.
+          bringing in Database and other external data, without immediate or
+          multiple execution. And describe the validations that have would be
+          executed, without executing them, and when. Allowing for a rich
+          integration with OpenApi, and an easy interaction with external
+          sources for validating data, without querying those external data
+          sources.
         </p>
       </v-card-text>
     </v-card>

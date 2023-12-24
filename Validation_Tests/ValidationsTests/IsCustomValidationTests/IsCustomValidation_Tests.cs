@@ -9,12 +9,12 @@ namespace PopValidations_Tests.ValidationsTests.IsCustomValidationTests;
 
 public class IsCustomValidation_Tests
 {
-    public static bool TestValue(int value)
+    public static bool TestValue(int? value)
     {
         return value == 0;
     }
 
-    public static bool ThrowFunc(int value)
+    public static bool ThrowFunc(int? value)
     {
         throw new System.Exception("Fake Error");
     }
@@ -23,7 +23,7 @@ public class IsCustomValidation_Tests
     public void GivenAPassingValue_ThenItPasses()
     {
         // Arrange
-        var validator = new IsCustomValidation<int>(
+        var validator = new IsCustomValidation<int?>(
             "Decription",
             "Error",
             TestValue
@@ -36,42 +36,48 @@ public class IsCustomValidation_Tests
         result.Success.Should().BeTrue();
     }
 
-    [Fact]
-    public void GivenAFailingValue_ThenItFails()
+    [Theory]
+    [InlineData(1)]
+    [InlineData(null)]
+    public void GivenAFailingValue_ThenItFails(int? failingValue)
     {
         // Arrange
-        var validator = new IsCustomValidation<int>(
+        var validator = new IsCustomValidation<int?>(
             "Description",
             "Error",
             TestValue
         );
 
         // Act
-        var result = validator.Validate(1);
+        var result = validator.Validate(failingValue);
 
         // Assert
-        result.Success.Should().BeFalse();
+        using (new AssertionScope())
+        {
+            result.Success.Should().BeFalse();
+            result.Message.Should().Be("Error");
+        }
     }
 
     [Fact]
     public void WhenValidating_WithAFuncThatExceptions_ItExceptions()
     {
         // Arrange
-        var validator = new IsCustomValidation<int>(
+        var validator = new IsCustomValidation<int?>(
             "Description",
             "Error",
             ThrowFunc
         );
 
         // Act + Assert
-        var result =  validator.Invoking(a => a.Validate(0)).Should().Throw<Exception>();
+        var result = validator.Invoking(a => a.Validate(0)).Should().Throw<Exception>();
     }
 
     [Fact]
     public void TheValidationAndDescriptionValues_AreCorrect()
     {
         // Arrange
-        var validator = new IsCustomValidation<int>(
+        var validator = new IsCustomValidation<int?>(
             "Description",
             "Error",
             TestValue

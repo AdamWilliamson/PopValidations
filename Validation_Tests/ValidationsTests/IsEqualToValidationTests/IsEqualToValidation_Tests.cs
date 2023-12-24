@@ -9,6 +9,41 @@ using Xunit;
 
 namespace PopValidations_Tests.ValidationsTests.IsEqualToValidationTests;
 
+internal class TestObject : IComparable
+{
+    public TestObject(int test)
+    {
+        Test = test;
+    }
+
+    public int Test { get; set; }
+
+    public int CompareTo(object? obj)
+    {
+        return Equals(obj)? 0 : 1;
+    }
+
+    public bool Equals(TestObject? other)
+    {
+        return Test.Equals(other?.Test);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is TestObject result)
+        {
+            return Equals(result);
+        }
+
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return Test;
+    }
+}
+
 public class IsEqualToValidation_Tests
 {
     [Theory]
@@ -18,14 +53,28 @@ public class IsEqualToValidation_Tests
     [InlineData(float.MaxValue, float.MaxValue)]
     [InlineData(long.MaxValue, long.MaxValue)]
     [InlineData(short.MaxValue, short.MaxValue)]
+    [InlineData("MatchingValue", "MatchingValue")]
     [InlineData(null, null)]
-    public void WhenValidatingWithEqualValues_TheyAllPass(IComparable testValue, IComparable incomingValue)
+    public void WhenValidatingWithEqualValues_TheyAllPass(IComparable? testValue, IComparable? incomingValue)
     {
         // Arrange
-        var validator = new IsEqualToValidation(new ScopedData<object, IComparable>(testValue));
+        var validator = new IsEqualToValidation(new ScopedData<object, IComparable?>(testValue));
 
         // Act
         var result = validator.Validate(incomingValue);
+
+        // Assert
+        result.Success.Should().BeTrue();
+    }
+
+    [Fact]
+    public void GivenAObject_WhenValidatingWithEqualValues_ItPasses()
+    {
+        // Arrange
+        var validator = new IsEqualToValidation(new ScopedData<object, TestObject>(new TestObject(1)));
+
+        // Act
+        var result = validator.Validate(new TestObject(1));
 
         // Assert
         result.Success.Should().BeTrue();
@@ -39,13 +88,27 @@ public class IsEqualToValidation_Tests
     [InlineData(long.MaxValue, short.MaxValue)]
     [InlineData(short.MaxValue, int.MaxValue)]
     [InlineData(short.MaxValue, null)]
-    public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable incomingValue)
+    [InlineData("MatchingValue", "NotAMatchingValue")]
+    public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable? incomingValue)
     {
         // Arrange
         var validator = new IsEqualToValidation(new ScopedData<object, IComparable>(testValue));
 
         // Act
         var result = validator.Validate(incomingValue);
+
+        // Assert
+        result.Success.Should().BeFalse();
+    }
+
+    [Fact]
+    public void GivenAObject_WhenValidatingWithNonEqualValues_ItFails()
+    {
+        // Arrange
+        var validator = new IsEqualToValidation(new ScopedData<object, TestObject>(new TestObject(1)));
+
+        // Act
+        var result = validator.Validate(new TestObject(2));
 
         // Assert
         result.Success.Should().BeFalse();

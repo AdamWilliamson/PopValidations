@@ -11,19 +11,16 @@ public sealed class WhenStringValidator<TValidationType> : ScopeBase
     public override string Name => whenDescription;
 
     public WhenStringValidator(
-        //IValidationStore validatorStore,
         string whenDescription,
         Func<TValidationType, Task<bool>> ifTrue,
         Action rules
-    ) //: base(validatorStore)
+    )
     {
         this.whenDescription = whenDescription;
         this.rules = rules;
         Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
-            this,
             item,
             new WhenStringValidator_IfTrue<TValidationType>(ifTrue),
-            null,
             fieldDescriptor
         );
     }

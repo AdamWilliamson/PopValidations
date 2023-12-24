@@ -55,8 +55,6 @@ public class SubValidator : AbstractSubValidator<Level1>
                         Describe(x => x).IsEqualTo(moreData);
                     }
                 );
-
-                //Describe(x => x.Child).SetValidator(new SubValidator());
             }
         );
     }

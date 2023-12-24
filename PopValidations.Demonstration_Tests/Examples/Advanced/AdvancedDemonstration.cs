@@ -1,8 +1,4 @@
 ﻿using PopValidations.Swashbuckle_Tests.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PopValidations.Demonstration_Tests.Examples.Advanced;
 
@@ -81,7 +77,8 @@ public static class AdvancedDemonstration
 
             Describe(x => x.Type).Vitally().IsNotNull();
 
-            DescribeEnumerable(x => x.Artists).Vitally().IsNotNull()
+            DescribeEnumerable(x => x.Artists)
+                .Vitally().IsNotNull()
                 .ForEach(x => x.Vitally().IsNotNull().SetValidator(new ArtistValidator()));
 
             Describe(x => x.CoverImageUrl).Vitally().IsNotEmpty();
@@ -94,7 +91,8 @@ public static class AdvancedDemonstration
             DescribeEnumerable(x => x.Songs)
                 .Vitally().IsNotNull()
                 .IsLengthInclusivelyBetween(3, 45)
-                .ForEach(song => song.Vitally().IsNotNull().SetValidator(new SongValidator()));
+                .ForEach(song => song.Vitally().IsNotNull().SetValidator(new SongValidator()))
+                ;
 
             Scope("Validate Album",
                 async (album) => await albumVerificationService.GetAlbumChecker(album),
@@ -167,7 +165,7 @@ public static class AdvancedDemonstration
                             "Must Abide by the rules for singles.",
                             albumChecker.To(
                                 "Album is Single",
-                                (List<Song?>? x, AlbumChecker? i) => i?.IsSingle is true)
+                                (List<Song?>? x, AlbumChecker i) => i?.IsSingle is true)
                         );
                 });
         }

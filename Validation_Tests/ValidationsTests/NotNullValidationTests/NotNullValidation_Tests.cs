@@ -9,7 +9,7 @@ namespace PopValidations_Tests.ValidationsTests.NotNullValidationTests;
 public class NotNullValidation_Tests
 {
     [Fact]
-    public void WhenSupplyingANullValue_ItValidatesAsSuccessful()
+    public void WhenSupplyingANonNullValue_ItValidatesAsSuccessful()
     {
         // Arrange
         var validator = new IsNotNullValidation();
@@ -19,6 +19,19 @@ public class NotNullValidation_Tests
 
         // Assert
         result.Success.Should().BeTrue();
+    }
+
+    [Fact]
+    public void WhenSupplyingANullValue_ItValidatesAsFailure()
+    {
+        // Arrange
+        var validator = new IsNotNullValidation();
+
+        // Act
+        var result = validator.Validate(null);
+
+        // Assert
+        result.Success.Should().BeFalse();
     }
 
     [Fact]
