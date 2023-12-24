@@ -69,7 +69,7 @@ public class PopValidationBehavior<TRequest, TResponse>
 
         if (errors.Any())
         {
-            throw new PopValidationHttpException(errors);
+            throw new PopValidationMediatRException(errors);
         }
 
         return await next();

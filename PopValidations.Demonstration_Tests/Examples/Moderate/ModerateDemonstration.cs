@@ -9,17 +9,17 @@ public static class ModerateDemonstration
 {
     //Begin-Request
     public record ModerateSong(
-        string Artist,
+        string? Artist,
         int? TrackNumber,
-        string TrackName,
-        double Duration,
-        string Genre
+        string? TrackName,
+        double? Duration,
+        string? Genre
     );
 
     public record ModerateAlbum(
-        string Artist,
-        string Genre,
-        List<ModerateSong?> Songs
+        string? Artist,
+        string? Genre,
+        List<ModerateSong?>? Songs
     );
     //End-Request
 

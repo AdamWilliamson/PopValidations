@@ -12,7 +12,12 @@ export default defineConfig({
       vue: 'vue/dist/vue.esm-bundler.js',
     },
   },
-  base: '/popvalidations/'
+  base: '/popvalidations/',
+  server: {
+    watch: {
+        usePolling: true
+    }
+  }
   // build:{
   //   rollupOptions:{
   //     external:["@mdi/js"]

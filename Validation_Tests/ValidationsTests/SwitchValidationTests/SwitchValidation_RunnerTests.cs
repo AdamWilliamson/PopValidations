@@ -11,9 +11,9 @@ using Xunit;
 
 namespace PopValidations_Tests.ValidationsTests.SwitchValidationTests;
 
-public record Level1(int? NIntegerLevel1, Level2 Level2, List<Level2> ArrayOfLevel2);
-public record Level2(int? NIntegerLevel2, Level3 Level3, List<Level3> ArrayOfLevel3);
-public record Level3(int? NIntegerLevel3, Level4 Level4, List<Level4> ArrayOfLevel4);
+public record Level1(int? NIntegerLevel1, Level2? Level2, List<Level2?>? ArrayOfLevel2);
+public record Level2(int? NIntegerLevel2, Level3? Level3, List<Level3?>? ArrayOfLevel3);
+public record Level3(int? NIntegerLevel3, Level4? Level4, List<Level4?>? ArrayOfLevel4);
 public record Level4(int? NIntegerLevel4);
 
 public class Validator

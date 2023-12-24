@@ -10,7 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 public static class PopValidationsWebApiExtenstions
 {
-    public static void UseMediatRToHttpErrorMiddleware(this WebApplication? app)
+    public static void UseMediatRToHttpErrorMiddleware(this WebApplication app)
     {
         app.UseExceptionHandler(exceptionHandlerApp =>
         {
@@ -19,7 +19,7 @@ public static class PopValidationsWebApiExtenstions
                 var exceptionHandlerPathFeature =
                     context.Features.Get<IExceptionHandlerPathFeature>();
 
-                if (exceptionHandlerPathFeature?.Error is PopValidationHttpException exception)
+                if (exceptionHandlerPathFeature?.Error is PopValidationMediatRException exception)
                 {
                     context.Response.ContentType = Text.Plain;
                     context.Response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;

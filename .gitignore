@@ -7,3 +7,6 @@ PopValidations
 /PopValidations.MediatR/bin/Debug
 /Validations/bin/Debug
 *.nupkg
+net7.0
+net8.0
+ProjectEvaluation

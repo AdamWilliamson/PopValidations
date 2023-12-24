@@ -13,7 +13,7 @@ public interface IPropertyExpressionToken<TInput, TOutput>
 public abstract class PropertyExpressionTokenBase<TInput, TOutput> : IPropertyExpressionToken<TInput, TOutput>
 {
     public abstract string Name { get; }
-    protected abstract Expression<Func<TInput, TOutput?>> Expression { get; }
+    protected abstract Expression<Func<TInput, TOutput>> Expression { get; }
 
     public virtual TOutput? Execute(TInput value) { return Expression.Compile().Invoke(value); }
 

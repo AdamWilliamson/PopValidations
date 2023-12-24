@@ -54,8 +54,8 @@ public class BasicDemonstrationTests
 
         // Act
         var helper = await setup.GetHelper(config);
-        JObject json = JObject.Parse(helper.Content);
-        var match = json["components"]["schemas"].FirstOrDefault();
+        JObject json = JObject.Parse(helper.Content!);
+        var match = json["components"]!["schemas"]!.FirstOrDefault();
 
         // Assert
         Approvals.VerifyJson(match?.ToString(Newtonsoft.Json.Formatting.None));

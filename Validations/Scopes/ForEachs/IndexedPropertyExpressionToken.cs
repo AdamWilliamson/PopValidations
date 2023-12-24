@@ -8,17 +8,17 @@ namespace PopValidations.Scopes.ForEachs;
 
 public class IndexedPropertyExpressionToken<TValidationType,TInput, TOutput>
     : PropertyExpressionTokenBase<TInput, TOutput>
-    where TInput : IEnumerable<TOutput?>
+    where TInput : IEnumerable<TOutput>
 {
-    protected override Expression<Func<TInput, TOutput?>> Expression { get; }
-    public IFieldDescriptor<TValidationType, TInput> ParentDescriptor { get; }
+    protected override Expression<Func<TInput, TOutput>> Expression { get; }
+    //public IFieldDescriptor<TValidationType, TInput> ParentDescriptor { get; }
     public override string Name { get; }
 
     public IndexedPropertyExpressionToken(
         string name, 
         int index)
     {
-        Expression = (input) => input != null? input.ElementAt(index) : default(TOutput);
+        Expression = (input) => input.ElementAt(index);
 
         Name = name ?? string.Empty;
         Index = index;

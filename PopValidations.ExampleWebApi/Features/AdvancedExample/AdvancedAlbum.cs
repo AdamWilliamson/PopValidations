@@ -156,7 +156,7 @@ public class AlbumValidator : AbstractSubValidator<Album>
                         "Must Abide by the rules for singles.",
                         albumChecker.To(
                             "Album is Single",
-                            (List<Song?>? x, AlbumChecker? i) => i?.IsSingle is true)
+                            (List<Song?>? x, AlbumChecker i) => i?.IsSingle is true)
                     );
             });
     }

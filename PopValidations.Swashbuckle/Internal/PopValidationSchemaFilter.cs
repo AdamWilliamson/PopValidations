@@ -47,9 +47,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
         if (!results.Results.Any())
             return;
 
-#pragma warning disable CS8604 // Possible null reference argument.
         var extensions = InitExtension(model);
-#pragma warning restore CS8604 // Possible null reference argument.
 
         RunRules(String.Empty, model, results.Results, context, null, context.Type, extensions, null);
     }
@@ -361,7 +359,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
             if (realProp.Contains(config.OrdinalIndicator))
             {
                 var result = config.GetPropertyFromType(src, realProp.Replace(config.OrdinalIndicator, ""));
-                if (IsGenericList(result.PropertyType))
+                if (result is not null && IsGenericList(result.PropertyType))
                 {
                     return result.PropertyType.GetGenericArguments().FirstOrDefault();
                 }

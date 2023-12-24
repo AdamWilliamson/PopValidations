@@ -21,7 +21,7 @@ onMounted(async () => {
           <v-card-title><h3>ForEach</h3></v-card-title>
           <v-card-text>
             ForEach allows you to repeat a set of validations for each element
-            in the list.
+            in the list.  It can only be used after DescribeEnumerable, a version of Describe explicitly for ForEach.  DescribeEnumerable allows you to validate the list as a property of the object, and using ForEach, each element within that list.
           </v-card-text>
         </v-card>
       </v-col>

@@ -4,7 +4,7 @@ namespace PopValidations.ExampleWebApi.Features.BasicExample;
 
 public class CreateSongRequest : IRequest<CreateSongResponse>
 {
-    public BasicSong Song { get; set; }
+    public BasicSong? Song { get; init; }
 }
 
 public class CreateSongRequestValidator : AbstractValidator<CreateSongRequest>

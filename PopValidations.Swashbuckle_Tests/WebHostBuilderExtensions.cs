@@ -22,9 +22,11 @@ namespace PopValidations.Swashbuckle_Tests
 
         private static ApplicationPartManager GetApplicationPartManager(IServiceCollection services)
         {
-            var partManager = (ApplicationPartManager)services
+            var partManager = services
                 .Last(descriptor => descriptor.ServiceType == typeof(ApplicationPartManager))
-                .ImplementationInstance;
+                ?.ImplementationInstance as ApplicationPartManager;
+
+            if (partManager == null) throw new Exception("Part manager is not correct..  How?");
             return partManager;
         }
 

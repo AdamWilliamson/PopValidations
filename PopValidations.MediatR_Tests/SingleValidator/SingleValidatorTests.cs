@@ -49,10 +49,10 @@ namespace PopValidations.MediatR_Tests.SingleValidator
             var mediator = serviceProvider.GetService<IMediator>();
 
             // Act
-            Func<Task> act = () => mediator.Send(new TestCommand(30));
+            Func<Task> act = () => mediator!.Send(new TestCommand(30));
 
             // Assert
-            await act.Should().ThrowAsync<PopValidationHttpException>();
+            await act.Should().ThrowAsync<PopValidationMediatRException>();
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace PopValidations.MediatR_Tests.SingleValidator
             var mediator = serviceProvider.GetService<IMediator>();
 
             // Act
-            Func<Task> act = () => mediator.Send(new TestCommand(10));
+            Func<Task> act = () => mediator!.Send(new TestCommand(10));
 
             // Assert
             await act.Should().NotThrowAsync();

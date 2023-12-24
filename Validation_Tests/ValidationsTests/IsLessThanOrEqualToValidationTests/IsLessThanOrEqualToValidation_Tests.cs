@@ -27,10 +27,10 @@ public class IsLessThanOrEqualToValidation_Tests
     [InlineData(1, 0)]
     [InlineData(1, 1)]
     [InlineData(null, null)]
-    public void WhenValidatingWithHigherValues_TheyAllPass(IComparable testValue, IComparable incomingValue)
+    public void WhenValidatingWithHigherValues_TheyAllPass(IComparable? testValue, IComparable? incomingValue)
     {
         // Arrange
-        var validator = new IsLessThanOrEqualToValidation(new ScopedData<object, IComparable>(testValue));
+        var validator = new IsLessThanOrEqualToValidation(new ScopedData<object, IComparable?>(testValue));
 
         // Act
         var result = validator.Validate(incomingValue);
@@ -48,10 +48,10 @@ public class IsLessThanOrEqualToValidation_Tests
     [InlineData(short.MaxValue, int.MinValue)]
     [InlineData(short.MaxValue, null)]
     [InlineData(-2, -1)]
-    public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable incomingValue)
+    public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable? incomingValue)
     {
         // Arrange
-        var validator = new IsLessThanOrEqualToValidation(new ScopedData<object, IComparable>(testValue));
+        var validator = new IsLessThanOrEqualToValidation(new ScopedData<object, IComparable?>(testValue));
 
         // Act
         var result = validator.Validate(incomingValue);

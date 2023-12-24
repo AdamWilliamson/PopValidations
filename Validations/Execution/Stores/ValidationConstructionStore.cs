@@ -317,7 +317,13 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
                     expandable.Decorator
                 );
             }
-            expandable.ReHomeScopes(InformationDepth.GetCurrentFieldExecutor());
+
+            var currFieldExecutor = InformationDepth.GetCurrentFieldExecutor();
+            if (currFieldExecutor is not null)
+            {
+                expandable.ReHomeScopes(currFieldExecutor);
+            }
+
             expandable.ExpandToDescribe(this);
             var copyNewUnExpanded = unExpandedItems.ToList();
             unExpandedItems = new();
@@ -385,7 +391,11 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
 
             if (currentInstanceValue != null)
             {
-                expandable.ReHomeScopes(currentFieldExecutor);
+                if (currentFieldExecutor != null)
+                {
+                    expandable.ReHomeScopes(currentFieldExecutor);
+                }
+
                 expandable.ExpandToValidate(this, currentInstanceValue);
                 var copyNewUnExpanded = unExpandedItems.ToList();
                 unExpandedItems = new();

@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+	<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
     <RootNamespace>PopValidations</RootNamespace>
 
 	<PackageTags>Validation;Fluent;FluentValidation;PopValidation;Database;API;WebAPI;Async;Scoped;MediatR;Swashbuckle;OpenApi;Json;</PackageTags>
 	<PackageReleaseNotes>Working towards V1. This contains the basics needed to validate any level of object complexity.</PackageReleaseNotes>
 	<Version>1.0.0.0</Version>
+	<PackageVersion>1.0.0.0</PackageVersion>
 	<Authors>Mythos_TheProgrammer</Authors>
 	<Company>PopValidations</Company>
 	<Description>PopValidations. A Fluent based validation system for objects and APIs</Description>
@@ -30,10 +30,10 @@
   <ItemGroup>
 	  <Content Include="Icon.png" Pack="true" PackagePath="" />
 	  <Content Include="License.txt" Pack="true" PackagePath="" />
-	  <None Update="ReadMe.md">
+	  <Content Include="ReadMe.md">
 		  <Pack>True</Pack>
 		  <PackagePath>\</PackagePath>
-	  </None>
+	  </Content>
   </ItemGroup>
 
 	<ItemGroup>

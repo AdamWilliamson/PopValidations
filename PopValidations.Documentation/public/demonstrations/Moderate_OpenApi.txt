@@ -65,7 +65,8 @@
             },
             "duration": {
                 "type": "number",
-                "format": "double"
+                "format": "double",
+                "nullable": true
             },
             "genre": {
                 "type": "string",

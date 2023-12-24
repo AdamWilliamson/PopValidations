@@ -6,7 +6,7 @@ namespace PopValidations.FieldDescriptors.Base;
 
 internal interface IFieldDescripor_Internal<TValidationType, TFieldType>  : IFieldDescriptor<TValidationType, TFieldType>
 {
-    IPropertyExpressionToken<TValidationType, TFieldType?> PropertyToken { get; }
+    IPropertyExpressionToken<TValidationType, TFieldType> PropertyToken { get; }
     IValidationStore Store { get; }
 }
 
@@ -16,5 +16,6 @@ public interface IFieldDescriptor<TValidationType, TFieldType> : IFieldDescripto
     void AddSelfDescribingEntity(IExpandableEntity component);
 
     void NextValidationIsVital();
+    void SetAlwaysVital();
     void AddValidation(IValidationComponent validation);
 }

@@ -17,7 +17,7 @@ public enum TestEnum
 public class IsEnumValidation_Tests
 {
     [Theory]
-    [InlineData(1l)]
+    [InlineData(1L)]
     [InlineData(1.0d)]
     [InlineData('1')]
     [InlineData("2")]
@@ -44,10 +44,10 @@ public class IsEnumValidation_Tests
     [InlineData(long.MaxValue)]
     [InlineData(short.MaxValue)]
     [InlineData(null)]
-    public void WhenValidatingWithNonConvertableValues_TheyAllFail(object value)
+    public void WhenValidatingWithNonConvertableValues_TheyAllFail(object? value)
     {
         // Arrange
-        var validator = new IsEnumValidation<object>(typeof(TestEnum));
+        var validator = new IsEnumValidation<object?>(typeof(TestEnum));
 
         // Act
         var result = validator.Validate(value);
@@ -59,10 +59,10 @@ public class IsEnumValidation_Tests
     [Theory]
     [InlineData(typeof(Object))]
     [InlineData(null)]
-    public void WhenValidatingWithOddTypes_TheyAllFail(object value)
+    public void WhenValidatingWithOddTypes_TheyAllFail(object? value)
     {
         // Arrange
-        var validator = new IsEnumValidation<object>(typeof(TestEnum));
+        var validator = new IsEnumValidation<object?>(typeof(TestEnum));
 
         // Act
         var result = validator.Validate(value);

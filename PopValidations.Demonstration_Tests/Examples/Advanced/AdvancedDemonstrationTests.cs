@@ -197,8 +197,8 @@ public class AdvancedDemonstrationTests
         setup.Register(typeof(AdvancedDemonstration.AlbumVerificationService), new AdvancedDemonstration.AlbumVerificationService());
         // Act
         var helper = await setup.GetHelper(config);
-        JObject json = JObject.Parse(helper.Content);
-        var match = json["components"]["schemas"];//.FirstOrDefault();
+        JObject json = JObject.Parse(helper.Content!);
+        var match = json["components"]!["schemas"]!;//.FirstOrDefault();
 
         // Assert
         Approvals.VerifyJson(match?.ToString(Newtonsoft.Json.Formatting.None));

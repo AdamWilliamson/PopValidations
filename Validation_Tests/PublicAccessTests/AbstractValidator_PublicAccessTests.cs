@@ -1,4 +1,5 @@
 ﻿using ApprovalTests;
+using ApprovalTests.Namers;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using PopValidations;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Xunit;
 
 namespace PopValidations_Tests.PublicAccessTests;
@@ -82,9 +84,12 @@ public class AbstractValidator_PublicAccessTests
 
         // Act
         // Assert
-        Approvals.Verify(
-            string.Join(Environment.NewLine + "-", props)
-        );
+        using (ApprovalResults.ForScenario(RuntimeInformation.FrameworkDescription))
+        {
+            Approvals.Verify(
+                string.Join(Environment.NewLine + "-", props)
+            );
+        }
     }
 
     [Fact]
@@ -147,9 +152,12 @@ public class AbstractValidator_PublicAccessTests
 
         // Act
         // Assert
-        Approvals.Verify(
-            string.Join(Environment.NewLine + "-", props)
-        );
+        using (ApprovalResults.ForScenario(RuntimeInformation.FrameworkDescription))
+        {
+            Approvals.Verify(
+                string.Join(Environment.NewLine + "-", props)
+            );
+        }
     }
 
     [Fact]

@@ -1,12 +1,8 @@
-﻿using System.Net;
-using System.Web.Http;
+﻿namespace PopValidations.MediatR;
 
-namespace PopValidations.MediatR;
-
-public class PopValidationHttpException : HttpResponseException
+public class PopValidationMediatRException : Exception
 {
-    public PopValidationHttpException(Dictionary<string, List<string>> errors)
-        : base(HttpStatusCode.UnprocessableEntity)
+    public PopValidationMediatRException(Dictionary<string, List<string>> errors)
     {
         Errors = errors;
     }

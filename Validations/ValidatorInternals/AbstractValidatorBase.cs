@@ -19,7 +19,7 @@ public interface IStoreContainer
 
 public abstract class AbstractValidatorBase<TValidationType> : IParentScope, IStoreContainer
 {
-    private IParentScope? _Parent;
+    private readonly IParentScope? _Parent;
     IParentScope? IParentScope.Parent => _Parent;
     string IParentScope.Name => typeof(TValidationType).Name;
     Guid IParentScope.Id { get; } = Guid.NewGuid();
@@ -30,26 +30,27 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
         _Store = store;
     }
 
-    public IFieldDescriptor<
-        TValidationType,
-        IEnumerable<TFieldType?>?
-    > DescribeEnumerable<TFieldType>(
-        Expression<Func<TValidationType, IEnumerable<TFieldType?>?>> expr
-    )
+    public IFieldDescriptor<TValidationType, IEnumerable<TFieldType>> 
+        DescribeEnumerable<TFieldType>(Expression<Func<TValidationType, IEnumerable<TFieldType>>> expr)
     {
-        var fieldDescriptor = new FieldDescriptor<TValidationType, IEnumerable<TFieldType?>?>(
-            new PropertyExpressionToken<TValidationType, IEnumerable<TFieldType?>?>(expr),
+        var fieldDescriptor = new EnumerableFieldDescriptor<TValidationType, TFieldType>(
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            new PropertyExpressionToken<TValidationType, IEnumerable<TFieldType>>(expr),
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             _Store
         );
+
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
         return fieldDescriptor;
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
     }
 
-    public IFieldDescriptor<TValidationType, TFieldType?> Describe<TFieldType>(
-        Expression<Func<TValidationType, TFieldType?>> expr
+    public IFieldDescriptor<TValidationType, TFieldType> Describe<TFieldType>(
+        Expression<Func<TValidationType, TFieldType>> expr
     )
     {
-        var fieldDescriptor = new FieldDescriptor<TValidationType, TFieldType?>(
-            new PropertyExpressionToken<TValidationType, TFieldType?>(expr),
+        var fieldDescriptor = new FieldDescriptor<TValidationType, TFieldType>(
+            new PropertyExpressionToken<TValidationType, TFieldType>(expr),
             _Store
         );
         return fieldDescriptor;
@@ -57,14 +58,14 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
 
     public void Scope<TData>(
         string scopedDataDecsription,
-        Func<Task<TData?>> dataRetrievalFunc,
-        Action<IScopedData<TData?>> action
+        Func<Task<TData>> dataRetrievalFunc,
+        Action<IScopedData<TData>> action
     )
     {
         _Store.AddItem(
             null,
             new Scope<TData>(
-                new ScopedData<TData?>(scopedDataDecsription, dataRetrievalFunc),
+                new ScopedData<TData>(scopedDataDecsription, dataRetrievalFunc),
                 action
             )
         );
@@ -72,14 +73,14 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
 
     public void Scope<TData>(
         string scopedDataDecsription,
-        Func<TValidationType, Task<TData?>> dataRetrievalFunc,
-        Action<IScopedData<TData?>> action
+        Func<TValidationType, Task<TData>> dataRetrievalFunc,
+        Action<IScopedData<TData>> action
     )
     {
         _Store.AddItem(
             null,
             new Scope<TData>(
-                new ScopedData<TValidationType, TData?>(scopedDataDecsription, dataRetrievalFunc),
+                new ScopedData<TValidationType, TData>(scopedDataDecsription, dataRetrievalFunc),
                 action
             )
         );
@@ -87,14 +88,14 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
 
     public void Scope<TData>(
         string scopedDataDecsription,
-        Func<TValidationType, TData?> dataRetrievalFunc,
-        Action<IScopedData<TData?>> action
+        Func<TValidationType, TData> dataRetrievalFunc,
+        Action<IScopedData<TData>> action
     )
     {
         _Store.AddItem(
             null,
             new Scope<TData>(
-                new ScopedData<TValidationType, TData?>(scopedDataDecsription, dataRetrievalFunc),
+                new ScopedData<TValidationType, TData>(scopedDataDecsription, dataRetrievalFunc),
                 action
             )
         );
@@ -186,12 +187,12 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
 
     public ISwitchValidator<TValidationType, TPassThrough> Switch<TPassThrough>(
         string scopedDataDecsription,
-        Func<TValidationType, Task<TPassThrough?>> dataRetrievalFunc
+        Func<TValidationType, Task<TPassThrough>> dataRetrievalFunc
     )
     {
         var switchScope = new SwitchScope<TValidationType, TPassThrough>(
             this,
-            new ScopedData<TValidationType, TPassThrough?>(scopedDataDecsription, dataRetrievalFunc)
+            new ScopedData<TValidationType, TPassThrough>(scopedDataDecsription, dataRetrievalFunc)
         );
 
         _Store.AddItem(null, switchScope);
@@ -201,19 +202,18 @@ public abstract class AbstractValidatorBase<TValidationType> : IParentScope, ISt
 
     public ISwitchValidator<TValidationType, TPassThrough> Switch<TPassThrough>(
         string scopedDataDecsription,
-        Func<TValidationType, TPassThrough?> dataRetrievalFunc
+        Func<TValidationType, TPassThrough> dataRetrievalFunc
     )
     {
         var switchScope = new SwitchScope<TValidationType, TPassThrough>(
             this,
-            new ScopedData<TValidationType, TPassThrough?>(scopedDataDecsription, dataRetrievalFunc)
+            new ScopedData<TValidationType, TPassThrough>(scopedDataDecsription, dataRetrievalFunc)
         );
 
         _Store.AddItem(null, switchScope);
 
         return switchScope;
     }
-
 
 
     IValidationStore IStoreContainer.Store => _Store;

@@ -19,10 +19,8 @@ public sealed class WhenStringValidator<TValidationType> : ScopeBase
         this.whenDescription = whenDescription;
         this.rules = rules;
         Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
-            this,
             item,
             new WhenStringValidator_IfTrue<TValidationType>(ifTrue),
-            null,
             fieldDescriptor
         );
     }

@@ -6,32 +6,31 @@ using PopValidations.ValidatorInternals;
 using System;
 using System.Diagnostics;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PopValidations.Validations;
 
 public interface ISwitchValidator<TValidationType, TScopedDataType>
 {
     ISwitchValidator<TValidationType, TScopedDataType> Case<TFieldType>(
-        Expression<Func<TValidationType, TFieldType?>> Describe, 
+        Expression<Func<TValidationType, TFieldType>> Describe, 
         string Description, 
-        Func<TFieldType?, TScopedDataType?, bool> Test, 
+        Func<TFieldType, TScopedDataType?, bool> Test, 
         string ErrorMessage);
 
-    ISwitchValidator<TValidationType, TScopedDataType> Ignore(string description, Func<TValidationType?, TScopedDataType?, bool> test);
+    ISwitchValidator<TValidationType, TScopedDataType> Ignore(string description, Func<TValidationType, TScopedDataType?, bool> test);
 }
 
 public sealed class SwitchScope<TValidationType, TScopedDataType> : ScopeBase, ISwitchValidator<TValidationType, TScopedDataType>
 {
     private readonly AbstractValidatorBase<TValidationType> parent;
-    private readonly IScopedData<TScopedDataType?> scopedData;
+    private readonly IScopedData<TScopedDataType> scopedData;
 
     public override bool IgnoreScope => true;
     public override string Name => scopedData.Describe();
 
     public SwitchScope(
         AbstractValidatorBase<TValidationType> parent,
-        IScopedData<TScopedDataType?> scopedData
+        IScopedData<TScopedDataType> scopedData
     )
     {
         this.parent = parent;
@@ -56,9 +55,9 @@ public sealed class SwitchScope<TValidationType, TScopedDataType> : ScopeBase, I
     public override void ChangeStore(IValidationStore store) { }
 
     public ISwitchValidator<TValidationType, TScopedDataType> Case<TFieldType>(
-        Expression<Func<TValidationType, TFieldType?>> Describe, 
+        Expression<Func<TValidationType, TFieldType>> Describe, 
         string Description, 
-        Func<TFieldType?, TScopedDataType?, bool> Test, 
+        Func<TFieldType, TScopedDataType?, bool> Test, 
         string ErrorMessage)
     {
         var fieldDescriptor = parent.Describe(Describe);
@@ -66,7 +65,7 @@ public sealed class SwitchScope<TValidationType, TScopedDataType> : ScopeBase, I
         var validation = new IsCustomValidation<TFieldType>(
             Description,
             ErrorMessage,
-            new ScopedData<TFieldType?, bool>("",
+            new ScopedData<TFieldType, bool>("",
                 (x) => {
 
                     Debug.Assert(x is TFieldType || x is TFieldType? || x is null);
@@ -76,7 +75,7 @@ public sealed class SwitchScope<TValidationType, TScopedDataType> : ScopeBase, I
                     if (data is TScopedDataType)
                         return !(Test?.Invoke(x, (TScopedDataType)data) ?? true);
                     else if (data is null)
-                        return !(Test?.Invoke(x, default) ?? true);
+                        return !(Test?.Invoke(x, default(TScopedDataType)) ?? true);
                     else
                         throw new ScopedDataException("Switch");
                 }
@@ -88,7 +87,7 @@ public sealed class SwitchScope<TValidationType, TScopedDataType> : ScopeBase, I
         return this;
     }
 
-    public ISwitchValidator<TValidationType, TScopedDataType> Ignore(string description, Func<TValidationType?, TScopedDataType?, bool> test)
+    public ISwitchValidator<TValidationType, TScopedDataType> Ignore(string description, Func<TValidationType, TScopedDataType?, bool> test)
     {
         return this;
     }

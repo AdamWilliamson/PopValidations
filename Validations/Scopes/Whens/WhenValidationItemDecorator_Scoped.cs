@@ -11,7 +11,7 @@ public class WhenValidationItemDecorator_Scoped<TValidationType, TPassThrough> :
     public WhenValidationItemDecorator_Scoped(
         IValidatableStoreItem itemToDecorate,
         WhenStringValidator_IfTruescoped<TValidationType, TPassThrough> ifTrue,
-        IFieldDescriptorOutline fieldDescriptor
+        IFieldDescriptorOutline? fieldDescriptor
     ) : base(itemToDecorate, fieldDescriptor)
     {
         this.ifTrue = ifTrue;
@@ -34,7 +34,9 @@ public class WhenValidationItemDecorator_Scoped<TValidationType, TPassThrough> :
             }
             else
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 return ifTrue.CanValidate(default);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 

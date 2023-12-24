@@ -1,10 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
+	<ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
 
-    <IsPackable>false</IsPackable>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS8620;CS8602;CS8603</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;CS8620;CS8602;CS8603</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,21 +29,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PopValidations.Swashbuckle_Tests\PopValidations.Swashbuckle_Tests.csproj" />
-    <ProjectReference Include="..\Validations\Validations.csproj" />
+	  <ProjectReference Include="..\Validations\Validations.csproj">
+		  <NoWarn>CS8603</NoWarn>
+	  </ProjectReference>
     <ProjectReference Include="..\Validation_Tests\Validations_Tests.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Examples\Basic\BasicDemonstrationTests.BasicValidator_Describe_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
-    <None Update="Examples\Basic\BasicDemonstrationTests.BasicValidator_Validate_ToJson.approved.json">
-      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
-      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
-      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
-    </None>
-  </ItemGroup>
-
 </Project>

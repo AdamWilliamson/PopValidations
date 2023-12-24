@@ -5,7 +5,7 @@ namespace PopValidations.Swashbuckle.Internal;
 public class PopValidationArray
 {
     private readonly OpenApiArray array;
-    private string lineHeader;
+    private string lineHeader = String.Empty;
 
     public PopValidationArray(OpenApiArray array)
     {

@@ -19,10 +19,10 @@ public class IsGreaterThanValidation_Tests
     [InlineData(long.MinValue, long.MaxValue)]
     [InlineData(short.MinValue, short.MaxValue)]
     [InlineData(null, null)]
-    public void WhenValidatingWithHigherValues_TheyAllPass(IComparable testValue, IComparable incomingValue)
+    public void WhenValidatingWithHigherValues_TheyAllPass(IComparable? testValue, IComparable? incomingValue)
     {
         // Arrange
-        var validator = new IsGreaterThanValidation(new ScopedData<object, IComparable>(testValue));
+        var validator = new IsGreaterThanValidation(new ScopedData<object, IComparable?>(testValue));
 
         // Act
         var result = validator.Validate(incomingValue);
@@ -39,7 +39,7 @@ public class IsGreaterThanValidation_Tests
     [InlineData(long.MinValue, short.MaxValue)]
     [InlineData(short.MinValue, int.MaxValue)]
     [InlineData(short.MinValue, null)]
-    public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable incomingValue)
+    public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable? incomingValue)
     {
         // Arrange
         var validator = new IsGreaterThanValidation(new ScopedData<object, IComparable>(testValue));

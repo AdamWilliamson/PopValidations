@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+	<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -24,15 +24,17 @@
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <PackageIcon>Icon.png</PackageIcon>
 	<IncludeContentInPack>true</IncludeContentInPack>
+	<OutputType>Library</OutputType>
+	  <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
   </PropertyGroup>
 
   <ItemGroup>
 	<Content Include="Icon.png" Pack="true" PackagePath="" />
 	<Content Include="License.txt" Pack="true" PackagePath="" />
-	  <None Update="ReadMe.md">
+	  <Content Include="ReadMe.md">
 		  <Pack>True</Pack>
 		  <PackagePath>\</PackagePath>
-	  </None>
+	  </Content>
   </ItemGroup>
 
   <ItemGroup>

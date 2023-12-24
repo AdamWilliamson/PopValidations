@@ -8,33 +8,20 @@ namespace PopValidations.Scopes.Whens;
 public class WhenValidationItemDecorator<TValidationType> 
     : WhenValidationItemDecoratorBase<TValidationType>
 {
-    private readonly IValidatorScope scopeParent;
     private readonly WhenStringValidator_IfTrue<TValidationType> ifTrue;
-    private readonly IScopeData? scopedData;
-    IFieldDescriptorOutline parentScopeFieldDescriptor;
 
     public WhenValidationItemDecorator(
-        IValidatorScope scopeParent,
         IValidatableStoreItem itemToDecorate,
         WhenStringValidator_IfTrue<TValidationType> ifTrue,
-        IScopeData? scopedData,
         IFieldDescriptorOutline? fieldDescriptor
     ) : base(itemToDecorate, fieldDescriptor)
     {
-        this.scopeParent = scopeParent;
         this.ifTrue = ifTrue;
-        this.scopedData = scopedData;
     }
 
     public override void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor)
     {
         base.ReHomeScopes(attemptedScopeFieldDescriptor);
-    }
-
-    public void SetParent(FieldExecutor fieldExecutor)
-    {
-        base.SetParent(fieldExecutor);
-        parentScopeFieldDescriptor = fieldExecutor;
     }
 
     public override async Task<bool> CanValidate(object? instance)
@@ -52,7 +39,7 @@ public class WhenValidationItemDecorator<TValidationType>
         }
         else if (WrappingLevelfieldDescriptor != null)
         {
-            var fieldExecutorValue = WrappingLevelfieldDescriptor!.GetValue(parentScopeFieldDescriptor?.GetValue(instance) ?? instance);
+            var fieldExecutorValue = WrappingLevelfieldDescriptor!.GetValue(/*parentScopeFieldDescriptor?.GetValue(instance) ??*/ instance);
 
             if (fieldExecutorValue != null)
             {
@@ -60,7 +47,9 @@ public class WhenValidationItemDecorator<TValidationType>
             }
             else
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 result = await ifTrue.CanValidate(default);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
         else

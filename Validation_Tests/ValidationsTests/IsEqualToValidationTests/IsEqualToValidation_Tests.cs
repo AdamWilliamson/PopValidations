@@ -37,6 +37,11 @@ internal class TestObject : IComparable
 
         return false;
     }
+
+    public override int GetHashCode()
+    {
+        return Test;
+    }
 }
 
 public class IsEqualToValidation_Tests
@@ -50,10 +55,10 @@ public class IsEqualToValidation_Tests
     [InlineData(short.MaxValue, short.MaxValue)]
     [InlineData("MatchingValue", "MatchingValue")]
     [InlineData(null, null)]
-    public void WhenValidatingWithEqualValues_TheyAllPass(IComparable testValue, IComparable incomingValue)
+    public void WhenValidatingWithEqualValues_TheyAllPass(IComparable? testValue, IComparable? incomingValue)
     {
         // Arrange
-        var validator = new IsEqualToValidation(new ScopedData<object, IComparable>(testValue));
+        var validator = new IsEqualToValidation(new ScopedData<object, IComparable?>(testValue));
 
         // Act
         var result = validator.Validate(incomingValue);
@@ -84,7 +89,7 @@ public class IsEqualToValidation_Tests
     [InlineData(short.MaxValue, int.MaxValue)]
     [InlineData(short.MaxValue, null)]
     [InlineData("MatchingValue", "NotAMatchingValue")]
-    public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable incomingValue)
+    public void WhenValidatingAginastDifferentTypes_TheyAllFail(IComparable testValue, IComparable? incomingValue)
     {
         // Arrange
         var validator = new IsEqualToValidation(new ScopedData<object, IComparable>(testValue));

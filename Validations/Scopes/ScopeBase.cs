@@ -14,7 +14,7 @@ public abstract class ScopeBase : IValidatorScope
     public Func<IValidatableStoreItem, IFieldDescriptorOutline?, IValidatableStoreItem>? Decorator { get; protected set; } = null;
     protected bool IsVital = false;
     public void AsVital() { IsVital = true; }
-    protected IFieldDescriptorOutline FieldDescriptor { get; set; }
+    protected IFieldDescriptorOutline? FieldDescriptor { get; set; }
 
     public virtual void ReHomeScopes(IFieldDescriptorOutline fieldDescriptorOutline) { }
 

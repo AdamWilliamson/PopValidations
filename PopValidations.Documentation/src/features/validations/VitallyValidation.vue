@@ -20,6 +20,7 @@ onMounted(async () => {
         <v-card>
           <v-card-title><h3>Vitally</h3></v-card-title>
           <v-card-text>Vitally, is a Validation modification. It ensures no validations run, if the validation right after it, fails. This ensures you can test an object for nullability, for example, and not run any validation or custom validations that may fail with less than useful error messages.</v-card-text>
+          <v-card-text>AllNextAreVital, is also a Validation modification. It ensures that the next validation that fails, stops any future ones running. It is the equivalent of putitng Vitally(), before each validation. It cannot be turned off once done, and applies only to the current instance of Describe().</v-card-text>          
         </v-card>
       </v-col>
     </v-row>

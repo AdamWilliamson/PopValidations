@@ -17,7 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopValidations.MediatR", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopValidations.Demonstration_Tests", "PopValidations.Demonstration_Tests\PopValidations.Demonstration_Tests.csproj", "{1482A5F2-5CBF-4024-8A7D-B5C710E4CCE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopValidations.MediatR_Tests", "PopValidations.MediatR_Tests\PopValidations.MediatR_Tests.csproj", "{FFF9A5C5-FFE6-4D9A-BB9B-26B81DFC9E6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopValidations.MediatR_Tests", "PopValidations.MediatR_Tests\PopValidations.MediatR_Tests.csproj", "{FFF9A5C5-FFE6-4D9A-BB9B-26B81DFC9E6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{939089EC-B580-43DC-85FB-52E5B1D6B5C9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

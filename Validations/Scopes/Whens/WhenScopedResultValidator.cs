@@ -38,10 +38,8 @@ public sealed class WhenScopedResultValidator<TValidationType, TPassThrough> : S
         this.rules = rules;
 
         Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
-            this,
             item,
             new WhenStringValidator_IfTrue<TValidationType>(ifTrue),
-            this.scoped,
             fieldDescriptor
         );
     }

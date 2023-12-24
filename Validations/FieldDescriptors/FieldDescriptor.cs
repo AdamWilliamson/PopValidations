@@ -2,13 +2,22 @@
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 using PopValidations.ValidatorInternals;
+using System.Collections.Generic;
 
 namespace PopValidations.FieldDescriptors;
+
+public class EnumerableFieldDescriptor<TValidationType, TFieldType> : FieldDescriptor<TValidationType, IEnumerable<TFieldType>?> 
+{
+    public EnumerableFieldDescriptor(
+        IPropertyExpressionToken<TValidationType, IEnumerable<TFieldType>?> propertyToken,
+        IValidationStore store
+    ) : base(propertyToken, store) { }
+}
 
 public class FieldDescriptor<TValidationType, TFieldType>
     : IFieldDescripor_Internal<TValidationType, TFieldType>
 {
-    public IPropertyExpressionToken<TValidationType, TFieldType?> PropertyToken { get; }
+    public IPropertyExpressionToken<TValidationType, TFieldType> PropertyToken { get; }
     protected object? RetrievedValue = null;
     protected bool ValueHasBeenRetrieved = false;
     public IValidationStore Store { get; }
@@ -27,13 +36,13 @@ public class FieldDescriptor<TValidationType, TFieldType>
         _NextValidationVital = true;
     }
 
-    public void IsAlwaysVital()
+    public void SetAlwaysVital()
     {
         _AlwaysVital = true;
     }
 
     public FieldDescriptor(
-        IPropertyExpressionToken<TValidationType, TFieldType?> propertyToken,
+        IPropertyExpressionToken<TValidationType, TFieldType> propertyToken,
         IValidationStore store
     )
     {

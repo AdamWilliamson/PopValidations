@@ -18,7 +18,7 @@
           <v-card-text>
             <a href="https://www.nuget.org/packages/PopValidations">https://www.nuget.org/packages/PopValidations</a><br />
             Or via CLI<br />
-            dotnet add package PopValidations --version 0.9.0
+            dotnet add package PopValidations --version 1.0.0
           </v-card-text>
         </v-card>
       </v-col>
@@ -31,7 +31,7 @@
           <v-card-text>
             <a href="https://www.nuget.org/packages/PopValidations.MediatR">https://www.nuget.org/packages/PopValidations.MediatR</a><br />
             Or via CLI<br />
-            dotnet add package PopValidations.MediatR --version 0.9.0
+            dotnet add package PopValidations.MediatR --version 1.0.0
           </v-card-text>
         </v-card>
       </v-col>
@@ -44,7 +44,7 @@
           <v-card-text>
             <a href="https://www.nuget.org/packages/PopValidations.Swashbuckle">https://www.nuget.org/packages/PopValidations.Swashbuckle</a><br />
             Or via CLI<br />
-            dotnet add package PopValidations.Swashbuckle --version 0.9.0
+            dotnet add package PopValidations.Swashbuckle --version 1.0.0
           </v-card-text>
         </v-card>
       </v-col>
