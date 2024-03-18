@@ -1,0 +1,138 @@
+﻿{
+    "results": [
+        {
+            "property": "InputFunction1(Int32):Void::(value,0,Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '10'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "10"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "InputFunction1(Int32):Void::Return",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "InputFunction1(Int32,String):Void::(value,0,Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '0'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "0"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "InputFunction1(Int32,String):Void::(anothervalue,1,String)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsEmailValidation",
+                    "message": "Must be a valid email.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "InputFunction1(Int32,String):Void::Return",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "InputFunction2(InputObject):Int32::(value,0,InputObject).value",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "InputFunction2(InputObject):Int32::Return(Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "ChildObject.InputFunction1(Int32):Void::(value,0,Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '100'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "100"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "ChildObject.InputFunction1(Int32):Void::Return",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

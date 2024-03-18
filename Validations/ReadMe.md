@@ -9,6 +9,15 @@ Feature or bugfix PR's, including appropriate tests are more than welcome.
 
 The core developer is Adam Williamson(https://github.com/AdamWilliamson), with help from Andrew Williamson (https://github.com/AWilliamson88)
 
+### Installation
+
+https://www.nuget.org/packages/PopValidations/
+
+https://www.nuget.org/packages/PopValidations.MediatR/
+
+https://www.nuget.org/packages/PopValidations.Swashbuckle/
+
+
 ### Example
 
 PopValidation  provides a class "AbstractValidator", that you can inherit which provides the functions
