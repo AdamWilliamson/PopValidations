@@ -30,15 +30,14 @@ public class BasicSubApi
 public class BasicTestApiValidator : ApiValidator<BasicTestApi>
 {
     public BasicTestApiValidator()
-    {         
-        //var stringParam = Param.Is<string>().IsNotNull().IsEmail();
+    {
+        var stringParam = Param.Is<string>().IsNotNull().IsEmail();
 
-        //DescribeFunc(x => x.InputFunction1(Param.Is<int>().IsNotNull().IsGreaterThan(10)));
-        //DescribeFunc(x => x.InputFunction1(Param.Is<int>().IsNotNull().IsGreaterThan(0), stringParam));
-        //DescribeFunc(x => x.InputFunction2(Param.Is<BasicInputObject>().SetValidator(new BasicInputObjectValidator()))).TypedReturn.IsNotNull();
+        DescribeFunc(x => x.InputFunction1(Param.Is<int>().IsNotNull().IsGreaterThan(10)));
+        DescribeFunc(x => x.InputFunction1(Param.Is<int>().IsNotNull().IsGreaterThan(0), stringParam));
+        DescribeFunc(x => x.InputFunction2(Param.Is<BasicInputObject>().SetValidator(new BasicInputObjectValidator()))).TypedReturn.IsNotNull();
 
-        //Describe(x => x.ChildObject).SetValidator(new BasicSubApiValidator());
-
+        Describe(x => x.ChildObject).SetValidator(new BasicSubApiValidator());
 
         DescribeFunc(x =>
             x.EnumerableParamFunc(
