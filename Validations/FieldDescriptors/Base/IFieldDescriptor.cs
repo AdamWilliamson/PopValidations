@@ -4,9 +4,9 @@ using PopValidations.ValidatorInternals;
 
 namespace PopValidations.FieldDescriptors.Base;
 
-internal interface IFieldDescripor_Internal<TValidationType, TFieldType>  : IFieldDescriptor<TValidationType, TFieldType>
+public interface IFieldDescripor_Internal<TValidationType, TFieldType>  : IFieldDescriptor<TValidationType, TFieldType>
 {
-    IPropertyExpressionToken<TValidationType, TFieldType> PropertyToken { get; }
+    IPropertyExpressionToken<TFieldType> PropertyToken { get; }
     IValidationStore Store { get; }
 }
 

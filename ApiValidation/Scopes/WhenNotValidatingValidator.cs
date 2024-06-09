@@ -3,7 +3,7 @@ using PopValidations.Scopes;
 using PopValidations.Scopes.Whens;
 //using System.Xml;
 
-namespace PopValidations_Functional_Testbed;
+namespace ApiValidations.Scopes;
 
 public sealed class WhenNotValidatingValidator<TValidationType> : ScopeBase
 {
@@ -25,7 +25,7 @@ public sealed class WhenNotValidatingValidator<TValidationType> : ScopeBase
 
     protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {
-        
+
     }
 
     protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)

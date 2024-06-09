@@ -15,6 +15,7 @@ namespace PopValidations_Tests.PublicAccessTests
                 "AddSubValidator",
                 "AddSelfDescribingEntity",
                 "NextValidationIsVital",
+                "SetAlwaysVital",
                 "AddValidation"
             };
 

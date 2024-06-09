@@ -1,4 +1,4 @@
-﻿namespace PopValidations_Functional_Testbed;
+﻿namespace ApiValidations.Descriptors.Core;
 
 public class ParamDetailsDTO
 {

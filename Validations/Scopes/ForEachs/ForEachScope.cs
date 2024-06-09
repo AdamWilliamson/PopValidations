@@ -10,11 +10,11 @@ namespace PopValidations.Scopes.ForEachs;
 public class ForEachFieldDescriptor<TValidationType, TEnumeratedFieldType, TFieldType>
     : FieldDescriptor<TEnumeratedFieldType, TFieldType>
 {
-    private readonly IPropertyExpressionToken<TValidationType, TEnumeratedFieldType> parentPropertyExpressionToken;
+    private readonly IPropertyExpressionToken<TEnumeratedFieldType> parentPropertyExpressionToken;
 
     public ForEachFieldDescriptor(
-        IPropertyExpressionToken<TValidationType, TEnumeratedFieldType> parentPropertyExpressionToken,
-        IPropertyExpressionToken<TEnumeratedFieldType, TFieldType> propertyExpressionToken,
+        IPropertyExpressionToken<TEnumeratedFieldType> parentPropertyExpressionToken,
+        IPropertyExpressionToken<TFieldType> propertyExpressionToken,
         ValidationConstructionStore store
         )
         : base(propertyExpressionToken, store)
@@ -48,7 +48,7 @@ public class ForEachFieldDescriptor<TValidationType, TEnumeratedFieldType, TFiel
     }
 }
 
-internal class ForEachScope<TValidationType, TFieldType> : ScopeBase//, ISubValidatorClass
+internal class ForEachScope<TValidationType, TFieldType> : ScopeBase
     where TValidationType : class
 {
     private readonly IFieldDescripor_Internal<TValidationType, IEnumerable<TFieldType>> fieldDescriptor;

@@ -1,7 +1,7 @@
 ﻿using PopValidations.Execution.Stores;
 using PopValidations.Scopes;
 
-namespace PopValidations_Functional_Testbed;
+namespace ApiValidations.Scopes;
 
 public class ApiScope<TScopedDataType> : ScopeBase
 {

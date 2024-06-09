@@ -9,7 +9,7 @@ namespace PopValidations.FieldDescriptors;
 public class EnumerableFieldDescriptor<TValidationType, TFieldType> : FieldDescriptor<TValidationType, IEnumerable<TFieldType>?> 
 {
     public EnumerableFieldDescriptor(
-        IPropertyExpressionToken<TValidationType, IEnumerable<TFieldType>?> propertyToken,
+        IPropertyExpressionToken<IEnumerable<TFieldType>?> propertyToken,
         IValidationStore store
     ) : base(propertyToken, store) { }
 }
@@ -17,7 +17,7 @@ public class EnumerableFieldDescriptor<TValidationType, TFieldType> : FieldDescr
 public class FieldDescriptor<TValidationType, TFieldType>
     : IFieldDescripor_Internal<TValidationType, TFieldType>
 {
-    public IPropertyExpressionToken<TValidationType, TFieldType> PropertyToken { get; }
+    public IPropertyExpressionToken<TFieldType> PropertyToken { get; }
     protected object? RetrievedValue = null;
     protected bool ValueHasBeenRetrieved = false;
     public IValidationStore Store { get; }
@@ -42,7 +42,7 @@ public class FieldDescriptor<TValidationType, TFieldType>
     }
 
     public FieldDescriptor(
-        IPropertyExpressionToken<TValidationType, TFieldType> propertyToken,
+        IPropertyExpressionToken<TFieldType> propertyToken,
         IValidationStore store
     )
     {
