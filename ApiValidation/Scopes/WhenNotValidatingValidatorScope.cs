@@ -1,17 +1,16 @@
 ﻿using PopValidations.Execution.Stores;
 using PopValidations.Scopes;
 using PopValidations.Scopes.Whens;
-//using System.Xml;
 
 namespace ApiValidations.Scopes;
 
-public sealed class WhenNotValidatingValidator<TValidationType> : ScopeBase
+public sealed class WhenNotValidatingValidatorScope<TValidationType> : ScopeBase
 {
     private readonly Action rules;
     public override string Name => string.Empty;
     public override bool IgnoreScope => true;
 
-    public WhenNotValidatingValidator(
+    public WhenNotValidatingValidatorScope(
         Action rules
     )
     {

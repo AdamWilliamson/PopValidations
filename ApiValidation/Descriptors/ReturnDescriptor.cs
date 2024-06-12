@@ -1,115 +1,11 @@
 ﻿using ApiValidations.Descriptors.Core;
+using ApiValidations.Helpers;
 using PopValidations.Execution.Stores;
 using PopValidations.FieldDescriptors.Base;
-using PopValidations.Scopes;
-using PopValidations.Scopes.Whens;
 using PopValidations.Validations.Base;
 using PopValidations.ValidatorInternals;
-using System.ComponentModel;
 
 namespace ApiValidations.Descriptors;
-
-public sealed class WhenReturningNotValidatingValidator<TValidationType> : ScopeBase
-{
-    private readonly List<Action<IValidationStore>> rules = new();
-    private readonly IValidationStore owningStore;
-    private readonly IFieldDescriptorOutline outline;
-
-    public override string Name => string.Empty;
-    public override bool IgnoreScope => true;
-
-    public WhenReturningNotValidatingValidator(IValidationStore owningStore, IFieldDescriptorOutline outline)
-    {
-        Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
-            item,
-            new WhenStringValidator_IfTrue<TValidationType>((_) => Task.FromResult(false)),
-            fieldDescriptor
-        );
-
-        this.owningStore = owningStore;
-        this.outline = outline;
-    }
-
-    public void AddValidation(bool isVital, IValidationComponent component)
-    {
-        rules.Add((store) => store.AddItem(isVital, outline, component));
-    }
-
-    //public void AddSelfDescribingEntity(bool isvital, IExpandableEntity component)
-    //{
-    //    if (_NextValidationVital || _AlwaysVital) component.AsVital();
-
-    //    .AddValidation(
-    //        _NextValidationVital
-    //        component
-    //    );
-    //    _NextValidationVital = false;
-    //}
-
-    protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value) { }
-
-    protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
-    {
-        foreach (var rule in rules)
-        {
-            rule.Invoke(owningStore);
-        }
-    }
-
-    public override void ChangeStore(IValidationStore store) { }
-}
-
-//public sealed class WhenReturningNotValidatingValidator<TValidationType, TReturnType> : ScopeBase
-//{
-//    private readonly List<Action<IValidationStore>> rules = new();
-//    private readonly IValidationStore owningStore;
-//    private readonly IFieldDescriptorOutline outline;
-
-//    public override string Name => string.Empty;
-//    public override bool IgnoreScope => true;
-
-//    public WhenReturningNotValidatingValidator(IValidationStore owningStore, IFieldDescriptorOutline outline)
-//    {
-//        Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
-//            item,
-//            new WhenStringValidator_IfTrue<TValidationType>((_) => Task.FromResult(false)),
-//            fieldDescriptor
-//        );
-
-//        this.owningStore = owningStore;
-//        this.outline = outline;
-//    }
-
-//    public void AddValidation(bool isVital, IValidationComponent component)
-//    {
-//        rules.Add((store) => store.AddItem(isVital, outline, component));
-//    }
-
-//    public void AddSubValidator(ISubValidatorClass<TReturnType> component)
-//    {
-//        rules.Add((store) => {
-//            foreach (var item in component.Store.GetItems())
-//            {
-//                owningStore.AddItemToCurrentScope(outline, item);
-//            }
-
-//            component.ChangeStore(owningStore);
-//        });
-//    }
-
-//    protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value){}
-
-//    protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
-//    {
-//        foreach (var rule in rules)
-//        {
-//            rule.Invoke(owningStore);
-//        }
-//    }
-
-//    public override void ChangeStore(IValidationStore store) { }
-//}
-
 
 public interface IReturnDescriptor: IFieldDescriptorOutline
 {
@@ -124,11 +20,6 @@ public interface IReturnDescriptor<TReturnType> : IReturnDescriptor
     void AddSelfDescribingEntity(IExpandableEntity component);
 }
 
-public interface IReturnDescriptor_Internal 
-{
-    IFunctionExpressionToken FunctionDescriptor { get; }
-}
-
 public class ReturnDescriptor<TValidationType> : IReturnDescriptor, IFieldDescriptorOutline, IReturnDescriptor_Internal
 {
     protected object? RetrievedValue = null;
@@ -141,14 +32,11 @@ public class ReturnDescriptor<TValidationType> : IReturnDescriptor, IFieldDescri
 
     IFunctionExpressionToken _functionDescriptor { get; set; }
     IFunctionExpressionToken IReturnDescriptor_Internal.FunctionDescriptor => _functionDescriptor;
-    //WhenReturningNotValidatingValidator<TValidationType> when;
 
     public ReturnDescriptor(IValidationStore store, IFunctionExpressionToken functionDescription)
     {
         this.store = store;
         this._functionDescriptor = functionDescription;
-        //when = new WhenReturningNotValidatingValidator<TValidationType>(store, this);
-        //store.AddItem(null, when);
     }
 
     public virtual string AddTo(string existing)
@@ -158,7 +46,6 @@ public class ReturnDescriptor<TValidationType> : IReturnDescriptor, IFieldDescri
 
     public void AddValidation(IValidationComponent validation)
     {
-        //when.AddValidation(_NextValidationVital || _AlwaysVital, validation);
         store.AddItem(_NextValidationVital || _AlwaysVital, this, validation);
         _NextValidationVital = false;
     }
@@ -189,30 +76,24 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
 
     protected bool _NextValidationVital { get; set; } = false;
     protected bool _AlwaysVital { get; set; } = false;
-    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $"::Return({typeof(TReturnType).Name})";
+    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $"::Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
 
     IFunctionExpressionToken _functionDescriptor { get; set; }
     IFunctionExpressionToken IReturnDescriptor_Internal.FunctionDescriptor => _functionDescriptor;
-
-    //WhenReturningNotValidatingValidator<TValidationType, TReturnType> when;
 
     public ReturnDescriptor(IValidationStore store, IFunctionExpressionToken functionDescription)
     {
         this.store = store;
         _functionDescriptor = functionDescription;
-        //when = new WhenReturningNotValidatingValidator<TValidationType, TReturnType>(store, this);
-        //store.AddItem(null, when);
     }
 
     public virtual string AddTo(string existing)
     {
-        return _functionDescriptor.CombineWithParentProperty(existing) + $"::Return({typeof(TReturnType).Name})";
+        return _functionDescriptor.CombineWithParentProperty(existing) + $"::Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
     }
 
     public void AddValidation(IValidationComponent validation)
     {
-        //store.AddItem()
-        //..when.AddValidation(_NextValidationVital || _AlwaysVital, validation);
         store.AddItem(_NextValidationVital || _AlwaysVital, this, validation);
         _NextValidationVital = false;
     }

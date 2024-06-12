@@ -1,11 +1,10 @@
-using ApiValidations.ApiValidators;
+using ApiValidations;
 using ApprovalTests;
 using FluentAssertions;
 using PopValidations;
 using PopValidations_Tests.TestHelpers;
-using System.Xml;
 
-namespace ApiValidations_Tests;
+namespace ApiValidations_Tests.Examples;
 
 public record ModerateInputObject(int value);
 public record ModerateOutputObject(int value);
@@ -20,7 +19,7 @@ public class ModerateTestApi
     public string IsCustom(string value) { return string.Empty; }
     public string IsEmail(string email) { return string.Empty; }
     public string IsEmpty(string empty) { return string.Empty; }
-    public string IsEnum(string enumValue){ return string.Empty; }
+    public string IsEnum(string enumValue) { return string.Empty; }
     public string IsEqualTo(string value) { return string.Empty; }
     public int IsGreaterThan(int greaterThan) { return 0; }
     public int IsGreaterThanOrEqualTo(int greaterThanOrEqualTo) { return 0; }
@@ -51,7 +50,7 @@ public class ModerateTestApiValidator : ApiValidator<ModerateTestApi>
         DescribeFunc(x => x.IsGreaterThanOrEqualTo(Param.Is<int>().IsGreaterThanOrEqualTo(10))).Return.IsGreaterThanOrEqualTo(10);
         DescribeFunc(x => x.IsLessThan(Param.Is<int>().IsLessThan(10))).Return.IsLessThan(10);
         DescribeFunc(x => x.IsLessThanOrEqual(Param.Is<int>().IsLessThanOrEqualTo(10))).Return.IsLessThanOrEqualTo(10);
-        DescribeFunc(x => x.IsLengthExclusivelyBetween(Param.Is<int>().IsLengthExclusivelyBetween(1,10))).Return.IsLengthExclusivelyBetween(0,10);
+        DescribeFunc(x => x.IsLengthExclusivelyBetween(Param.Is<int>().IsLengthExclusivelyBetween(1, 10))).Return.IsLengthExclusivelyBetween(0, 10);
         DescribeFunc(x => x.IsLengthInclusivelyBetween(Param.Is<int>().IsLengthInclusivelyBetween(1, 10))).Return.IsLengthInclusivelyBetween(0, 10);
         DescribeFunc(x => x.IsNotEmpty(Param.Is<string>().IsNotEmpty())).Return.IsNotEmpty();
         DescribeFunc(x => x.IsNotNull(Param.Is<string?>().IsNotNull())).Return.IsNotNull();

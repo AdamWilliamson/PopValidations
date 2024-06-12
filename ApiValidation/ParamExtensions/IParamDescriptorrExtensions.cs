@@ -5,7 +5,7 @@ using PopValidations.FieldDescriptors.Base;
 using PopValidations.Scopes.ForEachs;
 using PopValidations.ValidatorInternals;
 
-namespace PopValidations;
+namespace ApiValidations;
 
 public interface IParamDescripor_Internal<TValidationType, TFieldType> 
     : IParamDescriptor<TFieldType>

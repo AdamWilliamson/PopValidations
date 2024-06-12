@@ -1,10 +1,10 @@
 ﻿using ApiValidations.Descriptors;
+using ApiValidations.Descriptors.Core;
 using ApiValidations.Scopes;
 using PopValidations.Execution;
-using PopValidations.Scopes.ForEachs;
 using PopValidations.ValidatorInternals;
 
-namespace PopValidations;
+namespace ApiValidations;
 
 public static partial class IReturnValidatorExtensions
 {
@@ -51,20 +51,6 @@ public static partial class IReturnValidatorExtensions
             throw new PopValidationException(nameof(returnDescriptor), "Invalid Param Descriptor");
         }
 
-
-        //if (fieldDescriptor is IParamDescriptor_Internal<TValidationType, TParamType> converted)
-        //{
-        //    var forEachScope = new ParamForEachScope<TValidationType, TParamType>(
-        //        converted,
-        //        actions
-        //    );
-
-
         return returnDescriptor;
-        //}
-        //else
-        //{
-        //    throw new PopValidationException(nameof(fieldDescriptor), "Invalid Field Descriptor");
-        //}
     }
 }

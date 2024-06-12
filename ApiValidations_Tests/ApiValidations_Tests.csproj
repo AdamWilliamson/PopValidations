@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Validation_Tests\Validations_Tests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ReturnTests\" />
+  </ItemGroup>
+
 </Project>

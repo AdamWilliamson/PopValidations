@@ -3,7 +3,7 @@ using ApiValidations.Descriptors;
 using ApiValidations.Descriptors.Core;
 using PopValidations.ValidatorInternals;
 
-namespace ApiValidations.ApiValidators;
+namespace ApiValidations;
 
 public interface IValidator
 {

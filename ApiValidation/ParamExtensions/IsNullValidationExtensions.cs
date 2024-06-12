@@ -2,7 +2,7 @@ using ApiValidations.Descriptors;
 using PopValidations.Execution.Validations.Base;
 using PopValidations.Validations;
 
-namespace PopValidations;
+namespace ApiValidations;
 
 public static class IsNullValidationExtensions
 {

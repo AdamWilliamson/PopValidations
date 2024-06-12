@@ -1,11 +1,11 @@
-using ApiValidations.ApiValidators;
+using ApiValidations;
 using ApprovalTests;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using PopValidations;
 using PopValidations_Tests.TestHelpers;
 
-namespace ApiValidations_Tests;
+namespace ApiValidations_Tests.Examples;
 
 public record BasicInputObject(int value);
 public record BasicOutputObject(int value);
@@ -17,12 +17,12 @@ public class BasicTestApi
     public int InputFunction2(BasicInputObject value) { return 1; }
     public List<int> EnumerableReturnFunc() { return []; }
     public int IntReturnFunc() { return 0; }
-    public void EnumerableParamFunc(List<int> enumerableParam) {}
+    public void EnumerableParamFunc(List<int> enumerableParam) { }
 
     public BasicSubApi ChildObject { get; set; } = new();
 }
 
-public class BasicSubApi 
+public class BasicSubApi
 {
     public void InputFunction1(int value) { }
     public string InputFunction2(int value) { return ""; }
@@ -101,7 +101,6 @@ public class BasicTest
 
         // Assert
         AssertionOptions.FormattingOptions.MaxLines = 500;
-        //description.Results.Should().HaveCount(9);
         Approvals.VerifyJson(json);
     }
 }

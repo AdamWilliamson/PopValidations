@@ -1,4 +1,5 @@
-﻿using PopValidations.FieldDescriptors.Base;
+﻿using ApiValidations.Helpers;
+using PopValidations.FieldDescriptors.Base;
 using System.Linq.Expressions;
 
 namespace ApiValidations.Descriptors.Core;
@@ -17,30 +18,7 @@ public interface IFunctionExpressionToken
     new string Name { get; }
 
     bool Matches(string name, Type returnType, IEnumerable<ParamDetailsDTO> paramList);
-
 }
-
-//public class UnknownFunctionExpressionToken<TValidationType> : IFunctionExpressionToken<TValidationType>
-//{
-//    public string Name => "Unknown";
-//    public Type? ReturnType => null;
-//    public List<ParamDetailsDTO>? Params => null;
-
-//    public string CombineWithParentProperty(string parentProperty)
-//    {
-//        if (string.IsNullOrWhiteSpace(Name))
-//        {
-//            return parentProperty;
-//        }
-
-//        return parentProperty + '.' + Name;
-//    }
-
-//    public Expression? Execute(TValidationType value)
-//    {
-//        return null;
-//    }
-//}
 
 public class FunctionExpressionToken<TValidationType> : IFunctionExpressionToken
 {
@@ -50,7 +28,7 @@ public class FunctionExpressionToken<TValidationType> : IFunctionExpressionToken
     
     public FunctionExpressionToken(string? name, Type? returnType, List<ParamDetailsDTO>? paramList)
     {
-        Name = name + $"({string.Join(',', paramList?.Select(x => x.ParamType.Name) ?? [])}):{returnType?.Name}";
+        Name = name + $"({string.Join(',', paramList?.Select(x => x.ParamType.Name) ?? [])}):{GenericNameHelper.GetNameWithoutGenericArity(returnType)}";
         ReturnType = returnType;
         Params = paramList;
     }

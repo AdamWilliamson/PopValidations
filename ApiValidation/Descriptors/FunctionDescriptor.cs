@@ -4,13 +4,6 @@ using System.Diagnostics;
 
 namespace ApiValidations.Descriptors;
 
-public interface IFunctionDescriptor_Internal
-{
-    Type? ReturnType { get; }
-    string Name { get; }
-    IEnumerable<ParamDetailsDTO>? ParamList { get; }
-}
-
 public interface IFunctionDescriptor : IFunctionDescriptor_Internal
 {
     IReturnDescriptor Return { get; }
@@ -25,37 +18,6 @@ public interface IEnumerableFunctionDescriptor<TReturnType> : IFunctionDescripto
 {
     IReturnDescriptor<IEnumerable<TReturnType>> Return { get; }
 }
-
-//public interface IFunctionDescriptionFor { 
-//    public string? Name { get; }
-//    IEnumerable<ParamDetailsDTO>? ParamList { get; }
-//    Type? ReturnType { get; }
-//}
-
-//public interface IFunctionDescriptionFor<TValidationType> : IFunctionDescriptionFor
-//{
-//    IFunctionExpressionToken<TValidationType> FunctionPropertyToken { get; }
-//    bool Matches(string name, Type returnType, IEnumerable<ParamDetailsDTO> paramList);
-//}
-
-//public abstract class FunctionDescriptorBase<TValidationType> : IFunctionDescriptionFor<TValidationType>
-//{
-//    protected IFunctionExpressionToken<TValidationType> internalFunctionProptertyToken;
-//    IFunctionExpressionToken<TValidationType> IFunctionDescriptionFor<TValidationType>.FunctionPropertyToken => internalFunctionProptertyToken;
-
-//    public string Name => internalFunctionProptertyToken.Name;
-
-//    public IEnumerable<ParamDetailsDTO>? ParamList => internalFunctionProptertyToken?.Params;
-
-//    public Type? ReturnType => internalFunctionProptertyToken?.ReturnType;
-
-//    public FunctionDescriptorBase(IFunctionExpressionToken<TValidationType> functionPropertyToken)
-//    {
-//        internalFunctionProptertyToken = functionPropertyToken;
-//    }
-
-
-//}
 
 public class FunctionDescriptor<TValidationType>: IFunctionDescriptor
 {
@@ -78,15 +40,6 @@ public class FunctionDescriptor<TValidationType>: IFunctionDescriptor
     public Type? ReturnType => internalFunctionPropertyToken.ReturnType;
 
     public IReturnDescriptor Return => new ReturnDescriptor<TValidationType>(store, internalFunctionPropertyToken);
-
-
-    //public bool Matches(string name, Type returnType, IEnumerable<ParamDetailsDTO> paramList)
-    //{
-    //    return name == Name
-    //        && returnType == ReturnType
-    //        && (ParamList?.Select(p => p.ParamType).AsEnumerable().SequenceEqual(paramList.Select(p => p.ParamType).AsEnumerable()) ?? false)
-    //        && (ParamList?.All(x => x.MatchesValue(x.ParamType)) ?? false);
-    //}
 }
 
 public class FunctionDescriptor<TValidationType, TReturnType>: IFunctionDescriptor<TReturnType>
@@ -109,15 +62,5 @@ public class FunctionDescriptor<TValidationType, TReturnType>: IFunctionDescript
 
     public Type? ReturnType => internalFunctionPropertyToken.ReturnType;
 
-    //public IReturnDescriptor Return => new ReturnDescriptor<TValidationType>(store, internalFunctionPropertyToken);
-
     public IReturnDescriptor<TReturnType> Return => new ReturnDescriptor<TReturnType, TValidationType>(store, internalFunctionPropertyToken);
-
-    //public bool Matches(string name, Type returnType, IEnumerable<ParamDetailsDTO> paramList)
-    //{
-    //    return name == Name
-    //        && returnType == ReturnType
-    //        && (ParamList?.Select(p => p.ParamType).AsEnumerable().SequenceEqual(paramList.Select(p => p.ParamType).AsEnumerable()) ?? false)
-    //        && (ParamList?.All(x => x.MatchesValue(x.ParamType)) ?? false);
-    //}
 }

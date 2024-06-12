@@ -3,7 +3,7 @@ using ApiValidations.Descriptors;
 using ApiValidations.Descriptors.Core;
 using PopValidations.ValidatorInternals;
 
-namespace ApiValidations.ApiValidators;
+namespace ApiValidations;
 
 public abstract class ApiSubValidator<TValidationType> : PopValidations.AbstractSubValidator<TValidationType>, IValidator
 {
@@ -17,33 +17,6 @@ public abstract class ApiSubValidator<TValidationType> : PopValidations.Abstract
     }
 
     ParamDetailsDTO? IValidator.GetCurrentParamDescriptor() => Builder.CurrentParam;
-
-    //public IFunctionDescriptor DescribeParams(Expression<Action<TValidationType>> expression)
-    //{
-    //    var method = ((MethodCallExpression)expression.Body);
-
-    //    var args2 = (from arg in method.Arguments
-    //                 select Expression.Lambda(arg, null)
-    //                ).ToList();
-
-    //    var actualParams = method.Method.GetParameters();
-    //    if (actualParams.Length != args2.Count()) throw new Exception("Parameter Exception Failed.");
-
-    //    Builder.SetCurrentFunction(method.Method);
-
-    //    for (var i = 0; i < actualParams.Length; i++)
-    //    {
-    //        var param = args2[i];
-    //        var paramDetails = actualParams[i];
-    //        Builder.SetCurrentParam(paramDetails.Name, paramDetails.ParameterType);
-    //        param.Compile().DynamicInvoke();
-    //    }
-
-    //    return (IFunctionDescriptor)Builder.CurrentFunction;
-
-    //    //return new ReturnDescriptor<TValidationType>();
-    //}
-
 
     public IFunctionDescriptor<IEnumerable<TFuncOutput>> DescribeFuncEnumerable<TFuncOutput>(Expression<Func<TValidationType, IEnumerable<TFuncOutput>>> expression)
     {

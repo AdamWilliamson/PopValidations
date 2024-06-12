@@ -2,17 +2,8 @@
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 using PopValidations.ValidatorInternals;
-using System.Collections.Generic;
 
 namespace PopValidations.FieldDescriptors;
-
-public class EnumerableFieldDescriptor<TValidationType, TFieldType> : FieldDescriptor<TValidationType, IEnumerable<TFieldType>?> 
-{
-    public EnumerableFieldDescriptor(
-        IPropertyExpressionToken<IEnumerable<TFieldType>?> propertyToken,
-        IValidationStore store
-    ) : base(propertyToken, store) { }
-}
 
 public class FieldDescriptor<TValidationType, TFieldType>
     : IFieldDescripor_Internal<TValidationType, TFieldType>

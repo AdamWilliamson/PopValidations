@@ -2,7 +2,7 @@
 using PopValidations.Validations;
 using PopValidations.Validations.Base;
 
-namespace PopValidations;
+namespace ApiValidations;
 
 public static class IsLengthInclusivelyBetweenValidationExtensions
 {

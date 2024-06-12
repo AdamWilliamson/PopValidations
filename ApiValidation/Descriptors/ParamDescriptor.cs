@@ -12,7 +12,6 @@ public interface IParamDescriptor<TParamType> : IParamDescriptor, IFieldDescript
 public interface IParamDescriptor_Internal<TParamType> 
     : IParamDescriptor<TParamType>
 {
-    //ParamVisitor<TValidationType> Visitor { get; }
     IParamToken<TParamType> ParamToken { get; }
     IParamVisitor ParamVisitor { get; }
 }
@@ -50,7 +49,7 @@ public class ParamDescriptor<TParamType, TValidationType>
         this.Name = descriptor.Name;
         this.ParamIndex = descriptor.Index;
 
-        var when = new WhenNotValidatingValidator<TValidationType>(() =>
+        var when = new WhenNotValidatingValidatorScope<TValidationType>(() =>
         {
             foreach (var action in this.AddValidationActions)
             {
@@ -65,12 +64,9 @@ public class ParamDescriptor<TParamType, TValidationType>
 
     List<Action<ParamDescriptor<TParamType, TValidationType>>> AddValidationActions = new();
     protected readonly IValidationStore? store;
-    //public ParamExpressionToken<TParamType, TValidationType> ParamToken { get; }
     public IParamVisitor ParamVisitor { get; }
-    //ParamVisitor<TValidationType> IParamDescriptor_Internal<TValidationType, TParamType>.Visitor => visitor;
 
     protected readonly IParamDescriptor_Strategy<TValidationType, TParamType> strategy;
-    //public IParamToken<TValidationType, TParamType> ParamToken => strategy.ParamToken;
     protected object? RetrievedValue = null;
     protected bool ValueHasBeenRetrieved = false;
 
@@ -85,7 +81,6 @@ public class ParamDescriptor<TParamType, TValidationType>
 
     public ParamDescriptor(
         IParamToken<TParamType> paramToken,
-        //ParamVisitor<TValidationType> visitor,
         IParamVisitor visitor,
         IParamDescriptor_Strategy<TValidationType, TParamType> strategy)
     {
@@ -98,9 +93,8 @@ public class ParamDescriptor<TParamType, TValidationType>
     public ParamDescriptor(
         ParamDescriptor<TParamType, TValidationType> toClone)
     {
-        //ParamToken = toClone.ParamToken;
+        ParamToken = toClone.ParamToken;
         store = toClone.store;
-        //visitor = toClone.visitor;
         RetrievedValue = toClone.RetrievedValue;
         ValueHasBeenRetrieved = toClone.ValueHasBeenRetrieved;
         _NextValidationVital = toClone._NextValidationVital;
@@ -118,7 +112,6 @@ public class ParamDescriptor<TParamType, TValidationType>
     public virtual string AddTo(string existing)
     {
         return strategy.AddTo(existing);
-        //return FunctionDescriptor?.FunctionPropertyToken.CombineWithParentProperty(existing) + $"::({Name},{ParamIndex},{ParamType.Name})";
     }
 
     public ParamDescriptor<TParamType, TValidationType> NextValidationIsVital()
@@ -186,58 +179,5 @@ public class ParamDescriptor<TParamType, TValidationType>
     public virtual object? GetValue(object? value)
     {
         return strategy.GetValue(value);
-    }
-}
-
-
-public interface IParamDescriptor_Strategy<TValidationType, TParamType>
-{
-    int? ParamIndex { get; }
-    string PropertyName { get; }
-    string AddTo(string existing);
-    IParamDescriptor_Strategy<TValidationType, TParamType> Clone();
-    object? GetValue(object? value);
-    void SetParamDetails(string name, int index, IFunctionExpressionToken function);
-    //IParamToken<TValidationType, TParamType> ParamToken { get; }
-}
-
-public class ParamDescriptor_Strategy<TParamType, TValidationType> 
-    : IParamDescriptor_Strategy<TValidationType, TParamType>
-{
-    public IParamToken<TParamType> ParamToken { get; protected set; }
-    protected object? RetrievedValue = null;
-    protected bool ValueHasBeenRetrieved = false;
-
-    public ParamDescriptor_Strategy(
-        IParamToken<TParamType> paramToken)
-    {
-        ParamToken = paramToken;
-    }
-
-    public void SetParamDetails(string name, int index, IFunctionExpressionToken function)
-    {
-        ParamToken.SetParamDetails(name, index, function);
-    }
-
-    public IParamDescriptor_Strategy<TValidationType, TParamType> Clone()
-    {
-        return new ParamDescriptor_Strategy<TParamType, TValidationType>(this.ParamToken)
-        {
-            ValueHasBeenRetrieved = this.ValueHasBeenRetrieved,
-            RetrievedValue = this.RetrievedValue,
-        };
-    }
-
-    public int? ParamIndex => ParamToken.Index;
-    public string PropertyName => (ParamToken.FunctionToken?.Name ?? string.Empty) + $"::({ParamToken.Name},{ParamIndex},{ParamToken.ParamType.Name})";
-
-    public virtual string AddTo(string existing)
-    {
-        return ParamToken.FunctionToken?.CombineWithParentProperty(existing) + $"::({ParamToken.Name},{ParamIndex},{ParamToken.ParamType.Name})";
-    }
-
-    public virtual object? GetValue(object? value)
-    {
-        return null;
     }
 }
