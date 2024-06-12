@@ -82,7 +82,7 @@ internal class ForEachScope<TValidationType, TFieldType> : ScopeBase
             {
                 var thingo = new ForEachFieldDescriptor<TValidationType,IEnumerable<TFieldType>, TFieldType>(
                     fieldDescriptor.PropertyToken,
-                    new IndexedPropertyExpressionToken<TValidationType,IEnumerable<TFieldType>, TFieldType>(
+                    new IndexedPropertyExpressionToken<IEnumerable<TFieldType>, TFieldType>(
                         fieldDescriptor.PropertyToken.Name + $"[{index}]",
                         index
                     ),
@@ -101,7 +101,7 @@ internal class ForEachScope<TValidationType, TFieldType> : ScopeBase
                 {
                     var thingo2 = new ForEachFieldDescriptor<TValidationType, IEnumerable<TFieldType>, TFieldType>(
                     fieldDescriptor.PropertyToken,
-                    new IndexedPropertyExpressionToken<TValidationType, IEnumerable<TFieldType>, TFieldType>(
+                    new IndexedPropertyExpressionToken<IEnumerable<TFieldType>, TFieldType>(
                         fieldDescriptor.PropertyToken.Name + $"[{index}" + Char.MaxValue,
                         index
                     ),
@@ -123,7 +123,7 @@ internal class ForEachScope<TValidationType, TFieldType> : ScopeBase
     protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
     {
         var thingo = new FieldDescriptor<IEnumerable<TFieldType>, TFieldType>(
-           new IndexedPropertyExpressionToken<TValidationType, IEnumerable<TFieldType>, TFieldType>(
+           new IndexedPropertyExpressionToken<IEnumerable<TFieldType>, TFieldType>(
                fieldDescriptor.PropertyToken.Name + $"[n]",
                -1
            ),

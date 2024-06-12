@@ -6,7 +6,7 @@ using PopValidations.FieldDescriptors.Base;
 
 namespace PopValidations.Scopes.ForEachs;
 
-public class IndexedPropertyExpressionToken<TValidationType,TInput, TOutput>
+public class IndexedPropertyExpressionToken<TInput, TOutput>
     : PropertyExpressionTokenBase<TInput, TOutput>
     where TInput : IEnumerable<TOutput>
 {

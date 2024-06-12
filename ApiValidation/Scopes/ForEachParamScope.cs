@@ -110,14 +110,6 @@ internal class ParamForEachScope<TValidationType, TListType, TParamType> : Scope
             )
         );
 
-        //var thingo = new ParamForEachFieldDescriptor<TValidationType, IEnumerable<TParamType>, TParamType>(
-        //    paramDescriptor,
-        //   new ParamIndexedPropertyExpressionToken<TValidationType, IEnumerable<TParamType>, TParamType>(
-        //       paramDescriptor.ParamToken,
-        //       -1
-        //   )
-        //);
-
         actions.Invoke(thingo);
         thingo.Convert<string?>();
     }

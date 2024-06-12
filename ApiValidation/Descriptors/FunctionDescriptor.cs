@@ -4,17 +4,26 @@ using System.Diagnostics;
 
 namespace ApiValidations.Descriptors;
 
-public interface IFunctionDescriptor
+public interface IFunctionDescriptor_Internal
 {
     Type? ReturnType { get; }
-    IReturnDescriptor Return { get; }
     string Name { get; }
     IEnumerable<ParamDetailsDTO>? ParamList { get; }
 }
 
-public interface IFunctionDescriptor<TReturnType> : IFunctionDescriptor
+public interface IFunctionDescriptor : IFunctionDescriptor_Internal
 {
-    IReturnDescriptor<TReturnType> TypedReturn { get; }
+    IReturnDescriptor Return { get; }
+}
+
+public interface IFunctionDescriptor<TReturnType> : IFunctionDescriptor_Internal
+{
+    IReturnDescriptor<TReturnType> Return { get; }
+}
+
+public interface IEnumerableFunctionDescriptor<TReturnType> : IFunctionDescriptor_Internal
+{
+    IReturnDescriptor<IEnumerable<TReturnType>> Return { get; }
 }
 
 //public interface IFunctionDescriptionFor { 
@@ -100,9 +109,9 @@ public class FunctionDescriptor<TValidationType, TReturnType>: IFunctionDescript
 
     public Type? ReturnType => internalFunctionPropertyToken.ReturnType;
 
-    public IReturnDescriptor Return => new ReturnDescriptor<TValidationType>(store, internalFunctionPropertyToken);
+    //public IReturnDescriptor Return => new ReturnDescriptor<TValidationType>(store, internalFunctionPropertyToken);
 
-    public IReturnDescriptor<TReturnType> TypedReturn => new ReturnDescriptor<TReturnType, TValidationType>(store, internalFunctionPropertyToken);
+    public IReturnDescriptor<TReturnType> Return => new ReturnDescriptor<TReturnType, TValidationType>(store, internalFunctionPropertyToken);
 
     //public bool Matches(string name, Type returnType, IEnumerable<ParamDetailsDTO> paramList)
     //{

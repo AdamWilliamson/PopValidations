@@ -43,18 +43,18 @@ public class ModerateTestApiValidator : ApiValidator<ModerateTestApi>
     public ModerateTestApiValidator()
     {
         //DescribeFunc(x => x.IsCustom(Param.Is<string>().IsCustom("Checks for things", c => c == string.Empty))).Returns.IsCustom(x => x == string.Empty);
-        DescribeFunc(x => x.IsEmail(Param.Is<string>().IsEmail())).TypedReturn.IsEmail();
-        DescribeFunc(x => x.IsEmpty(Param.Is<string>().IsEmpty())).TypedReturn.IsEmpty();
-        DescribeFunc(x => x.IsEnum(Param.Is<string>().IsEnum(typeof(ModerateEnum)))).TypedReturn.IsEnum(typeof(ModerateEnum));
-        DescribeFunc(x => x.IsEqualTo(Param.Is<string>().IsEqualTo(string.Empty))).TypedReturn.IsEqualTo(string.Empty);
-        DescribeFunc(x => x.IsGreaterThan(Param.Is<int>().IsGreaterThan(10))).TypedReturn.IsGreaterThan(10);
-        DescribeFunc(x => x.IsGreaterThanOrEqualTo(Param.Is<int>().IsGreaterThanOrEqualTo(10))).TypedReturn.IsGreaterThanOrEqualTo(10);
-        DescribeFunc(x => x.IsLessThan(Param.Is<int>().IsLessThan(10))).TypedReturn.IsLessThan(10);
-        DescribeFunc(x => x.IsLessThanOrEqual(Param.Is<int>().IsLessThanOrEqualTo(10))).TypedReturn.IsLessThanOrEqualTo(10);
-        DescribeFunc(x => x.IsLengthExclusivelyBetween(Param.Is<int>().IsLengthExclusivelyBetween(1,10))).TypedReturn.IsLengthExclusivelyBetween(0,10);
-        DescribeFunc(x => x.IsLengthInclusivelyBetween(Param.Is<int>().IsLengthInclusivelyBetween(1, 10))).TypedReturn.IsLengthInclusivelyBetween(0, 10);
-        DescribeFunc(x => x.IsNotEmpty(Param.Is<string>().IsNotEmpty())).TypedReturn.IsNotEmpty();
-        DescribeFunc(x => x.IsNotNull(Param.Is<string?>().IsNotNull())).TypedReturn.IsNotNull();
+        DescribeFunc(x => x.IsEmail(Param.Is<string>().IsEmail())).Return.IsEmail();
+        DescribeFunc(x => x.IsEmpty(Param.Is<string>().IsEmpty())).Return.IsEmpty();
+        DescribeFunc(x => x.IsEnum(Param.Is<string>().IsEnum(typeof(ModerateEnum)))).Return.IsEnum(typeof(ModerateEnum));
+        DescribeFunc(x => x.IsEqualTo(Param.Is<string>().IsEqualTo(string.Empty))).Return.IsEqualTo(string.Empty);
+        DescribeFunc(x => x.IsGreaterThan(Param.Is<int>().IsGreaterThan(10))).Return.IsGreaterThan(10);
+        DescribeFunc(x => x.IsGreaterThanOrEqualTo(Param.Is<int>().IsGreaterThanOrEqualTo(10))).Return.IsGreaterThanOrEqualTo(10);
+        DescribeFunc(x => x.IsLessThan(Param.Is<int>().IsLessThan(10))).Return.IsLessThan(10);
+        DescribeFunc(x => x.IsLessThanOrEqual(Param.Is<int>().IsLessThanOrEqualTo(10))).Return.IsLessThanOrEqualTo(10);
+        DescribeFunc(x => x.IsLengthExclusivelyBetween(Param.Is<int>().IsLengthExclusivelyBetween(1,10))).Return.IsLengthExclusivelyBetween(0,10);
+        DescribeFunc(x => x.IsLengthInclusivelyBetween(Param.Is<int>().IsLengthInclusivelyBetween(1, 10))).Return.IsLengthInclusivelyBetween(0, 10);
+        DescribeFunc(x => x.IsNotEmpty(Param.Is<string>().IsNotEmpty())).Return.IsNotEmpty();
+        DescribeFunc(x => x.IsNotNull(Param.Is<string?>().IsNotNull())).Return.IsNotNull();
         //DescribeFunc(x => x.Switch(Param.Is<int>().Switch(x => x.Case(5, "5", "dont be 5")))).Return.Switch(x => x.Case(5, "5", "dont be 5"));
         //DescribeFuncEnumerable(x => x.EnumerableInt(Param.IsEnumerable<int>().ForEach(x => x.IsNotNull())).Return.ForEach(x => x.IsNotNull());
     }
