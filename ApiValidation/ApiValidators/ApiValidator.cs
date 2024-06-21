@@ -13,7 +13,7 @@ public interface IValidator
 public abstract class ApiValidator<TValidationType> : PopValidations.AbstractValidator<TValidationType>, IValidator
 {
     protected ParamValidationSetBuilder<TValidationType> Builder;
-    protected ParamBuilder<TValidationType> Param;
+    public ParamBuilder<TValidationType> Param { get; protected set; }
 
     protected ApiValidator()
     {

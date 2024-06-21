@@ -12,12 +12,12 @@ public interface IParamDescriptor<TParamType> : IParamDescriptor, IFieldDescript
 public interface IParamDescriptor_Internal<TParamType> 
     : IParamDescriptor<TParamType>
 {
-    IParamToken<TParamType> ParamToken { get; }
+    //IParamToken<TParamType> ParamToken { get; }
     IParamVisitor ParamVisitor { get; }
 }
 
 public class ParamDescriptor<TParamType, TValidationType> 
-    : IParamDescriptor_Internal<TParamType>
+    : IParamDescriptor<TParamType>, IParamDescriptor_Internal<TParamType>
 {
     public static implicit operator TParamType(ParamDescriptor<TParamType, TValidationType> d)
     {
@@ -44,21 +44,23 @@ public class ParamDescriptor<TParamType, TValidationType>
         var descriptor = this.ParamVisitor.GetCurrentParamDescriptor();
         if (descriptor == null) throw new Exception("Executing conversion without current Function or Param.");
 
-        this.strategy.SetParamDetails(descriptor!.Name ?? "<Unknown>", descriptor!.Index, function);
-        if (descriptor == null) throw new Exception("Cannot convert if the system isnt ready.");
-        this.Name = descriptor.Name;
-        this.ParamIndex = descriptor.Index;
+        var rebase = new ParamDescriptor<TParamType, TValidationType>(this);
+        rebase.Name = descriptor.Name;
+        rebase.ParamIndex = descriptor.Index;
+        rebase.strategy.Solidify();// SetParamDetails(descriptor!.Name ?? "<Unknown>", descriptor!.Index, function);
 
-        var when = new WhenNotValidatingValidatorScope<TValidationType>(() =>
-        {
-            foreach (var action in this.AddValidationActions)
-            {
-                action.Invoke(this);
-            }
-        });
+        var when = new WhenNotValidatingValidatorScope<TValidationType, TParamType>(
+        //    () =>
+        //{
+        //    foreach (var action in rebase.AddValidationActions)
+        //    {
+        //        action.Invoke(rebase);
+        //    }
+        //}, 
+            rebase, rebase.AddValidationActions);
 
-        if (this.store == null) throw new Exception("Param Descriptor has no scope for compilation.");
-        this.store?.AddItem(null, when);
+        if (rebase.store == null) throw new Exception("Param Descriptor has no scope for compilation.");
+        rebase.store?.AddItem(null, when);
 
     }
 
@@ -77,14 +79,13 @@ public class ParamDescriptor<TParamType, TValidationType>
 
     public Type ParamType => typeof(TParamType);
 
-    public IParamToken<TParamType> ParamToken { get; set; }
+    //public IParamToken<TParamType> ParamToken { get; set; }
 
     public ParamDescriptor(
-        IParamToken<TParamType> paramToken,
         IParamVisitor visitor,
         IParamDescriptor_Strategy<TValidationType, TParamType> strategy)
     {
-        ParamToken = paramToken ?? throw new ArgumentNullException(nameof(paramToken));
+        //ParamToken = paramToken ?? throw new ArgumentNullException(nameof(paramToken));
         ParamVisitor = visitor ?? throw new ArgumentNullException(nameof(visitor));
         this.strategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
         store = visitor.GetStore();
@@ -93,7 +94,7 @@ public class ParamDescriptor<TParamType, TValidationType>
     public ParamDescriptor(
         ParamDescriptor<TParamType, TValidationType> toClone)
     {
-        ParamToken = toClone.ParamToken;
+        
         store = toClone.store;
         RetrievedValue = toClone.RetrievedValue;
         ValueHasBeenRetrieved = toClone.ValueHasBeenRetrieved;
@@ -101,8 +102,9 @@ public class ParamDescriptor<TParamType, TValidationType>
         _AlwaysVital = toClone._AlwaysVital;
         Name = toClone.Name;
         IsNullable = toClone.IsNullable;
-        AddValidationActions = toClone.AddValidationActions;
+        AddValidationActions = toClone.AddValidationActions.ToList();
         strategy = toClone.strategy.Clone();
+        //ParamToken = strategy.ParamToken;
         this.ParamVisitor = toClone.ParamVisitor ?? throw new Exception("ParamVisitor is null somehow");
     }
 

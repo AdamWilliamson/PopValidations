@@ -8,7 +8,7 @@ namespace ApiValidations;
 public static class IsCustomReturnValidationExtensions
 {
     public static IReturnDescriptor<TReturnType> Is<TReturnType>(
-        this IReturnDescriptor<TReturnType> fieldDescriptor,
+        this IReturnDescriptor<TReturnType> returnDescriptor,
         string descriptionTemplate,
         string errorTemplate,
         Func<TReturnType, bool> validationFunc,
@@ -21,8 +21,8 @@ public static class IsCustomReturnValidationExtensions
             validationFunc
         );
         optionsAction?.Invoke(new ValidationOptions(validation));
-        fieldDescriptor.AddValidation(validation);
-        return fieldDescriptor;
+        returnDescriptor.AddValidation(validation);
+        return returnDescriptor;
     }
 
     public static IReturnDescriptor<TReturnType> Is<TReturnType>(

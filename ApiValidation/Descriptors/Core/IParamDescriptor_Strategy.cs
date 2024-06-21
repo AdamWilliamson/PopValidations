@@ -7,5 +7,6 @@ public interface IParamDescriptor_Strategy<TValidationType, TParamType>
     string AddTo(string existing);
     IParamDescriptor_Strategy<TValidationType, TParamType> Clone();
     object? GetValue(object? value);
-    void SetParamDetails(string name, int index, IFunctionExpressionToken function);
+    //void SetParamDetails(string name, int index, IFunctionExpressionToken function);
+    void Solidify();
 }

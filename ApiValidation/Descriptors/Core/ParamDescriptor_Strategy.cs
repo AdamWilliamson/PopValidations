@@ -13,14 +13,15 @@ public class ParamDescriptor_Strategy<TParamType, TValidationType>
         ParamToken = paramToken;
     }
 
-    public void SetParamDetails(string name, int index, IFunctionExpressionToken function)
-    {
-        ParamToken.SetParamDetails(name, index, function);
-    }
+    //public void SetParamDetails(string name, int index, IFunctionExpressionToken function)
+    //{
+    //    ParamToken.SetParamDetails(name, index, function);
+    //}
+    public void Solidify() { ParamToken.Solidify();  }
 
     public IParamDescriptor_Strategy<TValidationType, TParamType> Clone()
     {
-        return new ParamDescriptor_Strategy<TParamType, TValidationType>(ParamToken)
+        return new ParamDescriptor_Strategy<TParamType, TValidationType>(new ParamToken<TParamType, TValidationType>(ParamToken.Visitor))
         {
             ValueHasBeenRetrieved = ValueHasBeenRetrieved,
             RetrievedValue = RetrievedValue,

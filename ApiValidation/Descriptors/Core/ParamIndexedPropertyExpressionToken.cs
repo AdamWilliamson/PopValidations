@@ -12,29 +12,39 @@ public class ParamIndexedPropertyExpressionToken<TValidationType, TInput, TOutpu
     : IParamIndexedToken<TValidationType, TInput, TOutput>
     where TInput : IEnumerable<TOutput>
 {
-    private readonly IParamToken<TInput> paramToken;
+    //private readonly IParamToken<TInput> paramToken;
+    public IParamVisitor Visitor { get; protected set; }
 
-    public string Name => paramToken.Name + $"[n]";
+    private string? _name = null;
+    public string Name => _name + $"[n]";
+    public int Index { get; protected set; }
+    public int EnumerableIndex { get; protected set; }
     public Type ParamType => typeof(TOutput);
-    public IFunctionExpressionToken FunctionToken => paramToken.FunctionToken;
+    public IFunctionExpressionToken FunctionToken { get; protected set; }
+
     public ParamIndexedPropertyExpressionToken(
-        IParamToken<TInput> paramToken,
-        int index)
+        IParamVisitor visitor,
+        //IParamToken<TInput> paramToken,
+        int enumerableIndex)
     {
-        this.paramToken = paramToken;
-        Index = index;
+        this.Visitor = visitor;
+        //this.paramToken = paramToken;
+        EnumerableIndex = enumerableIndex;
     }
 
-    public int Index { get; protected set; }
+    //public ParamIndexedPropertyExpressionToken(IParamVisitor visitor)
+    //{
+    //    this.visitor = visitor;
+    //}
 
     public virtual string CombineWithParentProperty(string parentProperty)
     {
         if (string.IsNullOrEmpty(Name))
         {
-            return paramToken?.CombineWithParentProperty(parentProperty) ?? "<Unknown>";
+            return FunctionToken?.CombineWithParentProperty(parentProperty) ?? "<Unknown>";
         }
-        if (Index < 0) return paramToken?.CombineWithParentProperty(parentProperty) + "." + Name;
-        return paramToken?.CombineWithParentProperty(parentProperty) + "." + Name;
+        if (Index < 0) return FunctionToken?.CombineWithParentProperty(parentProperty) + "." + Name;
+        return FunctionToken?.CombineWithParentProperty(parentProperty) + "." + Name;
     }
 
     public TOutput? Execute(object value)
@@ -44,6 +54,25 @@ public class ParamIndexedPropertyExpressionToken<TValidationType, TInput, TOutpu
 
     public void SetParamDetails(string name, int index, IFunctionExpressionToken owningFunction)
     {
-        paramToken.SetParamDetails(name, index, owningFunction);
+        _name = name;
+        FunctionToken = owningFunction;
+        Index = index;
+    }
+
+    public IParamToken<TOutput> Clone()
+    {
+        return new ParamIndexedPropertyExpressionToken<TValidationType, TInput, TOutput>(Visitor, this.Index);
+    }
+
+    public void Solidify()
+    {
+        //paramToken.Solidify();
+        var param = Visitor.GetCurrentParamDescriptor();
+
+        SetParamDetails(
+            param.Name ?? "<unknown>",
+            param.Index,
+            Visitor.GetCurrentFunction() ?? throw new Exception("Instatiating Parameter details without Function.")
+        );
     }
 }

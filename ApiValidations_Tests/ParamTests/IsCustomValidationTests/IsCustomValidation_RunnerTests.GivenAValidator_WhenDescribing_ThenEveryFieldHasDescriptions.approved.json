@@ -1,0 +1,244 @@
+﻿{
+    "results": [
+        {
+            "property": "IntReturnNoParams():Int32::Return(Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "DecimalReturnNoParams():Decimal::Return(Decimal)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "StringReturnNoParams():String::Return(String)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be aaaaa.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "NoReturnIntParam(Int32):Void::(intParam1,0,Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "NoReturnDecimalParam(Decimal):Void::(decimalParam1,0,Decimal)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "NoReturnStringParam(String):Void::(stringParam1,0,String)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be aaaaa.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "IntReturnIntDecimalParam(Int32,Decimal):Int32::(intParam1,0,Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "IntReturnIntDecimalParam(Int32,Decimal):Int32::(decimalParam1,1,Decimal)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "IntReturnIntDecimalParam(Int32,Decimal):Int32::Return(Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "DecimalReturnDecimalStringParam(Decimal,String):Decimal::(decimalParam1,0,Decimal)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "DecimalReturnDecimalStringParam(Decimal,String):Decimal::(stringParam1,1,String)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be aaaaa.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "DecimalReturnDecimalStringParam(Decimal,String):Decimal::Return(Decimal)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "StringReturnStringIntParam(String,Int32):String::(stringParam1,0,String)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be aaaaa.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "StringReturnStringIntParam(String,Int32):String::(intParam1,1,Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be min value.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "StringReturnStringIntParam(String,Int32):String::Return(String)",
+            "outcomes": [
+                {
+                    "validator": "IsCustomValidation",
+                    "message": "Must be aaaaa.",
+                    "values": [
+                        {
+                            "key": "is_value",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

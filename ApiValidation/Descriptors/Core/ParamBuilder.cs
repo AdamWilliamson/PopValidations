@@ -11,9 +11,8 @@ public class ParamBuilder<TValidationType>
 
     public ParamDescriptor<TParamType, TValidationType> Is<TParamType>()
     {
-        var pt = new ParamExpressionToken<TParamType, TValidationType>();
+        var pt = new ParamToken<TParamType, TValidationType>(owner);
         return new ParamDescriptor<TParamType, TValidationType>(
-            pt,
             owner,
             new ParamDescriptor_Strategy<TParamType, TValidationType>(
                pt 
@@ -23,9 +22,8 @@ public class ParamBuilder<TValidationType>
 
     public ParamDescriptor<IEnumerable<TParamType>, TValidationType> IsEnumerable<TParamType>()
     {
-        var pt = new ParamExpressionToken<IEnumerable<TParamType>, TValidationType>();
+        var pt = new ParamToken<IEnumerable<TParamType>, TValidationType>(owner);
         return new ParamDescriptor<IEnumerable<TParamType>, TValidationType>(
-            pt,
             owner,
             new ParamDescriptor_Strategy<IEnumerable<TParamType>, TValidationType>(
                 pt

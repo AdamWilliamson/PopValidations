@@ -1,6 +1,5 @@
 ﻿using ApiValidations;
 using ApprovalTests;
-using FluentAssertions;
 using PopValidations_Tests.TestHelpers;
 
 namespace ApiValidations_Tests.ParamTests.ForEachTests;

@@ -35,15 +35,15 @@ internal class ParamForEachScope<TValidationType, TListType, TParamType> : Scope
     protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
     {
         var pt = new ParamIndexedPropertyExpressionToken<TValidationType, TListType, TParamType>(
-                    paramDescriptor.ParamToken,
-                    paramDescriptor.ParamToken.Index
-                );
+            visitor, -1);
+                //    paramDescriptor.ParamToken,
+                //    paramDescriptor.ParamToken.Index
+                //);
         var thingo = new ParamDescriptor<TParamType, TValidationType>(
-            pt,
             visitor,
             new ParamIndexedDescriptor_Strategy<TValidationType, TListType, TParamType>(
                 pt,
-                paramDescriptor.ParamToken.Index
+                -1
             )
         );
 
