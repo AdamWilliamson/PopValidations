@@ -1,0 +1,22 @@
+﻿{
+    "errors": {
+        "decimal": [
+            "Is not a valid email."
+        ],
+        "double": [
+            "Is not a valid email."
+        ],
+        "integer": [
+            "Is not a valid email."
+        ],
+        "long": [
+            "Is not a valid email."
+        ],
+        "short": [
+            "Is not a valid email."
+        ],
+        "string": [
+            "Is not a valid email."
+        ]
+    }
+}

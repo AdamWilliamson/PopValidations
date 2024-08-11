@@ -1,0 +1,148 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "First,Second"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "10,20"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "numeric"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "First,Second"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "10,20"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "string"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "First,Second"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "10,20"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "numeric"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "First,Second"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "10,20"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "numeric"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "First,Second"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "10,20"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "numeric"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "validator": "IsEnumValidation",
+                    "message": "Must be one of 'First,Second' or '10,20'.",
+                    "values": [
+                        {
+                            "key": "enumNames",
+                            "value": "First,Second"
+                        },
+                        {
+                            "key": "enumValues",
+                            "value": "10,20"
+                        },
+                        {
+                            "key": "fieldType",
+                            "value": "numeric"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

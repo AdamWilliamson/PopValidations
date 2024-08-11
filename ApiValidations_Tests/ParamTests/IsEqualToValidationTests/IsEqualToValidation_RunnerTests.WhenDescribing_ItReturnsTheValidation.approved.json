@@ -1,0 +1,148 @@
+﻿{
+    "results": [
+        {
+            "property": "SetInteger(Int32):Void::(value,0,Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetString(String):Void::(value,0,String)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetBoolean(Boolean):Void::(value,0,Boolean)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetDouble(Double):Void::(value,0,Double)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetDecimal(Decimal):Void::(value,0,Decimal)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetFloat(Single):Void::(value,0,Single)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetShort(Int16):Void::(value,0,Int16)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetLong(Int64):Void::(value,0,Int64)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetObject(Object):Void::(value,0,Object)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to '1'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

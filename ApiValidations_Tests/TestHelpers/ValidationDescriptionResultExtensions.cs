@@ -1,6 +1,6 @@
 ﻿using PopValidations.Execution.Description;
 
-namespace PopValidations_Tests.TestHelpers;
+namespace ApiValidations_Tests.TestHelpers;
 
 public static class DescriptionResultExtensions
 {

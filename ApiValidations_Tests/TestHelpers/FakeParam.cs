@@ -1,4 +1,4 @@
-﻿namespace PopValidations_Tests.ValidationsTests.IsCustomValidationTests;
+﻿namespace ApiValidations_Tests.TestHelpers;
 
 public static class FakeParam
 {

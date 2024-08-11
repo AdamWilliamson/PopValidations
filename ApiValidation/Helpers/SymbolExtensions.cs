@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace PopValidations_Tests.ValidationsTests.TestHelpers;
+namespace ApiValidations_Tests.ValidationsTests.TestHelpers;
 
 //http://blog.functionalfun.net/2009/10/getting-methodinfo-of-generic-method.html
 public static class SymbolExtensions

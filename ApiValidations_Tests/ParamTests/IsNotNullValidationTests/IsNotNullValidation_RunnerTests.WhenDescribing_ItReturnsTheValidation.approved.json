@@ -1,0 +1,81 @@
+﻿{
+    "results": [
+        {
+            "property": "Set1(Nullable`1,String,Nullable`1,Nullable`1):Void::(param1,0,Nullable`1)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set1(Nullable`1,String,Nullable`1,Nullable`1):Void::(param2,1,String)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set1(Nullable`1,String,Nullable`1,Nullable`1):Void::(param3,2,Nullable`1)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set1(Nullable`1,String,Nullable`1,Nullable`1):Void::(param4,3,Nullable`1)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set2(Nullable`1,Nullable`1,Object):Void::(param1,0,Nullable`1)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set2(Nullable`1,Nullable`1,Object):Void::(param2,1,Nullable`1)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set2(Nullable`1,Nullable`1,Object):Void::(param3,2,Object)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

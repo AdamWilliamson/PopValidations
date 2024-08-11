@@ -16,8 +16,13 @@ public interface IParamDescriptor_Internal<TParamType>
     IParamVisitor ParamVisitor { get; }
 }
 
+public interface ParamIsObjectDescriptor
+{
+    TConvertType Convert<TConvertType>();
+}
+
 public class ParamDescriptor<TParamType, TValidationType> 
-    : IParamDescriptor<TParamType>, IParamDescriptor_Internal<TParamType>
+    : IParamDescriptor<TParamType>, IParamDescriptor_Internal<TParamType>, ParamIsObjectDescriptor
 {
     public static implicit operator TParamType(ParamDescriptor<TParamType, TValidationType> d)
     {

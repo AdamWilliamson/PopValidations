@@ -6,7 +6,7 @@ using Xunit;
 
 namespace PopValidations_Tests.ValidationsTests.NotNullValidationTests;
 
-public class NotNullValidation_Tests
+public class IsNotNullValidation_Tests
 {
     [Fact]
     public void WhenSupplyingANonNullValue_ItValidatesAsSuccessful()

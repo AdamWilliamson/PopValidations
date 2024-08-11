@@ -45,4 +45,19 @@
 	  <ProjectReference Include="..\Validations\Validations.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ValidationsTests\IsNotNullValidationTests\IsNotNullValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <DependentUpon>IsNotNullValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsNotNullValidationTests\IsNotNullValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <DependentUpon>IsNotNullValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsNotNullValidationTests\IsNotNullValidation_Tests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <DependentUpon>IsNotNullValidation_Tests.cs</DependentUpon>
+    </None>
+    <None Update="ValidationsTests\IsNotNullValidationTests\IsNotNullValidation_Tests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <DependentUpon>IsNotNullValidation_Tests.cs</DependentUpon>
+    </None>
+  </ItemGroup>
+
 </Project>

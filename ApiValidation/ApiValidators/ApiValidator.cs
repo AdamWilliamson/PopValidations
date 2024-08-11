@@ -64,7 +64,11 @@ public abstract class ApiValidator<TValidationType> : PopValidations.AbstractVal
             var param = args2[i];
             var paramDetails = actualParams[i];
             Builder.SetCurrentParam(paramDetails.Name, paramDetails.ParameterType);
-            param.Compile().DynamicInvoke();
+            var paramResult = param.Compile().DynamicInvoke();
+            if (paramResult is IParamDescriptor<object>)
+            {
+                (paramResult as ParamIsObjectDescriptor)?.Convert<object>();
+            }
         }
     }
 }

@@ -1,0 +1,124 @@
+﻿{
+    "results": [
+        {
+            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param1,0,String)",
+            "outcomes": [
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 0 and 10 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "0"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "10"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param2,1,Array)",
+            "outcomes": [
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 0 and 10 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "0"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "10"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param3,2,IEnumerable`1)",
+            "outcomes": [
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between -1 and 1 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "-1"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param4,3,LinkedList`1)",
+            "outcomes": [
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between -1 and 1 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "-1"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param5,4,IEnumerable`1)",
+            "outcomes": [
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between -1 and 1 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "-1"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param6,5,Dictionary`2)",
+            "outcomes": [
+                {
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between -1 and 1 inclusive.",
+                    "values": [
+                        {
+                            "key": "startValue",
+                            "value": "-1"
+                        },
+                        {
+                            "key": "endValue",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

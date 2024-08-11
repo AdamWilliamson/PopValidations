@@ -1,0 +1,100 @@
+﻿{
+    "results": [
+        {
+            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param1,0,Int32)",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '2147483647'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "2147483647"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param2,1,String)",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param3,2,Decimal)",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '79228162514264337593543950335'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "79228162514264337593543950335"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param4,3,Double)",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '1.7976931348623157E+308'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "1.7976931348623157E+308"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param5,4,Int16)",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '32767'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "32767"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param6,5,Int64)",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '9223372036854775807'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "9223372036854775807"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

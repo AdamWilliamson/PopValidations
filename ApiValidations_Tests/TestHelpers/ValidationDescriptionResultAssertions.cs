@@ -1,14 +1,14 @@
 ﻿using ApiValidations.Descriptors.Core;
 using ApiValidations.Helpers;
+using ApiValidations_Tests.ValidationsTests.TestHelpers;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using PopValidations.Execution.Description;
-using PopValidations_Tests.ValidationsTests.TestHelpers;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace PopValidations_Tests.TestHelpers;
+namespace ApiValidations_Tests.TestHelpers;
 
 public class DescriptionResultAssertions :
     ReferenceTypeAssertions<DescriptionResult, DescriptionResultAssertions>

@@ -1,0 +1,15 @@
+﻿{
+    "results": [
+        {
+            "property": "SetAndGetEmail(String):Void::(email,0,String)",
+            "outcomes": [
+                {
+                    "validator": "IsEmailValidation",
+                    "message": "Must be a valid email.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

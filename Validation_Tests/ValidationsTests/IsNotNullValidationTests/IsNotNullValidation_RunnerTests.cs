@@ -28,7 +28,7 @@ public class NotNull_NoError_TestingValidator : AbstractValidator<NullAllFieldTy
     }
 }
 
-public class NotNullValidation_RunnerTests
+public class IsNotNullValidation_RunnerTests
 {
     [Fact]
     public async Task GivenAValidator_WithNoErrors_ThenNoErrorsAreProduced()
