@@ -42,7 +42,7 @@ public class IsNotEmptyValidation_RunnerTests
         var description = runner.Describe();
 
         // Assert
-        description.Results.Should().HaveCount(3);
+        description.Results.Should().HaveCount(7);
         description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<NotEmptyApi>(ValidatableType.NoExceptions));
         Approvals.VerifyJson(JsonConverter.ToJson(description));
     }

@@ -1,0 +1,15 @@
+﻿{
+    "results": [
+        {
+            "property": "EnumerableStringReturn():IEnumerable<String>::Return(String)[n]",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

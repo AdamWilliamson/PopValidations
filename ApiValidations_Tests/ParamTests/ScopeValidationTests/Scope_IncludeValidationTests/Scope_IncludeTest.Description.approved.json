@@ -1,0 +1,40 @@
+﻿{
+    "results": [
+        {
+            "property": "Check(Boolean):Void::(param1,0,Boolean)",
+            "outcomes": [
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'True'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "True"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Database Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "validator": "IsEqualToValidation",
+                    "message": "Must equal to 'Another DB Value'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}
