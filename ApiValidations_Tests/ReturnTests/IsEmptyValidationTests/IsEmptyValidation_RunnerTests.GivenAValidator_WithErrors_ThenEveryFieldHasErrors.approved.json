@@ -1,0 +1,37 @@
+﻿{
+    "results": [
+        {
+            "property": "AllParamsMustBeEmpty(String,List`1,Dictionary`2):Void::(param1,0,String)",
+            "outcomes": [
+                {
+                    "validator": "IsEmptyValidation",
+                    "message": "Must be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "AllParamsMustBeEmpty(String,List`1,Dictionary`2):Void::(param2,1,List`1)",
+            "outcomes": [
+                {
+                    "validator": "IsEmptyValidation",
+                    "message": "Must be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "AllParamsMustBeEmpty(String,List`1,Dictionary`2):Void::(param3,2,Dictionary`2)",
+            "outcomes": [
+                {
+                    "validator": "IsEmptyValidation",
+                    "message": "Must be empty.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Set(Int32)->Void:Param(0,Int32,param1)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLessThanValidation",
+                    "Message": "Must be less than '2147483646'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "2147483646"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set_Custom(Int32)->Void:Param(0,Int32,param1)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLessThanValidation",
+                    "Message": "Be more",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "2147483646"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

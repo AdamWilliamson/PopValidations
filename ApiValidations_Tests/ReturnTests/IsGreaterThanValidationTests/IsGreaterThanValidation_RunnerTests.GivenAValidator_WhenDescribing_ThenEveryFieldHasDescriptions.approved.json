@@ -1,0 +1,100 @@
+﻿{
+    "results": [
+        {
+            "property": "Integer",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '-2147483648'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-2147483648"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "String",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Decimal",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '-79228162514264337593543950335'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-79228162514264337593543950335"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Double",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '-1.7976931348623157E+308'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-1.7976931348623157E+308"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Short",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '-32768'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-32768"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "Long",
+            "outcomes": [
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '-9223372036854775808'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "-9223372036854775808"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        }
+    ]
+}

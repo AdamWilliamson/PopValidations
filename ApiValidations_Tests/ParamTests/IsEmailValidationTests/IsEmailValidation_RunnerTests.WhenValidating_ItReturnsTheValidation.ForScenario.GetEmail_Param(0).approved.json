@@ -1,0 +1,7 @@
+﻿{
+    "Errors": {
+        "GetEmail(String)->Void:Param(0,String,email)": [
+            "Is not a valid email."
+        ]
+    }
+}

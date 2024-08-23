@@ -1,0 +1,174 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'True'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "True"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Database Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Another DB Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Child[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'True'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "True"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Database Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Another DB Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Child[n].Child[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'True'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "True"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Database Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Another DB Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Child[n].Child[n].Child[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'True'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "True"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Database Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Database Value"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Another DB Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Child[n].Child[n].Child[n].Child[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'True'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "True"
+                        }
+                    ]
+                },
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to 'Another DB Value'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "Another DB Value"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

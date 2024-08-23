@@ -1,0 +1,13 @@
+﻿{
+    "Errors": {
+        "Set2(Nullable<Int16>,Nullable<Int64>,Object)->Void:Param(0,Nullable<Int16>,param1)": [
+            "Is not null."
+        ],
+        "Set2(Nullable<Int16>,Nullable<Int64>,Object)->Void:Param(1,Nullable<Int64>,param2)": [
+            "Is not null."
+        ],
+        "Set2(Nullable<Int16>,Nullable<Int64>,Object)->Void:Param(2,Object,param3)": [
+            "Is not null."
+        ]
+    }
+}

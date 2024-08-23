@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using PopValidations.FieldDescriptors.Base;
@@ -105,5 +106,9 @@ public class ValidatableStoreItem : IValidatableStoreItem
         }
 
         return Component.Describe();
+    }
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        FieldDescriptor?.UpdateContext(context);
     }
 }

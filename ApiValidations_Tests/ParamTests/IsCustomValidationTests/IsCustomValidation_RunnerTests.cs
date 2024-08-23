@@ -1,13 +1,13 @@
 ﻿using ApprovalTests;
 using FluentAssertions;
-using PopValidations;
 using ApiValidations_Tests.GenericTestableObjects;
 using ApiValidations;
 using PopValidations.Validations;
 using FluentAssertions.Execution;
 using ApiValidations_Tests.TestHelpers;
-
-namespace PopValidations_Tests.ValidationsTests.IsCustomValidationTests;
+using ApiValidations.Execution;
+using ApprovalTests.Namers;
+namespace PopValidations_Tests.ParamTests.IsCustomValidationTests;
 
 public class IsCustom_TestingValidator : ApiValidator<BasicDataTypes>
 {
@@ -15,24 +15,11 @@ public class IsCustom_TestingValidator : ApiValidator<BasicDataTypes>
     {
         var intParam1Validation = Param.Is<int>().Is("Must be min value.", "Is not min value.", x => x == int.MinValue);
         var decimalParam1Validation = Param.Is<decimal>().Is("Must be min value.", "Is not min value.", x => x == decimal.MinValue);
-        var stringParam1Valdiation = Param.Is<string>().Is("Must be aaaaa.", "Is not aaaaa.", x => x == "aaaaa");
-
-        DescribeFunc(x => x.IntReturnNoParams()).Return.Is("Must be min value.", "Is not min value.", x => x == int.MinValue);
-        DescribeFunc(x => x.DecimalReturnNoParams()).Return.Is("Must be min value.", "Is not min value.", x => x == decimal.MinValue);
-        DescribeFunc(x => x.StringReturnNoParams()).Return.Is("Must be aaaaa.", "Is not aaaaa.", x => x == "aaaaa");
+        var stringParam1Valdiation = Param.Is<string>().Is("Must be min value.", "Is not min value.", x => x == "aaaaa");
 
         DescribeFunc(x => x.NoReturnIntParam(intParam1Validation));
         DescribeFunc(x => x.NoReturnDecimalParam(decimalParam1Validation));
         DescribeFunc(x => x.NoReturnStringParam(stringParam1Valdiation));
-
-        DescribeFunc(x => x.IntReturnIntDecimalParam(intParam1Validation, decimalParam1Validation))
-            .Return.Is("Must be min value.", "Is not min value.", x => x == int.MinValue);
-
-        DescribeFunc(x => x.DecimalReturnDecimalStringParam(decimalParam1Validation, stringParam1Valdiation))
-            .Return.Is("Must be min value.", "Is not min value.", x => x == decimal.MinValue);
-
-        DescribeFunc(x => x.StringReturnStringIntParam(stringParam1Valdiation, intParam1Validation))
-            .Return.Is("Must be aaaaa.", "Is not aaaaa.", x => x == "aaaaa");
     }
 }
 
@@ -60,7 +47,73 @@ public class IsCustomValidation_RunnerTests
             "Must be min value.",
             null
         );
-        description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<BasicDataTypes>(ValidatableType.NoExceptions));
+        description.Results.Should().HaveCount(3);
         Approvals.VerifyJson(json);
+    }
+
+    public static IEnumerable<object[]> ErroringValues()
+    {
+        yield return new object[] { typeof(BasicDataTypes), nameof(BasicDataTypes.NoReturnIntParam), int.MaxValue };
+        yield return new object[] { typeof(BasicDataTypes), nameof(BasicDataTypes.NoReturnDecimalParam), decimal.MaxValue };
+        yield return new object[] { typeof(BasicDataTypes), nameof(BasicDataTypes.NoReturnStringParam), "bbbb" };
+    }
+
+    [Theory]
+    [MemberData(nameof(ErroringValues))]
+    public async Task WhenValidating_ItReturnsTheValidation(Type apiType, string function, object value)
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsCustom_TestingValidator());
+
+        // Act
+        var results = await runner.Validate(
+            new BasicDataTypes(),
+            new HeirarchyMethodInfo(
+                string.Empty,
+                apiType.GetMethod(function)!,
+                [value]
+            )
+        );
+
+        // Assert
+        results.Errors.Should().HaveCount(1);
+        results.Should().ContainsParam(
+            apiType.GetMethod(function)!,
+            0,
+            "Is not min value."
+        );
+
+        using (ApprovalResults.ForScenario(function))
+        {
+            Approvals.VerifyJson(JsonConverter.ToJson(results));
+        }
+    }
+
+    public static IEnumerable<object[]> SuccessfulValues()
+    {
+        yield return new object[] { typeof(BasicDataTypes), nameof(BasicDataTypes.NoReturnIntParam), int.MinValue };
+        yield return new object[] { typeof(BasicDataTypes), nameof(BasicDataTypes.NoReturnDecimalParam), decimal.MinValue };
+        yield return new object[] { typeof(BasicDataTypes), nameof(BasicDataTypes.NoReturnStringParam), "aaaaa" };
+    }
+
+    [Theory]
+    [MemberData(nameof(SuccessfulValues))]
+    public async Task WhenValidating_ItSucceeds(Type apiType, string function, object value)
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsCustom_TestingValidator());
+
+        // Act
+        var results = await runner.Validate(
+            new BasicDataTypes(),
+            new HeirarchyMethodInfo(
+                string.Empty,
+                apiType.GetMethod(function)!,
+                [value]
+            )
+        );
+
+        // Assert
+        results.Errors.Should().HaveCount(0);
     }
 }

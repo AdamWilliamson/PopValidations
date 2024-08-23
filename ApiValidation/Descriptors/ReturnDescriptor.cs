@@ -25,23 +25,30 @@ public class ReturnDescriptor<TValidationType> : IReturnDescriptor, IFieldDescri
     protected object? RetrievedValue = null;
     protected bool ValueHasBeenRetrieved = false;
     private readonly IValidationStore store;
+    private readonly IFunctionContext context;
 
     protected bool _NextValidationVital { get; set; } = false;
     protected bool _AlwaysVital { get; set; } = false;
-    public string PropertyName => (_functionDescriptor?.Name ?? string.Empty) + $"::Return";
+    public string PropertyName => (_functionDescriptor?.Name ?? string.Empty) + $":Return";
 
     IFunctionExpressionToken _functionDescriptor { get; set; }
     IFunctionExpressionToken IReturnDescriptor_Internal.FunctionDescriptor => _functionDescriptor;
 
-    public ReturnDescriptor(IValidationStore store, IFunctionExpressionToken functionDescription)
+    public ReturnDescriptor(IValidationStore store, IFunctionExpressionToken functionDescription, IFunctionContext context)
     {
         this.store = store;
         this._functionDescriptor = functionDescription;
+        this.context = context;
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        // Currently contains no context
     }
 
     public virtual string AddTo(string existing)
     {
-        return _functionDescriptor.CombineWithParentProperty(existing) + $"::Return";
+        return _functionDescriptor.CombineWithParentProperty(existing) + $":Return";
     }
 
     public void AddValidation(IValidationComponent validation)
@@ -66,6 +73,8 @@ public class ReturnDescriptor<TValidationType> : IReturnDescriptor, IFieldDescri
     {
         return null;
     }
+
+    public IFunctionContext GetContext() {  return context; }
 }
 
 public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<TReturnType>, IFieldDescriptorOutline, IReturnDescriptor_Internal
@@ -73,23 +82,30 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
     protected object? RetrievedValue = null;
     protected bool ValueHasBeenRetrieved = false;
     private readonly IValidationStore store;
+    private readonly IFunctionContext context;
 
     protected bool _NextValidationVital { get; set; } = false;
     protected bool _AlwaysVital { get; set; } = false;
-    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $"::Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
+    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $":Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
 
     IFunctionExpressionToken _functionDescriptor { get; set; }
     IFunctionExpressionToken IReturnDescriptor_Internal.FunctionDescriptor => _functionDescriptor;
 
-    public ReturnDescriptor(IValidationStore store, IFunctionExpressionToken functionDescription)
+    public ReturnDescriptor(IValidationStore store, IFunctionExpressionToken functionDescription, IFunctionContext context)
     {
         this.store = store;
         _functionDescriptor = functionDescription;
+        this.context = context;
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        // Currently contains no context
     }
 
     public virtual string AddTo(string existing)
     {
-        return _functionDescriptor.CombineWithParentProperty(existing) + $"::Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
+        return _functionDescriptor.CombineWithParentProperty(existing) + $":Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
     }
 
     public void AddValidation(IValidationComponent validation)
@@ -137,4 +153,6 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
     {
         return null;
     }
+
+    public IFunctionContext GetContext() { return context; }
 }

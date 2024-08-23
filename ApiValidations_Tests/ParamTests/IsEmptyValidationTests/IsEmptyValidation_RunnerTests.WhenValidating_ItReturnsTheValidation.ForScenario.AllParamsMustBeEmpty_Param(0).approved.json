@@ -1,0 +1,13 @@
+﻿{
+    "Errors": {
+        "AllParamsMustBeEmpty(String,List<String>,Dictionary<String,String>)->Void:Param(0,String,param1)": [
+            "Is not empty."
+        ],
+        "AllParamsMustBeEmpty(String,List<String>,Dictionary<String,String>)->Void:Param(1,List<String>,param2)": [
+            "Is not empty."
+        ],
+        "AllParamsMustBeEmpty(String,List<String>,Dictionary<String,String>)->Void:Param(2,Dictionary<String,String>,param3)": [
+            "Is not empty."
+        ]
+    }
+}

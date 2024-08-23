@@ -1,0 +1,24 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Get()->IEnumerable:Return(IEnumerable)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Must be between -1 and 1 exclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "-1"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

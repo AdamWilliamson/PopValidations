@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PopValidations.Execution.Stores.Internal;
 using PopValidations.FieldDescriptors.Base;
 
@@ -13,4 +14,5 @@ public interface IExpandableEntity
     void AsVital();
     bool IgnoreScope { get; }
     void ChangeStore(IValidationStore store);
+    void UpdateContext(Dictionary<string, object?> context);
 }

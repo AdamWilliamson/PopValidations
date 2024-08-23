@@ -1,0 +1,76 @@
+﻿{
+    "Results": [
+        {
+            "Property": "IsEnum1()->IsEnumTestEnum:Return(IsEnumTestEnum)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEnumValidation",
+                    "Message": "Must be one of 'First,Second' or '10,20'.",
+                    "Values": [
+                        {
+                            "Key": "enumNames",
+                            "Value": "First,Second"
+                        },
+                        {
+                            "Key": "enumValues",
+                            "Value": "10,20"
+                        },
+                        {
+                            "Key": "fieldType",
+                            "Value": "enum"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "IsEnum2()->String:Return(String)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEnumValidation",
+                    "Message": "Must be one of 'First,Second' or '10,20'.",
+                    "Values": [
+                        {
+                            "Key": "enumNames",
+                            "Value": "First,Second"
+                        },
+                        {
+                            "Key": "enumValues",
+                            "Value": "10,20"
+                        },
+                        {
+                            "Key": "fieldType",
+                            "Value": "string"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "IsEnum3()->Int32:Return(Int32)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEnumValidation",
+                    "Message": "Must be one of 'First,Second' or '10,20'.",
+                    "Values": [
+                        {
+                            "Key": "enumNames",
+                            "Value": "First,Second"
+                        },
+                        {
+                            "Key": "enumValues",
+                            "Value": "10,20"
+                        },
+                        {
+                            "Key": "fieldType",
+                            "Value": "numeric"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

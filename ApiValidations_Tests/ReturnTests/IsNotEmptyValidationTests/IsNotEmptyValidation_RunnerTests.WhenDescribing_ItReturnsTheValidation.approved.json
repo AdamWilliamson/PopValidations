@@ -1,0 +1,26 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Get1()->Nullable<Decimal>:Return(Nullable<Decimal>)",
+            "Outcomes": [
+                {
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Get2()->String:Return(String)",
+            "Outcomes": [
+                {
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

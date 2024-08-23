@@ -61,7 +61,7 @@ public class ParamSwitch<TParamType, TValidationType, TScopedDataType>
     }
 }
 
-public static class SwitchValidationExtensions
+public static partial class SwitchValidationExtensions
 {
     public static ParamSwitch<TParamType, TValidationType, TScopedDataType> Switch<TParamType, TValidationType, TScopedDataType>(
         this ParamDescriptor<TParamType, TValidationType> fieldDescriptor,

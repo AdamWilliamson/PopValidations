@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using PopValidations.FieldDescriptors.Base;
 
 namespace PopValidations.Validations.Base;

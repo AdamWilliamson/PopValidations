@@ -9,11 +9,12 @@ public static class JsonConverter
 {
     public static string ToJson(DescriptionResult description)
     {
-        return JsonConvert.SerializeObject(description, new JsonSerializerSettings
+        return JsonConvert.SerializeObject(description, new JsonSerializerSettings() 
         {
-            ContractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new CamelCaseNamingStrategy
+            //Formatting = Formatting.Indented,
+            ContractResolver = new DefaultContractResolver()
+            {                 
+                NamingStrategy = new DefaultNamingStrategy
                 {
                     ProcessDictionaryKeys = true,
                 },
@@ -23,15 +24,16 @@ public static class JsonConverter
 
     public static string ToJson(ValidationResult validation)
     {
-        return JsonConvert.SerializeObject(validation, new JsonSerializerSettings
+        return JsonConvert.SerializeObject(validation, new JsonSerializerSettings() 
         {
-            ContractResolver = new DefaultContractResolver
+            //Formatting = Formatting.Indented,
+            ContractResolver = new DefaultContractResolver()
             {
-                NamingStrategy = new CamelCaseNamingStrategy
+                NamingStrategy = new DefaultNamingStrategy 
                 {
                     ProcessDictionaryKeys = true,
-                }
+                },
             }
-        });
+        }).Trim();
     }
 }

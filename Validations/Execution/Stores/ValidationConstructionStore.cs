@@ -88,9 +88,11 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
 {
     private InfoStack InformationDepth = new();
     public List<IStoreItem> unExpandedItems = new();
+    Dictionary<string, object> contextValues = new();
 
     public void AddItem(IFieldDescriptorOutline? fieldDescriptor, IExpandableEntity component)
-    {   
+    {
+        //fieldDescriptor.UpdateContext(contextValues);
         var scopeParent = new ScopeParent(component as IParentScope, InformationDepth.GetCurrentScopeParent());
         IExpandableStoreItem decoratedItem = new ExpandableStoreItem(
             scopeParent,
@@ -129,10 +131,12 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
     {
         if (storeItem is IExpandableStoreItem expandable && expandable is not null)
         {
+            storeItem.UpdateContext(contextValues);
             AddItem(fieldDecorator, new WrappingExpandableStoreItem(null, expandable.FieldDescriptor, expandable.Component));
         }
         else if (storeItem is IValidatableStoreItem validatable)
         {
+            validatable.UpdateContext(contextValues);
             int infoCount = InformationDepth.Count();
             InformationDepth.Push(null, fieldDecorator, null);
             PushParentTree(validatable.ScopeParent, null);
@@ -197,10 +201,14 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
         {
             if (item is IExpandableStoreItem expandable && expandable is not null)
             {
+                expandable.FieldDescriptor?.UpdateContext(contextValues);
+
                 this.unExpandedItems.Add(expandable);
             }
             else if (item is IValidatableStoreItem validatable)
             {
+                validatable.FieldDescriptor?.UpdateContext(contextValues);
+
                 int infoCount = InformationDepth.Count();
                 PushParentTree(validatable.ScopeParent, validatable.CurrentFieldExecutor);
 
@@ -358,6 +366,7 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
             {
                 converted.SetParent(attemptedScopeFieldDescriptor);
                 converted.ReHomeScopes(attemptedScopeFieldDescriptor);
+                converted.UpdateContext(contextValues);
             }
             converted = InformationDepth.Decorate(converted);
             results.Add(converted);
@@ -365,6 +374,7 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
         else if (storeItem is IExpandableStoreItem expandable)
         {
             var originalInformationDepth = InformationDepth.Count();
+            storeItem.UpdateContext(contextValues);
 
             if (!expandable.Component.IgnoreScope)
             {
@@ -434,5 +444,23 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
     public void AddExpandedItemsForValidation(ValidationConstructionStore store, object? value)
     {
         throw new NotImplementedException();
+    }
+
+    public void AddContextItem(string key, object value)
+    {
+        if (contextValues.ContainsKey(key))
+        {
+            contextValues[key] = value;
+        }
+        else
+        {
+            contextValues.Add(key, value);
+        }
+
+        foreach(var storeItem in unExpandedItems)
+        {
+            storeItem.UpdateContext(contextValues);
+            //storeItem.FieldDescriptor?.UpdateContext(contextValues);
+        }
     }
 }

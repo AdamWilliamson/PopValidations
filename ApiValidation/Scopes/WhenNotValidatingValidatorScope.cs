@@ -17,22 +17,29 @@ public sealed class WhenNotValidatingValidatorScope<TValidationType, TParamType>
     public WhenNotValidatingValidatorScope(
         //Action rules,
         ParamDescriptor<TParamType, TValidationType> paramDescriptor
-,
+,       
         List<Action<ParamDescriptor<TParamType, TValidationType>>> addValidationActions)
     {
         //this.rules = rules;
         this.paramDescriptor = paramDescriptor;
         this.addValidationActions = addValidationActions;
+        
         Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
             item,
-            new WhenStringValidator_IfTrue<TValidationType>((_) => Task.FromResult(false)),
+            // This needs to do true/false, depending on whether its Validating an OBJECT vs validating a Function.
+            new WhenStringValidator_IfTrue<TValidationType>(
+                (_) => Task.FromResult(paramDescriptor.ParamVisitor.IsRunningFunctionValidation())
+            ), 
             fieldDescriptor
         );
     }
 
     protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {
-
+        foreach (var action in addValidationActions)
+        {
+            action.Invoke(paramDescriptor);
+        }
     }
 
     protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
@@ -46,4 +53,8 @@ public sealed class WhenNotValidatingValidatorScope<TValidationType, TParamType>
     }
 
     public override void ChangeStore(IValidationStore store) { }
+    public override void UpdateContext(Dictionary<string, object?> context)
+    {
+        paramDescriptor.UpdateContext(context);
+    }
 }

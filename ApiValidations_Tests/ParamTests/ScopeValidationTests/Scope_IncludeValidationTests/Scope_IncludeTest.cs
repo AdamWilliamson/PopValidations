@@ -1,28 +1,10 @@
 ﻿using ApprovalTests;
 using ApiValidations;
 using ApiValidations_Tests.TestHelpers;
+using ApiValidations.Execution;
+using FluentAssertions;
 
 namespace ApiValidations_Tests.ParamTests.ScopeValidationTests.Scope_IncludeValidationTests;
-
-//public static class DataRetriever
-//{
-//    public static Task<string> GetValue(Base v)
-//    {
-//        return Task.FromResult(v?.DependantField + " GetValue");
-//    }
-
-//    public static Task<string> GetMoreValue(Base v)
-//    {
-//        return Task.FromResult(v?.DependantField + " GetMoreValue");
-//    }
-//}
-
-//public record Base(string? DependantField);
-//public record Level1(bool Check, string? DependantField, Level2? Child) : Base(DependantField);
-//public record Level2(bool Check, string? DependantField, Level3? Child) : Base(DependantField);
-//public record Level3(bool Check, string? DependantField, Level4? Child) : Base(DependantField);
-//public record Level4(bool Check, string? DependantField, Level5? Child) : Base(DependantField);
-//public record Level5(bool Check, string? DependantField);
 
 public class Validator : ApiValidator<Level1>
 {
@@ -71,5 +53,63 @@ public class Scope_IncludeTest
 
         // Assert
         Approvals.VerifyJson(JsonConverter.ToJson(descriptionResult));
+    }
+
+    public static IEnumerable<object[]> ErroringValues()
+    {
+        yield return new ObjectFunctionValidationTestDescription<Level1>(
+            "",
+            nameof(Level1.Check),
+            0,
+            [false],
+            $"Is not equal to 'True'."
+        );
+    }
+
+    [Theory]
+    [MemberData(nameof(ErroringValues))]
+    public async Task WhenValidating_ItReturnsTheValidation(ObjectFunctionValidationTestDescription<Level1> description)
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Validator());
+
+        // Act
+        var results = await runner.Validate(
+            ModelCreation.GenerateTestData(),
+            new HeirarchyMethodInfo(
+                description.ObjectMap,
+                description.ApiType.GetMethod(description.Function)!,
+                description.ParamInputs.ToList()
+            )
+        );
+
+        // Assert
+        var methodInfo = description.ApiType.GetMethod(description.Function)!;
+        results.Errors.Should().HaveCount(methodInfo.GetParameters().Count());
+        results.Should().ContainsParam(
+            methodInfo,
+            description.ParamIndex,
+            description.Error
+        );
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItSucceeds()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new Validator());
+
+        // Act
+        var results = await runner.Validate(
+            ModelCreation.GenerateTestData(),
+            new HeirarchyMethodInfo(
+                string.Empty,
+                typeof(Level1).GetMethod(nameof(Level1.Check))!,
+                [true]
+            )
+        );
+
+        // Assert
+        results.Errors.Should().HaveCount(0);
     }
 }

@@ -1,0 +1,7 @@
+﻿{
+    "Errors": {
+        "NoReturnStringParam(String)->Void:Param(0,String,stringParam1)": [
+            "Is not min value."
+        ]
+    }
+}

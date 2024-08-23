@@ -1,6 +1,7 @@
 ﻿using PopValidations.Validations.Base;
+using PopValidations_Tests.TestHelpers;
 
-namespace PopValidations_Tests.TestHelpers;
+namespace FluentAssertions;
 
 public static class ValidationActionResultExtensions
 {

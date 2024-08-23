@@ -1,4 +1,7 @@
-﻿namespace ApiValidations.Descriptors.Core;
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace ApiValidations.Descriptors.Core;
 
 public class ParamIndexedDescriptor_Strategy<TValidationType, TEnumeratedParamType, TParamType>
     : IParamDescriptor_Strategy<TValidationType, TParamType>
@@ -34,9 +37,30 @@ public class ParamIndexedDescriptor_Strategy<TValidationType, TEnumeratedParamTy
         );
     }
 
+    private object? GetindexedValue(IEnumerator enumerator, int curindex, int endIndex)
+    {
+        if (curindex == endIndex)
+        {
+            return enumerator.Current;
+        }
+
+        enumerator.MoveNext();
+        return GetindexedValue(enumerator, curindex++, endIndex);
+    }
+
     public virtual object? GetValue(object? value)
     {
-        throw new NotImplementedException("Shouldn't get Param value through Non-Api Validation.");
+        //throw new NotImplementedException("Shouldn't get Param value through Non-Api Validation.");
+        if (!ParamIndex.HasValue || !EnumerableIndex.HasValue) return null;
+
+        var pValue = ParamToken.Visitor.GetParamValue(ParamIndex.Value);
+
+        return pValue switch
+        {
+            IList l => l[EnumerableIndex.Value],
+            IEnumerable e =>GetindexedValue(e.GetEnumerator(), 0, EnumerableIndex.Value),
+            _ => throw new Exception("Unknown enumerable type")
+        };
     }
 
     //public void SetParamDetails(string name, int index, IFunctionExpressionToken function)

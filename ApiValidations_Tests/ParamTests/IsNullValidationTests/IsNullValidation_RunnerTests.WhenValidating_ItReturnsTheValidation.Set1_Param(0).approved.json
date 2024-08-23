@@ -1,0 +1,16 @@
+﻿{
+    "Errors": {
+        "Set1(Nullable<Int32>,String,Nullable<Decimal>,Nullable<Double>)->Void:Param(0,Nullable<Int32>,param1)": [
+            "Is not null."
+        ],
+        "Set1(Nullable<Int32>,String,Nullable<Decimal>,Nullable<Double>)->Void:Param(1,String,param2)": [
+            "Is not null."
+        ],
+        "Set1(Nullable<Int32>,String,Nullable<Decimal>,Nullable<Double>)->Void:Param(2,Nullable<Decimal>,param3)": [
+            "Is not null."
+        ],
+        "Set1(Nullable<Int32>,String,Nullable<Decimal>,Nullable<Double>)->Void:Param(3,Nullable<Double>,param4)": [
+            "Is not null."
+        ]
+    }
+}

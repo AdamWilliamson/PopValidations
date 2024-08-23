@@ -1,0 +1,13 @@
+﻿{
+    "Errors": {
+        "IsEnum(IsEnumTestEnum,String,Int32)->Void:Param(0,IsEnumTestEnum,param1)": [
+            "'null' Is not a valid value."
+        ],
+        "IsEnum(IsEnumTestEnum,String,Int32)->Void:Param(1,String,param2)": [
+            "'NotAnEnumValue' Is not a valid value."
+        ],
+        "IsEnum(IsEnumTestEnum,String,Int32)->Void:Param(2,Int32,param3)": [
+            "'2147483647' Is not a valid value."
+        ]
+    }
+}

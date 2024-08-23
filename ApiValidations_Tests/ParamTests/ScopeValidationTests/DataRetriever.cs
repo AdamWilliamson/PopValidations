@@ -2,13 +2,13 @@
 
 public static class DataRetriever
 {
-    public static Task<string> GetValue(Base v)
+    public static Task<bool> GetValue(Base v)
     {
-        return Task.FromResult(v?.DependantField + " GetValue");
+        return Task.FromResult(v?.DependantField ?? true);
     }
 
     public static Task<bool> GetMoreValue(Base v)
     {
-        return Task.FromResult(v?.DependantField ?? false);
+        return Task.FromResult(v?.DependantField ?? true);
     }
 }

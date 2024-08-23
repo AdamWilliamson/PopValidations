@@ -1,0 +1,363 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsCustomValidation",
+                    "Message": "Must not be Null",
+                    "Values": [
+                        {
+                            "Key": "is_value",
+                            "Value": ""
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Level2.Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [],
+                    "Outcomes": [
+                        {
+                            "Validator": "IsCustomValidation",
+                            "Message": "Must not be Null",
+                            "Values": [
+                                {
+                                    "Key": "is_value",
+                                    "Value": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Property": "Level2.Level3.Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [
+                        {
+                            "Name": "Tst",
+                            "Description": "Tst",
+                            "Children": [],
+                            "Outcomes": [
+                                {
+                                    "Validator": "IsCustomValidation",
+                                    "Message": "Must not be Null",
+                                    "Values": [
+                                        {
+                                            "Key": "is_value",
+                                            "Value": ""
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "Outcomes": []
+                }
+            ]
+        },
+        {
+            "Property": "Level2.Level3.Level4.Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [
+                        {
+                            "Name": "Tst",
+                            "Description": "Tst",
+                            "Children": [
+                                {
+                                    "Name": "Tst",
+                                    "Description": "Tst",
+                                    "Children": [],
+                                    "Outcomes": [
+                                        {
+                                            "Validator": "IsCustomValidation",
+                                            "Message": "Must not be Null",
+                                            "Values": [
+                                                {
+                                                    "Key": "is_value",
+                                                    "Value": ""
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "Outcomes": []
+                        }
+                    ],
+                    "Outcomes": []
+                }
+            ]
+        },
+        {
+            "Property": "Level2.Level3.ArrayOfLevel4[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [
+                        {
+                            "Name": "Tst",
+                            "Description": "Tst",
+                            "Children": [],
+                            "Outcomes": [
+                                {
+                                    "Validator": "IsCustomValidation",
+                                    "Message": "Must not be Null",
+                                    "Values": [
+                                        {
+                                            "Key": "is_value",
+                                            "Value": ""
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "Outcomes": []
+                }
+            ]
+        },
+        {
+            "Property": "Level2.ArrayOfLevel3[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [],
+                    "Outcomes": [
+                        {
+                            "Validator": "IsCustomValidation",
+                            "Message": "Must not be Null",
+                            "Values": [
+                                {
+                                    "Key": "is_value",
+                                    "Value": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Property": "Level2.ArrayOfLevel3[n].Level4.Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [
+                        {
+                            "Name": "Tst",
+                            "Description": "Tst",
+                            "Children": [],
+                            "Outcomes": [
+                                {
+                                    "Validator": "IsCustomValidation",
+                                    "Message": "Must not be Null",
+                                    "Values": [
+                                        {
+                                            "Key": "is_value",
+                                            "Value": ""
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "Outcomes": []
+                }
+            ]
+        },
+        {
+            "Property": "Level2.ArrayOfLevel3[n].ArrayOfLevel4[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [],
+                    "Outcomes": [
+                        {
+                            "Validator": "IsCustomValidation",
+                            "Message": "Must not be Null",
+                            "Values": [
+                                {
+                                    "Key": "is_value",
+                                    "Value": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Property": "ArrayOfLevel2[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsCustomValidation",
+                    "Message": "Must not be Null",
+                    "Values": [
+                        {
+                            "Key": "is_value",
+                            "Value": ""
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "ArrayOfLevel2[n].Level3.Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [],
+                    "Outcomes": [
+                        {
+                            "Validator": "IsCustomValidation",
+                            "Message": "Must not be Null",
+                            "Values": [
+                                {
+                                    "Key": "is_value",
+                                    "Value": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Property": "ArrayOfLevel2[n].Level3.Level4.Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [
+                        {
+                            "Name": "Tst",
+                            "Description": "Tst",
+                            "Children": [],
+                            "Outcomes": [
+                                {
+                                    "Validator": "IsCustomValidation",
+                                    "Message": "Must not be Null",
+                                    "Values": [
+                                        {
+                                            "Key": "is_value",
+                                            "Value": ""
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "Outcomes": []
+                }
+            ]
+        },
+        {
+            "Property": "ArrayOfLevel2[n].Level3.ArrayOfLevel4[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [],
+                    "Outcomes": [
+                        {
+                            "Validator": "IsCustomValidation",
+                            "Message": "Must not be Null",
+                            "Values": [
+                                {
+                                    "Key": "is_value",
+                                    "Value": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Property": "ArrayOfLevel2[n].ArrayOfLevel3[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsCustomValidation",
+                    "Message": "Must not be Null",
+                    "Values": [
+                        {
+                            "Key": "is_value",
+                            "Value": ""
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "ArrayOfLevel2[n].ArrayOfLevel3[n].Level4.Check()->Boolean:Return(Boolean)",
+            "Outcomes": [],
+            "ValidationGroups": [
+                {
+                    "Name": "Tst",
+                    "Description": "Tst",
+                    "Children": [],
+                    "Outcomes": [
+                        {
+                            "Validator": "IsCustomValidation",
+                            "Message": "Must not be Null",
+                            "Values": [
+                                {
+                                    "Key": "is_value",
+                                    "Value": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Property": "ArrayOfLevel2[n].ArrayOfLevel3[n].ArrayOfLevel4[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsCustomValidation",
+                    "Message": "Must not be Null",
+                    "Values": [
+                        {
+                            "Key": "is_value",
+                            "Value": ""
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

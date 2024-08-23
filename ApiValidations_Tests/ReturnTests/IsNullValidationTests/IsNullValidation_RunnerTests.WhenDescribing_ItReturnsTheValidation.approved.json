@@ -1,0 +1,26 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Get1()->Nullable<Int32>:Return(Nullable<Int32>)",
+            "Outcomes": [
+                {
+                    "Validator": "IsNullValidation",
+                    "Message": "Must be null.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Get2()->Object:Return(Object)",
+            "Outcomes": [
+                {
+                    "Validator": "IsNullValidation",
+                    "Message": "Must be null.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

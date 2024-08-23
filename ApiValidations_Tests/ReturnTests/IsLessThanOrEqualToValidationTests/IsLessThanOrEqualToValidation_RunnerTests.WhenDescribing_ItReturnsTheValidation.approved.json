@@ -1,0 +1,20 @@
+﻿{
+    "Results": [
+        {
+            "Property": "GetValue()->Int32:Return(Int32)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLessThanOrEqualToValidation",
+                    "Message": "Must be less than or equal to '9223372036854775807'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "9223372036854775807"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

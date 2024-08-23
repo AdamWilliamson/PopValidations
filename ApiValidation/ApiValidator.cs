@@ -1,16 +1,27 @@
 ﻿using System.Linq.Expressions;
 using ApiValidations.Descriptors;
 using ApiValidations.Descriptors.Core;
+using ApiValidations.Execution;
 using PopValidations.ValidatorInternals;
 
 namespace ApiValidations;
 
-public abstract class ApiSubValidator<TValidationType> : PopValidations.AbstractSubValidator<TValidationType>, IValidator
+public interface IApiMainValidator<TValidationType> 
+{
+    void SetCurrentExecutionContext(HeirarchyMethodInfo methodInfo);
+}
+
+public interface IValidator
+{
+    ParamDetailsDTO? GetCurrentParamDescriptor();
+}
+
+public abstract class ApiValidator<TValidationType> : PopValidations.AbstractValidator<TValidationType>, IValidator, IApiMainValidator<TValidationType>
 {
     protected ParamValidationSetBuilder<TValidationType> Builder;
-    protected ParamBuilder<TValidationType> Param;
+    public ParamBuilder<TValidationType> Param { get; protected set; }
 
-    protected ApiSubValidator()
+    protected ApiValidator()
     {
         Builder = new(this);
         Param = new(new ParamVisitor<TValidationType>(this, Builder));
@@ -59,7 +70,22 @@ public abstract class ApiSubValidator<TValidationType> : PopValidations.Abstract
             var param = args2[i];
             var paramDetails = actualParams[i];
             Builder.SetCurrentParam(paramDetails.Name, paramDetails.ParameterType);
-            param.Compile().DynamicInvoke();
+            var paramResult = param.Compile().DynamicInvoke();
+            if (paramResult is IParamDescriptor<object>)
+            {
+                (paramResult as ParamIsObjectDescriptor)?.Convert<object>();
+            }
         }
     }
+
+    void IApiMainValidator<TValidationType>.SetCurrentExecutionContext(HeirarchyMethodInfo methodInfo)
+    {
+        ((IMainValidator<TValidationType>)this).Store.AddContextItem(ApiValidationConstants.MethodInfoKey, methodInfo);
+        Param.SetCurrentExecutionContext(methodInfo);
+    }
+}
+
+public static class ApiValidationConstants
+{
+    public static readonly string MethodInfoKey = "MethodInfo";
 }

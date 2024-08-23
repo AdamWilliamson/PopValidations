@@ -1,0 +1,20 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Set()->Int32:Return(Int32)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLessThanValidation",
+                    "Message": "Must be less than '2147483647'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "2147483647"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

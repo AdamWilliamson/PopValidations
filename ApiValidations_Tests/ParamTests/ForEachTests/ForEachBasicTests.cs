@@ -1,7 +1,6 @@
 ﻿using ApiValidations;
 using ApprovalTests;
 using ApiValidations_Tests.TestHelpers;
-using ApiValidations_Tests.ValidationsTests;
 using FluentAssertions;
 
 namespace ApiValidations_Tests.ParamTests.ForEachTests;
@@ -31,8 +30,8 @@ public class ForEachBasicTests
         var description = runner.Describe();
 
         // Assert
-        description.Results.Should().HaveCount(3);
-        description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<NotEmptyApi>(ValidatableType.NoExceptions));
+        description.Results.Should().HaveCount(1);
+        description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<EnumerableParamApi>(ValidatableType.NoExceptions));
         Approvals.VerifyJson(JsonConverter.ToJson(description));
     }
 }

@@ -1,0 +1,20 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Get()->Int32:Return(Int32)",
+            "Outcomes": [
+                {
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Must be greater than '9223372036854775807'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "9223372036854775807"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

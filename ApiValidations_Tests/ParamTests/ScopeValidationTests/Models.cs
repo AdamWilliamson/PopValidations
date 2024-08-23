@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ApiValidations_Tests.ParamTests.ScopeValidationTests;
+﻿namespace ApiValidations_Tests.ParamTests.ScopeValidationTests;
 
 public class Base(bool? dependantField)
 {

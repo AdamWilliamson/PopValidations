@@ -4,8 +4,8 @@
             "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param1,0,String)",
             "outcomes": [
                 {
-                    "validator": "IsLengthExclusivelyBetweenValidation",
-                    "message": "Must be between 0 and 10 exclusive.",
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 0 and 10 inclusive.",
                     "values": [
                         {
                             "key": "startValue",
@@ -24,8 +24,8 @@
             "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param2,1,Array)",
             "outcomes": [
                 {
-                    "validator": "IsLengthExclusivelyBetweenValidation",
-                    "message": "Must be between 0 and 10 exclusive.",
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between 0 and 10 inclusive.",
                     "values": [
                         {
                             "key": "startValue",
@@ -44,8 +44,8 @@
             "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param3,2,IEnumerable`1)",
             "outcomes": [
                 {
-                    "validator": "IsLengthExclusivelyBetweenValidation",
-                    "message": "Must be between -1 and 1 exclusive.",
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between -1 and 1 inclusive.",
                     "values": [
                         {
                             "key": "startValue",
@@ -64,8 +64,8 @@
             "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param4,3,LinkedList`1)",
             "outcomes": [
                 {
-                    "validator": "IsLengthExclusivelyBetweenValidation",
-                    "message": "Must be between -1 and 1 exclusive.",
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between -1 and 1 inclusive.",
                     "values": [
                         {
                             "key": "startValue",
@@ -84,8 +84,8 @@
             "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param5,4,IEnumerable`1)",
             "outcomes": [
                 {
-                    "validator": "IsLengthExclusivelyBetweenValidation",
-                    "message": "Must be between -1 and 1 exclusive.",
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between -1 and 1 inclusive.",
                     "values": [
                         {
                             "key": "startValue",
@@ -104,8 +104,8 @@
             "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param6,5,Dictionary`2)",
             "outcomes": [
                 {
-                    "validator": "IsLengthExclusivelyBetweenValidation",
-                    "message": "Must be between -1 and 1 exclusive.",
+                    "validator": "IsLengthInclusivelyBetweenValidation",
+                    "message": "Must be between -1 and 1 inclusive.",
                     "values": [
                         {
                             "key": "startValue",

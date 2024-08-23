@@ -1,0 +1,24 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Get()->String:Return(String)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthInclusivelyBetweenValidation",
+                    "Message": "Must be between -1 and 1 inclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "-1"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

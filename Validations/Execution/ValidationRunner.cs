@@ -17,6 +17,7 @@ public interface IValidationDescriber
 public interface IValidationRunner<TValidationType>: IValidationDescriber
 {
     Task<ValidationResult> Validate(TValidationType instance);
+    Task<ValidationResult> Validate(TValidationType instance, string[] allowedGraphs);
 }
 
 public class ValidationRunner<TValidationType> : IValidationRunner<TValidationType>, IValidationDescriber
@@ -34,7 +35,17 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
         this.messageProcessor = messageProcessor;
     }
 
-    public async Task<ValidationResult> Validate(TValidationType instance)
+    public Task<ValidationResult> Validate(TValidationType instance, string[] allowedGraphs)
+    {
+        return ValidateImpl(instance, allowedGraphs);
+    }
+
+    public Task<ValidationResult> Validate(TValidationType instance)
+    {
+        return ValidateImpl(instance);
+    }
+
+    protected async Task<ValidationResult> ValidateImpl(TValidationType instance, string[]? allowedGraphs = null)
     {
         var validationResult = new ValidationResult();
         var store = new ValidationConstructionStore();
@@ -51,6 +62,7 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
 
         var groupedItems = allItems
             .GroupBy(x => new { x.PropertyName })
+            .Where(x => allowedGraphs == null || allowedGraphs.Any(g => x.Key.PropertyName.StartsWith(g)))
             .OrderBy(x => x.Key.PropertyName);
 
         var vitallyFailedFields = new List<string>();

@@ -1,76 +1,100 @@
 ﻿{
-    "results": [
+    "Results": [
         {
-            "property": "IsEnum(IsEnumTestEnum,String,Int32):Void::(param1,0,IsEnumTestEnum)",
-            "outcomes": [
+            "Property": "IsEnum(IsEnumTestEnum,String,Int32)->Void:Param(0,IsEnumTestEnum,param1)",
+            "Outcomes": [
                 {
-                    "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'.",
-                    "values": [
+                    "Validator": "IsEnumValidation",
+                    "Message": "Must be one of 'First,Second' or '10,20'.",
+                    "Values": [
                         {
-                            "key": "enumNames",
-                            "value": "First,Second"
+                            "Key": "enumNames",
+                            "Value": "First,Second"
                         },
                         {
-                            "key": "enumValues",
-                            "value": "10,20"
+                            "Key": "enumValues",
+                            "Value": "10,20"
                         },
                         {
-                            "key": "fieldType",
-                            "value": "enum"
+                            "Key": "fieldType",
+                            "Value": "enum"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "IsEnum(IsEnumTestEnum,String,Int32):Void::(param2,1,String)",
-            "outcomes": [
+            "Property": "IsEnum(IsEnumTestEnum,String,Int32)->Void:Param(1,String,param2)",
+            "Outcomes": [
                 {
-                    "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'.",
-                    "values": [
+                    "Validator": "IsEnumValidation",
+                    "Message": "Must be one of 'First,Second' or '10,20'.",
+                    "Values": [
                         {
-                            "key": "enumNames",
-                            "value": "First,Second"
+                            "Key": "enumNames",
+                            "Value": "First,Second"
                         },
                         {
-                            "key": "enumValues",
-                            "value": "10,20"
+                            "Key": "enumValues",
+                            "Value": "10,20"
                         },
                         {
-                            "key": "fieldType",
-                            "value": "string"
+                            "Key": "fieldType",
+                            "Value": "string"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "IsEnum(IsEnumTestEnum,String,Int32):Void::(param3,2,Int32)",
-            "outcomes": [
+            "Property": "IsEnum(IsEnumTestEnum,String,Int32)->Void:Param(2,Int32,param3)",
+            "Outcomes": [
                 {
-                    "validator": "IsEnumValidation",
-                    "message": "Must be one of 'First,Second' or '10,20'.",
-                    "values": [
+                    "Validator": "IsEnumValidation",
+                    "Message": "Must be one of 'First,Second' or '10,20'.",
+                    "Values": [
                         {
-                            "key": "enumNames",
-                            "value": "First,Second"
+                            "Key": "enumNames",
+                            "Value": "First,Second"
                         },
                         {
-                            "key": "enumValues",
-                            "value": "10,20"
+                            "Key": "enumValues",
+                            "Value": "10,20"
                         },
                         {
-                            "key": "fieldType",
-                            "value": "numeric"
+                            "Key": "fieldType",
+                            "Value": "numeric"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
+        },
+        {
+            "Property": "IsEnum_Custom(String)->Void:Param(0,String,param1)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEnumValidation",
+                    "Message": "Keep it enum",
+                    "Values": [
+                        {
+                            "Key": "enumNames",
+                            "Value": "First,Second"
+                        },
+                        {
+                            "Key": "enumValues",
+                            "Value": "10,20"
+                        },
+                        {
+                            "Key": "fieldType",
+                            "Value": "string"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
         }
     ]
 }

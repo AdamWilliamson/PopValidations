@@ -1,0 +1,22 @@
+﻿{
+    "Errors": {
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(0,Int32,param1)": [
+            "Is not less than or equal to '2147483646'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(1,String,param2)": [
+            "Is not less than or equal to 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(2,Decimal,param3)": [
+            "Is not less than or equal to '79228162514264337593543950334'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(3,Double,param4)": [
+            "Is not less than or equal to '99999999.9999999'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(4,Int16,param5)": [
+            "Is not less than or equal to '32766'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(5,Int64,param6)": [
+            "Is not less than or equal to '9223372036854775806'."
+        ]
+    }
+}

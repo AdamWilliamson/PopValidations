@@ -1,4 +1,5 @@
 ﻿using PopValidations.FieldDescriptors.Base;
+using System.Collections.Generic;
 
 namespace PopValidations.Execution.Stores.Internal;
 
@@ -23,6 +24,11 @@ class ValidationFieldDescriptorOutline : IFieldDescriptorOutline
     }
 
     public string PropertyName { get; }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        outline.UpdateContext(context);
+    }
 
     public string AddTo(string existing)
     {

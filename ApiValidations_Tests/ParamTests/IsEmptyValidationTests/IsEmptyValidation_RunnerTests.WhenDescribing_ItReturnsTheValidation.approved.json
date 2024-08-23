@@ -1,37 +1,70 @@
 ﻿{
-    "results": [
+    "Results": [
         {
-            "property": "AllParamsMustBeEmpty(String,List`1,Dictionary`2):Void::(param1,0,String)",
-            "outcomes": [
+            "Property": "AllParamsMustBeEmpty(String,List<String>,Dictionary<String,String>)->Void:Param(0,String,param1)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty.",
-                    "values": []
+                    "Validator": "IsEmptyValidation",
+                    "Message": "Must be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "AllParamsMustBeEmpty(String,List`1,Dictionary`2):Void::(param2,1,List`1)",
-            "outcomes": [
+            "Property": "AllParamsMustBeEmpty(String,List<String>,Dictionary<String,String>)->Void:Param(1,List<String>,param2)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty.",
-                    "values": []
+                    "Validator": "IsEmptyValidation",
+                    "Message": "Must be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "AllParamsMustBeEmpty(String,List`1,Dictionary`2):Void::(param3,2,Dictionary`2)",
-            "outcomes": [
+            "Property": "AllParamsMustBeEmpty(String,List<String>,Dictionary<String,String>)->Void:Param(2,Dictionary<String,String>,param3)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty.",
-                    "values": []
+                    "Validator": "IsEmptyValidation",
+                    "Message": "Must be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
+        },
+        {
+            "Property": "AllParamsMustBeEmpty_Custom(String,List<String>,Dictionary<String,String>)->Void:Param(0,String,param1)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEmptyValidation",
+                    "Message": "Be Empty.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "AllParamsMustBeEmpty_Custom(String,List<String>,Dictionary<String,String>)->Void:Param(1,List<String>,param2)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEmptyValidation",
+                    "Message": "Be Empty.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "AllParamsMustBeEmpty_Custom(String,List<String>,Dictionary<String,String>)->Void:Param(2,Dictionary<String,String>,param3)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEmptyValidation",
+                    "Message": "Be Empty.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
         }
     ]
 }

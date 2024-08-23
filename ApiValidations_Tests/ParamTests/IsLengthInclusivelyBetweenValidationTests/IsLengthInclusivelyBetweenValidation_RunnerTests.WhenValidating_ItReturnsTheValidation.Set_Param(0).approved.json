@@ -1,0 +1,22 @@
+﻿{
+    "Errors": {
+        "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(0,String,param1)": [
+            "Is not between 0 and 9 inclusive."
+        ],
+        "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(1,Array,param2)": [
+            "Is not between 5 and 9 inclusive."
+        ],
+        "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(2,IEnumerable<String>,param3)": [
+            "Is not between -1 and 0 inclusive."
+        ],
+        "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(3,LinkedList<Int32>,param4)": [
+            "Is not between -1 and 0 inclusive."
+        ],
+        "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(4,IEnumerable<Double>,param5)": [
+            "Is not between -1 and 0 inclusive."
+        ],
+        "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(5,Dictionary<String,Int32>,param6)": [
+            "Is not between -1 and 0 inclusive."
+        ]
+    }
+}

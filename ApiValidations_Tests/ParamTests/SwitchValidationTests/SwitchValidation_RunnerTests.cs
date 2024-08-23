@@ -110,7 +110,7 @@ public class Level4_TestingValidator : ApiSubValidator<Level4>
 public class SwitchValidation_RunnerTests
 {
     [Fact]
-    public async Task WhenDescribing_ItReturnsTheValidation()
+    public void WhenDescribing_ItReturnsTheValidation()
     {
         // Arrange
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1_TestingValidator());

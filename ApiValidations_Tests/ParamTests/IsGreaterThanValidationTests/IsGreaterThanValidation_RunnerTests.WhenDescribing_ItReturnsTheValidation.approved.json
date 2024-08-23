@@ -1,100 +1,116 @@
 ﻿{
-    "results": [
+    "Results": [
         {
-            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param1,0,Int32)",
-            "outcomes": [
+            "Property": "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(0,Int32,param1)",
+            "Outcomes": [
                 {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '2147483647'.",
-                    "values": [
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Must be greater than '2147483646'.",
+                    "Values": [
                         {
-                            "key": "value",
-                            "value": "2147483647"
+                            "Key": "value",
+                            "Value": "2147483646"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param2,1,String)",
-            "outcomes": [
+            "Property": "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(1,String,param2)",
+            "Outcomes": [
                 {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'.",
-                    "values": [
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Must be greater than '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'.",
+                    "Values": [
                         {
-                            "key": "value",
-                            "value": "￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿"
+                            "Key": "value",
+                            "Value": "￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param3,2,Decimal)",
-            "outcomes": [
+            "Property": "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(2,Decimal,param3)",
+            "Outcomes": [
                 {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '79228162514264337593543950335'.",
-                    "values": [
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Must be greater than '79228162514264337593543950334'.",
+                    "Values": [
                         {
-                            "key": "value",
-                            "value": "79228162514264337593543950335"
+                            "Key": "value",
+                            "Value": "79228162514264337593543950334"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param4,3,Double)",
-            "outcomes": [
+            "Property": "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(3,Double,param4)",
+            "Outcomes": [
                 {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '1.7976931348623157E+308'.",
-                    "values": [
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Must be greater than '1.7976931348623157E+308'.",
+                    "Values": [
                         {
-                            "key": "value",
-                            "value": "1.7976931348623157E+308"
+                            "Key": "value",
+                            "Value": "1.7976931348623157E+308"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param5,4,Int16)",
-            "outcomes": [
+            "Property": "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(4,Int16,param5)",
+            "Outcomes": [
                 {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '32767'.",
-                    "values": [
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Must be greater than '32766'.",
+                    "Values": [
                         {
-                            "key": "value",
-                            "value": "32767"
+                            "Key": "value",
+                            "Value": "32766"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "SetValues(Int32,String,Decimal,Double,Int16,Int64):Void::(param6,5,Int64)",
-            "outcomes": [
+            "Property": "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(5,Int64,param6)",
+            "Outcomes": [
                 {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '9223372036854775807'.",
-                    "values": [
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Must be greater than '9223372036854775806'.",
+                    "Values": [
                         {
-                            "key": "value",
-                            "value": "9223372036854775807"
+                            "Key": "value",
+                            "Value": "9223372036854775806"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
+        },
+        {
+            "Property": "SetValue_Custom(Int32)->Void:Param(0,Int32,param1)",
+            "Outcomes": [
+                {
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Be Big",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "2147483646"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
         }
     ]
 }

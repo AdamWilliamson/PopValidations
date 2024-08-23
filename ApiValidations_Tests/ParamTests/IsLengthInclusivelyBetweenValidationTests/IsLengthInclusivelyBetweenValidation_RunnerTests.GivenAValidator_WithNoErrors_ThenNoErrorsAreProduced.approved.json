@@ -1,124 +1,144 @@
 ﻿{
-    "results": [
+    "Results": [
         {
-            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param1,0,String)",
-            "outcomes": [
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(0,String,param1)",
+            "Outcomes": [
                 {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between 0 and 10 inclusive.",
-                    "values": [
+                    "Validator": "IsLengthInclusivelyBetweenValidation",
+                    "Message": "Must be between 0 and 9 inclusive.",
+                    "Values": [
                         {
-                            "key": "startValue",
-                            "value": "0"
+                            "Key": "startValue",
+                            "Value": "0"
                         },
                         {
-                            "key": "endValue",
-                            "value": "10"
+                            "Key": "endValue",
+                            "Value": "9"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param2,1,Array)",
-            "outcomes": [
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(1,Array,param2)",
+            "Outcomes": [
                 {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between 0 and 10 inclusive.",
-                    "values": [
+                    "Validator": "IsLengthInclusivelyBetweenValidation",
+                    "Message": "Must be between 5 and 9 inclusive.",
+                    "Values": [
                         {
-                            "key": "startValue",
-                            "value": "0"
+                            "Key": "startValue",
+                            "Value": "5"
                         },
                         {
-                            "key": "endValue",
-                            "value": "10"
+                            "Key": "endValue",
+                            "Value": "9"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param3,2,IEnumerable`1)",
-            "outcomes": [
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(2,IEnumerable<String>,param3)",
+            "Outcomes": [
                 {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between -1 and 1 inclusive.",
-                    "values": [
+                    "Validator": "IsLengthInclusivelyBetweenValidation",
+                    "Message": "Must be between -1 and 0 inclusive.",
+                    "Values": [
                         {
-                            "key": "startValue",
-                            "value": "-1"
+                            "Key": "startValue",
+                            "Value": "-1"
                         },
                         {
-                            "key": "endValue",
-                            "value": "1"
+                            "Key": "endValue",
+                            "Value": "0"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param4,3,LinkedList`1)",
-            "outcomes": [
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(3,LinkedList<Int32>,param4)",
+            "Outcomes": [
                 {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between -1 and 1 inclusive.",
-                    "values": [
+                    "Validator": "IsLengthInclusivelyBetweenValidation",
+                    "Message": "Must be between -1 and 0 inclusive.",
+                    "Values": [
                         {
-                            "key": "startValue",
-                            "value": "-1"
+                            "Key": "startValue",
+                            "Value": "-1"
                         },
                         {
-                            "key": "endValue",
-                            "value": "1"
+                            "Key": "endValue",
+                            "Value": "0"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param5,4,IEnumerable`1)",
-            "outcomes": [
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(4,IEnumerable<Double>,param5)",
+            "Outcomes": [
                 {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between -1 and 1 inclusive.",
-                    "values": [
+                    "Validator": "IsLengthInclusivelyBetweenValidation",
+                    "Message": "Must be between -1 and 0 inclusive.",
+                    "Values": [
                         {
-                            "key": "startValue",
-                            "value": "-1"
+                            "Key": "startValue",
+                            "Value": "-1"
                         },
                         {
-                            "key": "endValue",
-                            "value": "1"
+                            "Key": "endValue",
+                            "Value": "0"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set(String,Array,IList`1,LinkedList`1,IEnumerable`1,Dictionary`2):Void::(param6,5,Dictionary`2)",
-            "outcomes": [
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(5,Dictionary<String,Int32>,param6)",
+            "Outcomes": [
                 {
-                    "validator": "IsLengthInclusivelyBetweenValidation",
-                    "message": "Must be between -1 and 1 inclusive.",
-                    "values": [
+                    "Validator": "IsLengthInclusivelyBetweenValidation",
+                    "Message": "Must be between -1 and 0 inclusive.",
+                    "Values": [
                         {
-                            "key": "startValue",
-                            "value": "-1"
+                            "Key": "startValue",
+                            "Value": "-1"
                         },
                         {
-                            "key": "endValue",
-                            "value": "1"
+                            "Key": "endValue",
+                            "Value": "0"
                         }
                     ]
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set_Custom(String)->Void:Param(0,String,param1)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthInclusivelyBetweenValidation",
+                    "Message": "Be Short",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "0"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "10"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
         }
     ]
 }

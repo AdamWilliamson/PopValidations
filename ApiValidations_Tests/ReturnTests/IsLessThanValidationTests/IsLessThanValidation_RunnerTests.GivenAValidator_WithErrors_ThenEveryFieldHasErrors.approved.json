@@ -1,0 +1,22 @@
+﻿{
+    "errors": {
+        "decimal": [
+            "Is not less than '79228162514264337593543950335'."
+        ],
+        "double": [
+            "Is not less than '1.7976931348623157E+308'."
+        ],
+        "integer": [
+            "This Integer is not less then MaxValue"
+        ],
+        "long": [
+            "Is not less than '9223372036854775807'."
+        ],
+        "short": [
+            "Is not less than '32767'."
+        ],
+        "string": [
+            "Is not less than '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'."
+        ]
+    }
+}

@@ -1,90 +1,108 @@
 ﻿using ApprovalTests;
 using FluentAssertions;
-using System;
-using System.Threading.Tasks;
-using PopValidations;
-using PopValidations_Tests.TestHelpers;
-using PopValidations_Tests.ValidationsTests.GenericTestableObjects;
-using Xunit;
+using ApiValidations;
+using ApiValidations_Tests.TestHelpers;
+using ApiValidations.Execution;
 
-namespace PopValidations_Tests.ValidationsTests.IsLessThanValidationTests;
+namespace PopValidations_Tests.ParamTests.IsLessThanValidationTests;
 
-public class IsLessThan_NoError_TestingValidator : AbstractValidator<NonNullAllFieldTypesDto>
+public class IsLessThanApi
 {
-    public IsLessThan_NoError_TestingValidator()
-    {
-        Describe(x => x.Integer).IsLessThan(int.MaxValue);
-        Describe(x => x.String).IsLessThan(new string(char.MaxValue, 100));
-        Describe(x => x.Decimal).IsLessThan(decimal.MaxValue);
-        Describe(x => x.Double).IsLessThan(double.MaxValue);
-        Describe(x => x.Short).IsLessThan(short.MaxValue);
-        Describe(x => x.Long).IsLessThan(long.MaxValue);
-    }
+    public void Set(int param1) { }
+    public void Set_Custom(int param1) { }
 }
 
-public class IsLessThan_AllErrored_TestingValidator : AbstractValidator<NonNullAllFieldTypesDto>
+public class IsLessThan_TestingValidator : ApiValidator<IsLessThanApi>
 {
-    public IsLessThan_AllErrored_TestingValidator()
+    public IsLessThan_TestingValidator()
     {
-        Describe(x => x.Integer).IsLessThan(int.MaxValue, options => options.WithErrorMessage("This Integer is not less then MaxValue"));
-        Describe(x => x.String).IsLessThan(new string(char.MaxValue, 100));
-        Describe(x => x.Decimal).IsLessThan(decimal.MaxValue);
-        Describe(x => x.Double).IsLessThan(double.MaxValue);
-        Describe(x => x.Short).IsLessThan(short.MaxValue);
-        Describe(x => x.Long).IsLessThan(long.MaxValue);
+        DescribeFunc(x => x.Set(Param.Is<int>().IsLessThan(int.MaxValue-1)));
+        DescribeFunc(x => x.Set_Custom(Param.Is<int>().IsLessThan(int.MaxValue-1, o=> o.WithDescription("Be more").WithErrorMessage("Not more"))));
     }
 }
 
 public class IsLessThanValidation_RunnerTests
 {
     [Fact]
-    public async Task GivenAValidator_WithNoErrors_ThenNoErrorsAreProduced()
+    public void WhenDescribing_ItReturnsTheValidation()
     {
         // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLessThan_NoError_TestingValidator());
-
-        // Act
-        var validationResult = await runner.Validate(new NonNullAllFieldTypesDto()
-        {
-            Integer = int.MaxValue/2,
-            String = new string('g', 100),
-            Decimal = decimal.MaxValue / 2,
-            Double = double.MaxValue / 2,
-            Short = short.MaxValue/2,
-            Long = long.MaxValue / 2
-        });
-
-        // Assert
-        validationResult.Errors.Should().BeEmpty();
-    }
-
-    [Fact]
-    public async Task GivenAValidator_WithErrors_ThenEveryFieldHasErrors()
-    {
-        // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLessThan_AllErrored_TestingValidator());
-
-        // Act
-        var validationResult = await runner.Validate(new NonNullAllFieldTypesDto());
-        var json = JsonConverter.ToJson(validationResult);
-
-        // Assert
-        validationResult.Errors.Should().HaveCount(6);
-        Approvals.VerifyJson(json);
-    }
-
-    [Fact]
-    public void GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions()
-    {
-        // Arrange
-        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLessThan_NoError_TestingValidator());
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLessThan_TestingValidator());
 
         // Act
         var description = runner.Describe();
-        var json = JsonConverter.ToJson(description);
 
         // Assert
-        description.Results.Should().HaveCount(6);
-        Approvals.VerifyJson(json);
+        description.Results.Should().HaveCount(2);
+        description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<IsLessThanApi>(ValidatableType.NoExceptions));
+        Approvals.VerifyJson(JsonConverter.ToJson(description));
+    }
+
+    public static IEnumerable<object[]> ErroringValues()
+    {
+        yield return new FunctionValidationTestDescription<IsLessThanApi>(
+            nameof(IsLessThanApi.Set),
+            0,
+            [int.MaxValue],
+            $"Is not less than '{int.MaxValue - 1}'."
+        );
+        yield return new FunctionValidationTestDescription<IsLessThanApi>(
+            nameof(IsLessThanApi.Set_Custom),
+            0,
+            [int.MaxValue],
+            "Not more"
+        );
+    }
+
+    [Theory]
+    [MemberData(nameof(ErroringValues))]
+    public async Task WhenValidating_ItReturnsTheValidation(FunctionValidationTestDescription<IsLessThanApi> description)
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLessThan_TestingValidator());
+
+        // Act
+        var results = await runner.Validate(
+            new IsLessThanApi(),
+            new HeirarchyMethodInfo(
+                string.Empty,
+                description.ApiType.GetMethod(description.Function)!,
+                description.ParamInputs.ToList()
+            )
+        );
+
+        // Assert
+        var methodInfo = description.ApiType.GetMethod(description.Function)!;
+        results.Errors.Should().HaveCount(methodInfo.GetParameters().Count());
+        results.Should().ContainsParam(
+            methodInfo,
+            description.ParamIndex,
+            description.Error
+        );
+
+        using (ApprovalTestsHelpers.SilentForScenario($"{description.Function}_Param({description.ParamIndex})"))
+        {
+            Approvals.VerifyJson(JsonConverter.ToJson(results));
+        }
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItSucceeds()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLessThan_TestingValidator());
+
+        // Act
+        var results = await runner.Validate(
+            new IsLessThanApi(),
+            new HeirarchyMethodInfo(
+                string.Empty,
+                typeof(IsLessThanApi).GetMethod(nameof(IsLessThanApi.Set_Custom))!,
+                [0]
+            )
+        );
+
+        // Assert
+        results.Errors.Should().HaveCount(0);
     }
 }

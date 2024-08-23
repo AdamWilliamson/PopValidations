@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using PopValidations.Execution.Stores;
 using PopValidations.Execution.Stores.Internal;
 using PopValidations.FieldDescriptors.Base;
@@ -37,7 +38,6 @@ public abstract class WhenValidationItemDecoratorBase<TValidationType> : IValida
     }
 
     public IValidationComponent Component => ItemToDecorate.Component;
-
     public IValidatableStoreItem ItemToDecorate { get; }
     protected IFieldDescriptorOutline? WrappingLevelfieldDescriptor { get; }
 
@@ -67,12 +67,20 @@ public abstract class WhenValidationItemDecoratorBase<TValidationType> : IValida
     {
         ItemToDecorate.ReHomeScopes(attemptedScopeFieldDescriptor);
     }
+
     public Task InitScopes(object? instance)
     {
         return ItemToDecorate.InitScopes(instance);
     }
+
     public virtual ValidationActionResult Validate(object? value)
     {
         return ItemToDecorate.Validate(value);
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        FieldDescriptor?.UpdateContext(context);
+        WrappingLevelfieldDescriptor?.UpdateContext(context);
     }
 }

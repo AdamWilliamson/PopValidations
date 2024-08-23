@@ -28,7 +28,7 @@ public class FunctionExpressionToken<TValidationType> : IFunctionExpressionToken
     
     public FunctionExpressionToken(string? name, Type? returnType, List<ParamDetailsDTO>? paramList)
     {
-        Name = name + $"({string.Join(',', paramList?.Select(x => x.ParamType.Name) ?? [])}):{GenericNameHelper.GetNameWithoutGenericArity(returnType)}";
+        Name = name + $"({string.Join(',', paramList?.Select(x => GenericNameHelper.GetNameWithoutGenericArity(x.ParamType)) ?? [])})->{GenericNameHelper.GetNameWithoutGenericArity(returnType)}";
         ReturnType = returnType;
         Params = paramList;
     }

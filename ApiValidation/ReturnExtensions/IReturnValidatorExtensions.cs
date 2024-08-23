@@ -41,7 +41,8 @@ public static partial class IReturnValidatorExtensions
             var forEachScope = new ForEachReturnScope<TParamType>(
                 converted.FunctionDescriptor,
                 returnDescriptor,
-                actions
+                actions,
+                converted.GetContext()
             );
 
             returnDescriptor.AddSelfDescribingEntity(forEachScope);

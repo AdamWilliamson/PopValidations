@@ -1,7 +1,7 @@
 ﻿{
     "results": [
         {
-            "property": "InputFunction1(Int32):Void::(value,0,Int32)",
+            "property": "InputFunction1(Int32)->Void:Param(0,Int32,value)",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -22,7 +22,7 @@
             "validationGroups": []
         },
         {
-            "property": "InputFunction1(Int32,String):Void::(value,0,Int32)",
+            "property": "InputFunction1(Int32,String)->Void:Param(0,Int32,value)",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -43,7 +43,7 @@
             "validationGroups": []
         },
         {
-            "property": "InputFunction1(Int32,String):Void::(anothervalue,1,String)",
+            "property": "InputFunction1(Int32,String)->Void:Param(1,String,anothervalue)",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -59,7 +59,7 @@
             "validationGroups": []
         },
         {
-            "property": "InputFunction2(BasicInputObject):Int32::(value,0,BasicInputObject).value",
+            "property": "InputFunction2(BasicInputObject)->Int32:Param(0,BasicInputObject,value).value",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -70,7 +70,7 @@
             "validationGroups": []
         },
         {
-            "property": "InputFunction2(BasicInputObject):Int32::Return(Int32)",
+            "property": "InputFunction2(BasicInputObject)->Int32:Return(Int32)",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -81,28 +81,7 @@
             "validationGroups": []
         },
         {
-            "property": "ChildObject.InputFunction1(Int32):Void::(value,0,Int32)",
-            "outcomes": [
-                {
-                    "validator": "IsNotNullValidation",
-                    "message": "Must not be null.",
-                    "values": []
-                },
-                {
-                    "validator": "IsGreaterThanValidation",
-                    "message": "Must be greater than '100'.",
-                    "values": [
-                        {
-                            "key": "value",
-                            "value": "100"
-                        }
-                    ]
-                }
-            ],
-            "validationGroups": []
-        },
-        {
-            "property": "ChildObject.InputFunction2(Int32):String::(value,0,Int32)",
+            "property": "ChildObject.InputFunction1(Int32)->Void:Param(0,Int32,value)",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -123,7 +102,28 @@
             "validationGroups": []
         },
         {
-            "property": "ChildObject.InputFunction2(Int32):String::Return(String)",
+            "property": "ChildObject.InputFunction2(Int32)->String:Param(0,Int32,value)",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                },
+                {
+                    "validator": "IsGreaterThanValidation",
+                    "message": "Must be greater than '100'.",
+                    "values": [
+                        {
+                            "key": "value",
+                            "value": "100"
+                        }
+                    ]
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "ChildObject.InputFunction2(Int32)->String:Return(String)",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -134,7 +134,7 @@
             "validationGroups": []
         },
         {
-            "property": "IntReturnFunc():Int32::Return(Int32)",
+            "property": "IntReturnFunc()->Int32:Return(Int32)",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -145,7 +145,7 @@
             "validationGroups": []
         },
         {
-            "property": "EnumerableReturnFunc():List<Int32>::Return(IEnumerable<Int32>)",
+            "property": "EnumerableReturnFunc()->List<Int32>:Return(IEnumerable<Int32>)",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -156,7 +156,18 @@
             "validationGroups": []
         },
         {
-            "property": "EnumerableReturnFunc():List<Int32>::Return(Int32)[n]",
+            "property": "EnumerableReturnFunc()->List<Int32>::Return(Int32)[n]",
+            "outcomes": [
+                {
+                    "validator": "IsNotNullValidation",
+                    "message": "Must not be null.",
+                    "values": []
+                }
+            ],
+            "validationGroups": []
+        },
+        {
+            "property": "EnumerableParamFunc(List<Int32>)->Void::(enumerableParam[n],,Int32)[n]",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",

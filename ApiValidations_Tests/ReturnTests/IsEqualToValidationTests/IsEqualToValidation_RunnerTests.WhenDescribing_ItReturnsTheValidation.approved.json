@@ -1,0 +1,148 @@
+﻿{
+    "Results": [
+        {
+            "Property": "GetInteger()->Int32:Return(Int32)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetString()->String:Return(String)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetBoolean()->Boolean:Return(Boolean)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetDouble()->Double:Return(Double)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetDecimal()->Decimal:Return(Decimal)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetFloat()->Single:Return(Single)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetShort()->Int16:Return(Int16)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetLong()->Int64:Return(Int64)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetObject()->Object:Return(Object)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

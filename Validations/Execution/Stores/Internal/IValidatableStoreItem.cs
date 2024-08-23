@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 
@@ -18,4 +19,5 @@ public interface IValidatableStoreItem : IStoreItem
     Task InitScopes(object? instance);
     DescribeActionResult Describe();
     void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor);
+    void UpdateContext(Dictionary<string, object?> context);
 }

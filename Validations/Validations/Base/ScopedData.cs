@@ -44,6 +44,13 @@ public class ScopedData<TResponse> : IScopedData<TResponse>, IScopeData
         HasRetrievedValue = true;
     }
 
+    public ScopedData(string? description, TResponse data)
+    {
+        Description = description;
+        RetrievedValue = data;
+        HasRetrievedValue = true;
+    }
+
     public ScopedData(string? description, Func<Task<TResponse>> passThroughFunction)
     {
         Description = description;

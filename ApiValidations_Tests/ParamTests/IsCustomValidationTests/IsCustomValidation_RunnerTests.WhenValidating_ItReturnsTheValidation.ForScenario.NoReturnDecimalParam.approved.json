@@ -1,0 +1,7 @@
+﻿{
+    "Errors": {
+        "NoReturnDecimalParam(Decimal)->Void:Param(0,Decimal,decimalParam1)": [
+            "Is not min value."
+        ]
+    }
+}

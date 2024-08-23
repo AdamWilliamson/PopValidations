@@ -1,0 +1,22 @@
+﻿{
+    "Errors": {
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(0,Int32,param1)": [
+            "Is not greater than or equal to '2147483647'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(1,String,param2)": [
+            "Is not greater than or equal to '￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(2,Decimal,param3)": [
+            "Is not greater than or equal to '79228162514264337593543950335'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(3,Double,param4)": [
+            "Is not greater than or equal to '1.7976931348623157E+308'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(4,Int16,param5)": [
+            "Is not greater than or equal to '32767'."
+        ],
+        "SetValues(Int32,String,Decimal,Double,Int16,Int64)->Void:Param(5,Int64,param6)": [
+            "Is not greater than or equal to '9223372036854775807'."
+        ]
+    }
+}

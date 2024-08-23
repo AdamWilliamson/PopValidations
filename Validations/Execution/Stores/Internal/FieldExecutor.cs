@@ -1,4 +1,5 @@
 ﻿using PopValidations.FieldDescriptors.Base;
+using System.Collections.Generic;
 
 namespace PopValidations.Execution.Stores.Internal;
 
@@ -39,7 +40,13 @@ public class FieldExecutor : IFieldDescriptorOutline
             else
                 return string.Empty;
         } 
-    } 
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        FieldDescriptor?.UpdateContext(context);
+    }
+
     public string AddTo(string existing) => FieldDescriptor?.AddTo(existing) ?? existing;
     #endregion
 

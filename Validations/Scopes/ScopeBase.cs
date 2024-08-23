@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PopValidations.Execution.Stores;
 using PopValidations.Execution.Stores.Internal;
 using PopValidations.FieldDescriptors.Base;
@@ -32,4 +33,9 @@ public abstract class ScopeBase : IValidatorScope
     protected abstract void InvokeScopeContainerToDescribe(ValidationConstructionStore store);
 
     public abstract void ChangeStore(IValidationStore store);
+
+    public virtual void UpdateContext(Dictionary<string, object?> context)
+    {
+        FieldDescriptor?.UpdateContext(context);
+    }
 }

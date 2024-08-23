@@ -2,6 +2,7 @@
 using PopValidations.FieldDescriptors.Base;
 using PopValidations.Validations.Base;
 using PopValidations.ValidatorInternals;
+using System.Collections.Generic;
 
 namespace PopValidations.FieldDescriptors;
 
@@ -39,6 +40,10 @@ public class FieldDescriptor<TValidationType, TFieldType>
     {
         PropertyToken = propertyToken;
         Store = store;
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context){
+        // Currently contains no context
     }
 
     public void AddSubValidator(ISubValidatorClass<TFieldType> component)

@@ -1,0 +1,144 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(0,String,param1)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Must be between 0 and 10 exclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "0"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "10"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(1,Array,param2)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Must be between 10 and 20 exclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "10"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "20"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(2,IEnumerable<String>,param3)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Must be between -1 and 0 exclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "-1"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "0"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(3,LinkedList<Int32>,param4)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Must be between 10 and 15 exclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "10"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "15"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(4,IEnumerable<Double>,param5)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Must be between 5 and 7 exclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "5"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "7"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(5,Dictionary<String,Int32>,param6)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Must be between -1 and 0 exclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "-1"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "0"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set_Custom(String)->Void:Param(0,String,param1)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Keep inside the lines",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "0"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "10"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

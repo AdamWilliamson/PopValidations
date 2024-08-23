@@ -13,6 +13,7 @@ public class ForEachReturnDescriptor<TEnumeratedFieldType, TReturnType>
     protected bool ValueHasBeenRetrieved = false;
     private readonly IValidationStore store;
     private readonly int index;
+    private readonly IFunctionContext context;
 
     protected bool _NextValidationVital { get; set; } = false;
     protected bool _AlwaysVital { get; set; } = false;
@@ -21,11 +22,21 @@ public class ForEachReturnDescriptor<TEnumeratedFieldType, TReturnType>
     IFunctionExpressionToken _functionDescriptor { get; set; }
     IFunctionExpressionToken IReturnDescriptor_Internal.FunctionDescriptor => _functionDescriptor;
 
-    public ForEachReturnDescriptor(IValidationStore store, IFunctionExpressionToken functionDescription, int index)
+    public ForEachReturnDescriptor(
+        IValidationStore store, 
+        IFunctionExpressionToken functionDescription, 
+        int index,
+        IFunctionContext context)
     {
         this.store = store;
         _functionDescriptor = functionDescription;
         this.index = index;
+        this.context = context;
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        // Return is Untested, Unsure if this will be needed.
     }
 
     public virtual string AddTo(string existing)
@@ -78,4 +89,6 @@ public class ForEachReturnDescriptor<TEnumeratedFieldType, TReturnType>
     {
         return null;
     }
+
+    public IFunctionContext GetContext() { return context; }
 }

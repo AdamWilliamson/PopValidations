@@ -1,0 +1,7 @@
+﻿{
+    "Errors": {
+        "SetInteger_Custom(Int32)->Void:Param(0,Int32,value)": [
+            "Not 1"
+        ]
+    }
+}

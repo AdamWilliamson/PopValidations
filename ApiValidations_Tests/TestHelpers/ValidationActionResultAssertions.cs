@@ -14,6 +14,7 @@ public class ValidationActionResultAssertions :
 
     protected override string Identifier => nameof(ValidationActionResult);
 
+    [CustomAssertion]
     public AndConstraint<ValidationActionResultAssertions> Matches(
         string message, 
         List<KeyValuePair<string, string>> keyValuePairs,

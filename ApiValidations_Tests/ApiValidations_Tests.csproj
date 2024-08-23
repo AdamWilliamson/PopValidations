@@ -10,6 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ParamTests\IsLengthExclusivelyBetweenValidationTests\IsLengthExclusivelyBetweenValidation_RunnerTests2.WhenValidating_ItReturnsTheValidation.ForScenario.Set_Custom_Param%280%29.approved.json\**" />
+    <Compile Remove="ParamTests\IsLengthExclusivelyBetweenValidationTests\IsLengthExclusivelyBetweenValidation_RunnerTests2.WhenValidating_ItReturnsTheValidation.ForScenario.Set_Custom_Param%280%29.received.json\**" />
+    <EmbeddedResource Remove="ParamTests\IsLengthExclusivelyBetweenValidationTests\IsLengthExclusivelyBetweenValidation_RunnerTests2.WhenValidating_ItReturnsTheValidation.ForScenario.Set_Custom_Param%280%29.approved.json\**" />
+    <EmbeddedResource Remove="ParamTests\IsLengthExclusivelyBetweenValidationTests\IsLengthExclusivelyBetweenValidation_RunnerTests2.WhenValidating_ItReturnsTheValidation.ForScenario.Set_Custom_Param%280%29.received.json\**" />
+    <None Remove="ParamTests\IsLengthExclusivelyBetweenValidationTests\IsLengthExclusivelyBetweenValidation_RunnerTests2.WhenValidating_ItReturnsTheValidation.ForScenario.Set_Custom_Param%280%29.approved.json\**" />
+    <None Remove="ParamTests\IsLengthExclusivelyBetweenValidationTests\IsLengthExclusivelyBetweenValidation_RunnerTests2.WhenValidating_ItReturnsTheValidation.ForScenario.Set_Custom_Param%280%29.received.json\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="xunit" Version="2.6.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0">
@@ -209,6 +218,181 @@
       <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
     </None>
     <None Update="ParamTests\SwitchValidationTests\SwitchValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsCustomValidationTests\IsCustomValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsCustomValidationTests\IsCustomValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsEmailValidationTests\IsEmailValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsEmptyValidationTests\IsEmptyValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsEnumValidationTests\IsEnumValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsEnumValidationTests\IsEnumValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsEqualToValidationTests\IsEqualToValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsEqualToValidationTests\IsEqualToValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsGreaterThanValidationTests\IsGreaterThanValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsGreaterThanValidationTests\IsGreaterThanValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsLengthExclusivelyBetweenValidationTests\IsLengthExclusivelyBetweenValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsLengthInclusivelyBetweenValidationTests\IsLengthInclusivelyBetweenValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsLessThanOrEqualToValidationTests\IsLessThanOrEqualToValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsLessThanOrEqualToValidationTests\IsLessThanOrEqualToValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsLessThanValidationTests\IsLessThanValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsLessThanValidationTests\IsLessThanValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsNotEmptyValidationTests\IsNotEmptyValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsNotEmptyValidationTests\IsNotEmptyValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsNotEmptyValidationTests\IsNotEmptyValidation_RunnerTests.GivenAValidator_WithNoErrors_ThenNoErrorsAreProduced.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsNotNullValidationTests\IsNotNullValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsNotNullValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsNotNullValidationTests\IsNotNullValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsNotNullValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsNullValidationTests\IsNullValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsNullValidationTests\IsNullValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_DemoTest.Description.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_DemoTest.Validation.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_ForEachValidationTests\Scope_ForEachTest.Description.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_ForEachValidationTests\Scope_ForEachTest.Validation.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_IncludeInsideForEachWhenValidationTests\Scope_IncludeForEachScopeTest.Description.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_IncludeInsideForEachWhenValidationTests\Scope_IncludeForEachScopeTest.Validation.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_IncludeInsideScopeWhenValidationTests\Scope_IncludeInsideScopeTest.Description.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_IncludeInsideScopeWhenValidationTests\Scope_IncludeInsideScopeTest.Validation.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_IncludeValidationTests\Scope_IncludeTest.Description.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\ScopeValidationTests\Scope_IncludeValidationTests\Scope_IncludeTest.Validation.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\SwitchValidationTests\SwitchValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
+    </None>
+    <None Update="ReturnTests\SwitchValidationTests\SwitchValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>

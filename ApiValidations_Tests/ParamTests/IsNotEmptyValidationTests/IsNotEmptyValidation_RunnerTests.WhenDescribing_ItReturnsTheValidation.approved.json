@@ -1,81 +1,92 @@
 ﻿{
-    "results": [
+    "Results": [
         {
-            "property": "Set1(Nullable`1,String,Nullable`1,Nullable`1):Void::(param1,0,Nullable`1)",
-            "outcomes": [
+            "Property": "Set1(Nullable<Int32>,String,Nullable<Decimal>,Nullable<Double>)->Void:Param(0,Nullable<Int32>,param1)",
+            "Outcomes": [
                 {
-                    "validator": "IsNotEmptyValidation",
-                    "message": "Must not be empty.",
-                    "values": []
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set1(Nullable`1,String,Nullable`1,Nullable`1):Void::(param2,1,String)",
-            "outcomes": [
+            "Property": "Set1(Nullable<Int32>,String,Nullable<Decimal>,Nullable<Double>)->Void:Param(1,String,param2)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty.",
-                    "values": []
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set1(Nullable`1,String,Nullable`1,Nullable`1):Void::(param3,2,Nullable`1)",
-            "outcomes": [
+            "Property": "Set1(Nullable<Int32>,String,Nullable<Decimal>,Nullable<Double>)->Void:Param(2,Nullable<Decimal>,param3)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty.",
-                    "values": []
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set1(Nullable`1,String,Nullable`1,Nullable`1):Void::(param4,3,Nullable`1)",
-            "outcomes": [
+            "Property": "Set1(Nullable<Int32>,String,Nullable<Decimal>,Nullable<Double>)->Void:Param(3,Nullable<Double>,param4)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty.",
-                    "values": []
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set2(Nullable`1,Nullable`1,Object):Void::(param1,0,Nullable`1)",
-            "outcomes": [
+            "Property": "Set2(Nullable<Int16>,Nullable<Int64>,Object)->Void:Param(0,Nullable<Int16>,param1)",
+            "Outcomes": [
                 {
-                    "validator": "IsNotEmptyValidation",
-                    "message": "Must not be empty.",
-                    "values": []
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set2(Nullable`1,Nullable`1,Object):Void::(param2,1,Nullable`1)",
-            "outcomes": [
+            "Property": "Set2(Nullable<Int16>,Nullable<Int64>,Object)->Void:Param(1,Nullable<Int64>,param2)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty.",
-                    "values": []
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
         },
         {
-            "property": "Set2(Nullable`1,Nullable`1,Object):Void::(param3,2,Object)",
-            "outcomes": [
+            "Property": "Set2(Nullable<Int16>,Nullable<Int64>,Object)->Void:Param(2,Object,param3)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmptyValidation",
-                    "message": "Must be empty.",
-                    "values": []
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Must not be empty.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Set_Custom(Object)->Void:Param(0,Object,param3)",
+            "Outcomes": [
+                {
+                    "Validator": "IsNotEmptyValidation",
+                    "Message": "Be Empty",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
         }
     ]
 }

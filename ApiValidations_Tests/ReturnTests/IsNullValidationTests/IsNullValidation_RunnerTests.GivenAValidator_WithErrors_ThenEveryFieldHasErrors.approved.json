@@ -1,0 +1,43 @@
+﻿{
+    "errors": {
+        "allFieldTypesDictionary": [
+            "Is not null."
+        ],
+        "allFieldTypesIEnumerable": [
+            "Is not null."
+        ],
+        "allFieldTypesLinkedList": [
+            "Is not null."
+        ],
+        "allFieldTypesList": [
+            "Is not null."
+        ],
+        "decimal": [
+            "Is not null."
+        ],
+        "double": [
+            "Is not null."
+        ],
+        "integer": [
+            "Is not null."
+        ],
+        "long": [
+            "Is not null."
+        ],
+        "short": [
+            "Is not null."
+        ],
+        "string": [
+            "Is not null."
+        ],
+        "struct": [
+            "Is not null."
+        ],
+        "twoComponentNewTupple": [
+            "Is not null."
+        ],
+        "twoComponentTuple": [
+            "Is not null."
+        ]
+    }
+}

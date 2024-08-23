@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PopValidations.FieldDescriptors.Base;
 
 namespace PopValidations.Execution.Stores.Internal;
@@ -47,6 +48,12 @@ public class ExpandableStoreItem : IExpandableStoreItem
     {
         Component?.ChangeStore(store);
     }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        FieldDescriptor?.UpdateContext(context);
+        Component?.UpdateContext(context);
+    }
 }
 
 public class WrappingExpandableStoreItem : IExpandableStoreItem
@@ -92,5 +99,11 @@ public class WrappingExpandableStoreItem : IExpandableStoreItem
     public void ChangeStore(IValidationStore store)
     {
         Component?.ChangeStore(store);
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        FieldDescriptor?.UpdateContext(context);
+        Component?.UpdateContext(context);
     }
 }

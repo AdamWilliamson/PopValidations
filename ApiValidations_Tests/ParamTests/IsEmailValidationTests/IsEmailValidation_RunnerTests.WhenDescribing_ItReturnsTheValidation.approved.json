@@ -1,15 +1,26 @@
 ﻿{
-    "results": [
+    "Results": [
         {
-            "property": "SetAndGetEmail(String):Void::(email,0,String)",
-            "outcomes": [
+            "Property": "GetEmail(String)->Void:Param(0,String,email)",
+            "Outcomes": [
                 {
-                    "validator": "IsEmailValidation",
-                    "message": "Must be a valid email.",
-                    "values": []
+                    "Validator": "IsEmailValidation",
+                    "Message": "Must be a valid email.",
+                    "Values": []
                 }
             ],
-            "validationGroups": []
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetEmail_Custom(String)->Void:Param(0,String,email)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEmailValidation",
+                    "Message": "Don't make a mistake.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
         }
     ]
 }

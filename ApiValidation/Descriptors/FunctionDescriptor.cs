@@ -39,7 +39,7 @@ public class FunctionDescriptor<TValidationType>: IFunctionDescriptor
 
     public Type? ReturnType => internalFunctionPropertyToken.ReturnType;
 
-    public IReturnDescriptor Return => new ReturnDescriptor<TValidationType>(store, internalFunctionPropertyToken);
+    public IReturnDescriptor Return => new ReturnDescriptor<TValidationType>(store, internalFunctionPropertyToken, new FunctionContext(ParamList?.Count() ?? 0));
 }
 
 public class FunctionDescriptor<TValidationType, TReturnType>: IFunctionDescriptor<TReturnType>
@@ -62,5 +62,5 @@ public class FunctionDescriptor<TValidationType, TReturnType>: IFunctionDescript
 
     public Type? ReturnType => internalFunctionPropertyToken.ReturnType;
 
-    public IReturnDescriptor<TReturnType> Return => new ReturnDescriptor<TReturnType, TValidationType>(store, internalFunctionPropertyToken);
+    public IReturnDescriptor<TReturnType> Return => new ReturnDescriptor<TReturnType, TValidationType>(store, internalFunctionPropertyToken, new FunctionContext(ParamList?.Count() ?? 0));
 }

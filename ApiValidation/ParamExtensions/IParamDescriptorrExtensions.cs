@@ -44,7 +44,7 @@ public static partial class IParamDescriptorrExtensions
         TParamType, TValidationType
     >(
         this ParamDescriptor<IEnumerable<TParamType>, TValidationType> paramDescriptor,
-        Action<ParamDescriptor<TParamType, TValidationType>> actions
+        Func<ParamDescriptor<TParamType, TValidationType>, ParamDescriptor<TParamType, TValidationType>> actions
     )
         where TValidationType : class
     {
@@ -56,7 +56,7 @@ public static partial class IParamDescriptorrExtensions
                 actions
             );
 
-            paramDescriptor.AddSelfDescribingEntity(forEachScope);
+            return paramDescriptor.AddSelfDescribingEntity(forEachScope);
         }
         else
         {
@@ -72,7 +72,7 @@ public static partial class IParamDescriptorrExtensions
         //    );
 
         
-        return paramDescriptor;
+        //return paramDescriptor;
         //}
         //else
         //{

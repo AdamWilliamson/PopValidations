@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PopValidations.Execution.Stores;
 using PopValidations.Execution.Stores.Internal;
 
@@ -57,5 +58,10 @@ internal class FieldDescriptionExpandableWrapper<TValidationType, TFieldType>
     public void ChangeStore(IValidationStore store)
     {
         component.ChangeStore(store);
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        fieldDescriptor?.UpdateContext(context);
     }
 }

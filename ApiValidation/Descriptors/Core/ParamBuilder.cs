@@ -1,4 +1,6 @@
-﻿namespace ApiValidations.Descriptors.Core;
+﻿using ApiValidations.Execution;
+
+namespace ApiValidations.Descriptors.Core;
 
 public class ParamBuilder<TValidationType>
 {
@@ -29,5 +31,10 @@ public class ParamBuilder<TValidationType>
                 pt
             )
         );
+    }
+
+    public void SetCurrentExecutionContext(HeirarchyMethodInfo methodInfo)
+    {
+        owner.SetCurrentExecutionContext(methodInfo);
     }
 }

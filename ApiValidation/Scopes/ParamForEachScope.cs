@@ -10,14 +10,14 @@ internal class ParamForEachScope<TValidationType, TListType, TParamType> : Scope
 {
     private readonly IParamVisitor visitor;
     private readonly IParamDescriptor_Internal<TListType> paramDescriptor;
-    private Action<ParamDescriptor<TParamType, TValidationType>> actions;
+    private Func<ParamDescriptor<TParamType, TValidationType>, ParamDescriptor<TParamType, TValidationType>> actions;
 
     public override bool IgnoreScope => true;
 
     public ParamForEachScope(
         IParamVisitor visitor,
         IParamDescriptor_Internal<TListType> paramDescriptor,
-        Action<ParamDescriptor<TParamType, TValidationType>> actions
+        Func<ParamDescriptor<TParamType, TValidationType>, ParamDescriptor<TParamType, TValidationType>> actions
     )
     {
         this.visitor = visitor;
@@ -47,8 +47,8 @@ internal class ParamForEachScope<TValidationType, TListType, TParamType> : Scope
             )
         );
 
-        actions.Invoke(thingo);
-        thingo.Convert<string?>();
+        var finalDescriptor = actions.Invoke(thingo);
+        finalDescriptor.Convert<string?>();
     }
 
     public override void ChangeStore(IValidationStore store) { }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PopValidations.Execution.Stores;
 using PopValidations.Execution.Stores.Internal;
 using PopValidations.FieldDescriptors.Base;
@@ -32,4 +33,6 @@ public abstract class AbstractSubValidator<TValidationType>
     {
         ((IStoreContainer)this).Store.ReplaceInternalStore(store);
     }
+
+    void IExpandableEntity.UpdateContext(Dictionary<string, object?> context){}
 }

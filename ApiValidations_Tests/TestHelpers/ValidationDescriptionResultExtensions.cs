@@ -1,6 +1,7 @@
-﻿using PopValidations.Execution.Description;
+﻿using ApiValidations_Tests.TestHelpers;
+using PopValidations.Execution.Description;
 
-namespace ApiValidations_Tests.TestHelpers;
+namespace FluentAssertions;
 
 public static class DescriptionResultExtensions
 {

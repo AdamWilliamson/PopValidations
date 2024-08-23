@@ -1,4 +1,5 @@
 ﻿using ApiValidations.Descriptors.Core;
+using ApiValidations.Execution;
 using ApiValidations.Scopes;
 using PopValidations.Execution.Stores;
 using PopValidations.FieldDescriptors.Base;
@@ -111,6 +112,20 @@ public class ParamDescriptor<TParamType, TValidationType>
         strategy = toClone.strategy.Clone();
         //ParamToken = strategy.ParamToken;
         this.ParamVisitor = toClone.ParamVisitor ?? throw new Exception("ParamVisitor is null somehow");
+    }
+
+    public void UpdateContext(Dictionary<string, object?> context)
+    {
+        // Currently contains no context
+        //strategy..ParamToken.UpdateContext(context);
+        var methodInfo = context.ContainsKey(ApiValidationConstants.MethodInfoKey) 
+            ? context[ApiValidationConstants.MethodInfoKey] as HeirarchyMethodInfo 
+            : null;
+
+        if (methodInfo != null)
+        {
+            ParamVisitor.SetCurrentExecutionContext(methodInfo);
+        }
     }
 
     public bool IsNullable { get; }

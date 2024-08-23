@@ -1,0 +1,52 @@
+﻿{
+    "Results": [
+        {
+            "Property": "IntReturnNoParams()->Int32:Return(Int32)",
+            "Outcomes": [
+                {
+                    "Validator": "IsCustomValidation",
+                    "Message": "Must be min value.",
+                    "Values": [
+                        {
+                            "Key": "is_value",
+                            "Value": ""
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "DecimalReturnNoParams()->Decimal:Return(Decimal)",
+            "Outcomes": [
+                {
+                    "Validator": "IsCustomValidation",
+                    "Message": "Must be min value.",
+                    "Values": [
+                        {
+                            "Key": "is_value",
+                            "Value": ""
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "StringReturnNoParams()->String:Return(String)",
+            "Outcomes": [
+                {
+                    "Validator": "IsCustomValidation",
+                    "Message": "Must be aaaaa.",
+                    "Values": [
+                        {
+                            "Key": "is_value",
+                            "Value": ""
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

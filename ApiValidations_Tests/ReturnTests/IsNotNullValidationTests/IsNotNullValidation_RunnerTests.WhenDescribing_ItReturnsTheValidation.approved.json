@@ -1,0 +1,26 @@
+﻿{
+    "Results": [
+        {
+            "Property": "Get1()->String:Return(String)",
+            "Outcomes": [
+                {
+                    "Validator": "IsNotNullValidation",
+                    "Message": "Must not be null.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Get2()->Nullable<Int64>:Return(Nullable<Int64>)",
+            "Outcomes": [
+                {
+                    "Validator": "IsNotNullValidation",
+                    "Message": "Must not be null.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        }
+    ]
+}

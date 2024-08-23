@@ -19,6 +19,7 @@ public class DescriptionResultAssertions :
 
     protected override string Identifier => nameof(DescriptionResult);
 
+    [CustomAssertion]
     public AndConstraint<DescriptionResultAssertions> ContainsParam(
         LambdaExpression expression,
         int paramIndex,
@@ -33,10 +34,10 @@ public class DescriptionResultAssertions :
         var paramsList = methodInfo.GetParameters().Select(x => new ParamDetailsDTO(x.Name, x.ParameterType, x.Position)).ToList();
         var paramSelected = paramsList[paramIndex];
         var Name = methodInfo.Name 
-            + $"({string.Join(',', paramsList?.Select(x => x.ParamType.Name) ?? [])}):"
+            + $"({string.Join(',', paramsList?.Select(x => GenericNameHelper.GetNameWithoutGenericArity(x.ParamType)) ?? [])})->"
             + GenericNameHelper.GetNameWithoutGenericArity(methodInfo.ReturnType) 
-            + "::"
-            + $"({paramSelected.Name},{paramIndex},{paramSelected.ParamType.Name})";
+            + ":"
+            + $"Param({paramIndex},{GenericNameHelper.GetNameWithoutGenericArity(paramSelected.ParamType)},{paramSelected.Name})";
         return Contains(
             Name,
             validationName,
@@ -47,6 +48,7 @@ public class DescriptionResultAssertions :
         );
     }
 
+    [CustomAssertion]
     public AndConstraint<DescriptionResultAssertions> ContainsParam(
         MethodInfo methodInfo,
         int paramIndex,
@@ -74,6 +76,7 @@ public class DescriptionResultAssertions :
         );
     }
 
+    [CustomAssertion]
     public AndConstraint<DescriptionResultAssertions> Contains(
         string property,
         string validationName,

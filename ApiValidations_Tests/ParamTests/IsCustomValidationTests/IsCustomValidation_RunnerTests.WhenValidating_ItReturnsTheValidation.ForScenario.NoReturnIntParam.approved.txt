@@ -1,0 +1,7 @@
+﻿{
+  "Errors": {
+    "NoReturnIntParam(Int32)->Void:Param(0,Int32,intParam1)": [
+      "Is not min value."
+    ]
+  }
+}

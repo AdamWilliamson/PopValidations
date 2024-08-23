@@ -5,17 +5,14 @@ using PopValidations.ValidatorInternals;
 
 namespace ApiValidations;
 
-public interface IValidator
-{
-    ParamDetailsDTO? GetCurrentParamDescriptor();
-}
+public interface IApiSubValidator<TValidationType> { }
 
-public abstract class ApiValidator<TValidationType> : PopValidations.AbstractValidator<TValidationType>, IValidator
+public abstract class ApiSubValidator<TValidationType> : PopValidations.AbstractSubValidator<TValidationType>, IValidator, IApiSubValidator<TValidationType>
 {
     protected ParamValidationSetBuilder<TValidationType> Builder;
-    public ParamBuilder<TValidationType> Param { get; protected set; }
+    protected ParamBuilder<TValidationType> Param;
 
-    protected ApiValidator()
+    protected ApiSubValidator()
     {
         Builder = new(this);
         Param = new(new ParamVisitor<TValidationType>(this, Builder));
@@ -64,11 +61,7 @@ public abstract class ApiValidator<TValidationType> : PopValidations.AbstractVal
             var param = args2[i];
             var paramDetails = actualParams[i];
             Builder.SetCurrentParam(paramDetails.Name, paramDetails.ParameterType);
-            var paramResult = param.Compile().DynamicInvoke();
-            if (paramResult is IParamDescriptor<object>)
-            {
-                (paramResult as ParamIsObjectDescriptor)?.Convert<object>();
-            }
+            param.Compile().DynamicInvoke();
         }
     }
 }

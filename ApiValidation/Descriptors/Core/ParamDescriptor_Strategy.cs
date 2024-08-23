@@ -1,4 +1,6 @@
-﻿namespace ApiValidations.Descriptors.Core;
+﻿using ApiValidations.Helpers;
+
+namespace ApiValidations.Descriptors.Core;
 
 public class ParamDescriptor_Strategy<TParamType, TValidationType>
     : IParamDescriptor_Strategy<TValidationType, TParamType>
@@ -29,15 +31,17 @@ public class ParamDescriptor_Strategy<TParamType, TValidationType>
     }
 
     public int? ParamIndex => ParamToken.Index;
-    public string PropertyName => (ParamToken.FunctionToken?.Name ?? string.Empty) + $"::({ParamToken.Name},{ParamIndex},{ParamToken.ParamType.Name})";
+    public string PropertyName => (ParamToken.FunctionToken?.Name ?? string.Empty) + $":Param({ParamIndex},{GenericNameHelper.GetNameWithoutGenericArity(ParamToken.ParamType)},{ParamToken.Name})";
 
     public virtual string AddTo(string existing)
     {
-        return ParamToken.FunctionToken?.CombineWithParentProperty(existing) + $"::({ParamToken.Name},{ParamIndex},{ParamToken.ParamType.Name})";
+        return ParamToken.FunctionToken?.CombineWithParentProperty(existing) + $":Param({ParamIndex},{GenericNameHelper.GetNameWithoutGenericArity(ParamToken.ParamType)},{ParamToken.Name})";
     }
 
     public virtual object? GetValue(object? value)
     {
-        return null;
+        if (!ParamIndex.HasValue) return null;
+
+        return ParamToken.Visitor.GetParamValue(ParamIndex.Value);
     }
 }
