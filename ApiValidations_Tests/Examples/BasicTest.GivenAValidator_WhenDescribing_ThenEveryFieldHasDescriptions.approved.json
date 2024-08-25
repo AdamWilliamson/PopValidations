@@ -156,7 +156,7 @@
             "validationGroups": []
         },
         {
-            "property": "EnumerableReturnFunc()->List<Int32>::Return(Int32)[n]",
+            "property": "EnumerableReturnFunc()->List<Int32>:Return(Int32)[n]",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",

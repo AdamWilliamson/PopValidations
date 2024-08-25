@@ -22,28 +22,28 @@ public class Scope_DemoTest
 
     public static IEnumerable<object[]> ErroringValues()
     {
-        yield return new ObjectFunctionValidationTestDescription<Level1>(
+        yield return new ObjectFunctionValidationTestDescription<Level2>(
             "Child[0]",
-            nameof(Level5.Check),
+            nameof(Level2.Check),
             0,
             [false],
             $"Is not equal to 'True'."
         );
-        yield return new ObjectFunctionValidationTestDescription<Level1>(
+        yield return new ObjectFunctionValidationTestDescription<Level3>(
             "Child[0].Child[0]",
-            nameof(Level5.Check),
+            nameof(Level3.Check),
             0,
             [false],
             $"Is not equal to 'True'."
         );
-        yield return new ObjectFunctionValidationTestDescription<Level1>(
+        yield return new ObjectFunctionValidationTestDescription<Level4>(
             "Child[0].Child[0].Child[0]",
-            nameof(Level5.Check),
+            nameof(Level4.Check),
             0,
             [false],
             $"Is not equal to 'True'."
         );
-        yield return new ObjectFunctionValidationTestDescription<Level1>(
+        yield return new ObjectFunctionValidationTestDescription<Level5>(
             "Child[0].Child[0].Child[0].Child[0]",
             nameof(Level5.Check),
             0,
@@ -54,7 +54,7 @@ public class Scope_DemoTest
 
     [Theory]
     [MemberData(nameof(ErroringValues))]
-    public async Task WhenValidating_ItReturnsTheValidation(ObjectFunctionValidationTestDescription<Level1> description)
+    public async Task WhenValidating_ItReturnsTheValidation(IObjectFunctionValidationTestDescription description)
     {
         // Arrange
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1Validator());

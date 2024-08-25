@@ -45,22 +45,26 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
         return ValidateImpl(instance);
     }
 
+    private List<ExpandedItem>? CompiledItems = null;
     protected async Task<ValidationResult> ValidateImpl(TValidationType instance, string[]? allowedGraphs = null)
     {
         var validationResult = new ValidationResult();
-        var store = new ValidationConstructionStore();
-        var allItems = new List<ExpandedItem>();
 
-        foreach (var mainValidator in mainValidators)
+        if (CompiledItems is null)
         {
-            var expandedItems = mainValidator.Store.Compile(instance);
-            if (expandedItems?.Any() == true)
+            var store = new ValidationConstructionStore();
+            CompiledItems = new List<ExpandedItem>();
+            foreach (var mainValidator in mainValidators)
             {
-                allItems.AddRange(expandedItems);
+                var expandedItems = mainValidator.Store.Compile(instance);
+                if (expandedItems?.Any() == true)
+                {
+                    CompiledItems.AddRange(expandedItems);
+                }
             }
         }
 
-        var groupedItems = allItems
+        var groupedItems = CompiledItems
             .GroupBy(x => new { x.PropertyName })
             .Where(x => allowedGraphs == null || allowedGraphs.Any(g => x.Key.PropertyName.StartsWith(g)))
             .OrderBy(x => x.Key.PropertyName);

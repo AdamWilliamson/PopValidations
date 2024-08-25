@@ -9,6 +9,7 @@ namespace ApiValidations;
 public interface IApiMainValidator<TValidationType> 
 {
     void SetCurrentExecutionContext(HeirarchyMethodInfo methodInfo);
+    void SetCurrentExecutionContext(HeirarchyReturnMethodInfo methodInfo);
 }
 
 public interface IValidator
@@ -83,9 +84,15 @@ public abstract class ApiValidator<TValidationType> : PopValidations.AbstractVal
         ((IMainValidator<TValidationType>)this).Store.AddContextItem(ApiValidationConstants.MethodInfoKey, methodInfo);
         Param.SetCurrentExecutionContext(methodInfo);
     }
+
+    void IApiMainValidator<TValidationType>.SetCurrentExecutionContext(HeirarchyReturnMethodInfo methodInfo)
+    {
+        ((IMainValidator<TValidationType>)this).Store.AddContextItem(ApiValidationConstants.MethodResultKey, methodInfo);
+    }
 }
 
 public static class ApiValidationConstants
 {
     public static readonly string MethodInfoKey = "MethodInfo";
+    public static readonly string MethodResultKey = "MethodResult";
 }

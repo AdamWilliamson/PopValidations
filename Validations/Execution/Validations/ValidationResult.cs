@@ -8,7 +8,7 @@ namespace PopValidations.Execution.Validation;
 
 public class ValidationResult
 {
-    public Dictionary<string, List<string>> Errors { get; private set; } = new ();
+    public Dictionary<string, List<string>> Errors { get; protected set; } = new ();
 
     public void AddItem(ExpandedItem item, ValidationActionResult outcome)
     {

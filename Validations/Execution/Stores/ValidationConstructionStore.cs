@@ -8,7 +8,7 @@ using PopValidations.Validations.Base;
 
 namespace PopValidations.Execution.Stores;
 
-public interface IValidationStore 
+public interface IValidationStore
 {
     void ReplaceInternalStore(ValidationConstructionStore store);
 
@@ -29,6 +29,8 @@ public interface IValidationStore
     List<IStoreItem> GetItems();
 
     void Merge(IValidationStore store);
+
+    object? GetContextItem(string key);
 }
 
 public class ValidationSubStore : IValidationStore
@@ -82,6 +84,11 @@ public class ValidationSubStore : IValidationStore
     {
         internalStore.AddItemToCurrentScope(fieldDecorator, storeItem);
     }
+
+    public object? GetContextItem(string key)
+    {
+        return internalStore.GetContextItem(key);
+    }
 }
 
 public sealed class ValidationConstructionStore : IValidationCompilationStore, IValidationStore
@@ -92,11 +99,10 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
 
     public void AddItem(IFieldDescriptorOutline? fieldDescriptor, IExpandableEntity component)
     {
-        //fieldDescriptor.UpdateContext(contextValues);
         var scopeParent = new ScopeParent(component as IParentScope, InformationDepth.GetCurrentScopeParent());
         IExpandableStoreItem decoratedItem = new ExpandableStoreItem(
             scopeParent,
-            fieldDescriptor,// ?? InformationDepth.GetCurrentFieldExecutor(), 
+            fieldDescriptor,
             component
         );
         unExpandedItems.Add(decoratedItem);
@@ -461,6 +467,18 @@ public sealed class ValidationConstructionStore : IValidationCompilationStore, I
         {
             storeItem.UpdateContext(contextValues);
             //storeItem.FieldDescriptor?.UpdateContext(contextValues);
+        }
+    }
+
+    public object? GetContextItem(string key)
+    {
+        if (contextValues.ContainsKey(key))
+        {
+            return contextValues[key];
+        }
+        else
+        {
+            return null;
         }
     }
 }

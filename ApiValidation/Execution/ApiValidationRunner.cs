@@ -1,5 +1,9 @@
 ﻿using System.Collections;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using ApiValidations.Helpers;
+using PopValidations.Configurations;
 using PopValidations.Execution;
 using PopValidations.Execution.Description;
 using PopValidations.Execution.Validation;
@@ -13,7 +17,7 @@ public interface IApiValidationDescriber
 
 public interface IApiValidationRunner<TValidationType>: IApiValidationDescriber
 {
-    Task<ValidationResult> Validate(TValidationType instance, HeirarchyMethodInfo methodInfo);
+    Task<ApiValidationResult> Validate(TValidationType instance, HeirarchyMethodInfo methodInfo);
     Task<ValidationResult> Validate(TValidationType instance);
 }
 
@@ -34,6 +38,112 @@ public class HeirarchyMethodInfo
     public string ObjectMap { get; }
     public MethodInfo Method { get; }
     public List<object> ParamValues { get; }
+}
+
+public class HeirarchyReturnMethodInfo
+{
+    public HeirarchyReturnMethodInfo(HeirarchyMethodInfo info, object? returnValue)
+    {
+        ReturnValue = returnValue;
+        ObjectMap = info.ObjectMap.Trim('.');
+        Method = info.Method;
+        ParamValues = info.ParamValues;
+    }
+
+    public object? ReturnValue { get; }
+    public string ObjectMap { get; }
+    public MethodInfo Method { get; }
+    public List<object> ParamValues { get; }
+}
+
+public sealed class PopApiValidations
+{
+    public static ApiConfiguration Configuation { get; } = new ApiConfiguration();
+}
+
+public class ApiConfiguration
+{
+    //public LangaugeConfiguration Language { get; set; } = new();
+
+    public string ParamToken { get; set; } = ":Param";
+    public string ReturnToken { get; set; } = ":Return";
+
+    public Func<MethodInfo, string> FunctionDescription { get; set; } = (methodInfo) =>
+    {
+        var paramList = methodInfo.GetParameters();
+        var returnType = methodInfo.ReturnType;
+        return methodInfo.Name + $"({string.Join(',', paramList?.Select(x => GenericNameHelper.GetNameWithoutGenericArity(x.ParameterType)) ?? [])})->{GenericNameHelper.GetNameWithoutGenericArity(returnType)}";
+    };
+
+    public Func<MethodInfo, int, string> ParamDescription { get; set; }
+    public Func<Type, string> ReturnDescription { get; set; }
+    public Func<MethodInfo, int, int?, string> DescribeValidatingParam { get; set; }
+    public Func<MethodInfo, int?, string> DescribeValidatingReturn { get; set; }
+
+    public ApiConfiguration()
+    {
+        ParamDescription = (MethodInfo methodInfo, int paramIndex) =>
+        {
+            var param = methodInfo.GetParameters()[paramIndex];
+            return $"{ParamToken}({param.Position},{GenericNameHelper.GetNameWithoutGenericArity(param.ParameterType)},{param.Name})";
+        };
+
+        ReturnDescription = (Type returnType) =>
+        {
+            return $"{ReturnToken}({GenericNameHelper.GetNameWithoutGenericArity(returnType)})";
+        };
+
+        DescribeValidatingParam = (MethodInfo methodInfo, int paramIndex, int? indexArray) =>
+        {
+            var description = $"{FunctionDescription.Invoke(methodInfo)}{ParamDescription.Invoke(methodInfo, paramIndex)}";
+            if (indexArray.HasValue)
+            {
+                description += $"[{(indexArray >= 0 ? indexArray.ToString() : 'n')}]";
+            }
+
+            return description;
+        };
+
+        DescribeValidatingReturn = (MethodInfo methodInfo, int? returnIndex) =>
+        {
+            var description = $"{FunctionDescription.Invoke(methodInfo)}{ReturnDescription.Invoke(methodInfo.ReturnType)}";
+            if (returnIndex.HasValue)
+            {
+                description += $"[{(returnIndex >= 0 ? returnIndex.ToString() : 'n')}]";
+            }
+
+            return description;
+        };
+    }
+}
+
+public class ApiValidationResult : ValidationResult
+{
+    [IgnoreDataMember]
+    public object? Result { get; set; }
+
+    public ApiValidationResult() { }
+
+    public ApiValidationResult(ValidationResult validationResult)
+    {
+        Errors = validationResult.Errors;
+    }
+
+    public ApiValidationResult(ValidationResult validationResult, object? result)
+        : this(validationResult)
+    {
+        Result = result;
+    }
+}
+
+public class ApiValidationResult<T> : ValidationResult
+{
+    public T? Result { get; set; }
+    public ApiValidationResult() { }
+    public ApiValidationResult(ValidationResult validationResult)
+    {
+        Errors = validationResult.Errors;
+    }
 }
 
 public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValidationType>, IApiValidationDescriber
@@ -102,7 +212,7 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
         }
     }
 
-    public async Task<ValidationResult> Validate(TValidationType instance, HeirarchyMethodInfo methodInfo)
+    public async Task<ApiValidationResult> Validate(TValidationType instance, HeirarchyMethodInfo methodInfo)
     {
         if (instance == null) throw new ArgumentNullException(nameof(instance));
 
@@ -118,16 +228,16 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
 
         //if (finalMethod == null) { throw new Exception("Function Doesnt exist to validate"); }
         //finalMethod.Invoke(resultantObject, methodInfo.ParamValues.ToArray());
-
+        var funcDesc = PopApiValidations.Configuation.FunctionDescription(methodInfo.Method);
         var objectGraphWithFunction = (string.IsNullOrWhiteSpace(methodInfo.ObjectMap))
-            ? methodInfo.Method.Name + "("
-            : string.Join('.', [methodInfo.ObjectMap, methodInfo.Method.Name + "("]);
-
-        var validations = await validationRunner.Validate(instance, [objectGraphWithFunction]);
+            ? funcDesc // methodInfo.Method.Name + "("
+            : string.Join('.', [methodInfo.ObjectMap, funcDesc]);
+        var objectGraphWithFunctionAndParam = objectGraphWithFunction + PopApiValidations.Configuation.ParamToken;
+        var validations = await validationRunner.Validate(instance, [objectGraphWithFunctionAndParam]);
 
         if (validations.Errors.Any())
         {
-            return validations;
+            return new ApiValidationResult(validations);
         }
 
         // Navigate to Object
@@ -143,17 +253,27 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
             }
         }
 
-        
-
-
         // Execute Function on Object
+        var returnDesc = PopApiValidations.Configuation.ReturnDescription(methodInfo.Method.ReturnType);
+        objectGraphWithFunction += returnDesc;
 
+        //===
+        if (methodInfo.Method.ReturnType != typeof(void))
+        {
+            object? result = methodInfo.Method.Invoke(resultantObject, methodInfo.ParamValues.ToArray());
+            var completedMethodInfo = new HeirarchyReturnMethodInfo(methodInfo, result);
 
-        // Validate the Return value
+            foreach (var mainValidator in mainValidators)
+            {
+                mainValidator.SetCurrentExecutionContext(completedMethodInfo);
+            }
 
-        // if Successful Return Value
-
-        return new ValidationResult();
+            var returnValidations = await validationRunner.Validate(instance, [objectGraphWithFunction]);
+            return new ApiValidationResult(returnValidations, result);
+        }
+        
+        methodInfo.Method.Invoke(resultantObject, methodInfo.ParamValues.ToArray());
+        return new ApiValidationResult();
     }
 
     public DescriptionResult Describe() 

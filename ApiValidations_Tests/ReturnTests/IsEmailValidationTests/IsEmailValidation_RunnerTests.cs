@@ -8,14 +8,15 @@ namespace ApiValidations_Tests.ReturnTests.IsEmailValidationTests;
 
 public class EmailApi
 {
-    public string GetEmail() { return string.Empty; }
+    public string GetInvalidEmail() { return string.Empty; }
+    public string GetValidEmail() { return "Test@Testcase.com.au"; }
 }
 
 public class IsEmail_TestingValidator : ApiValidator<EmailApi>
 {
     public IsEmail_TestingValidator()
     {
-        DescribeFunc(x => x.GetEmail()).Return.IsEmail();
+        DescribeFunc(x => x.GetInvalidEmail()).Return.IsEmail();
     }
 }
 
@@ -34,5 +35,47 @@ public class IsEmailValidation_RunnerTests
         description.Results.Should().HaveCount(1);
         description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<EmailApi>(ValidatableType.NoExceptions));
         Approvals.VerifyJson(JsonConverter.ToJson(description));
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItReturnsTheValidation()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsEmail_TestingValidator());
+
+        // Act
+        var validation = await runner.Validate(
+            new EmailApi(),
+            new ApiValidations.Execution.HeirarchyMethodInfo(
+                string.Empty,
+                typeof(EmailApi).GetMethod(nameof(EmailApi.GetInvalidEmail))!,
+                []
+            )
+        );
+
+        // Assert
+        validation.Errors.Should().HaveCount(1);
+        validation.Errors.Should().HaveCount(ValidatableHelper.GetValidatableCount<EmailApi>(ValidatableType.NoExceptions));
+        Approvals.VerifyJson(JsonConverter.ToJson(validation));
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItIsSuccessful()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsEmail_TestingValidator());
+
+        // Act
+        var validation = await runner.Validate(
+            new EmailApi(),
+            new ApiValidations.Execution.HeirarchyMethodInfo(
+                string.Empty,
+                typeof(EmailApi).GetMethod(nameof(EmailApi.GetValidEmail))!,
+                []
+            )
+        );
+
+        // Assert
+        validation.Errors.Should().HaveCount(0);
     }
 }

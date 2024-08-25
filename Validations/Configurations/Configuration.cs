@@ -2,5 +2,5 @@
 
 public class Configuration
 {
-    public LangaugeConfiguration Language { get; set; } = new();
+    public LanguageConfiguration Language { get; set; } = new();
 }

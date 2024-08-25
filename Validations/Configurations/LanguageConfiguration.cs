@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PopValidations.Configurations.Languages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using PopValidations.Configurations.Languages;
 
 namespace PopValidations.Configurations;
 
-public class LangaugeConfiguration
+public class LanguageConfiguration
 {
     private readonly List<ILanguageSource> languageSources = new();
     public string? CurrentCulture { get; protected set; } = null;

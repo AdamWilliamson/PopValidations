@@ -1,4 +1,6 @@
-﻿namespace ApiValidations_Tests.TestHelpers;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace ApiValidations_Tests.TestHelpers;
 
 public class FunctionValidationTestDescription<TApi>(
     string function,
@@ -17,6 +19,15 @@ public class FunctionValidationTestDescription<TApi>(
         new object[] { d };
 }
 
+public interface IObjectFunctionValidationTestDescription 
+{
+    Type ApiType { get; }
+    string ObjectMap { get; }
+    string Function { get; }
+    object[] ParamInputs { get; }
+    int ParamIndex { get; }
+    string Error { get; }
+}
 
 public class ObjectFunctionValidationTestDescription<TApi>(
     string objMap,
@@ -24,7 +35,7 @@ public class ObjectFunctionValidationTestDescription<TApi>(
     int paramIndex,
     object[] paramInputs,
     string error
-    )
+    ) : IObjectFunctionValidationTestDescription
 {
     public Type ApiType => typeof(TApi);
     public string ObjectMap => objMap;

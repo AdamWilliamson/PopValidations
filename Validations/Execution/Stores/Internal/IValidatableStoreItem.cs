@@ -19,5 +19,5 @@ public interface IValidatableStoreItem : IStoreItem
     Task InitScopes(object? instance);
     DescribeActionResult Describe();
     void ReHomeScopes(IFieldDescriptorOutline attemptedScopeFieldDescriptor);
-    void UpdateContext(Dictionary<string, object?> context);
+    //void UpdateContext(Dictionary<string, object?> context);
 }

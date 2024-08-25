@@ -1,4 +1,5 @@
 ﻿using ApiValidations.Descriptors.Core;
+using ApiValidations.Execution;
 using ApiValidations.Helpers;
 using PopValidations.Execution.Stores;
 using PopValidations.FieldDescriptors.Base;
@@ -86,7 +87,9 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
 
     protected bool _NextValidationVital { get; set; } = false;
     protected bool _AlwaysVital { get; set; } = false;
-    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $":Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
+    public string PropertyName => (_functionDescriptor.Name ?? string.Empty)
+        + PopApiValidations.Configuation.ReturnDescription.Invoke(typeof(TReturnType));
+        //$":Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
 
     IFunctionExpressionToken _functionDescriptor { get; set; }
     IFunctionExpressionToken IReturnDescriptor_Internal.FunctionDescriptor => _functionDescriptor;
@@ -105,7 +108,9 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
 
     public virtual string AddTo(string existing)
     {
-        return _functionDescriptor.CombineWithParentProperty(existing) + $":Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
+        return _functionDescriptor.CombineWithParentProperty(existing) 
+            + PopApiValidations.Configuation.ReturnDescription.Invoke(typeof(TReturnType));
+        //$":Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
     }
 
     public void AddValidation(IValidationComponent validation)
@@ -151,7 +156,7 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
 
     public virtual object? GetValue(object? value)
     {
-        return null;
+        return store.GetContextItem(ApiValidationConstants.MethodResultKey);
     }
 
     public IFunctionContext GetContext() { return context; }

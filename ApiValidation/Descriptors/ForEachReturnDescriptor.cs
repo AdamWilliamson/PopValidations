@@ -17,7 +17,7 @@ public class ForEachReturnDescriptor<TEnumeratedFieldType, TReturnType>
 
     protected bool _NextValidationVital { get; set; } = false;
     protected bool _AlwaysVital { get; set; } = false;
-    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $"::Return({typeof(TReturnType).Name})[{(index >= 0 ? index.ToString() : 'n')}]";
+    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $":Return({typeof(TReturnType).Name})[{(index >= 0 ? index.ToString() : 'n')}]";
 
     IFunctionExpressionToken _functionDescriptor { get; set; }
     IFunctionExpressionToken IReturnDescriptor_Internal.FunctionDescriptor => _functionDescriptor;
@@ -41,7 +41,7 @@ public class ForEachReturnDescriptor<TEnumeratedFieldType, TReturnType>
 
     public virtual string AddTo(string existing)
     {
-        return _functionDescriptor.CombineWithParentProperty(existing) + $"::Return({typeof(TReturnType).Name})[{(index >= 0 ? index.ToString() : 'n')}]";
+        return _functionDescriptor.CombineWithParentProperty(existing) + $":Return({typeof(TReturnType).Name})[{(index >= 0 ? index.ToString() : 'n')}]";
     }
 
     public void AddValidation(IValidationComponent validation)
