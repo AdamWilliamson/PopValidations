@@ -1,0 +1,7 @@
+﻿{
+    "Errors": {
+        "Get_Invalid()->IEnumerable:Return(IEnumerable)": [
+            "Is not between 10 and 12 exclusive."
+        ]
+    }
+}

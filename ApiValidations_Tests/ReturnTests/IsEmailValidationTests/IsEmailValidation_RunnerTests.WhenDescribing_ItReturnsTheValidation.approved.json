@@ -1,7 +1,18 @@
 ﻿{
     "Results": [
         {
-            "Property": "GetEmail()->String:Return(String)",
+            "Property": "GetInvalidEmail()->String:Return(String)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEmailValidation",
+                    "Message": "Must be a valid email.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetValidEmail()->String:Return(String)",
             "Outcomes": [
                 {
                     "Validator": "IsEmailValidation",

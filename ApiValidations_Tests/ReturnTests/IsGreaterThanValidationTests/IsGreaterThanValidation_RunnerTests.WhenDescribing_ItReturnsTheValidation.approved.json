@@ -15,6 +15,22 @@
                 }
             ],
             "ValidationGroups": []
+        },
+        {
+            "Property": "GetGreaterThan0()->Int32:Return(Int32)",
+            "Outcomes": [
+                {
+                    "Validator": "IsGreaterThanValidation",
+                    "Message": "Must be greater than '0'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "0"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
         }
     ]
 }

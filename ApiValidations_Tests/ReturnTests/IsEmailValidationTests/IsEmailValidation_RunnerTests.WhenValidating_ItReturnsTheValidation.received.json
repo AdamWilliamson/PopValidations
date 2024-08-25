@@ -1,7 +1,0 @@
-﻿{
-    "Errors": {
-        "GetEmail()->String:Return(String)": [
-            "Is not a valid email."
-        ]
-    }
-}

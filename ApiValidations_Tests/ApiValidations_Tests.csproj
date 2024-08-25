@@ -262,6 +262,16 @@
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
       <DependentUpon>%(ParentFile)%(ParentExtension)</DependentUpon>
     </None>
+    <None Update="ReturnTests\IsGreaterThanOrEqualToValidationTests\IsGreaterThanOrEqualToValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanOrEqualToValidation_RunnerTests.cs</DependentUpon>
+    </None>
+    <None Update="ReturnTests\IsGreaterThanOrEqualToValidationTests\IsGreaterThanOrEqualToValidation_RunnerTests.GivenAValidator_WithErrors_ThenEveryFieldHasErrors.approved.json">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>
+      <DependentUpon>IsGreaterThanOrEqualToValidation_RunnerTests.cs</DependentUpon>
+    </None>
     <None Update="ReturnTests\IsGreaterThanValidationTests\IsGreaterThanValidation_RunnerTests.GivenAValidator_WhenDescribing_ThenEveryFieldHasDescriptions.approved.json">
       <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
       <ParentExtension>$(ProjectExt.Replace('proj', ''))</ParentExtension>

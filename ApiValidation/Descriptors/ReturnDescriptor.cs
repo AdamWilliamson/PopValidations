@@ -156,7 +156,7 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
 
     public virtual object? GetValue(object? value)
     {
-        return store.GetContextItem(ApiValidationConstants.MethodResultKey);
+        return (store.GetContextItem(ApiValidationConstants.MethodResultKey) as HeirarchyReturnMethodInfo)?.ReturnValue;
     }
 
     public IFunctionContext GetContext() { return context; }

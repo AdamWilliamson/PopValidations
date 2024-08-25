@@ -1,7 +1,18 @@
 ﻿{
     "Results": [
         {
-            "Property": "ReturnMustBeEmpty()->String:Return(String)",
+            "Property": "GetEmpty()->String:Return(String)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEmptyValidation",
+                    "Message": "Must be empty.",
+                    "Values": []
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "GetNotEmpty()->String:Return(String)",
             "Outcomes": [
                 {
                     "Validator": "IsEmptyValidation",

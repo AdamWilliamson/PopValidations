@@ -1,0 +1,7 @@
+﻿{
+    "Errors": {
+        "GetIntegerShouldReturn1()->Int32:Return(Int32)": [
+            "Is not equal to '1'."
+        ]
+    }
+}

@@ -4,12 +4,12 @@
             "Property": "Get()->Int32:Return(Int32)",
             "Outcomes": [
                 {
-                    "Validator": "IsLessThanValidation",
-                    "Message": "Must be less than '2147483647'.",
+                    "Validator": "IsGreaterThanOrEqualToValidation",
+                    "Message": "Must be greater than or equal to '9223372036854775807'.",
                     "Values": [
                         {
                             "Key": "value",
-                            "Value": "2147483647"
+                            "Value": "9223372036854775807"
                         }
                     ]
                 }
@@ -17,15 +17,15 @@
             "ValidationGroups": []
         },
         {
-            "Property": "GetValueLessThan10()->Int32:Return(Int32)",
+            "Property": "GetGreaterThan0()->Int32:Return(Int32)",
             "Outcomes": [
                 {
-                    "Validator": "IsLessThanValidation",
-                    "Message": "Must be less than '10'.",
+                    "Validator": "IsGreaterThanOrEqualToValidation",
+                    "Message": "Must be greater than or equal to '0'.",
                     "Values": [
                         {
                             "Key": "value",
-                            "Value": "10"
+                            "Value": "0"
                         }
                     ]
                 }

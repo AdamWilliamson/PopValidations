@@ -25,7 +25,7 @@
             "ValidationGroups": []
         },
         {
-            "Property": "IsEnum2()->String:Return(String)",
+            "Property": "IsEnum_Invalid()->String:Return(String)",
             "Outcomes": [
                 {
                     "Validator": "IsEnumValidation",

@@ -1,0 +1,7 @@
+﻿{
+    "Errors": {
+        "IsEnum_Invalid()->String:Return(String)": [
+            "'' Is not a valid value."
+        ]
+    }
+}

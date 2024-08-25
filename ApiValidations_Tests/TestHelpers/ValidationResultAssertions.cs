@@ -50,6 +50,31 @@ public class ValidationResultAssertions :
     }
 
     [CustomAssertion]
+    public AndConstraint<ValidationResultAssertions> ContainsReturn(
+        LambdaExpression expression,
+        string message,
+        string because = "",
+        params object[] becauseArgs
+    )
+    {
+        var methodInfo = SymbolExtensions.GetMethodInfo(expression);
+        var paramsList = methodInfo.GetParameters().Select(x => new ParamDetailsDTO(x.Name, x.ParameterType, x.Position)).ToList();
+        var Name = methodInfo.Name
+            + $"({string.Join(',', paramsList?.Select(x => GenericNameHelper.GetNameWithoutGenericArity(x.ParamType)) ?? [])})->"
+            + GenericNameHelper.GetNameWithoutGenericArity(methodInfo.ReturnType)
+            + ":"
+            + $"Return({GenericNameHelper.GetNameWithoutGenericArity(methodInfo.ReturnType)})";
+        return Contains(
+            Name,
+            //validationName,
+            message,
+            //keyValuePairs,
+            because,
+            becauseArgs
+        );
+    }
+
+    [CustomAssertion]
     public AndConstraint<ValidationResultAssertions> ContainsParam(
         MethodInfo methodInfo,
         int paramIndex,
@@ -78,11 +103,33 @@ public class ValidationResultAssertions :
     }
 
     [CustomAssertion]
+    public AndConstraint<ValidationResultAssertions> ContainsReturn(
+        string objectMap,
+        MethodInfo methodInfo,
+        string message,
+        string because = "",
+        params object[] becauseArgs
+    )
+    {
+        var paramsList = methodInfo.GetParameters().Select(x => new ParamDetailsDTO(x.Name, x.ParameterType, x.Position)).ToList();
+        var Name = methodInfo.Name
+            + $"({string.Join(',', paramsList?.Select(x => GenericNameHelper.GetNameWithoutGenericArity(x.ParamType)) ?? [])})->"
+            + GenericNameHelper.GetNameWithoutGenericArity(methodInfo.ReturnType)
+            + ":"
+            + $"Return({GenericNameHelper.GetNameWithoutGenericArity(methodInfo.ReturnType)})";
+
+        return Contains(
+            (string.IsNullOrWhiteSpace(objectMap)? "" : objectMap + ".") + Name,
+            message,
+            because,
+            becauseArgs
+        );
+    }
+
+    [CustomAssertion]
     public AndConstraint<ValidationResultAssertions> Contains(
         string property,
-        //string validationName,
         string message,
-        //(string Key, string Value)[]? keyValuePairs,
         string because = "",
         params object[] becauseArgs
     )
@@ -95,20 +142,6 @@ public class ValidationResultAssertions :
             .Given(() => Subject.Errors)
             .ForCondition(results => results.Any(x => x.Key.Contains(property)))
             .FailWith("Missing property {0}", property)
-            //.Then
-            //.Given((results) => results.SingleOrDefault(x => x.Key == property).Value)
-            //.ForCondition(outcomes => outcomes != null && outcomes.Any(x => x.Validator == validationName))
-            //.FailWith("Could not find Validator {0}", validationName)
-            //.Then
-            //.Given(outcomes => outcomes?.Where(x => x.Validator == validationName))
-            //.ForCondition(
-            //    outcomes => keyValuePairs == null
-            //        || (
-            //            outcomes?.Any(x => x.Values.All(x => keyValuePairs.Any(kvp => kvp.Key == x.Key && kvp.Value == x.Value)))
-            //            ?? false
-            //            )
-            //)
-            //.FailWith("No validator of name {0}, has a match for all properties", validationName)
             .Then
             .Given(outcomes => outcomes)
             .ForCondition(outcomes => outcomes?.Any(x => x.Value.Contains(message)) ?? false)

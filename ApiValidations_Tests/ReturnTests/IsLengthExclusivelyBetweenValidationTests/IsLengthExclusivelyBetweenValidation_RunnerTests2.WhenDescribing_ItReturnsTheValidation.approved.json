@@ -19,6 +19,26 @@
                 }
             ],
             "ValidationGroups": []
+        },
+        {
+            "Property": "Get_Invalid()->IEnumerable:Return(IEnumerable)",
+            "Outcomes": [
+                {
+                    "Validator": "IsLengthExclusivelyBetweenValidation",
+                    "Message": "Must be between 10 and 12 exclusive.",
+                    "Values": [
+                        {
+                            "Key": "startValue",
+                            "Value": "10"
+                        },
+                        {
+                            "Key": "endValue",
+                            "Value": "12"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
         }
     ]
 }

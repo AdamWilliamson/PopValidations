@@ -1,0 +1,7 @@
+﻿{
+    "Errors": {
+        "GetValueLessThan10()->Int32:Return(Int32)": [
+            "Is not less than '10'."
+        ]
+    }
+}

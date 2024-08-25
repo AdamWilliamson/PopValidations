@@ -17,6 +17,22 @@
             "ValidationGroups": []
         },
         {
+            "Property": "GetIntegerShouldReturn1()->Int32:Return(Int32)",
+            "Outcomes": [
+                {
+                    "Validator": "IsEqualToValidation",
+                    "Message": "Must equal to '1'.",
+                    "Values": [
+                        {
+                            "Key": "value",
+                            "Value": "1"
+                        }
+                    ]
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
             "Property": "GetString()->String:Return(String)",
             "Outcomes": [
                 {

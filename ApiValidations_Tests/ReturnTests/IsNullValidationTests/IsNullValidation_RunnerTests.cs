@@ -38,4 +38,45 @@ public class IsNullValidation_RunnerTests
         description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<IsNullApi>(ValidatableType.NoExceptions));
         Approvals.VerifyJson(JsonConverter.ToJson(description));
     }
+
+    [Fact]
+    public async Task WhenValidating_ItReturnsTheValidation()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsNull_TestingValidator());
+
+        // Act
+        var validation = await runner.Validate(
+            new IsNullApi(),
+            new ApiValidations.Execution.HeirarchyMethodInfo(
+                string.Empty,
+                typeof(IsNullApi).GetMethod(nameof(IsNullApi.Get2))!,
+                []
+            )
+        );
+
+        // Assert
+        validation.Errors.Should().HaveCount(1);
+        Approvals.VerifyJson(JsonConverter.ToJson(validation));
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItIsSuccessful()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsNull_TestingValidator());
+
+        // Act
+        var validation = await runner.Validate(
+            new IsNullApi(),
+            new ApiValidations.Execution.HeirarchyMethodInfo(
+                string.Empty,
+                typeof(IsNullApi).GetMethod(nameof(IsNullApi.Get1))!,
+                []
+            )
+        );
+
+        // Assert
+        validation.Errors.Should().HaveCount(0);
+    }
 }

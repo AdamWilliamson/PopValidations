@@ -8,6 +8,7 @@ namespace ApiValidations_Tests.ReturnTests.IsEqualToValidationTests;
 public class EqualToApi
 {
     public int GetInteger() { return 1; }
+    public int GetIntegerShouldReturn1() { return 2; }
     public string GetString() { return string.Empty; }
     public bool GetBoolean() { return true; }
     public double GetDouble() { return 1; }
@@ -23,6 +24,7 @@ public class EqualTo_TestingValidator : ApiValidator<EqualToApi>
     public EqualTo_TestingValidator()
     {
         DescribeFunc(x => x.GetInteger()).Return.IsEqualTo(1);
+        DescribeFunc(x => x.GetIntegerShouldReturn1()).Return.IsEqualTo(1);
         DescribeFunc(x => x.GetString()).Return.IsEqualTo(1);
         DescribeFunc(x => x.GetBoolean()).Return.IsEqualTo(1);
         DescribeFunc(x => x.GetDouble()).Return.IsEqualTo(1);
@@ -47,8 +49,49 @@ public class IsEqualToValidation_RunnerTests
         var description = runner.Describe();
 
         // Assert
-        description.Results.Should().HaveCount(9);
+        description.Results.Should().HaveCount(10);
         description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<EqualToApi>(ValidatableType.NoExceptions));
         Approvals.VerifyJson(JsonConverter.ToJson(description));
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItReturnsTheValidation()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new EqualTo_TestingValidator());
+
+        // Act
+        var validation = await runner.Validate(
+            new EqualToApi(),
+            new ApiValidations.Execution.HeirarchyMethodInfo(
+                string.Empty,
+                typeof(EqualToApi).GetMethod(nameof(EqualToApi.GetIntegerShouldReturn1))!,
+                []
+            )
+        );
+
+        // Assert
+        validation.Errors.Should().HaveCount(1);
+        Approvals.VerifyJson(JsonConverter.ToJson(validation));
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItIsSuccessful()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new EqualTo_TestingValidator());
+
+        // Act
+        var validation = await runner.Validate(
+            new EqualToApi(),
+            new ApiValidations.Execution.HeirarchyMethodInfo(
+                string.Empty,
+                typeof(EqualToApi).GetMethod(nameof(EqualToApi.GetInteger))!,
+                []
+            )
+        );
+
+        // Assert
+        validation.Errors.Should().HaveCount(0);
     }
 }

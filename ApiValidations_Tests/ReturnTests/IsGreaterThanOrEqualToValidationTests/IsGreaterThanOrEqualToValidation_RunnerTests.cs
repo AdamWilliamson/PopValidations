@@ -3,24 +3,24 @@ using FluentAssertions;
 using ApiValidations;
 using ApiValidations_Tests.TestHelpers;
 
-namespace ApiValidations_Tests.ReturnTests.IsGreaterThanValidationTests;
+namespace ApiValidations_Tests.ReturnTests.IsGreaterThanOrEqualToValidationTests;
 
-public class IsGreaterThanApi
+public class IsGreaterThanOrEqualToApi
 {
     public int Get() { return 0; }
     public int GetGreaterThan0() { return 1; }
 }
 
-public class IsGreaterThan_TestingValidator : ApiValidator<IsGreaterThanApi>
+public class IsGreaterThan_TestingValidator : ApiValidator<IsGreaterThanOrEqualToApi>
 {
     public IsGreaterThan_TestingValidator()
     {
-        DescribeFunc(x => x.Get()).Return.IsGreaterThan(long.MaxValue);
-        DescribeFunc(x => x.GetGreaterThan0()).Return.IsGreaterThan(0);
+        DescribeFunc(x => x.Get()).Return.IsGreaterThanOrEqualTo(long.MaxValue);
+        DescribeFunc(x => x.GetGreaterThan0()).Return.IsGreaterThanOrEqualTo(0);
     }
 }
 
-public class IsGreaterThanValidation_RunnerTests
+public class IsGreaterThanOrEqualToValidation_RunnerTests
 {
     [Fact]
     public void WhenDescribing_ItReturnsTheValidation()
@@ -33,7 +33,7 @@ public class IsGreaterThanValidation_RunnerTests
 
         // Assert
         description.Results.Should().HaveCount(2);
-        description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<IsGreaterThanApi>(ValidatableType.NoExceptions));
+        description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<IsGreaterThanOrEqualToApi>(ValidatableType.NoExceptions));
         Approvals.VerifyJson(JsonConverter.ToJson(description));
     }
 
@@ -45,10 +45,10 @@ public class IsGreaterThanValidation_RunnerTests
 
         // Act
         var validation = await runner.Validate(
-            new IsGreaterThanApi(),
+            new IsGreaterThanOrEqualToApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,
-                typeof(IsGreaterThanApi).GetMethod(nameof(IsGreaterThanApi.Get))!,
+                typeof(IsGreaterThanOrEqualToApi).GetMethod(nameof(IsGreaterThanOrEqualToApi.Get))!,
                 []
             )
         );
@@ -66,10 +66,10 @@ public class IsGreaterThanValidation_RunnerTests
 
         // Act
         var validation = await runner.Validate(
-            new IsGreaterThanApi(),
+            new IsGreaterThanOrEqualToApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,
-                typeof(IsGreaterThanApi).GetMethod(nameof(IsGreaterThanApi.GetGreaterThan0))!,
+                typeof(IsGreaterThanOrEqualToApi).GetMethod(nameof(IsGreaterThanOrEqualToApi.GetGreaterThan0))!,
                 []
             )
         );

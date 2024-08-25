@@ -17,6 +17,7 @@ public class IsEmail_TestingValidator : ApiValidator<EmailApi>
     public IsEmail_TestingValidator()
     {
         DescribeFunc(x => x.GetInvalidEmail()).Return.IsEmail();
+        DescribeFunc(x => x.GetValidEmail()).Return.IsEmail();
     }
 }
 
@@ -32,8 +33,7 @@ public class IsEmailValidation_RunnerTests
         var description = runner.Describe();
 
         // Assert
-        description.Results.Should().HaveCount(1);
-        description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<EmailApi>(ValidatableType.NoExceptions));
+        description.Results.Should().HaveCount(2);
         Approvals.VerifyJson(JsonConverter.ToJson(description));
     }
 
@@ -55,7 +55,6 @@ public class IsEmailValidation_RunnerTests
 
         // Assert
         validation.Errors.Should().HaveCount(1);
-        validation.Errors.Should().HaveCount(ValidatableHelper.GetValidatableCount<EmailApi>(ValidatableType.NoExceptions));
         Approvals.VerifyJson(JsonConverter.ToJson(validation));
     }
 

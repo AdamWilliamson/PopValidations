@@ -12,7 +12,13 @@
                             "Value": "Database Value"
                         }
                     ]
-                },
+                }
+            ],
+            "ValidationGroups": []
+        },
+        {
+            "Property": "Child[n].Check()->Boolean:Return(Boolean)",
+            "Outcomes": [
                 {
                     "Validator": "IsEqualToValidation",
                     "Message": "Must equal to 'True'.",

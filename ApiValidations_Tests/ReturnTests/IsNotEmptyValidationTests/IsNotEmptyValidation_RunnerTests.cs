@@ -8,7 +8,7 @@ namespace ApiValidations_Tests.ReturnTests.IsNotEmptyValidationTests;
 public class NotEmptyApi 
 {
     public decimal? Get1() { return null; }
-    public string? Get2() { return null; }
+    public string? Get2() { return "Not Empty"; }
 }
 
 public class NotEmpty_TestingValidator : ApiValidator<NotEmptyApi>
@@ -36,5 +36,46 @@ public class IsNotEmptyValidation_RunnerTests
         description.Results.Should().HaveCount(2);
         description.Results.Should().HaveCount(ValidatableHelper.GetValidatableCount<NotEmptyApi>(ValidatableType.NoExceptions));
         Approvals.VerifyJson(JsonConverter.ToJson(description));
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItReturnsTheValidation()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new NotEmpty_TestingValidator());
+
+        // Act
+        var validation = await runner.Validate(
+            new NotEmptyApi(),
+            new ApiValidations.Execution.HeirarchyMethodInfo(
+                string.Empty,
+                typeof(NotEmptyApi).GetMethod(nameof(NotEmptyApi.Get1))!,
+                []
+            )
+        );
+
+        // Assert
+        validation.Errors.Should().HaveCount(1);
+        Approvals.VerifyJson(JsonConverter.ToJson(validation));
+    }
+
+    [Fact]
+    public async Task WhenValidating_ItIsSuccessful()
+    {
+        // Arrange
+        var runner = ValidationRunnerHelper.BasicRunnerSetup(new NotEmpty_TestingValidator());
+
+        // Act
+        var validation = await runner.Validate(
+            new NotEmptyApi(),
+            new ApiValidations.Execution.HeirarchyMethodInfo(
+                string.Empty,
+                typeof(NotEmptyApi).GetMethod(nameof(NotEmptyApi.Get2))!,
+                []
+            )
+        );
+
+        // Assert
+        validation.Errors.Should().HaveCount(0);
     }
 }
