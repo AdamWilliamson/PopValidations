@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using System.Security.Principal;
 using ApiValidations.Helpers;
 using PopValidations.Configurations;
 using PopValidations.Execution;
@@ -155,7 +156,7 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
     public ApiValidationRunner(
         IValidationRunner<TValidationType> validationRunner,
         //IValidatorCreationFactory validatorCreationFactory,
-        IEnumerable<IApiMainValidator<TValidationType>> mainValidators
+        IEnumerable<IApiMainValidator<TValidationType>> mainValidators//...  WTF.  how do I get the same validations in SecurityIdentifier the Runner.
         )
     {
         this.validationRunner = validationRunner;

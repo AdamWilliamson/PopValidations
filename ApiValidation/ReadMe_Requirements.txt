@@ -13,3 +13,4 @@ V1
 	.. Update Class names to match ApiAbstract.
 	.. Update Namespace to include Pop   on ApiValidations
 	.. Adding a Context item shold be listable, not just single items.
+	Foreach seems untested.  Fix that.

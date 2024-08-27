@@ -35,8 +35,9 @@ Version 1.0.*
 	IsUri (may need to refine)
 	Numeric Types compare Favourbly, instead of Fail. ie : int field Lessthan long.MaxValue, fails.
 	Switch gets a custom IsCustomValidation implementation so the json output is clearer. And it checks all previous cases, and bails early.
+	TEST AbstractValidatableObject
 
-Version 1.1
+Version 1.1  -> Moved to API Validations
 	Per Function/End point, Object descriptions and parameter value descriptions.
 
 Completed:

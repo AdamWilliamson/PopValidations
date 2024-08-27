@@ -7,8 +7,6 @@ using System.Reflection;
 namespace PopValidations;
 public static class PopValidation
 {
-    public static void InitializeLanguages() { }
-
     public static IServiceCollection RegisterRunner(this IServiceCollection services)
     {
         services.AddSingleton(typeof(MessageProcessor));
