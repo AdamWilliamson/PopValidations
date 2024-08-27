@@ -6,7 +6,7 @@ using PopValidations.ValidatorInternals;
 
 namespace ApiValidations;
 
-public static class PopApiValidation
+public static class PopApiValidationExtensions
 {
     public static IServiceCollection RegisterApiValidationRunner(this IServiceCollection services)
     {

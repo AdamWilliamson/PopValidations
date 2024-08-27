@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 // PopValidations Extensions Function for Registering The Validation Runner
 builder.Services.RegisterApiValidationRunner()
     // And this extension and all the Validators in the same assembly as "SongValidator"
-    .RegisterAllMainApiValidators(typeof(WeatherForecastController).Assembly);
+    .RegisterAllMainApiValidators(typeof(AddressOwnershipController).Assembly);
 
 builder.Services.AddSwaggerGen();
 

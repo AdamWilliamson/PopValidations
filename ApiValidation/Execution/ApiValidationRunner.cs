@@ -57,11 +57,6 @@ public class HeirarchyReturnMethodInfo
     public List<object> ParamValues { get; }
 }
 
-public sealed class PopApiValidations
-{
-    public static ApiConfiguration Configuation { get; } = new ApiConfiguration();
-}
-
 public class ApiConfiguration
 {
     //public LangaugeConfiguration Language { get; set; } = new();
@@ -80,6 +75,7 @@ public class ApiConfiguration
     public Func<Type, string> ReturnDescription { get; set; }
     public Func<MethodInfo, int, int?, string> DescribeValidatingParam { get; set; }
     public Func<MethodInfo, int?, string> DescribeValidatingReturn { get; set; }
+    public Func<string, string> GetParamNameFromErrorKey { get; set; }
 
     public ApiConfiguration()
     {
@@ -114,6 +110,31 @@ public class ApiConfiguration
             }
 
             return description;
+        };
+
+        GetParamNameFromErrorKey = (string funcCall) =>
+        {
+            var pieces = funcCall.Split('.');
+            int paramTokenIndex = -1;
+            int substringStart = -1;
+
+            for (var x = 0; x < pieces.Count(); x++)
+            {
+                substringStart = pieces[x].IndexOf(ParamToken);
+                if (substringStart >= 0)
+                {
+                    paramTokenIndex = x;
+                    substringStart += ParamToken.Length;
+                    break;
+                }
+            }
+
+            pieces[paramTokenIndex] = pieces[paramTokenIndex].Substring(substringStart + 1);
+            int endSubstring = pieces[paramTokenIndex].IndexOf(')');
+            pieces[paramTokenIndex] = pieces[paramTokenIndex].Substring(0, endSubstring);
+            string paramName = pieces[paramTokenIndex].Split(',')[2];
+
+            return paramName;
         };
     }
 }
