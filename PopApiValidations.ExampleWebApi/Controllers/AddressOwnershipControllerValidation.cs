@@ -1,5 +1,6 @@
 ﻿using PopValidations;
 using ApiValidations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PopApiValidations.ExampleWebApi.Controllers;
 
@@ -14,6 +15,14 @@ public class AddressOwnershipControllerValidation : ApiValidator<AddressOwnershi
         DescribeFunc(x => x.Delete(Param.Is<int>().IsGreaterThan(0)));
 
         DescribeFunc(x => x.AddAddressOwnership(Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation())));
+
+        DescribeFunc(x => x.InsertOwner(
+            Param.Is<int>().IsGreaterThan(0),
+            Param.Is<string?>().IsNotNull(),
+            Param.Is<string?>().IsNotNull(),
+            Param.Is<ContactRecordType?>().IsNotNull(),
+            Param.Is<string?>().IsNotNull()
+        ));
     }
 }
 

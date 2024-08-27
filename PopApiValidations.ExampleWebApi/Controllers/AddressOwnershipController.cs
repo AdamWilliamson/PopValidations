@@ -45,4 +45,11 @@ public class AddressOwnershipController : ControllerBase
     {
         return Ok();
     }
+
+
+    [HttpPut("{id}/owner/insert")]
+    public IActionResult InsertOwner(int id, string? firstName, string? lastName, ContactRecordType? contactType, string? contactValue)
+    {
+        return Ok();
+    }
 }
