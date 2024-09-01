@@ -3,20 +3,23 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using PopValidations.Execution.Description;
 using PopValidations.Execution.Validations;
+using PopValidations.Swashbuckle;
+using PopValidations.Swashbuckle.Internal;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Reflection;
 
-namespace PopValidations.Swashbuckle.Internal;
+namespace PopApiValidations.Swashbuckle.Internal;
 
-public class PopValidationSchemaFilter : ISchemaFilter
+public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 {
-    private readonly IValidationRunnerFactory factory;
+    private readonly IApiValidationRunnerFactory factory;
     private readonly OpenApiConfig config;
-    private readonly ILogger<PopValidationSchemaFilter> logger;
+    private readonly ILogger<PopApiValidationSchemaFilter> logger;
 
-    public PopValidationSchemaFilter(
-        IValidationRunnerFactory factory,
+    public PopApiValidationSchemaFilter(
+        IApiValidationRunnerFactory factory,
         OpenApiConfig config,
-        ILogger<PopValidationSchemaFilter> logger
+        ILogger<PopApiValidationSchemaFilter> logger
     )
     {
         this.factory = factory;
@@ -24,8 +27,49 @@ public class PopValidationSchemaFilter : ISchemaFilter
         this.logger = logger;
     }
 
+
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        if (context.MethodInfo.DeclaringType is null) return;
+
+        var runner = factory.GetRunner(context.MethodInfo.DeclaringType);
+
+        if (runner == null) return;
+
+        var results = runner.Describe();
+
+        if (!results.Results.Any()) return;
+
+
+
+        operation.Description += "New Description";
+        operation.Summary += "New Summary";
+        var firstParam = operation.Parameters.FirstOrDefault();
+        if (firstParam != null)
+        {
+            firstParam.Description += "New param";
+            firstParam.Schema.Minimum = 100;
+        }
+
+        var body = operation.RequestBody?.Content?.FirstOrDefault();
+        if (body != null && !string.IsNullOrWhiteSpace(body.Value.Key)) 
+        {
+            body.Value.Value.Schema.Maximum = 2222;
+        }
+
+        var conParam = context.SchemaRepository.Schemas.FirstOrDefault();
+        if (!string.IsNullOrWhiteSpace(conParam.Key))
+        {
+            conParam.Value.MaxLength = 1999;
+        }
+
+        return;
+    }
+
     public void Apply(OpenApiSchema model, SchemaFilterContext context)
     {
+
+        return;
         if (model.Properties?.Any() != true)
         {
             return;
@@ -38,6 +82,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
         if (model.Required == null)
         {
+            logger.LogInformation("TEST: Model.Required is null");
             model.Required = new HashSet<string>();
         }
 
@@ -450,4 +495,5 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
         return existing;
     }
+
 }

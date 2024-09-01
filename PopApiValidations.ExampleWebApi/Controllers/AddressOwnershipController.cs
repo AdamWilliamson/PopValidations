@@ -5,6 +5,7 @@ namespace PopApiValidations.ExampleWebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
 public class AddressOwnershipController : ControllerBase
 {
     private readonly ILogger<AddressOwnershipController> _logger;
@@ -14,25 +15,42 @@ public class AddressOwnershipController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet()]
+    [HttpGet(nameof(Get))]
     public IEnumerable<AddressOwnership> Get()
     {
         return AddressOwnershipDataSource.Instance.Items.ToList();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet($"{nameof(GetById)}/{{id}}")]
     public AddressOwnership? GetById(int id)
     {
         return AddressOwnershipDataSource.Instance.GetAddressOwnershipById(id);
     }
 
-    [HttpPost()]
-    public AddressOwnership AddAddressOwnership(AddressOwnership newAddressOwnership)
+    [HttpPost(nameof(AddAddressOwnership))]
+    public AddressOwnership AddAddressOwnership([FromBody]AddressOwnership newAddressOwnership)
     {
         AddressOwnershipDataSource.Instance.AddRecord(newAddressOwnership);
         return newAddressOwnership;
     }
 
+    [HttpPost(nameof(AddAddressOwnership_Ignore))]
+    [PopApiValidationsIgnore]
+    public AddressOwnership AddAddressOwnership_Ignore([FromBody] AddressOwnership newAddressOwnership)
+    {
+        AddressOwnershipDataSource.Instance.AddRecord(newAddressOwnership);
+        return newAddressOwnership;
+    }
+
+    [HttpPost(nameof(AddAddressOwnership_Rename))]
+    public AddressOwnership AddAddressOwnership_Rename(
+        [FromBody][PopApiValidationsRenameParam("CreationAddress")] AddressOwnership newAddressOwnership
+    )
+    {
+        AddressOwnershipDataSource.Instance.AddRecord(newAddressOwnership);
+        return newAddressOwnership;
+    }
+        
     [HttpDelete()]
     public IActionResult Delete(int id)
     {
@@ -47,9 +65,20 @@ public class AddressOwnershipController : ControllerBase
     }
 
 
-    [HttpPut("{id}/owner/insert")]
+    [HttpPut($"{{id}}/{nameof(InsertOwner)}")]
     public IActionResult InsertOwner(int id, string? firstName, string? lastName, ContactRecordType? contactType, string? contactValue)
     {
         return Ok();
     }
+
+    [HttpGet(nameof(GetDumbTest))]
+    public IActionResult GetDumbTest(DumbTestRequest request)
+    {
+        return Ok();
+    }
+}
+
+public class DumbTestRequest
+{
+    public int Temporal { get; set; }
 }

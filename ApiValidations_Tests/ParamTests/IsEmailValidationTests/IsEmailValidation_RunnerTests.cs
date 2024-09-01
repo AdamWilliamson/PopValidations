@@ -54,7 +54,7 @@ public partial class IsEmailValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsEmail_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new EmailApi(), 
             new HeirarchyMethodInfo(
                 string.Empty,
@@ -85,7 +85,7 @@ public partial class IsEmailValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsEmail_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new EmailApi(),
             new HeirarchyMethodInfo(
                 string.Empty,

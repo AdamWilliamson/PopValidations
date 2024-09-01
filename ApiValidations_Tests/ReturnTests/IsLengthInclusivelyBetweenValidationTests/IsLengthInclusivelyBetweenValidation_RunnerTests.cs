@@ -47,7 +47,7 @@ public class IsLengthInclusivelyBetweenValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLengthExclusivelyBetween_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new IsLengthInclusivelyBetweenApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,
@@ -68,7 +68,7 @@ public class IsLengthInclusivelyBetweenValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLengthExclusivelyBetween_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new IsLengthInclusivelyBetweenApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,

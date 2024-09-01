@@ -82,7 +82,7 @@ public class IsNullValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsNull_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new IsNullApi(),
             new HeirarchyMethodInfo(
                 string.Empty,
@@ -113,7 +113,7 @@ public class IsNullValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsNull_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new IsNullApi(),
             new HeirarchyMethodInfo(
                 string.Empty,

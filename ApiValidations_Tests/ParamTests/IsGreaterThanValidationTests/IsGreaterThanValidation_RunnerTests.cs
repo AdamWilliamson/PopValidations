@@ -78,7 +78,7 @@ public class IsGreaterThanValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsGreaterThan_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new IsGreaterThanApi(),
             new HeirarchyMethodInfo(
                 string.Empty,
@@ -109,7 +109,7 @@ public class IsGreaterThanValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsGreaterThan_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new IsGreaterThanApi(),
             new HeirarchyMethodInfo(
                 string.Empty,

@@ -44,7 +44,7 @@ public class IsLessThanValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLessThan_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new IsLessThanApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,
@@ -65,7 +65,7 @@ public class IsLessThanValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsLessThan_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new IsLessThanApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,

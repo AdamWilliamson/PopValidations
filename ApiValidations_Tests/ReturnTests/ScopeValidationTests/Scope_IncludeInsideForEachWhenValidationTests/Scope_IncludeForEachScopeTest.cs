@@ -83,7 +83,7 @@ public class Scope_IncludeForEachScopeTest
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new Validator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             ModelCreation.GenerateInvalidTestData(),
             new HeirarchyMethodInfo(
                 description.ObjectMap,
@@ -109,7 +109,7 @@ public class Scope_IncludeForEachScopeTest
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new Validator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             ModelCreation.GenerateTestData(),
             new HeirarchyMethodInfo(
                 "Child[0]",

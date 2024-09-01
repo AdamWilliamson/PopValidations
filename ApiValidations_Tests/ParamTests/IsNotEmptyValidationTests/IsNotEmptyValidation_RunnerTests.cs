@@ -81,7 +81,7 @@ public class IsNotEmptyValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new NotEmpty_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new NotEmptyApi(),
             new HeirarchyMethodInfo(
                 string.Empty,
@@ -112,7 +112,7 @@ public class IsNotEmptyValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new NotEmpty_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new NotEmptyApi(),
             new HeirarchyMethodInfo(
                 string.Empty,

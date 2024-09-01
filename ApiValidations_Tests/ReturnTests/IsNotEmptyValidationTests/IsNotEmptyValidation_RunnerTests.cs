@@ -45,7 +45,7 @@ public class IsNotEmptyValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new NotEmpty_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new NotEmptyApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,
@@ -66,7 +66,7 @@ public class IsNotEmptyValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new NotEmpty_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new NotEmptyApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,

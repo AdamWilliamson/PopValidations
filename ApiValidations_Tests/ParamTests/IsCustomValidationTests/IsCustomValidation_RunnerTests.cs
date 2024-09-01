@@ -66,7 +66,7 @@ public class IsCustomValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsCustom_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new BasicDataTypes(),
             new HeirarchyMethodInfo(
                 string.Empty,
@@ -104,7 +104,7 @@ public class IsCustomValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsCustom_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new BasicDataTypes(),
             new HeirarchyMethodInfo(
                 string.Empty,

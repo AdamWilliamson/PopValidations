@@ -61,7 +61,7 @@ public class IsEqualToValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new EqualTo_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new EqualToApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,
@@ -82,7 +82,7 @@ public class IsEqualToValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new EqualTo_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new EqualToApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,

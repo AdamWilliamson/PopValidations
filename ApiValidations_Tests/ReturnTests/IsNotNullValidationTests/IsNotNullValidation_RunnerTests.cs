@@ -46,7 +46,7 @@ public class IsNotNullValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsNotNull_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new IsNotNullApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,
@@ -67,7 +67,7 @@ public class IsNotNullValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsNotNull_TestingValidator());
 
         // Act
-        var validation = await runner.Validate(
+        var validation = await runner.ValidateAndExecute(
             new IsNotNullApi(),
             new ApiValidations.Execution.HeirarchyMethodInfo(
                 string.Empty,

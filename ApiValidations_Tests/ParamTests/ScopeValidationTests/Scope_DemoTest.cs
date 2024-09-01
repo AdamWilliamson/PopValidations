@@ -60,7 +60,7 @@ public class Scope_DemoTest
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1Validator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             ModelCreation.GenerateTestData(),
             new HeirarchyMethodInfo(
                 description.ObjectMap,
@@ -86,7 +86,7 @@ public class Scope_DemoTest
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new Level1Validator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             ModelCreation.GenerateTestData(),
             new HeirarchyMethodInfo(
                 string.Empty,

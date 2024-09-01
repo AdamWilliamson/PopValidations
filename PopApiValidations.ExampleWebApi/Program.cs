@@ -1,6 +1,8 @@
 using PopApiValidations.ExampleWebApi.Controllers;
 using ApiValidations;
 using PopApiValidations;
+using PopApiValidations.Swashbuckle;
+using PopValidations.Swashbuckle;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,18 @@ builder.Services.RegisterApiValidationRunner()
     // And this extension and all the Validators in the same assembly as "SongValidator"
     .RegisterAllMainApiValidators(typeof(AddressOwnershipController).Assembly);
 
-builder.Services.AddSwaggerGen();
+// Register a Pop Validation Config that describes the configuration for describing the validations within OpenApi
+builder.Services.RegisterPopApiValidationsOpenApiDefaults(new OpenApiConfig());
+
+builder.Services.AddSwaggerGen(
+    options =>
+    {
+        // Register PopValidation's Custom API decorations
+        options.RegisterApiValidationOpenApiFilter();
+    });
+
+// Optional: Replace merging of objects for end points.
+//builder.Services.RegisterApiValidationPerEndpointDefinitionsFilter();
 
 var app = builder.Build();
 

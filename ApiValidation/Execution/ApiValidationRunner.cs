@@ -19,6 +19,7 @@ public interface IApiValidationDescriber
 public interface IApiValidationRunner<TValidationType>: IApiValidationDescriber
 {
     Task<ApiValidationResult> Validate(TValidationType instance, HeirarchyMethodInfo methodInfo);
+    Task<ApiValidationResult> ValidateAndExecute(TValidationType instance, HeirarchyMethodInfo methodInfo);
     Task<ValidationResult> Validate(TValidationType instance);
 }
 
@@ -134,6 +135,9 @@ public class ApiConfiguration
             pieces[paramTokenIndex] = pieces[paramTokenIndex].Substring(0, endSubstring);
             string paramName = pieces[paramTokenIndex].Split(',')[2];
 
+            var contents = pieces.Skip(paramTokenIndex + 1).ToList();
+            contents.Insert(0, paramName);
+            paramName = string.Join('.', contents);
             return paramName;
         };
     }
@@ -239,28 +243,34 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
         if (instance == null) throw new ArgumentNullException(nameof(instance));
 
         // Run Validations on Object's Function's Properties.
-        foreach(var mainValidator in mainValidators)
+        foreach (var mainValidator in mainValidators)
         {
             mainValidator.SetCurrentExecutionContext(methodInfo);
         }
 
-        // Old code trying to run Validate() on the child object only.. Mistake., 
-        //var creationMethod = validatorCreationFactory.GetType().GetMethod(nameof(IValidatorCreationFactory.CreateFor))?.GetGenericMethodDefinition();
-        //var finalMethod = creationMethod?.MakeGenericMethod(resultantObject.GetType());
-
-        //if (finalMethod == null) { throw new Exception("Function Doesnt exist to validate"); }
-        //finalMethod.Invoke(resultantObject, methodInfo.ParamValues.ToArray());
         var funcDesc = PopApiValidations.Configuation.FunctionDescription(methodInfo.Method);
         var objectGraphWithFunction = (string.IsNullOrWhiteSpace(methodInfo.ObjectMap))
-            ? funcDesc // methodInfo.Method.Name + "("
+            ? funcDesc
             : string.Join('.', [methodInfo.ObjectMap, funcDesc]);
         var objectGraphWithFunctionAndParam = objectGraphWithFunction + PopApiValidations.Configuation.ParamToken;
         var validations = await validationRunner.Validate(instance, [objectGraphWithFunctionAndParam]);
+
+        return new ApiValidationResult(validations);
+    }
+
+    public async Task<ApiValidationResult> ValidateAndExecute(TValidationType instance, HeirarchyMethodInfo methodInfo)
+    {
+        var validations = await Validate(instance, methodInfo);
 
         if (validations.Errors.Any())
         {
             return new ApiValidationResult(validations);
         }
+
+        var funcDesc = PopApiValidations.Configuation.FunctionDescription(methodInfo.Method);
+        var objectGraphWithFunction = (string.IsNullOrWhiteSpace(methodInfo.ObjectMap))
+            ? funcDesc
+            : string.Join('.', [methodInfo.ObjectMap, funcDesc]);
 
         // Navigate to Object
         var Properties = methodInfo.ObjectMap.Split('.').Where(x => !string.IsNullOrWhiteSpace(x));

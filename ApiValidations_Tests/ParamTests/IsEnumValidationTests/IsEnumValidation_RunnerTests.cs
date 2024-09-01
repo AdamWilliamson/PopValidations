@@ -76,7 +76,7 @@ public class IsEnumValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsEnum_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new EnumApi(),
             new HeirarchyMethodInfo(
                 string.Empty,
@@ -107,7 +107,7 @@ public class IsEnumValidation_RunnerTests
         var runner = ValidationRunnerHelper.BasicRunnerSetup(new IsEnum_TestingValidator());
 
         // Act
-        var results = await runner.Validate(
+        var results = await runner.ValidateAndExecute(
             new EnumApi(),
             new HeirarchyMethodInfo(
                 string.Empty,
