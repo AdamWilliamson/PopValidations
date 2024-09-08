@@ -15,7 +15,7 @@ public class IsNullValidationToOpenApiConverter : IValidationToOpenApiConverter
     }
 
     public void UpdateSchema(
-        OpenApiSchema owningObjectSchema,
+        OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description
@@ -29,7 +29,7 @@ public class IsNullValidationToOpenApiConverter : IValidationToOpenApiConverter
     }
 
     public void UpdateAttribute(
-        OpenApiSchema owningObjectSchema,
+        OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description,

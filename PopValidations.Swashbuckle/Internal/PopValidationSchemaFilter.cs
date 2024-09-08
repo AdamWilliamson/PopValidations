@@ -46,12 +46,17 @@ public class PopValidationSchemaFilter : ISchemaFilter
         if (!results.Results.Any())
             return;
 
-        var extensions = InitExtension(model);
+        var extensions = InitExtension(config, model);
 
-        RunRules(String.Empty, model, results.Results, context, null, context.Type, extensions, null);
+        RunRules(config, String.Empty, model, results.Results,
+            //context, 
+            context.SchemaRepository,
+            context.Type,
+
+            null, context.Type, extensions, null);
     }
 
-    private ValidationLevel CalculateOverride(ValidationLevel? validationLevelOverride, ValidationLevel objLevel)
+    private static ValidationLevel CalculateOverride(ValidationLevel? validationLevelOverride, ValidationLevel objLevel)
     {
         if (validationLevelOverride == null) return objLevel;
         if (validationLevelOverride > objLevel) return objLevel;
@@ -59,11 +64,14 @@ public class PopValidationSchemaFilter : ISchemaFilter
         return validationLevelOverride.Value;
     }
 
-    private void RunRules(
+    public static void RunRules(
+        OpenApiConfig config,
         string parent,
         OpenApiSchema model,
         List<DescriptionItemResult> fieldDescriptions,
-        SchemaFilterContext context,
+        //SchemaFilterContext context,
+        SchemaRepository schemaRepository,
+        Type owner,
         string? ownedby,
         Type? childType,
         OpenApiObject endPointObjectextention,
@@ -72,7 +80,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
     {
         //Need to decide WHEN to turn on or off logging schema details.
         ValidationLevel ObjectLevel = ValidationLevel.None;
-        var objType = GetPropertyType(config, childType ?? context.Type, parent);
+        var objType = config.GetPropertyType.Invoke(config, childType ?? owner, parent);
         if (objType != null)
         {
             ObjectLevel = (config.TypeValidationLevel?.Invoke(objType!) ?? 0);
@@ -80,8 +88,9 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
         ObjectLevel = CalculateOverride(validationLevelOverride, ObjectLevel);
 
-        if (ObjectLevel == ValidationLevel.None) { 
-            return; 
+        if (ObjectLevel == ValidationLevel.None)
+        {
+            return;
         }
 
         // Loop through the OpenApi model's proeprties
@@ -89,7 +98,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
         {
             //TODO:  If property is ignored, don't do these things.
             ValidationLevel PropertyValidationLevel = ValidationLevel.None;
-            var propType = GetPropertyType(config, childType ?? context.Type, parent);
+            var propType = config.GetPropertyType.Invoke(config, childType ?? owner, parent);
             if (propType != null)
             {
                 PropertyValidationLevel = (config.TypeValidationLevel?.Invoke(propType!) ?? ValidationLevel.FullDetails);
@@ -121,7 +130,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
                 );
 
 #pragma warning disable CS8604 // Possible null reference argument.
-                var customRulesArray = InitExtensionsAndArray(model, openApiPropName/*, outcomeSet, ownedby*/);
+                var customRulesArray = InitExtensionsAndArray(config, model, openApiPropName/*, outcomeSet, ownedby*/);
 #pragma warning restore CS8604 // Possible null reference argument.
 
                 // Execute processes for Field and Array descriptors for the property.
@@ -131,12 +140,13 @@ public class PopValidationSchemaFilter : ISchemaFilter
                         continue;
 
                     ConvertValiatorsToOpenApiDescriptions(
-                        model, 
-                        endPointObjectextention, 
-                        openApiPropName, 
-                        PropertyValidationLevel, 
-                        fieldName, 
-                        customRulesArray, 
+                        config,
+                        model,
+                        endPointObjectextention,
+                        openApiPropName,
+                        PropertyValidationLevel,
+                        fieldName,
+                        customRulesArray,
                         outcomeSet,
                         false
                     );
@@ -146,7 +156,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
                 if (arrayOutcomes?.Outcomes?.Any() == true || arrayOutcomes?.ValidationGroups?.Any() == true)
                 {
 #pragma warning disable CS8604 // Possible null reference argument.
-                    var customRulesArrayForArrays = InitExtensionsAndArray(model, openApiPropName + config.OrdinalIndicator/*, outcomeSet, ownedby*/);
+                    var customRulesArrayForArrays = InitExtensionsAndArray(config, model, openApiPropName + config.OrdinalIndicator/*, outcomeSet, ownedby*/);
 #pragma warning restore CS8604 // Possible null reference argument.
 
                     foreach (var outcomeSet in new[] { arrayOutcomes })
@@ -155,6 +165,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
                             continue;
 
                         ConvertValiatorsToOpenApiDescriptions(
+                            config,
                             model,
                             endPointObjectextention,
                             openApiPropName,
@@ -170,23 +181,26 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
                 //if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
                 {
-                    var newOwner = ownedby ?? "Owned By " + context.Type.Name;
+                    var newOwner = ownedby ?? "Owned By " + owner.Name;
                     if (
                         model.Properties[openApiPropName].Reference != null
-                        && context.SchemaRepository.Schemas.ContainsKey(
+                        && schemaRepository.Schemas.ContainsKey(
                             model.Properties[openApiPropName].Reference.Id
                         )
                     )
                     {
-                        var childObject = context.SchemaRepository.Schemas[
+                        var childObject = schemaRepository.Schemas[
                             model.Properties[openApiPropName].Reference.Id
                         ];
 
                         RunRules(
+                            config,
                             fieldName,
                             childObject,
                             fieldDescriptions,
-                            context,
+                            //context,
+                            schemaRepository,
+                            owner,
                             newOwner + config.ChildIndicator + model.Properties[openApiPropName].Reference.Id,
                             propType,
                             endPointObjectextention,
@@ -196,20 +210,23 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
                     if (
                         model.Properties[openApiPropName].Items?.Reference != null
-                        && context.SchemaRepository.Schemas.ContainsKey(
+                        && schemaRepository.Schemas.ContainsKey(
                             model.Properties[openApiPropName].Items.Reference.Id
                         )
                     )
                     {
-                        var childObject = context.SchemaRepository.Schemas[
+                        var childObject = schemaRepository.Schemas[
                             model.Properties[openApiPropName].Items.Reference.Id
                         ];
 
                         RunRules(
+                            config,
                             fieldName + config.OrdinalIndicator,
                             childObject,
                             fieldDescriptions,
-                            context,
+                            //context,
+                            schemaRepository,
+                            owner,
                             newOwner + config.ChildIndicator + model.Properties[openApiPropName].Items.Reference.Id,
                             propType,
                             endPointObjectextention,
@@ -221,7 +238,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
         }
     }
 
-    private List<(string, DescriptionOutcome)> FlattenOutcomes(DescriptionItemResult descriptionItem)
+    private static List<(string, DescriptionOutcome)> FlattenOutcomes(OpenApiConfig config, DescriptionItemResult descriptionItem)
     {
         //string Property = descriptionItem.Property;
         var endOutcomes = new List<(string, DescriptionOutcome)>();
@@ -241,25 +258,25 @@ public class PopValidationSchemaFilter : ISchemaFilter
         {
             foreach (var group in descriptionItem.ValidationGroups)
             {
-                endOutcomes.AddRange(FlattenRecurse(string.Empty, group));
+                endOutcomes.AddRange(FlattenRecurse(config, string.Empty, group));
             }
         }
 
         return endOutcomes;
     }
 
-    private List<(string, DescriptionOutcome)> FlattenRecurse(string existing, DescriptionGroupResult group)
+    private static List<(string, DescriptionOutcome)> FlattenRecurse(OpenApiConfig config, string existing, DescriptionGroupResult group)
     {
         var endOutcomes = new List<(string, DescriptionOutcome)>();
         var additive = string.IsNullOrWhiteSpace(existing) ? group.Description : config.MultiGroupIndicator + group.Description;
 
         if (group.Outcomes?.Any() == true)
         {
-            foreach(var outcome in group.Outcomes)
+            foreach (var outcome in group.Outcomes)
             {
                 if (outcome == null) continue;
 
-                endOutcomes.Add(new (existing + additive, outcome!));
+                endOutcomes.Add(new(existing + additive, outcome!));
             }
         }
 
@@ -267,21 +284,22 @@ public class PopValidationSchemaFilter : ISchemaFilter
         {
             foreach (var child in group.Children)
             {
-                endOutcomes.AddRange(FlattenRecurse(existing + additive, child));
+                endOutcomes.AddRange(FlattenRecurse(config, existing + additive, child));
             }
         }
 
         return endOutcomes;
     }
 
-    private void ConvertValiatorsToOpenApiDescriptions(
-        OpenApiSchema model, 
-        OpenApiObject endPointObjectextention, 
-        string openApiPropName, 
-        ValidationLevel PropertyValidationLevel, 
-        string fieldName, 
-        OpenApiArray customRulesArray, 
-        DescriptionItemResult? outcomeSet, 
+    public static void ConvertValiatorsToOpenApiDescriptions(
+        OpenApiConfig config,
+        OpenApiSchema model,
+        OpenApiObject endPointObjectextention,
+        string openApiPropName,
+        ValidationLevel PropertyValidationLevel,
+        string fieldName,
+        OpenApiArray customRulesArray,
+        DescriptionItemResult? outcomeSet,
         bool isArray)
     {
 
@@ -290,7 +308,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
         var validationArray = new PopValidationArray(customRulesArray);
 
         foreach (
-            var (owner, outcome) in FlattenOutcomes(outcomeSet)
+            var (owner, outcome) in FlattenOutcomes(config, outcomeSet)
         //var outcome in outcomeSet?.Outcomes
         //   ?? Enumerable.Empty<DescriptionOutcome>()
         )
@@ -322,7 +340,7 @@ public class PopValidationSchemaFilter : ISchemaFilter
 
                     if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
                     {
-                        var array = new PopValidationArray(InitArray(endPointObjectextention, fieldName));
+                        var array = new PopValidationArray(InitArray(config, endPointObjectextention, fieldName));
                         array.SetLineHeader(owner);
                         converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, array);
                     }
@@ -331,50 +349,50 @@ public class PopValidationSchemaFilter : ISchemaFilter
         }
     }
 
-    public static bool IsGenericList(Type oType)
-    {
-        Console.WriteLine(oType.FullName);
-        if (oType.IsGenericType)
-        {
-            var genDef = oType.GetGenericTypeDefinition();
+    //public static bool IsGenericList(Type oType)
+    //{
+    //    Console.WriteLine(oType.FullName);
+    //    if (oType.IsGenericType)
+    //    {
+    //        var genDef = oType.GetGenericTypeDefinition();
 
-            if (genDef.GetGenericTypeDefinition() == typeof(IEnumerable<>)) return true;
+    //        if (genDef.GetGenericTypeDefinition() == typeof(IEnumerable<>)) return true;
 
-            if (genDef.GetInterface(typeof(IEnumerable<>).Name) != null) return true;
+    //        if (genDef.GetInterface(typeof(IEnumerable<>).Name) != null) return true;
 
-            return false;
-        }
-        return false;
-    }
+    //        return false;
+    //    }
+    //    return false;
+    //}
 
-    private static Type? GetPropertyType(OpenApiConfig config, Type? src, string propName)
-    {
-        if (src == null) throw new ArgumentException("Value cannot be null.", "src");
-        if (string.IsNullOrWhiteSpace(propName)) return src;
+    //private static Type? GetPropertyType(OpenApiConfig config, Type? src, string propName)
+    //{
+    //    if (src == null) throw new ArgumentException("Value cannot be null.", "src");
+    //    if (string.IsNullOrWhiteSpace(propName)) return src;
 
-        var realProp = propName.Split(new char[] { '.' }).Last();
+    //    var realProp = propName.Split(new char[] { '.' }).Last();
 
-        {
-            if (realProp.Contains(config.OrdinalIndicator))
-            {
-                var result = config.GetPropertyFromType(src, realProp.Replace(config.OrdinalIndicator, ""));
-                if (result is not null && IsGenericList(result.PropertyType))
-                {
-                    return result.PropertyType.GetGenericArguments().FirstOrDefault();
-                }
-                return null;
-            }
-            else
-            {
-                var result = config.GetPropertyFromType(src, realProp);
+    //    {
+    //        if (realProp.Contains(config.OrdinalIndicator))
+    //        {
+    //            var result = config.GetPropertyFromType(src, realProp.Replace(config.OrdinalIndicator, ""));
+    //            if (result is not null && (config.IsGenericList?.Invoke(result.PropertyType) ?? false))
+    //            {
+    //                return result.PropertyType.GetGenericArguments().FirstOrDefault();
+    //            }
+    //            return null;
+    //        }
+    //        else
+    //        {
+    //            var result = config.GetPropertyFromType(src, realProp);
 
-                return result?.PropertyType;
-            }
-            //return prop != null ? prop.GetValue(src, null) : null;
-        }
-    }
+    //            return result?.PropertyType;
+    //        }
+    //        //return prop != null ? prop.GetValue(src, null) : null;
+    //    }
+    //}
 
-    private OpenApiObject InitExtension(OpenApiSchema modelSchema)
+    public static OpenApiObject InitExtension(OpenApiConfig config, OpenApiSchema modelSchema)
     {
         var modelValidations = new OpenApiObject();
         if (modelSchema.Extensions.ContainsKey(config.CustomValidationAttribute))
@@ -396,7 +414,8 @@ public class PopValidationSchemaFilter : ISchemaFilter
         return modelValidations;
     }
 
-    private OpenApiArray InitArray(
+    private static OpenApiArray InitArray(
+        OpenApiConfig config,
         OpenApiObject owningObject,
         string key
     )
@@ -416,14 +435,15 @@ public class PopValidationSchemaFilter : ISchemaFilter
         return array;
     }
 
-    private OpenApiArray InitExtensionsAndArray(
+    public static OpenApiArray InitExtensionsAndArray(
+        OpenApiConfig config,
         OpenApiSchema modelSchema,
         string key
     )
     {
-        var modelValidations = InitExtension(modelSchema);
+        var modelValidations = InitExtension(config, modelSchema);
 
-        return InitArray(modelValidations, key);
+        return InitArray(config, modelValidations, key);
     }
 
     private string RecursiveGroupDescriber(

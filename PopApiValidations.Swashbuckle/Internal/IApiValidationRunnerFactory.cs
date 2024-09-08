@@ -1,9 +1,9 @@
 ﻿
-using PopValidations.Execution;
+using ApiValidations.Execution;
 
 namespace PopApiValidations.Swashbuckle.Internal;
 
 public interface IApiValidationRunnerFactory
 {
-    IValidationDescriber? GetRunner(Type type);
+    IApiValidationDescriber? GetRunner(Type type);
 }

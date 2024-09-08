@@ -14,3 +14,7 @@ V1
 	.. Update Namespace to include Pop   on ApiValidations
 	.. Adding a Context item shold be listable, not just single items.
 	Foreach seems untested.  Fix that.
+
+	IsLengthInclusivelyBetweenValidation Does not include "Length" in it's description, making string errors/description wrong.
+		"Must be between 0 and 9999 inclusive."
+

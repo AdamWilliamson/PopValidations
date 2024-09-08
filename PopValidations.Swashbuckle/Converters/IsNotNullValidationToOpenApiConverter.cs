@@ -15,18 +15,18 @@ public class IsNotNullValidationToOpenApiConverter : IValidationToOpenApiConvert
     }
 
     public void UpdateSchema(
-        OpenApiSchema owningObjectSchema,
+        OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description
     )
     {
         propertySchema.Nullable = false;
-        owningObjectSchema.Required.Add(property);
+        owningObjectSchema?.Required.Add(property);
     }
 
     public void UpdateAttribute(
-        OpenApiSchema owningObjectSchema,
+        OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description,

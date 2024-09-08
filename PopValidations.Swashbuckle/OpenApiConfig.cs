@@ -50,10 +50,54 @@ public class OpenApiConfig
 
     public Func<string, string, bool> ObjectPropertyIsDescriptorArray { get; set; }
 
+    public Func<Type, bool> IsGenericList { get; set; }
+
+    public Func<OpenApiConfig, Type?, string, Type?> GetPropertyType { get; set; }
+
     public OpenApiConfig()
     {
         ObjectPropertyIsDescriptorArray
             = (string obj, string json) => obj.Equals(json + OrdinalIndicator, StringComparison.OrdinalIgnoreCase);
+
+        IsGenericList = (Type oType) =>
+        {
+            Console.WriteLine(oType.FullName);
+            if (oType.IsGenericType)
+            {
+                var genDef = oType.GetGenericTypeDefinition();
+
+                if (genDef.GetGenericTypeDefinition() == typeof(IEnumerable<>)) return true;
+
+                if (genDef.GetInterface(typeof(IEnumerable<>).Name) != null) return true;
+
+                return false;
+            }
+            return false;
+        };
+
+        GetPropertyType = (OpenApiConfig config, Type? src, string propName) =>
+        {
+            if (src == null) throw new ArgumentException("Value cannot be null.", "src");
+            if (string.IsNullOrWhiteSpace(propName)) return src;
+
+            var realProp = propName.Split(new char[] { '.' }).Last();
+
+            if (realProp.Contains(config.OrdinalIndicator))
+            {
+                var result = config.GetPropertyFromType(src, realProp.Replace(config.OrdinalIndicator, ""));
+                if (result is not null && (config.IsGenericList?.Invoke(result.PropertyType) ?? false))
+                {
+                    return result.PropertyType.GetGenericArguments().FirstOrDefault();
+                }
+                return null;
+            }
+            else
+            {
+                var result = config.GetPropertyFromType(src, realProp);
+
+                return result?.PropertyType;
+            }
+        };
     }
 
     public void AllClassesAreReused()

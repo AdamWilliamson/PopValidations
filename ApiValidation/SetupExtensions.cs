@@ -3,6 +3,7 @@ using ApiValidations.Execution;
 using System.Reflection;
 using PopValidations;
 using PopValidations.ValidatorInternals;
+using PopValidations.Execution;
 
 namespace ApiValidations;
 
@@ -10,7 +11,9 @@ public static class PopApiValidationExtensions
 {
     public static IServiceCollection RegisterApiValidationRunner(this IServiceCollection services)
     {
-        PopValidation.RegisterRunner(services);
+        //PopValidation.RegisterRunner(services);
+        services.AddSingleton(typeof(MessageProcessor));
+        //services.AddScoped(typeof(IValidationRunner<>), typeof(ValidationRunner<>));
         services.AddTransient(typeof(IApiValidationRunner<>), typeof(ApiValidationRunner<>));
         return services;
     }
@@ -19,16 +22,26 @@ public static class PopApiValidationExtensions
     {
         //PopValidation.RegisterAllMainValidators(services, assembly);
 
+        //assembly
+        //    .GetTypes()
+        //    .Where(a => a.GetInterface(typeof(IApiMainValidator<>).Name) != null && !a.IsAbstract && !a.IsInterface)
+        //    .Select(a => new { assignedType = a, apiValidatorType = a.GetInterface(typeof(IApiMainValidator<>).Name), objValidatorType = a.GetInterface(typeof(IMainValidator<>).Name) })
+        //    .ToList()
+        //    .ForEach(typesToRegister =>
+        //    {
+        //        services.AddScoped(typesToRegister.apiValidatorType, typesToRegister.assignedType);
+        //        services.AddScoped(typesToRegister.objValidatorType, (sp) => sp.GetService(typesToRegister.apiValidatorType));
+        //        //typesToRegister.serviceTypes.ForEach(typeToRegister => );
+        //    });
+
         assembly
             .GetTypes()
             .Where(a => a.GetInterface(typeof(IApiMainValidator<>).Name) != null && !a.IsAbstract && !a.IsInterface)
-            .Select(a => new { assignedType = a, apiValidatorType = a.GetInterface(typeof(IApiMainValidator<>).Name), objValidatorType = a.GetInterface(typeof(IMainValidator<>).Name) })
+            .Select(a => new { assignedType = a, serviceTypes = a.GetInterfaces().ToList() })
             .ToList()
             .ForEach(typesToRegister =>
             {
-                services.AddScoped(typesToRegister.apiValidatorType, typesToRegister.assignedType);
-                services.AddScoped(typesToRegister.objValidatorType, (sp) => sp.GetService(typesToRegister.apiValidatorType));
-                //typesToRegister.serviceTypes.ForEach(typeToRegister => );
+                typesToRegister.serviceTypes.ForEach(typeToRegister => services.AddTransient(typeToRegister, typesToRegister.assignedType));
             });
 
         return services;

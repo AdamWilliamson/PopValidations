@@ -8,6 +8,7 @@ using PopValidations.Configurations;
 using PopValidations.Execution;
 using PopValidations.Execution.Description;
 using PopValidations.Execution.Validation;
+using PopValidations.ValidatorInternals;
 
 namespace ApiValidations.Execution;
 
@@ -179,12 +180,12 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
     private readonly IEnumerable<IApiMainValidator<TValidationType>> mainValidators;
 
     public ApiValidationRunner(
-        IValidationRunner<TValidationType> validationRunner,
+        IEnumerable<IApiMainValidator<TValidationType>> mainValidators,//...  WTF.  how do I get the same validations in SecurityIdentifier the Runner.
+        MessageProcessor messageProcessor
         //IValidatorCreationFactory validatorCreationFactory,
-        IEnumerable<IApiMainValidator<TValidationType>> mainValidators//...  WTF.  how do I get the same validations in SecurityIdentifier the Runner.
         )
     {
-        this.validationRunner = validationRunner;
+        this.validationRunner = new ValidationRunner<TValidationType>(mainValidators.Cast<IMainValidator<TValidationType>>(), messageProcessor);
         //this.validatorCreationFactory = validatorCreationFactory;
         this.mainValidators = mainValidators;
     }

@@ -1,4 +1,4 @@
-﻿using PopValidations.Execution;
+﻿using ApiValidations.Execution;
 
 namespace PopApiValidations.Swashbuckle.Internal;
 
@@ -11,9 +11,9 @@ public class ApiValidationRunnerFactory : IApiValidationRunnerFactory
         this.serviceProvider = serviceProvider;
     }
 
-    public IValidationDescriber? GetRunner(Type type)
+    public IApiValidationDescriber? GetRunner(Type type)
     {
-        var validationRunnerType = typeof(IValidationRunner<>).MakeGenericType(type);
-        return serviceProvider.GetService(validationRunnerType) as IValidationDescriber;
+        var validationRunnerType = typeof(IApiValidationRunner<>).MakeGenericType(type);
+        return serviceProvider.GetService(validationRunnerType) as IApiValidationDescriber;
     }
 }

@@ -17,17 +17,17 @@ public class IsNotEmptyValidationToOpenApiConverter : IValidationToOpenApiConver
     }
 
     public void UpdateSchema(
-        OpenApiSchema owningObjectSchema,
+        OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description
     )
     {
-        if (owningObjectSchema.Required == null)
+        if (owningObjectSchema != null && owningObjectSchema.Required == null)
         {
             owningObjectSchema.Required = new HashSet<string>();
         }
-        if (!owningObjectSchema.Required.Contains(property))
+        if (owningObjectSchema != null && !owningObjectSchema.Required.Contains(property))
         {
             owningObjectSchema.Required.Add(property);
         }
@@ -36,7 +36,7 @@ public class IsNotEmptyValidationToOpenApiConverter : IValidationToOpenApiConver
     }
 
     public void UpdateAttribute(
-        OpenApiSchema owningObjectSchema,
+        OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description,

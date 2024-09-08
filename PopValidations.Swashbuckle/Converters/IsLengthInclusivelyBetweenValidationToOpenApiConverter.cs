@@ -17,7 +17,7 @@ public class IsLengthInclusivelyBetweenValidationToOpenApiConverter : IValidatio
     }
 
     public void UpdateSchema(
-        OpenApiSchema owningObjectSchema,
+        OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description
@@ -34,7 +34,7 @@ public class IsLengthInclusivelyBetweenValidationToOpenApiConverter : IValidatio
     }
 
     public void UpdateAttribute(
-        OpenApiSchema owningObjectSchema,
+        OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
         string property,
         DescriptionOutcome description,

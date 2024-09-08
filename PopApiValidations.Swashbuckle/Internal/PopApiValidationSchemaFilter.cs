@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ApiValidations.Execution;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using PopValidations.Execution.Description;
@@ -7,7 +8,10 @@ using PopValidations.Swashbuckle;
 using PopValidations.Swashbuckle.Internal;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
-
+using ApiValidations.Execution;
+using System.Collections;
+using System.Diagnostics;
+using Microsoft.OpenApi.Interfaces;
 namespace PopApiValidations.Swashbuckle.Internal;
 
 public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
@@ -40,8 +44,6 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 
         if (!results.Results.Any()) return;
 
-
-
         operation.Description += "New Description";
         operation.Summary += "New Summary";
         var firstParam = operation.Parameters.FirstOrDefault();
@@ -63,78 +65,151 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
             conParam.Value.MaxLength = 1999;
         }
 
-        return;
-    }
-
-    public void Apply(OpenApiSchema model, SchemaFilterContext context)
-    {
-
-        return;
-        if (model.Properties?.Any() != true)
+        List<(Type, int, OpenApiSchema, string)> models = new();
+        var parameters = context.MethodInfo.GetParameters();
+        foreach (var p in operation.Parameters.Where(p => p.Schema != null))
         {
-            return;
+            var foundParam = parameters.First(x => x.Name == p.Name);
+            models.Add((foundParam.ParameterType, foundParam.Position, p.Schema, p.Name));
         }
 
-        var runner = factory.GetRunner(context.Type);
+        var missingParameters = parameters.Where(x => !operation.Parameters.Any(p => p.Name == x.Name));
 
-        if (runner == null)
-            return;
-
-        if (model.Required == null)
+        foreach (var c in operation.RequestBody?.Content.Values ?? [])
         {
-            logger.LogInformation("TEST: Model.Required is null");
-            model.Required = new HashSet<string>();
+            var foundcontentparam =
+                c.Schema.Reference == null
+                ? missingParameters.FirstOrDefault(x => c.Schema.Properties.All(p => x.ParameterType.GetProperties().Any(g => string.Equals(g.Name,p.Key,StringComparison.InvariantCultureIgnoreCase) )))
+                : missingParameters.FirstOrDefault(x => x.ParameterType.Name == c.Schema.Reference.Id);
+            
+            if (foundcontentparam != null)
+            {
+                var foundParam = parameters.First(x => x.Name == foundcontentparam.Name);
+                models.Add((foundParam.ParameterType, foundParam.Position, 
+                    c.Schema.Reference != null? context.SchemaRepository.Schemas[c.Schema.Reference.Id] : c.Schema,
+                    foundcontentparam.Name));
+            }
         }
 
-        var results = runner.Describe();
+        var extensionObject = new OpenApiObject();
+        operation.Extensions.Add(config.CustomValidationAttribute, extensionObject);
+        
 
-        if (!results.Results.Any())
-            return;
+        foreach (var model in models)
+        {
+            var extensions = PopValidationSchemaFilter.InitExtension(config, model.Item3);
+            bool isEnumerable = model.Item1.GetInterface(typeof(IEnumerable).Name) == null? false: true;
+            var desc = ApiValidations.Execution.PopApiValidations.Configuation.DescribeValidatingParam.Invoke(
+                context.MethodInfo, Math.Max(model.Item2, 0), null
+            );
+            var enumerableDesc = ApiValidations.Execution.PopApiValidations.Configuation.DescribeValidatingParam.Invoke(
+                context.MethodInfo, Math.Max(model.Item2, 0), -1
+            );
 
-        var extensions = InitExtension(model);
+            var endPointExtensionRules = new OpenApiArray();
+            if (!extensionObject.ContainsKey(model.Item4))
+            {
+                extensionObject.Add(model.Item4, endPointExtensionRules);
+            }
+            else
+            {
+                endPointExtensionRules = extensionObject[model.Item4] as OpenApiArray;
+            }
 
-        RunRules(String.Empty, model, results.Results, context, null, context.Type, extensions, null);
+            var allresults = results.Results.Where(x => x.Property.StartsWith(desc));
+            var allnonenumerableresults = allresults.Where(x => !x.Property.StartsWith(enumerableDesc)).ToList();
+            var allenumerableresults = allresults.Where(x => x.Property.StartsWith(enumerableDesc)).ToList();
+
+            RunParameterRule(
+                model.Item1,
+                desc,
+                allnonenumerableresults,
+                model.Item3,
+                model.Item4,
+                model.Item2,
+                isEnumerable,
+                enumerableDesc,
+                context.SchemaRepository,
+                extensionObject
+            );
+        }
     }
 
-    private ValidationLevel CalculateOverride(ValidationLevel? validationLevelOverride, ValidationLevel objLevel)
+    public void RunParameterRule(
+        Type paramType,
+        string currentObjectGraph,
+        List<DescriptionItemResult> resultObjectGraph,
+        OpenApiSchema paramSchema,
+        string paramName,
+        int paramPosition,
+        bool isEnumerable,
+        string currentObjectGraphEnumerable,
+        SchemaRepository schemaRepository,
+        OpenApiObject endPointExtensions
+    )
     {
-        if (validationLevelOverride == null) return objLevel;
-        if (validationLevelOverride > objLevel) return objLevel;
 
-        return validationLevelOverride.Value;
+        //var baseParamResult = resultObjectGraph.Where(x => x.Item1 == currentObjectGraph);
+        //var baseParamResultEnumerable = resultObjectGraph.Where(x => x.Item1 == currentObjectGraphEnumerable);
+
+        //FlattenOutcomes(config, results.Results.star, desc),
+
+        var array = InitParamExtension(config, paramSchema);
+
+        ConvertValiatorsToOpenApiDescriptions(
+            config,
+            paramSchema,
+            paramName,
+            array,
+            //resultObjectGraph
+            FlattenOutcomes(config, resultObjectGraph, currentObjectGraph)
+        );
+
+        //var dir = new DescriptionItemResult(currentObjectGraph);
+        //dir.Outcomes.AddRange(resultObjectGraph.Select(x => x.Item2));
+
+        RunObjectRules(
+            config,
+            currentObjectGraph,
+            paramSchema,
+            resultObjectGraph,
+            schemaRepository,
+            paramType,
+            null,
+            paramType,
+            endPointExtensions,
+            ValidationLevel.FullDetails
+        );
     }
 
-    private void RunRules(
-        string parent,
+    public static void RunObjectRules(
+        OpenApiConfig config,
+        string currentApiObjectHeirarchy,
         OpenApiSchema model,
-        List<DescriptionItemResult> fieldDescriptions,
-        SchemaFilterContext context,
+        List<DescriptionItemResult> resultObjectGraph,
+        SchemaRepository schemaRepository,
+        Type owner,
         string? ownedby,
         Type? childType,
         OpenApiObject endPointObjectextention,
         ValidationLevel? validationLevelOverride
     )
     {
-        //Need to decide WHEN to turn on or off logging schema details.
-        ValidationLevel ObjectLevel = ValidationLevel.None;
-        var objType = GetPropertyType(config, childType ?? context.Type, parent);
-        if (objType != null)
+        // Model registers no api input properties, so we dont need to process this child.
+        if (model.Properties?.Any() != true)
         {
-            ObjectLevel = (config.TypeValidationLevel?.Invoke(objType!) ?? 0);
-        }
-
-        ObjectLevel = CalculateOverride(validationLevelOverride, ObjectLevel);
-
-        if (ObjectLevel == ValidationLevel.None) { 
-            return; 
+            return;
         }
 
         // Loop through the OpenApi model's proeprties
         foreach (var openApiPropName in model.Properties.Keys)
         {
-            //TODO:  If property is ignored, don't do these things.
+            // Generate a field Name Approximation, from the previous objects's accessor (parent), and the child property key.
+            var fieldName = !string.IsNullOrWhiteSpace(currentApiObjectHeirarchy) ? currentApiObjectHeirarchy + config.ChildIndicator + openApiPropName : openApiPropName;
+
+            //Determine if the Property should be shown.
             ValidationLevel PropertyValidationLevel = ValidationLevel.None;
-            var propType = GetPropertyType(config, childType ?? context.Type, parent);
+            var propType = config.GetPropertyType.Invoke(config, childType ?? owner, fieldName);
             if (propType != null)
             {
                 PropertyValidationLevel = (config.TypeValidationLevel?.Invoke(propType!) ?? ValidationLevel.FullDetails);
@@ -146,280 +221,245 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 
             validationLevelOverride = PropertyValidationLevel;
 
-            // Generate a field Name Approximation, from the previous objects's accessor (parent), and the child property key.
-            var fieldName = !string.IsNullOrWhiteSpace(parent) ? parent + config.ChildIndicator + openApiPropName : openApiPropName;
+
+            var properArrayName = openApiPropName + config.OrdinalIndicator;
+            var fullObjectHeirarchyProperArrayName = fieldName + config.OrdinalIndicator;
 
             // If the field descriptor has something that matches the current field
             if (
-                fieldDescriptions.Any(
+                resultObjectGraph.Any(
                     x => x.Property.StartsWith(fieldName, StringComparison.OrdinalIgnoreCase)
                 )
             )
             {
                 // Find the field descriptor exactly.
-                var fieldOutcomes = fieldDescriptions.FirstOrDefault(
+                var fieldOutcomes = resultObjectGraph.Where(
                     x => config.ObjectPropertyIsJsonProperty(x.Property, fieldName)
                 );
                 // Find the field descriptor if its an array
-                var arrayOutcomes = fieldDescriptions.FirstOrDefault(
+                var arrayOutcomes = resultObjectGraph.Where(
                     x => config.ObjectPropertyIsDescriptorArray(x.Property, fieldName)
                 );
 
 #pragma warning disable CS8604 // Possible null reference argument.
-                var customRulesArray = InitExtensionsAndArray(model, openApiPropName/*, outcomeSet, ownedby*/);
+                var customRulesArray = InitExtensionsAndArray(config, model, openApiPropName/*, outcomeSet, ownedby*/);
 #pragma warning restore CS8604 // Possible null reference argument.
 
                 // Execute processes for Field and Array descriptors for the property.
-                foreach (var outcomeSet in new[] { fieldOutcomes })
-                {
-                    if (outcomeSet is null)
-                        continue;
-
+                //foreach (var outcomeSet in fieldOutcomes)
+                //{
                     ConvertValiatorsToOpenApiDescriptions(
-                        model, 
-                        endPointObjectextention, 
-                        openApiPropName, 
-                        PropertyValidationLevel, 
-                        fieldName, 
-                        customRulesArray, 
-                        outcomeSet,
-                        false
+                        config,
+                        model,
+                        openApiPropName,
+                        customRulesArray,
+                        FlattenOutcomes(config, fieldOutcomes.ToList(), fieldName)
                     );
 
-                }
+                //}
 
-                if (arrayOutcomes?.Outcomes?.Any() == true || arrayOutcomes?.ValidationGroups?.Any() == true)
+                if (arrayOutcomes?.Any() == true)
                 {
 #pragma warning disable CS8604 // Possible null reference argument.
-                    var customRulesArrayForArrays = InitExtensionsAndArray(model, openApiPropName + config.OrdinalIndicator/*, outcomeSet, ownedby*/);
+                    var customRulesArrayForArrays = InitExtensionsAndArray(config, model, properArrayName/*, outcomeSet, ownedby*/);
 #pragma warning restore CS8604 // Possible null reference argument.
 
-                    foreach (var outcomeSet in new[] { arrayOutcomes })
-                    {
-                        if (outcomeSet is null)
-                            continue;
+                    //foreach (var outcomeSet in new[] { arrayOutcomes })
+                    //{
+                    //    if (outcomeSet is null)
+                    //        continue;
 
                         ConvertValiatorsToOpenApiDescriptions(
+                            config,
                             model,
-                            endPointObjectextention,
-                            openApiPropName,
-                            PropertyValidationLevel,
-                            fieldName,
+                            fieldName + config.OrdinalIndicator,
                             customRulesArrayForArrays,
-                            outcomeSet,
-                            true
+                            //arrayOutcomes.ToList()
+                            FlattenOutcomes(config, arrayOutcomes.ToList(), fieldName)
                         );
 
-                    }
+                    //}
                 }
 
                 //if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
                 {
-                    var newOwner = ownedby ?? "Owned By " + context.Type.Name;
-                    if (
-                        model.Properties[openApiPropName].Reference != null
-                        && context.SchemaRepository.Schemas.ContainsKey(
+                    var newOwner = ownedby ?? "Owned By " + owner.Name;
+
+                    var nonArrayChildObject =
+                        (model.Properties[openApiPropName].Reference != null
+                        && schemaRepository.Schemas.ContainsKey(
                             model.Properties[openApiPropName].Reference.Id
-                        )
+                        )) ? schemaRepository.Schemas[
+                            model.Properties[openApiPropName].Reference.Id
+                        ]
+                        : model.Properties[openApiPropName];
+                    if (
+                        nonArrayChildObject != null
+                        //model.Properties[openApiPropName].Reference != null
+                        //&& schemaRepository.Schemas.ContainsKey(
+                        //    model.Properties[openApiPropName].Reference.Id
+                        //)
                     )
                     {
-                        var childObject = context.SchemaRepository.Schemas[
-                            model.Properties[openApiPropName].Reference.Id
-                        ];
+                        //var nonArrayChildObject = schemaRepository.Schemas[
+                        //    model.Properties[openApiPropName].Reference.Id
+                        //];
 
-                        RunRules(
+                        RunObjectRules(
+                            config,
                             fieldName,
-                            childObject,
-                            fieldDescriptions,
-                            context,
-                            newOwner + config.ChildIndicator + model.Properties[openApiPropName].Reference.Id,
+                            nonArrayChildObject,
+                            resultObjectGraph,
+                            schemaRepository,
+                            owner,
+                            newOwner + config.ChildIndicator + (model.Properties[openApiPropName].Reference?.Id ?? openApiPropName),
                             propType,
                             endPointObjectextention,
                             validationLevelOverride
                         );
                     }
 
-                    if (
+                    var arraychildObject =
+                        (
                         model.Properties[openApiPropName].Items?.Reference != null
-                        && context.SchemaRepository.Schemas.ContainsKey(
+                        && schemaRepository.Schemas.ContainsKey(
                             model.Properties[openApiPropName].Items.Reference.Id
                         )
+                    ) ? schemaRepository.Schemas[
+                            model.Properties[openApiPropName].Items.Reference.Id
+                        ]
+                    : model.Properties[openApiPropName].Items;
+
+                    if (
+                        //model.Properties[openApiPropName].Items?.Reference != null
+                        //&& schemaRepository.Schemas.ContainsKey(
+                        //    model.Properties[openApiPropName].Items.Reference.Id
+                        //)
+                        arraychildObject != null
                     )
                     {
-                        var childObject = context.SchemaRepository.Schemas[
-                            model.Properties[openApiPropName].Items.Reference.Id
-                        ];
+                        //var arraychildObject = schemaRepository.Schemas[
+                        //    model.Properties[openApiPropName].Items.Reference.Id
+                        //];
 
-                        RunRules(
-                            fieldName + config.OrdinalIndicator,
-                            childObject,
-                            fieldDescriptions,
-                            context,
-                            newOwner + config.ChildIndicator + model.Properties[openApiPropName].Items.Reference.Id,
-                            propType,
+                        RunObjectRules(
+                            config,
+                            fullObjectHeirarchyProperArrayName,
+                            arraychildObject,
+                            resultObjectGraph,
+                            schemaRepository,
+                            owner,
+                            newOwner + config.ChildIndicator + (model.Properties[openApiPropName].Items.Reference?.Id ?? openApiPropName),
+                            propType.GetGenericArguments()[0],
                             endPointObjectextention,
                             validationLevelOverride
                         );
+
+                        //RunRules(
+                        //    config,
+                        //    fieldName + config.OrdinalIndicator,
+                        //    childObject,
+                        //    fieldDescriptions,
+                        //    //context,
+                        //    schemaRepository,
+                        //    owner,
+                        //    newOwner + config.ChildIndicator + model.Properties[openApiPropName].Items.Reference.Id,
+                        //    propType,
+                        //    endPointObjectextention,
+                        //    validationLevelOverride
+                        //);
                     }
                 }
             }
         }
     }
 
-    private List<(string, DescriptionOutcome)> FlattenOutcomes(DescriptionItemResult descriptionItem)
+    private static OpenApiArray InitArray(
+        OpenApiConfig config,
+        OpenApiObject owningObject,
+        string key
+    )
     {
-        //string Property = descriptionItem.Property;
-        var endOutcomes = new List<(string, DescriptionOutcome)>();
-
-        if (descriptionItem == null) return endOutcomes;
-        if (descriptionItem.Outcomes?.Any() == true)
+        OpenApiArray array;
+        if (owningObject.ContainsKey(key))
         {
-            foreach (var outcome in descriptionItem.Outcomes)
-            {
-                if (outcome == null) continue;
-
-                endOutcomes.Add((string.Empty, outcome!));
-            }
+            array = owningObject[key] as OpenApiArray ?? new OpenApiArray();
+        }
+        else
+        {
+            array = new OpenApiArray();
         }
 
-        if (descriptionItem.ValidationGroups?.Any() == true)
-        {
-            foreach (var group in descriptionItem.ValidationGroups)
-            {
-                endOutcomes.AddRange(FlattenRecurse(string.Empty, group));
-            }
-        }
+        owningObject[key] = array;
 
-        return endOutcomes;
+        return array;
     }
 
-    private List<(string, DescriptionOutcome)> FlattenRecurse(string existing, DescriptionGroupResult group)
+    public static OpenApiArray InitExtensionsAndArray(
+        OpenApiConfig config,
+        OpenApiSchema modelSchema,
+        string key
+    )
     {
-        var endOutcomes = new List<(string, DescriptionOutcome)>();
-        var additive = string.IsNullOrWhiteSpace(existing) ? group.Description : config.MultiGroupIndicator + group.Description;
+        var modelValidations = InitExtension(config, modelSchema);
 
-        if (group.Outcomes?.Any() == true)
-        {
-            foreach(var outcome in group.Outcomes)
-            {
-                if (outcome == null) continue;
-
-                endOutcomes.Add(new (existing + additive, outcome!));
-            }
-        }
-
-        if (group.Children?.Any() == true)
-        {
-            foreach (var child in group.Children)
-            {
-                endOutcomes.AddRange(FlattenRecurse(existing + additive, child));
-            }
-        }
-
-        return endOutcomes;
+        return InitArray(config, modelValidations, key);
     }
 
-    private void ConvertValiatorsToOpenApiDescriptions(
-        OpenApiSchema model, 
-        OpenApiObject endPointObjectextention, 
-        string openApiPropName, 
-        ValidationLevel PropertyValidationLevel, 
-        string fieldName, 
-        OpenApiArray customRulesArray, 
-        DescriptionItemResult? outcomeSet, 
-        bool isArray)
+    private static ValidationLevel CalculateOverride(ValidationLevel? validationLevelOverride, ValidationLevel objLevel)
     {
+        if (validationLevelOverride == null) return objLevel;
+        if (validationLevelOverride > objLevel) return objLevel;
 
-        if (outcomeSet == null) return;
+        return validationLevelOverride.Value;
+    }
 
-        var validationArray = new PopValidationArray(customRulesArray);
+    //private static Type? GetPropertyType(OpenApiConfig config, Type? src, string propName)
+    //{
+    //    if (src == null) throw new ArgumentException("Value cannot be null.", "src");
+    //    if (string.IsNullOrWhiteSpace(propName)) return src;
 
-        foreach (
-            var (owner, outcome) in FlattenOutcomes(outcomeSet)
-        //var outcome in outcomeSet?.Outcomes
-        //   ?? Enumerable.Empty<DescriptionOutcome>()
-        )
+    //    var realProp = propName.Split(new char[] { '.' }).Last();
+
+    //    if (realProp.Contains(config.OrdinalIndicator))
+    //    {
+    //        var result = config.GetPropertyFromType(src, realProp.Replace(config.OrdinalIndicator, ""));
+    //        if (result is not null && (config.IsGenericList?.Invoke(result.PropertyType) ?? false))
+    //        {
+    //            return result.PropertyType.GetGenericArguments().FirstOrDefault();
+    //        }
+    //        return null;
+    //    }
+    //    else
+    //    {
+    //        var result = config.GetPropertyFromType(src, realProp);
+
+    //        return result?.PropertyType;
+    //    }
+    //}
+
+    public static OpenApiArray InitParamExtension(OpenApiConfig config, OpenApiSchema modelSchema)
+    {
+        var modelValidations = new OpenApiArray();
+        if (modelSchema.Extensions.ContainsKey(config.CustomValidationAttribute))
         {
-            if (!string.IsNullOrWhiteSpace(owner))
+            if (modelSchema.Extensions[config.CustomValidationAttribute] is OpenApiArray converted)
             {
-                validationArray.SetLineHeader(owner + config.GroupResultIndicator);
+                modelValidations = converted;
             }
             else
             {
-                validationArray.SetLineHeader(string.Empty);
-            }
-            // for each converter registered in the config
-            foreach (var converter in config.Converters)
-            {
-                // Check if it supports the descriptor outcome
-                if (converter.Supports(outcome))
-                {
-                    //Incomplete
-                    if (!isArray && string.IsNullOrWhiteSpace(owner) && PropertyValidationLevel.HasFlag(ValidationLevel.OpenApi))
-                    {
-                        converter.UpdateSchema(model, model.Properties[openApiPropName], openApiPropName, outcome);
-                    }
-
-                    if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttribute))
-                    {
-                        converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, validationArray);
-                    }
-
-                    if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
-                    {
-                        var array = new PopValidationArray(InitArray(endPointObjectextention, fieldName));
-                        array.SetLineHeader(owner);
-                        converter.UpdateAttribute(model, model.Properties[openApiPropName], openApiPropName, outcome, array);
-                    }
-                }
+                modelSchema.Extensions[config.CustomValidationAttribute] = modelValidations;
             }
         }
-    }
-
-    public static bool IsGenericList(Type oType)
-    {
-        Console.WriteLine(oType.FullName);
-        if (oType.IsGenericType)
+        else
         {
-            var genDef = oType.GetGenericTypeDefinition();
-
-            if (genDef.GetGenericTypeDefinition() == typeof(IEnumerable<>)) return true;
-
-            if (genDef.GetInterface(typeof(IEnumerable<>).Name) != null) return true;
-
-            return false;
+            modelSchema.Extensions.Add(config.CustomValidationAttribute, modelValidations);
         }
-        return false;
+
+        return modelValidations;
     }
-
-    private static Type? GetPropertyType(OpenApiConfig config, Type? src, string propName)
-    {
-        if (src == null) throw new ArgumentException("Value cannot be null.", "src");
-        if (string.IsNullOrWhiteSpace(propName)) return src;
-
-        var realProp = propName.Split(new char[] { '.' }).Last();
-
-        {
-            if (realProp.Contains(config.OrdinalIndicator))
-            {
-                var result = config.GetPropertyFromType(src, realProp.Replace(config.OrdinalIndicator, ""));
-                if (result is not null && IsGenericList(result.PropertyType))
-                {
-                    return result.PropertyType.GetGenericArguments().FirstOrDefault();
-                }
-                return null;
-            }
-            else
-            {
-                var result = config.GetPropertyFromType(src, realProp);
-
-                return result?.PropertyType;
-            }
-            //return prop != null ? prop.GetValue(src, null) : null;
-        }
-    }
-
-    private OpenApiObject InitExtension(OpenApiSchema modelSchema)
+    public static OpenApiObject InitExtension(OpenApiConfig config, OpenApiSchema modelSchema)
     {
         var modelValidations = new OpenApiObject();
         if (modelSchema.Extensions.ContainsKey(config.CustomValidationAttribute))
@@ -441,59 +481,101 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
         return modelValidations;
     }
 
-    private OpenApiArray InitArray(
-        OpenApiObject owningObject,
-        string key
-    )
+
+    #region Flatten the Descriptions where groups exist, into a flat list.
+    private static List<(string, DescriptionOutcome)> FlattenOutcomes(OpenApiConfig config, List<DescriptionItemResult> descriptionItems, string param)
     {
-        OpenApiArray array;
-        if (owningObject.ContainsKey(key))
+        var endOutcomes = new List<(string, DescriptionOutcome)>();
+
+        if (descriptionItems?.Any() != true) return endOutcomes;
+
+        foreach (var descriptionItem in descriptionItems.Where(x => x.Property.Equals(param, StringComparison.OrdinalIgnoreCase)))
         {
-            array = owningObject[key] as OpenApiArray ?? new OpenApiArray();
-        }
-        else
-        {
-            array = new OpenApiArray();
+            if (descriptionItem.Outcomes?.Any() == true)
+            {
+                foreach (var outcome in descriptionItem.Outcomes)
+                {
+                    if (outcome == null) continue;
+
+                    endOutcomes.Add((string.Empty, outcome!));
+                }
+            }
+
+            if (descriptionItem.ValidationGroups?.Any() == true)
+            {
+                foreach (var group in descriptionItem.ValidationGroups)
+                {
+                    endOutcomes.AddRange(FlattenRecurse(config, string.Empty, group));
+                }
+            }
         }
 
-        owningObject[key] = array;
-
-        return array;
+        return endOutcomes;
     }
 
-    private OpenApiArray InitExtensionsAndArray(
-        OpenApiSchema modelSchema,
-        string key
-    )
+    private static List<(string, DescriptionOutcome)> FlattenRecurse(OpenApiConfig config, string existing, DescriptionGroupResult group)
     {
-        var modelValidations = InitExtension(modelSchema);
+        var endOutcomes = new List<(string, DescriptionOutcome)>();
+        var additive = string.IsNullOrWhiteSpace(existing) ? group.Description : config.MultiGroupIndicator + group.Description;
 
-        return InitArray(modelValidations, key);
+        if (group.Outcomes?.Any() == true)
+        {
+            foreach (var outcome in group.Outcomes)
+            {
+                if (outcome == null) continue;
+
+                endOutcomes.Add(new(existing + additive, outcome!));
+            }
+        }
+
+        if (group.Children?.Any() == true)
+        {
+            foreach (var child in group.Children)
+            {
+                endOutcomes.AddRange(FlattenRecurse(config, existing + additive, child));
+            }
+        }
+
+        return endOutcomes;
     }
+    #endregion 
 
-    private string RecursiveGroupDescriber(
-        DescriptionGroupResult group,
-        string depth,
-        string existing
-    )
+    public static void ConvertValiatorsToOpenApiDescriptions(
+        OpenApiConfig config,
+        OpenApiSchema model,
+        string openApiPropName,
+        OpenApiArray customRulesArray,
+        List<(string, DescriptionOutcome)> outcomeSet)
     {
-        if (!string.IsNullOrWhiteSpace(group.Description))
-        {
-            existing += config.NewLine + depth + group.Description;
-            depth += config.IndentCharacter;
-        }
+        Debug.Assert(outcomeSet != null);
+        var validationArray = new PopValidationArray(customRulesArray);
 
-        foreach (var parentGroup in group.Children)
+        foreach (var (owner, outcome) in outcomeSet)
         {
-            existing = RecursiveGroupDescriber(parentGroup, depth, existing);
-        }
+            if (!string.IsNullOrWhiteSpace(owner))
+            {
+                validationArray.SetLineHeader(owner + config.GroupResultIndicator);
+            }
+            else
+            {
+                validationArray.SetLineHeader(string.Empty);
+            }
 
-        foreach (var description in group.Outcomes)
-        {
-            existing += config.NewLine + depth + description.Message;
-        }
+            // for each converter registered in the config
+            foreach (var converter in config.Converters)
+            {
+                // Check if it supports the descriptor outcome
+                if (converter.Supports(outcome))
+                {
+                    //Incomplete
+                    if (string.IsNullOrWhiteSpace(owner))
+                    {
+                        converter.UpdateSchema(null, model, openApiPropName, outcome);
+                    }
 
-        return existing;
+                    converter.UpdateAttribute(null, model, openApiPropName, outcome, validationArray);
+                }
+            }
+        }
     }
-
 }

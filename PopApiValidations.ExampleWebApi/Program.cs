@@ -2,7 +2,6 @@ using PopApiValidations.ExampleWebApi.Controllers;
 using ApiValidations;
 using PopApiValidations;
 using PopApiValidations.Swashbuckle;
-using PopValidations.Swashbuckle;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +19,7 @@ builder.Services.RegisterApiValidationRunner()
     .RegisterAllMainApiValidators(typeof(AddressOwnershipController).Assembly);
 
 // Register a Pop Validation Config that describes the configuration for describing the validations within OpenApi
-builder.Services.RegisterPopApiValidationsOpenApiDefaults(new OpenApiConfig());
+builder.Services.RegisterPopApiValidationsOpenApiDefaults(new PopValidations.Swashbuckle.OpenApiConfig());
 
 builder.Services.AddSwaggerGen(
     options =>
@@ -30,7 +29,7 @@ builder.Services.AddSwaggerGen(
     });
 
 // Optional: Replace merging of objects for end points.
-//builder.Services.RegisterApiValidationPerEndpointDefinitionsFilter();
+builder.Services.RegisterApiValidationPerEndpointDefinitionsFilter();
 
 var app = builder.Build();
 

@@ -7,28 +7,34 @@ public class AddressOwnershipControllerValidation : ApiValidator<AddressOwnershi
 {
     public AddressOwnershipControllerValidation()
     {
-        DescribeFunc(x => x.Get()).Return.IsNotNull();
+        //DescribeFunc(x => x.Get()).Return.IsNotNull();
 
         DescribeFunc(x => x.GetById(Param.Is<int>().IsGreaterThan(0)));
 
-        DescribeFunc(x => x.Delete(Param.Is<int>().IsGreaterThan(0)));
+        //DescribeFunc(x => x.Delete(Param.Is<int>().IsGreaterThan(0)));
 
-        DescribeFunc(x => x.AddAddressOwnership(
-            Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
-        );
-        DescribeFunc(x => x.AddAddressOwnership_Ignore(
-            Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
-        );
-        DescribeFunc(x => x.AddAddressOwnership_Rename(
-            Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
-        );
+        //DescribeFunc(x => x.AddAddressOwnership(
+        //    Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
+        //);
+        //DescribeFunc(x => x.AddAddressOwnership_Ignore(
+        //    Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
+        //);
+        //DescribeFunc(x => x.AddAddressOwnership_Rename(
+        //    Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
+        //);
 
-        DescribeFunc(x => x.InsertOwner(
-            Param.Is<int>().IsGreaterThan(0),
-            Param.Is<string?>().IsNotNull(),
-            Param.Is<string?>().IsNotNull(),
-            Param.Is<ContactRecordType?>().IsNotNull(),
-            Param.Is<string?>().IsNotNull()
+        //DescribeFunc(x => x.InsertOwner(
+        //    Param.Is<int>().IsGreaterThan(0),
+        //    Param.Is<string?>().IsNotNull(),
+        //    Param.Is<string?>().IsNotNull(),
+        //    Param.Is<ContactRecordType?>().IsNotNull(),
+        //    Param.Is<string?>().IsNotNull()
+        //));
+
+        DescribeFunc(x => x.MultipleContentParameters(
+            Param.Is<AddressOwnership>().Vitally().IsNotNull().SetValidator(new CreatingAddressOwnershipValidation()),
+            Param.Is<int>().IsGreaterThan(0).IsLessThan(9999),
+            Param.Is<string>().Vitally().IsNotNull().IsLengthInclusivelyBetween(0,9999)
         ));
     }
 }
