@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using PopApiValidations.Swashbuckle.Internal;
-using PopValidations.Swashbuckle;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace PopApiValidations.Swashbuckle;
@@ -21,18 +20,15 @@ public static class SwaggerIntegrationExtensions
             ServiceLifetime.Transient
         );
         services.Replace(descriptor);
-
-        //services.AddTransient<ISchemaGenerator, NonRefSchemaGenerator>();
-        //options.<NonRefSchemaGenerator>();
     }
 
     public static IServiceCollection RegisterPopApiValidationsOpenApiDefaults(
         this IServiceCollection services,
-        OpenApiConfig? config = null,
+        PopApiOpenApiConfig? config = null,
         Type? validationRunnerFactoryType = null
     )
     {
-        services.AddSingleton(config ?? new OpenApiConfig());
+        services.AddSingleton(config ?? new PopApiOpenApiConfig());
         services.AddTransient(typeof(IApiValidationRunnerFactory), validationRunnerFactoryType ?? typeof(ApiValidationRunnerFactory));
         return services;
     }

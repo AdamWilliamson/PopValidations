@@ -19,7 +19,7 @@ builder.Services.RegisterApiValidationRunner()
     .RegisterAllMainApiValidators(typeof(AddressOwnershipController).Assembly);
 
 // Register a Pop Validation Config that describes the configuration for describing the validations within OpenApi
-builder.Services.RegisterPopApiValidationsOpenApiDefaults(new PopValidations.Swashbuckle.OpenApiConfig());
+builder.Services.RegisterPopApiValidationsOpenApiDefaults(new PopApiOpenApiConfig());
 
 builder.Services.AddSwaggerGen(
     options =>

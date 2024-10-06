@@ -13,6 +13,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApiValidation\ApiValidations.csproj" />
+    <ProjectReference Include="..\Validations\Validations.csproj" />
   </ItemGroup>
-
+<ItemGroup>
+    <InternalsVisibleTo Include="PopApiValidations.Swashbuckle_Tests" />
+  </ItemGroup>
 </Project>

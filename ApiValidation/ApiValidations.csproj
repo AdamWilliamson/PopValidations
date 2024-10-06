@@ -1,12 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+	<PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeProjectReferenceDlls</TargetsForTfmSpecificBuildOutput>
+		<NoWarn>$(NoWarn);NU5131</NoWarn>
   </PropertyGroup>
 
-    <ItemGroup>
-	    <ProjectReference Include="..\Validations\Validations.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Validations\Validations.csproj" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Add a ref folder to the package which only exposes the library so that the referenced class library doesn't get exposed. -->
+		<None Include="$(TargetPath)" PackagePath="ref/$(TargetFramework)" Pack="true" Condition="'$(TargetFramework)' != ''" />
+	</ItemGroup>
+
+	<Target Name="IncludeProjectReferenceDlls" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+		<ItemGroup>
+			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))" />
+			<!--  For things like internationalisation?? TargetPath="%(ReferenceCopyLocalPaths.DestinationSubDirectory)" -->
+		</ItemGroup>
+	</Target>
+    
 </Project>

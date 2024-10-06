@@ -17,5 +17,7 @@
     <ProjectReference Include="..\PopApiValidations.Swashbuckle\PopApiValidations.Swashbuckle.csproj" />
     <ProjectReference Include="..\PopApiValidations.WebApi\PopApiValidations.WebApi.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<InternalsVisibleTo Include="PopApiValidations.Swashbuckle_Tests" />
+	</ItemGroup>
 </Project>
