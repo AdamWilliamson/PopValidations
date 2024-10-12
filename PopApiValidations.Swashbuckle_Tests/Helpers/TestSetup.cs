@@ -16,16 +16,16 @@ public class TestSetup<TTestController, TRequestValidator>
     private string? Content { get; set; }
     private OpenApiHelper? Helper { get; set; }
 
-    public Type ControllerType => typeof(TTestController);
-    public Type ValidatorType => typeof(TRequestValidator);
+    //public Type ControllerType => typeof(TTestController);
+    //public Type ValidatorType => typeof(TRequestValidator);
 
-    public string Scenario
-    {
-        get
-        {
-            return $"{typeof(TTestController).FullName?.Split(".").Last().Split("+").First()}";
-        }
-    }
+    //public string Scenario
+    //{
+    //    get
+    //    {
+    //        return $"{typeof(TTestController).FullName?.Split(".").Last().Split("+").First()}";
+    //    }
+    //}
 
     public TestSetup()
     {
@@ -33,24 +33,36 @@ public class TestSetup<TTestController, TRequestValidator>
             .AddController<TTestController>();
     }
 
-    bool described = false;
+    //bool described = false;
+
+    //private void Configure<TFuncOutput>(PopApiOpenApiConfig config, JObject cleanOpenApi, string url, string type, Func<ApiValidationBuilder<TTestController>, Expression<Func<TTestController, TFuncOutput>>> expression)
+    //{
+    //    var validator = new TRequestValidator();
+    //    var testBuilder = new ApiValidationBuilder<TTestController>(
+    //                    config,
+    //                    validator,
+    //                    cleanOpenApi,
+    //                    url,
+    //                    type
+    //            );
+
+    //    validator.DescribeFunc(expression.Invoke(testBuilder));
 
 
+    //    Factory
+    //        //.AddValidator<TRequestValidator, TTestController>()
+    //        .AddRealizedValidator(typeof(IApiMainValidator<TTestController>), (x) =>
+    //        {
+    //            return validator;
+    //        })
+    //        .WithConfig(config);
+    //    //IApiMainValidator<TValidationType>
 
-    private void Configure<TFuncOutput>(PopApiOpenApiConfig config, JObject cleanOpenApi, string url, string type, Func<ApiValidationBuilder<TTestController>, Expression<Func<TTestController, TFuncOutput>>> expression)
+    //    Client = Factory.CreateClient();
+    //}
+
+    private void Configurev2(PopApiOpenApiConfig config, TRequestValidator validator)
     {
-        var validator = new TRequestValidator();
-        var testBuilder = new ApiValidationBuilder<TTestController>(
-                        config,
-                        validator,
-                        cleanOpenApi,
-                        url,
-                        type
-                );
-
-        validator.DescribeFunc(expression.Invoke(testBuilder));
-
-
         Factory
             //.AddValidator<TRequestValidator, TTestController>()
             .AddRealizedValidator(typeof(IApiMainValidator<TTestController>), (x) =>
@@ -101,14 +113,29 @@ public class TestSetup<TTestController, TRequestValidator>
         return JObject.Parse(Content);
     }
 
-    public async Task<OpenApiHelper> GetHelper<TFuncOutput>(PopApiOpenApiConfig config, JObject cleanOpenApi,
-        string url, string type, Func<ApiValidationBuilder<TTestController>, Expression<Func<TTestController, TFuncOutput>>> expression)
+    //public async Task<OpenApiHelper> GetHelper<TFuncOutput>(PopApiOpenApiConfig config, JObject cleanOpenApi,
+    //    string url, string type, Func<ApiValidationBuilder<TTestController>, Expression<Func<TTestController, TFuncOutput>>> expression)
+    //{
+    //    Configure(config, cleanOpenApi, url, type, expression);
+    //    await GetSwagger();
+    //    Describe();
+
+    //    Helper = new OpenApiHelper(config, Content, Description);
+    //    return Helper;
+    //}
+
+    public async Task<OpenApiHelper> GetHelperv2(
+        PopApiOpenApiConfig config, 
+        JObject cleanOpenApi,
+        string url, 
+        string type, 
+        TRequestValidator validator)
     {
-        Configure(config, cleanOpenApi, url, type, expression);
+        Configurev2(config, validator);
         await GetSwagger();
         Describe();
 
-        Helper = new OpenApiHelper(config, Content, Description);
+        Helper = new OpenApiHelper(config, Content, cleanOpenApi, Description, new ApiValidationBuilder(config, cleanOpenApi, url, type));
         return Helper;
     }
 }

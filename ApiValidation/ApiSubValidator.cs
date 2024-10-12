@@ -10,7 +10,7 @@ public interface IApiSubValidator<TValidationType> { }
 public abstract class ApiSubValidator<TValidationType> : PopValidations.AbstractSubValidator<TValidationType>, IValidator, IApiSubValidator<TValidationType>
 {
     protected ParamValidationSetBuilder<TValidationType> Builder;
-    protected ParamBuilder<TValidationType> Param;
+    public ParamBuilder<TValidationType> Param { get; protected set; }
 
     protected ApiSubValidator()
     {

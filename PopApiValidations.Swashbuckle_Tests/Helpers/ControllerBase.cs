@@ -32,6 +32,7 @@ public class Request : AbstractComplexObject
 }
 
 public class TestControllerValidation : ApiValidator<TestController> { }
+public class TestSubValidation<TSubObject> : ApiSubValidator<TSubObject> { }
 
 [ApiController]
 [Route("api/[controller]")]
@@ -56,7 +57,7 @@ public class TestController : Controller
     }
 
     [HttpPost(nameof(CreateByUrl) +"/{id}/{stringField}/{listOfIntField}")]
-    public ActionResult<Response> CreateByUrl(int id, string stringField, List<int> listOfIntField)
+    public ActionResult<Response> CreateByUrl(int? id, string stringField, List<int> listOfIntField)
     {
         return Ok();
     }

@@ -43,3 +43,5 @@ builder.Services.AddSwaggerGen(
 Full documentation can be found at
 [https://adamwilliamson.github.io/popvalidations/](https://adamwilliamson.github.io/popvalidations/)
 
+### Test Execution
+Approval Tests, requires a known comparer in path for it to detect.

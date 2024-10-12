@@ -64,11 +64,27 @@ public abstract class ValidationComponentBase : IValidationComponent
 
     protected DescribeActionResult CreateDescription(params (string Key, string Value)[] keyValues)
     {
-        string GetNameWithoutGenericArity(Type t)
+        //string GetNameWithoutGenericArity(Type t)
+        //{
+        //    string name = t.Name;
+        //    int index = name.IndexOf('`');
+        //    return index == -1 ? name : name.Substring(0, index);
+        //}
+
+        string GetNameWithoutGenericArity(Type? t)
         {
+            if (t == null) return string.Empty;
+
             string name = t.Name;
             int index = name.IndexOf('`');
-            return index == -1 ? name : name.Substring(0, index);
+            name = index == -1 ? name : name.Substring(0, index);
+
+            if (t.IsGenericType)
+            {
+                name += $"<{string.Join(',', t.GenericTypeArguments.ToList().Select(x => GetNameWithoutGenericArity(x)).ToList())}>";
+            }
+
+            return name;
         }
 
         return new DescribeActionResult(

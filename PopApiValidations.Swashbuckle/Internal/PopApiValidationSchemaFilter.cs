@@ -79,7 +79,8 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
         if (context.MethodInfo.DeclaringType is null) return;
-        if (config.ValidateEndpoint?.Invoke(context.MethodInfo) == false) return;
+        if (config.ValidateEndpoint?.Invoke(context.MethodInfo) == false) 
+            return;
 
         var runner = factory.GetRunner(context.MethodInfo.DeclaringType);
 
@@ -93,6 +94,7 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 
         List<(Type, int, OpenApiSchema, string)> models = new();
         var parameters = context.MethodInfo.GetParameters();
+
         foreach (var p in operation.Parameters.Where(p => p.Schema != null && p.In != ParameterLocation.Query))  // Cannot handle Query Parameters Currently.
         {
             var foundParam = parameters.First(x => x.Name == p.Name);
@@ -274,6 +276,7 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 
         ConvertValiatorsToOpenApiDescriptions(
             config,
+            null,
             paramInfo.ParameterSchema,
             paramInfo.ParamName,
             validationLevel,
@@ -361,6 +364,7 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                     ConvertValiatorsToOpenApiDescriptions(
                         config,
                         model,
+                        model.Properties[openApiPropName],
                         openApiPropName,
                         validationLevelOverride.Value,
                         FlattenOutcomes(config, fieldOutcomes.ToList(), fieldName)
@@ -377,6 +381,7 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                         ConvertValiatorsToOpenApiDescriptions(
                             config,
                             model,
+                            model.Properties[openApiPropName],
                             fieldName + config.OrdinalIndicator,
                             //arrayOutcomes.ToList()
                             validationLevelOverride.Value,
@@ -736,7 +741,8 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 
     public static void ConvertValiatorsToOpenApiDescriptions(
         PopApiOpenApiConfig config,
-        OpenApiSchema model,
+        OpenApiSchema parentModel,
+        OpenApiSchema propertyModel,
         string openApiPropName,
         ValidationLevel validationLevel,
         List<(string, DescriptionOutcome)> outcomeSet)
@@ -749,7 +755,7 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
         if (validationLevel.HasFlag(ValidationLevel.ValidationAttribute))
         {
 #pragma warning disable CS8604 // Possible null reference argument.
-            var customRulesArray = InitExtensionsAndArray(config, model, openApiPropName/*, outcomeSet, ownedby*/);
+            var customRulesArray = InitExtensionsAndArray(config, parentModel, openApiPropName/*, outcomeSet, ownedby*/);
 #pragma warning restore CS8604 // Possible null reference argument.
             validationArray = new PopValidationArray(customRulesArray);
         }
@@ -777,12 +783,12 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                     //Incomplete
                     if (string.IsNullOrWhiteSpace(owner))
                     {
-                        converter.UpdateSchema(null, model, openApiPropName, outcome);
+                        converter.UpdateSchema(parentModel, propertyModel, openApiPropName, outcome);
                     }
 
                     if (validationLevel.HasFlag(ValidationLevel.ValidationAttribute))
                     {
-                        converter.UpdateAttribute(null, model, openApiPropName, outcome, validationArray!);
+                        converter.UpdateAttribute(parentModel, propertyModel, openApiPropName, outcome, validationArray!);
                     }
                 }
             }

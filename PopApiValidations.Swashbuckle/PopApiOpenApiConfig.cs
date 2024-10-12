@@ -84,5 +84,5 @@ public class PopApiOpenApiConfig : OpenApiConfig
         new PopApiIsNotNullValidationToOpenApiConverter()
     };
 
-    public Func<MethodInfo, bool>? ValidateEndpoint { get; set; } = null;// (MethodInfo m) => true;
+    public Func<MethodInfo, bool>? ValidateEndpoint { get; set; } = null;
 }
