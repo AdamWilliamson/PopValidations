@@ -455,6 +455,44 @@ public class PopApiControllerValidationTestBuilder<TController, TValidator>
         }[attr];
 
         // Act
-        return await OpenApiSetup.GetHelperv2(config, cleanOpenApi, url, type, validator);
+        return await OpenApiSetup.GetHelperv2(config,  cleanOpenApi, url, type, validator);
+    }
+
+    public async Task<ApiValidationBuilder> GetBuilder<TFuncOutput>(
+       TestWebApiConfig config,
+       string methodName,
+       string url,
+       TValidator validator
+    )
+    {
+        var cleanOpenApi = await setup.GetCleanContent();
+        if (cleanOpenApi == null) { throw new Exception("Clean api json is missing"); }
+
+        //var controllerurl = typeof(TController).GetCustomAttributes(typeof(RouteAttribute)).Cast<RouteAttribute>().First().Template;
+        var method = typeof(TController).GetMethod(methodName);
+
+        var postname = method?.GetCustomAttributes(typeof(HttpPostAttribute), false).Cast<IRouteTemplateProvider>().FirstOrDefault();
+        var getname = method?.GetCustomAttributes(typeof(HttpGetAttribute), false).Cast<IRouteTemplateProvider>().FirstOrDefault();
+        var putname = method?.GetCustomAttributes(typeof(HttpPutAttribute), false).Cast<IRouteTemplateProvider>().FirstOrDefault();
+        var patchname = method?.GetCustomAttributes(typeof(HttpPatchAttribute), false).Cast<IRouteTemplateProvider>().FirstOrDefault();
+        var deletename = method?.GetCustomAttributes(typeof(HttpDeleteAttribute), false).Cast<IRouteTemplateProvider>().FirstOrDefault();
+        var headname = method?.GetCustomAttributes(typeof(HttpHeadAttribute), false).Cast<IRouteTemplateProvider>().FirstOrDefault();
+        var optionsname = method?.GetCustomAttributes(typeof(HttpOptionsAttribute), false).Cast<IRouteTemplateProvider>().FirstOrDefault();
+
+        IRouteTemplateProvider attr = postname ?? getname ?? putname ?? patchname ?? deletename ?? optionsname ?? headname ?? throw new Exception("no type found");
+        //var name = attr?.Template ?? "";
+
+        string type = new Dictionary<object, string>() {
+            { postname ?? new object(), "post"},
+            { getname  ?? new object(), "get"},
+            { putname  ?? new object(), "put"},
+            { patchname  ?? new object(), "patch"},
+            { deletename  ?? new object(), "delete"},
+            { optionsname ?? new object(), "options"},
+            { headname  ?? new object(), "head"}
+        }[attr];
+
+        // Act
+        return (await OpenApiSetup.GetHelperv2(config, cleanOpenApi, url, type, validator)).Builder;
     }
 }

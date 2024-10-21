@@ -16,14 +16,6 @@ public class OpenApiHelper
 
     private string Minify(string? json)
         => (json is null)? string.Empty : JsonConvert.SerializeObject(JsonConvert.DeserializeObject(json));
-
-    public OpenApiHelper(OpenApiConfig config, string? content,  DescriptionResult? description)
-    {
-        Config = config;
-        Content = Minify(content);
-        Description = description;
-        ParsedContent = (content is null)? null : JObject.Parse(content);
-    }
     
     public OpenApiHelper(OpenApiConfig config, string? content, JObject? cleanContent, DescriptionResult? description, ApiValidationBuilder builder)
     {
@@ -35,21 +27,21 @@ public class OpenApiHelper
         ParsedContent = (content is null) ? null : JObject.Parse(content);
     }
 
-    public JToken? Get(string token)
-    {
-        return ParsedContent?.SelectToken(token);
-    }
+    //public JToken? Get(string token)
+    //{
+    //    return ParsedContent?.SelectToken(token);
+    //}
 
-    public string? GetValue(string token)
-    {
-        var value = ParsedContent?.SelectToken(token);
+    //public string? GetValue(string token)
+    //{
+    //    var value = ParsedContent?.SelectToken(token);
 
-        if (value == null) return null;
-        return (string?)value;
-    }
+    //    if (value == null) return null;
+    //    return (string?)value;
+    //}
 
-    public static implicit operator JToken?(OpenApiHelper helper)
-    {
-        return helper.ParsedContent;
-    }
+    //public static implicit operator JToken?(OpenApiHelper helper)
+    //{
+    //    return helper.ParsedContent;
+    //}
 }

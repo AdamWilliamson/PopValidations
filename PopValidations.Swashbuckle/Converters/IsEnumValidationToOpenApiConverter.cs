@@ -16,6 +16,21 @@ public class IsEnumValidationToOpenApiConverter : IValidationToOpenApiConverter
             .GetNameWithoutGenericArity(typeof(IsEnumValidation<>));
     }
 
+    protected List<string> GetEnumValues(DescriptionOutcome description)
+    {
+        var fieldType = description.Values.First(c => c.Key == "fieldType").Value;
+        var stringValues = description.Values.First(c => c.Key == "enumNames").Value.Split(",");
+        var numericValues = description.Values.First(c => c.Key == "enumValues").Value.Split(",");
+
+        return fieldType switch
+        {
+            "enum" => stringValues.Concat(numericValues).ToList(),
+            "string" => stringValues.ToList(),
+            "numeric" => numericValues.ToList(),
+            _ => new List<string>()
+        };
+    }
+
     public void UpdateSchema(
         OpenApiSchema? owningObjectSchema,
         OpenApiSchema propertySchema,
@@ -23,20 +38,21 @@ public class IsEnumValidationToOpenApiConverter : IValidationToOpenApiConverter
         DescriptionOutcome description
     )
     {
-        var fieldType = description.Values.First(c => c.Key == "fieldType").Value;
-        var stringValues = description.Values.First(c => c.Key == "enumNames").Value.Split(",");
-        var numericValues = description.Values.First(c => c.Key == "enumValues").Value.Split(",");
+        //var fieldType = description.Values.First(c => c.Key == "fieldType").Value;
+        //var stringValues = description.Values.First(c => c.Key == "enumNames").Value.Split(",");
+        //var numericValues = description.Values.First(c => c.Key == "enumValues").Value.Split(",");
 
-        propertySchema.Enum = fieldType switch
-        {
-            "enum"
-                => new List<IOpenApiAny>(
-                    stringValues.Concat(numericValues).Select(v => new OpenApiString(v))
-                ),
-            "string" => new List<IOpenApiAny>(stringValues.Select(v => new OpenApiString(v))),
-            "numeric" => new List<IOpenApiAny>(numericValues.Select(v => new OpenApiString(v))),
-            _ => new List<IOpenApiAny>()
-        };
+        propertySchema.Enum = new List<IOpenApiAny>(GetEnumValues(description).Select(v => new OpenApiString(v)));
+        //    fieldType switch
+        //{
+        //    "enum"
+        //        => new List<IOpenApiAny>(
+        //            stringValues.Concat(numericValues).Select(v => new OpenApiString(v))
+        //        ),
+        //    "string" => new List<IOpenApiAny>(stringValues.Select(v => new OpenApiString(v))),
+        //    "numeric" => new List<IOpenApiAny>(numericValues.Select(v => new OpenApiString(v))),
+        //    _ => new List<IOpenApiAny>()
+        //};
     }
 
     public void UpdateAttribute(

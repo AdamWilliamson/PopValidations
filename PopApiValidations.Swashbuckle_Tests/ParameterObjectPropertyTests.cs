@@ -1,8 +1,10 @@
 ﻿using ApiValidations;
 using ApprovalTests;
-using Microsoft.AspNetCore.Components.Web;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using PopApiValidations.Swashbuckle_Tests.Helpers;
 using PopValidations;
 using System.Reflection;
@@ -19,7 +21,7 @@ public class ParameterObjectPropertyTests
         string methodName,
         Func<MethodInfo, bool> validateEndpointFunc,
         Func<TestControllerValidation> createValidation,
-        Action<OpenApiHelper> validationBuilder
+        Action<ApiValidationBuilder> validationBuilder
         )
     {
         // Arrange
@@ -31,18 +33,23 @@ public class ParameterObjectPropertyTests
         // Act
         var validator = createValidation.Invoke();
 
-        var helper = await controllerTester.GetHelper<ActionResult<Response>>(
+        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
             config,
             methodName,
             route,
             validator
         );
 
-        validationBuilder.Invoke(helper);
+        validationBuilder.Invoke(builder);
 
         //Assert
         Assert.NotEmpty(description);
-        Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        builder.Validate();
+
+        //Approvals.AssertEquals(
+        //    helper.CleanContent.ToString(Formatting.Indented), 
+        //    helper.ParsedContent.ToString(Formatting.Indented)
+        //);
     }
 
     public static IEnumerable<object[]> ParamAndChildObjectSetups()
@@ -58,13 +65,12 @@ public class ParameterObjectPropertyTests
                 subValidator.Describe(x => x.IntegerField).IsNotNull();
 
                 var validator = new TestControllerValidation();
-                validator.DescribeFunc(x => x.Create(validator.Param.Is<Request>().IsNotNull().SetValidator(subValidator)));
+                validator.DescribeFunc(x => x.Create(validator.Param.Is<Request>().SetValidator(subValidator)));
                 return validator;
             },
-            (OpenApiHelper helper) =>
+            (ApiValidationBuilder builder) =>
             {
-                helper.Builder.ParamIs<Request>(["request"]).IsNotNull();
-                helper.Builder.ParamIs<Request>(["request", "integerField"]).IsNotNull();
+                builder.ParamIs<Request>(["integerField"]).IsNotNull2();
             }
         };
 
@@ -85,11 +91,10 @@ public class ParameterObjectPropertyTests
                 validator.DescribeFunc(x => x.Create(validator.Param.Is<Request>().IsNotNull().SetValidator(subValidator)));
                 return validator;
             },
-            (OpenApiHelper helper) =>
+            (ApiValidationBuilder builder) =>
             {
-                helper.Builder.ParamIs<Request>(["request"]).IsNotNull();
-                helper.Builder.ParamIs<Request>(["request", "subRequestField"]).IsNotNull();
-                helper.Builder.ParamIs<Request>(["request", "subRequestField", "integerField"]).IsNotNull();
+                builder.ParamIs<Request>(["subRequestField"]).IsNotNull2();
+                builder.ParamIs<Request>(["subRequestField", "integerField"]).IsNotNull2();
             }
         };
 
@@ -129,23 +134,75 @@ public class ParameterObjectPropertyTests
                     .SetValidator(subValidator)));
                 return validator;
             },
-            (OpenApiHelper helper) =>
+            (ApiValidationBuilder builder) =>
             {
-                helper.Builder.ParamIs<Request>(["request"]).IsNotNull();
-                helper.Builder.ParamIs<Request>(["request", "subRequestField"]).IsNotNull();
-                helper.Builder.ParamIs<Request>(["request", "integerField"]).IsNotNull();
-                helper.Builder.ParamIs<Request>(["request", "dataItemField"]).IsNotNull();
-                helper.Builder.ParamIs<Request>(["request", "dataItemField", "identifier"]).IsNotNull();
-
-                
-                helper.Builder.ParamIs<Request>(["request", "subRequestField", "integerField"]).IsNotNull();
-
-                helper.Builder.ParamIs<Request>(["request", "subRequestField", "dataItemField"]).IsNotNull();
-                helper.Builder.ParamIs<Request>(["request", "subRequestField", "dataItemField", "identifier"]).IsNotNull();
+                builder.ParamIs<Request>(["subRequestField"]).IsNotNull2();
+                builder.ParamIs<Request>(["integerField"]).IsNotNull2();
+                builder.ParamIs<Request>(["dataItemField"]).IsNotNull2();
+                builder.ParamIs<Request>(["dataItemField", "identifier"]).IsNotNull2();
+                builder.ParamIs<Request>(["subRequestField", "integerField"]).IsNotNull2();
+                builder.ParamIs<Request>(["subRequestField", "dataItemField"]).IsNotNull2();
+                builder.ParamIs<Request>(["subRequestField", "dataItemField", "identifier"]).IsNotNull2();
             }
         };
-        
+
+        yield return new object[] {
+            "CreateByQuery Post Request.SubRequestField.IntegerField are not null",
+            "/api/Test/CreateByQuery",
+            nameof(TestController.CreateByQuery),
+            (MethodInfo m) => m == typeof(TestController).GetMethod(nameof(TestController.CreateByQuery)),
+            () =>
+            {
+                var subRequestFieldValidator = new TestSubValidation<SubRequest>();
+                subRequestFieldValidator.Describe(x => x.IntegerField).IsNotNull();
+
+                var subValidator = new TestSubValidation<Request>();
+                subValidator.Describe(x => x.IntegerField).IsNotNull();
+                subValidator.Describe(x => x.SubRequestField)
+                    .SetValidator(subRequestFieldValidator);
+
+                var validator = new TestControllerValidation();
+                validator.DescribeFunc(x => x.CreateByQuery(validator.Param.Is<Request>()
+                    .IsNotNull()
+                    .SetValidator(subValidator)));
+
+                return validator;
+            },
+            (ApiValidationBuilder builder) =>
+            {
+                builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.IntegerField"]).IsNotNull2();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["IntegerField"]).IsNotNull2();
+            }
+        };
 
         // TODO:   Array time bitches?
+        yield return new object[] {
+            "CreateByQuery Post Request.SubRequestField.IntegerField are not null",
+            "/api/Test/CreateByQuery",
+            nameof(TestController.CreateByQuery),
+            (MethodInfo m) => m == typeof(TestController).GetMethod(nameof(TestController.CreateByQuery)),
+            () =>
+            {
+                var subRequestFieldValidator = new TestSubValidation<SubRequest>();
+                subRequestFieldValidator.Describe(x => x.ListOfStringsField).IsNotNull();
+
+                var subValidator = new TestSubValidation<Request>();
+                subValidator.Describe(x => x.ListOfStringsField).IsNotNull();
+                subValidator.Describe(x => x.SubRequestField)
+                    .SetValidator(subRequestFieldValidator);
+
+                var validator = new TestControllerValidation();
+                validator.DescribeFunc(x => x.CreateByQuery(validator.Param.Is<Request>()
+                    .IsNotNull()
+                    .SetValidator(subValidator)));
+
+                return validator;
+            },
+            (ApiValidationBuilder builder) =>
+            {
+                builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.ListOfStringsField"]).IsNotNull2();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["ListOfStringsField"]).IsNotNull2();
+            }
+        };
     }
 }

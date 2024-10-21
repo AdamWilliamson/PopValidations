@@ -22,17 +22,18 @@ public class UnitTest1
         var validator = new TestControllerValidation();
         validator.DescribeFunc(x => x.Create(validator.Param.Is<Request>().IsNotNull()));
 
-        var helper = await controllerTester.GetHelper<ActionResult<Response>>(
+        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
             config,
             nameof(TestController.Create),
             "/api/Test",
             validator
         );
 
-        helper.Builder.ParamIs<Request>("request").IsNotNull();
+        builder.ParamIs<Request>().IsNotNull2();
 
         //Assert
-        Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        builder.Validate();
+        //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
     }
 
     [Fact]
@@ -49,17 +50,18 @@ public class UnitTest1
         var validator = new TestControllerValidation();
         validator.DescribeFunc(x => x.GetById(validator.Param.Is<int?>().IsNotNull()));
 
-        var helper = await controllerTester.GetHelper<ActionResult<Response>>(
+        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
             config,
             nameof(TestController.GetById),
             "/api/Test/{id}",
             validator
         );
 
-        helper.Builder.ParamIs<Request>("id").IsNotNull();
+        builder.ParamIs<Request>("id").IsNotNull2();
 
         //Assert
-        Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        builder.Validate();
     }
 
     [Fact]
@@ -80,19 +82,20 @@ public class UnitTest1
             validator.Param.Is<List<int>>().IsNotNull()
         ));
 
-        var helper = await controllerTester.GetHelper<ActionResult<Response>>(
+        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
             config,
             nameof(TestController.CreateByUrl),
             "/api/Test/CreateByUrl/{id}/{stringField}/{listOfIntField}",
             validator
         );
 
-        helper.Builder.ParamIs<Request>("id").IsNotNull();
-        helper.Builder.ParamIs<Request>("stringField").IsNotNull();
-        helper.Builder.ParamIs<Request>("listOfIntField").IsNotNull();
+        builder.ParamIs<Request>("id").IsNotNull2();
+        builder.ParamIs<Request>("stringField").IsNotNull2();
+        builder.ParamIs<Request>("listOfIntField").IsNotNull2();
 
         //Assert
-        Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        builder.Validate();
     }
 
     [Fact]
@@ -106,20 +109,24 @@ public class UnitTest1
         config.ValidateEndpoint = (m) => m == typeof(TestController).GetMethod(methodName);
 
         // Act
-        var validator = new TestControllerValidation();
-        validator.DescribeFunc(x => x.CreateByQuery(validator.Param.Is<Request>().IsNotNull()));
+        var objValidator = new TestSubValidation<Request>();
+        objValidator.Describe(x => x.IntegerField).IsNotNull();
 
-        var helper = await controllerTester.GetHelper<ActionResult<Response>>(
+        var validator = new TestControllerValidation();
+        validator.DescribeFunc(x => x.CreateByQuery(validator.Param.Is<Request>().SetValidator(objValidator).IsNotNull()));
+
+        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
             config,
             nameof(TestController.CreateByQuery),
             "/api/Test/CreateByQuery",
             validator
         );
 
-        helper.Builder.ParamIs<Request>("request").IsNotNull();
+        builder.ParamIs<Request>("IntegerField").IsNotNull2();
 
         //Assert
-        Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        builder.Validate();
     }
 
     [Fact]
@@ -136,17 +143,18 @@ public class UnitTest1
         var validator = new TestControllerValidation();
         validator.DescribeFunc(x => x.CreateByBody(validator.Param.Is<Request>().IsNotNull()));
 
-        var helper = await controllerTester.GetHelper<ActionResult<Response>>(
+        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
             config,
             nameof(TestController.CreateByBody),
             "/api/Test/CreateByBody",
             validator
         );
 
-        helper.Builder.ParamIs<Request>("request").IsNotNull();
+        builder.ParamIs<Request>().IsNotNull2();
 
         //Assert
-        Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        builder.Validate();
     }
 
     [Fact]
@@ -163,16 +171,17 @@ public class UnitTest1
         var validator = new TestControllerValidation();
         validator.DescribeFunc(x => x.Update(validator.Param.Is<Request>().IsNotNull()));
 
-        var helper = await controllerTester.GetHelper<ActionResult<Response>>(
+        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
             config,
             nameof(TestController.Update),
             "/api/Test",
             validator
         );
 
-        helper.Builder.ParamIs<Request>("request").IsNotNull();
+        builder.ParamIs<Request>().IsNotNull2();
 
         //Assert
-        Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+        builder.Validate();
     }
 }

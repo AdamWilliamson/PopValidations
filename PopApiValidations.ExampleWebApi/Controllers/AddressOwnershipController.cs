@@ -82,6 +82,14 @@ public class AddressOwnershipController : ControllerBase
     {
         return Ok();
     }
+
+
+    [HttpPost(nameof(TestyMcTestFace))]
+    public AddressOwnership TestyMcTestFace([FromQuery(Name ="TestyMyTestParam")] AddressOwnership newAddressOwnership, [FromQuery] AddressOwnership newAddressOwnership2)
+    {
+        AddressOwnershipDataSource.Instance.AddRecord(newAddressOwnership);
+        return newAddressOwnership;
+    }
 }
 
 public class DumbTestRequest

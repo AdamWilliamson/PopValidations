@@ -125,7 +125,7 @@ public class TestSetup<TTestController, TRequestValidator>
     //}
 
     public async Task<OpenApiHelper> GetHelperv2(
-        PopApiOpenApiConfig config, 
+        PopApiOpenApiConfig config,
         JObject cleanOpenApi,
         string url, 
         string type, 
@@ -135,7 +135,13 @@ public class TestSetup<TTestController, TRequestValidator>
         await GetSwagger();
         Describe();
 
-        Helper = new OpenApiHelper(config, Content, cleanOpenApi, Description, new ApiValidationBuilder(config, cleanOpenApi, url, type));
+        Helper = new OpenApiHelper(
+            config, 
+            Content, 
+            cleanOpenApi, 
+            Description, 
+            new ApiValidationBuilder(config, JObject.Parse(Content), cleanOpenApi, url, type)
+        );
         return Helper;
     }
 }

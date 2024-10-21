@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Collections;
 using System.Diagnostics;
 using PopValidations.FieldDescriptors.Base;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PopApiValidations.Swashbuckle.Internal;
 
@@ -19,7 +20,7 @@ public class OpenApiValidationParam
         OpenApiOperation operation,
         OpenApiParameter openApiParam,
         MethodInfo methodInfo,
-        ParameterInfo parameterInfo,
+        FunctionParameter parameterInfo,
         OpenApiSchema parameterSchema)
     {
         Operation = operation;
@@ -28,14 +29,20 @@ public class OpenApiValidationParam
         ParamType = parameterInfo.ParameterType;
         ParameterInfo = parameterInfo;
         ParameterSchema = parameterSchema;
-        ParamName = parameterInfo.Name ?? "UnknownParameter";
+        ParamName =
+            //((openApiParam.In == ParameterLocation.Query && parameterInfo.Name != openApiParam.Name)
+            //? string.Join('.', parameterInfo.ParamName, openApiParam.Name)
+            //: 
+            openApiParam.Name
+            //) 
+            ?? "RequestBody";
         ParamIndex = parameterInfo.Position;
     }
 
     public OpenApiValidationParam(
         OpenApiOperation operation,
         MethodInfo? methodInfo,
-        ParameterInfo parameterInfo,
+        FunctionParameter parameterInfo,
         OpenApiSchema parameterSchema,
         OpenApiRequestBody paramRequestBody)
     {
@@ -44,7 +51,7 @@ public class OpenApiValidationParam
         ParamType = parameterInfo.ParameterType;
         ParameterSchema = parameterSchema;
         ParamRequestBody = paramRequestBody;
-        ParamName = parameterInfo.Name ?? "UnknownParameter";
+        ParamName = "RequestBody";
         ParamIndex = parameterInfo.Position;
     }
 
@@ -52,11 +59,71 @@ public class OpenApiValidationParam
     public OpenApiParameter OpenApiParam { get; }
     public MethodInfo? MethodInfo { get; }
     public Type ParamType { get; }
-    public ParameterInfo? ParameterInfo { get; }
+    public FunctionParameter? ParameterInfo { get; }
     public OpenApiSchema ParameterSchema { get; }
     public OpenApiRequestBody? ParamRequestBody { get; }
     public string ParamName { get; }
     public int ParamIndex { get; }
+
+    internal string MakeName(string desc)
+    {
+        if (ParameterInfo is not null && OpenApiParam.Name != ParameterInfo.Name)
+        {
+            return string.Join('.', desc, OpenApiParam.Name);
+        }
+
+        return desc;
+    }
+}
+
+public class FunctionParameter(ParameterInfo parameterInfo)
+{
+    private string? _Name = null;
+
+    public ParameterInfo ParameterInfo { get; } = parameterInfo;
+    public string? ParamName => ParameterInfo.Name;
+
+    public string Name 
+    { 
+        get 
+        { 
+            if (_Name != null)
+            {
+                return _Name;
+            }
+
+            var queryAttr = ParameterInfo.GetCustomAttribute<FromQueryAttribute>();
+            var routeAttr = ParameterInfo.GetCustomAttribute<FromRouteAttribute>();
+            var headerAttr = ParameterInfo.GetCustomAttribute<FromHeaderAttribute>();
+
+            _Name = queryAttr?.Name ?? routeAttr?.Name ?? headerAttr?.Name ?? ParameterInfo.Name;
+
+            return _Name!;
+        } 
+    }
+
+    public Type ParameterType { get => ParameterInfo.ParameterType; }
+    public int Position { get => ParameterInfo.Position; }
+    public bool Matched { get; set; } = false;
+
+    public bool Matches(OpenApiParameter queryParam)
+    {
+        if (queryParam.Name == Name)
+        {
+            return true;
+        }
+
+        Type? type = ParameterInfo.ParameterType;
+
+        var properties = queryParam.Name.Split('.');
+
+        foreach (var prop in properties)
+        {
+            type = type?.GetProperty(prop)?.PropertyType;
+        }
+        
+        return type != null;
+    }
 }
 
 public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
@@ -93,19 +160,52 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
         List<OpenApiValidationParam> newModels = new List<OpenApiValidationParam>();
 
         List<(Type, int, OpenApiSchema, string)> models = new();
-        var parameters = context.MethodInfo.GetParameters();
+        var parameters = context.MethodInfo.GetParameters().Select(x => new FunctionParameter(x));
+
 
         foreach (var p in operation.Parameters.Where(p => p.Schema != null && p.In != ParameterLocation.Query))  // Cannot handle Query Parameters Currently.
         {
-            var foundParam = parameters.First(x => x.Name == p.Name);
+            var foundParam = parameters.First(x => string.Equals(x.Name, p.Name, StringComparison.InvariantCultureIgnoreCase));
             models.Add((foundParam.ParameterType, foundParam.Position, p.Schema, p.Name));
 
+            foundParam.Matched = true;
             newModels.Add(new OpenApiValidationParam(
                 operation,
                 p,
                 context.MethodInfo,
                 foundParam,
                 p.Schema
+            ));
+        }
+
+        // Query Version
+        var unusedParams = parameters
+            .Where(x => !x.Matched)
+            .ToList();
+        var queryOpenApiParameters = operation.Parameters.Where(p => p.Schema != null && p.In == ParameterLocation.Query);
+
+        foreach (var queryParam in queryOpenApiParameters)
+        {
+            var foundParam = unusedParams.FirstOrDefault(x => x.Name == queryParam.Name)
+                ?? unusedParams.FirstOrDefault(x => x.Matches(queryParam));
+                //.FirstOrDefault(x => x.ParameterType.GetProperties()
+                //    .Any(x => string.Equals(x.Name, GetFirstFromSplit(queryParams.Name, '.'), StringComparison.InvariantCultureIgnoreCase))
+                //);
+
+            if (foundParam == null)
+            {
+                // There is a query parameter that wasn't found... 
+                return;
+            }
+
+            models.Add((foundParam.ParameterType, foundParam.Position, queryParam.Schema, queryParam.Name));
+
+            newModels.Add(new OpenApiValidationParam(
+                operation,
+                queryParam,
+                context.MethodInfo,
+                foundParam,
+                queryParam.Schema
             ));
         }
 
@@ -125,7 +225,6 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                     c.Schema.Reference != null? context.SchemaRepository.Schemas[c.Schema.Reference.Id] : c.Schema,
                     foundcontentparam.Name));
 
-
                 newModels.Add(new OpenApiValidationParam(
                     operation,
                     context.MethodInfo,
@@ -135,9 +234,6 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                 ));
             }
         }
-
-        
-
 
         //foreach (var model in models)
         //{
@@ -190,6 +286,7 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                 context.MethodInfo, Math.Max(model.ParamIndex, 0), -1
             );
 
+
             //var endPointExtensionRules = new OpenApiArray();
             //if (!extensionObject.ContainsKey(model.ParamName))
             //{
@@ -206,13 +303,20 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 
             RunParameterRule(
                 model,
-                desc,
+                model.MakeName(desc),
                 allnonenumerableresults,
                 context.SchemaRepository,
                 ValidationLevel.FullDetails
             );
         }
     }
+
+    //private string GetFirstFromSplit(string input, char delimiter)
+    //{
+    //    var i = input.IndexOf(delimiter);
+
+    //    return i == -1 ? input : input.Substring(0, i);
+    //}
 
     public void RunParameterRule(
         OpenApiValidationParam paramInfo,
@@ -223,13 +327,9 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
         ValidationLevel validationLevel
     )
     {
-        //var extensionObject = new OpenApiObject();
-        //paramInfo.Operation.Extensions.Add(config.CustomValidationAttribute, extensionObject);
-
-        //var array = InitParamExtension(config, paramInfo.ParameterSchema);
         var flattenedOutcomes = FlattenOutcomes(config, resultObjectGraph, currentObjectGraph);
 
-        if (flattenedOutcomes.Any(x => x.Item1 == string.Empty))
+        if (flattenedOutcomes.Any(x => x.GroupTitle == string.Empty))
         {
             //var functionExtensionsArray = InitExtensionsAndArray(config, paramInfo.Operation, paramInfo.ParamName);
             PopValidationArray? validationArray = null;// = new PopValidationArray(functionExtensionsArray);
@@ -244,13 +344,13 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                     {
                         if (validationArray is null && paramInfo.ParamRequestBody is null)
                         {
-                            var functionExtensionsArray = InitExtensionsAndArray(config, paramInfo.Operation, paramInfo.ParamName);
+                            var functionExtensionsArray = InitExtensionsAndArray(config, paramInfo.Operation, paramInfo.OpenApiParam.Name);
                             validationArray = new PopValidationArray(functionExtensionsArray);
                         }
 
                         if (paramInfo.ParamRequestBody is not null && requestBodyValidationArray is null)
                         {
-                            var requestBodyExtensionsArray = InitExtensionsAndArrayForRequestBody(config, paramInfo.Operation, paramInfo.ParamName);
+                            var requestBodyExtensionsArray = InitExtensionsAndArray(config, paramInfo.Operation, paramInfo.ParamName);
                             requestBodyValidationArray = new PopValidationArray(requestBodyExtensionsArray);
                         }
 
@@ -258,7 +358,7 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                         if (string.IsNullOrWhiteSpace(owner))
                         {
                             if (paramInfo.OpenApiParam != null)
-                                converter.UpdateParamSchema(paramInfo.Operation, paramInfo.OpenApiParam, paramInfo.ParamName, outcome);
+                                converter.UpdateParamSchema(paramInfo.Operation, paramInfo.OpenApiParam, paramInfo.OpenApiParam?.Name, outcome);
 
                             if (paramInfo.ParamRequestBody != null)
                                 converter.UpdateRequestBodySchema(paramInfo.ParamRequestBody, paramInfo.ParameterSchema, paramInfo.ParamName, outcome);
@@ -266,13 +366,24 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 
                         if (paramInfo.ParamRequestBody != null && requestBodyValidationArray is not null)
                             converter.UpdateAttribute(paramInfo.Operation, paramInfo.ParameterSchema, paramInfo.ParamName, outcome, requestBodyValidationArray);
-                        else
-                            converter.UpdateAttribute(paramInfo.Operation, paramInfo.ParameterSchema, paramInfo.ParamName, outcome, validationArray);
+                        else if (!string.IsNullOrEmpty(paramInfo.OpenApiParam?.Name))
+                            converter.UpdateAttribute(paramInfo.Operation, paramInfo.ParameterSchema, paramInfo.OpenApiParam?.Name, outcome, validationArray);
                     }
                 }
             }
+
+            //ConvertValiatorsToOpenApiDescriptionsForParam(
+            //    config,
+            //    paramInfo,
+            //    //paramInfo.Operation,
+            //    //paramInfo.ParameterSchema,
+            //    //paramInfo.ParamName,
+            //    validationLevel,
+            //    flattenedOutcomes
+            //);
+
         }
-        flattenedOutcomes = flattenedOutcomes.Where(x => x.Item1 != string.Empty).ToList();
+        flattenedOutcomes = flattenedOutcomes.Where(x => x.GroupTitle != string.Empty).ToList();
 
         ConvertValiatorsToOpenApiDescriptions(
             config,
@@ -682,9 +793,9 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
 
 
     #region Flatten the Descriptions where groups exist, into a flat list.
-    private static List<(string, DescriptionOutcome)> FlattenOutcomes(OpenApiConfig config, List<DescriptionItemResult> descriptionItems, string param)
+    private static List<(string GroupTitle, DescriptionOutcome Outcome)> FlattenOutcomes(OpenApiConfig config, List<DescriptionItemResult> descriptionItems, string param)
     {
-        var endOutcomes = new List<(string, DescriptionOutcome)>();
+        var endOutcomes = new List<(string GroupTitle, DescriptionOutcome Outcome)>();
 
         if (descriptionItems?.Any() != true) return endOutcomes;
 
@@ -712,9 +823,9 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
         return endOutcomes;
     }
 
-    private static List<(string, DescriptionOutcome)> FlattenRecurse(OpenApiConfig config, string existing, DescriptionGroupResult group)
+    private static List<(string GroupTitle, DescriptionOutcome Outcome)> FlattenRecurse(OpenApiConfig config, string existing, DescriptionGroupResult group)
     {
-        var endOutcomes = new List<(string, DescriptionOutcome)>();
+        var endOutcomes = new List<(string GroupTitle, DescriptionOutcome Outcome)>();
         var additive = string.IsNullOrWhiteSpace(existing) ? group.Description : config.MultiGroupIndicator + group.Description;
 
         if (group.Outcomes?.Any() == true)
@@ -789,6 +900,63 @@ public class PopApiValidationSchemaFilter : IOperationFilter //ISchemaFilter
                     if (validationLevel.HasFlag(ValidationLevel.ValidationAttribute))
                     {
                         converter.UpdateAttribute(parentModel, propertyModel, openApiPropName, outcome, validationArray!);
+                    }
+                }
+            }
+        }
+    }
+
+    public static void ConvertValiatorsToOpenApiDescriptionsForParam(
+        PopApiOpenApiConfig config,
+        OpenApiValidationParam paramInfo,
+        //OpenApiOperation parentModel,
+        //OpenApiSchema propertyModel,
+        //string openApiPropName,
+        ValidationLevel validationLevel,
+        List<(string, DescriptionOutcome)> outcomeSet)
+    {
+        Debug.Assert(outcomeSet != null);
+        if (outcomeSet.Count == 0) return;
+
+        PopValidationArray? validationArray = null;
+
+        if (validationLevel.HasFlag(ValidationLevel.ValidationAttribute))
+        {
+#pragma warning disable CS8604 // Possible null reference argument.
+            var customRulesArray = InitExtensionsAndArray(config, paramInfo.Operation, paramInfo.ParamName/*, outcomeSet, ownedby*/);
+#pragma warning restore CS8604 // Possible null reference argument.
+            validationArray = new PopValidationArray(customRulesArray);
+        }
+
+        foreach (var (owner, outcome) in outcomeSet)
+        {
+            if (validationLevel.HasFlag(ValidationLevel.ValidationAttribute))
+            {
+                if (!string.IsNullOrWhiteSpace(owner))
+                {
+                    validationArray!.SetLineHeader(owner + config.GroupResultIndicator);
+                }
+                else
+                {
+                    validationArray!.SetLineHeader(string.Empty);
+                }
+            }
+
+            // for each converter registered in the config
+            foreach (var converter in config.PopApiConverters)
+            {
+                // Check if it supports the descriptor outcome
+                if (converter.Supports(outcome))
+                {
+                    //Incomplete
+                    if (string.IsNullOrWhiteSpace(owner))
+                    {
+                        converter.UpdateParamSchema(paramInfo.Operation, paramInfo.OpenApiParam, paramInfo.ParamName, outcome);
+                    }
+
+                    if (validationLevel.HasFlag(ValidationLevel.ValidationAttribute))
+                    {
+                        converter.UpdateAttribute(paramInfo.Operation, paramInfo.ParameterSchema, paramInfo.ParamName, outcome, validationArray!);
                     }
                 }
             }

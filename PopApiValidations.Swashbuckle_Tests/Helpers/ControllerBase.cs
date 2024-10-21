@@ -1,6 +1,5 @@
 ﻿using ApiValidations;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace PopApiValidations.Swashbuckle_Tests.Helpers;
 
@@ -12,9 +11,9 @@ public class RequestDataItem
 
 public abstract class AbstractComplexObject
 {
-    [Required]
-    public int IntegerField { get; set; }
-    [Required]
+    //[Required]
+    public int? IntegerField { get; set; }
+    //[Required]
     public string StringField { get; set; }
     public List<string> ListOfStringsField { get; set; }
     public RequestDataItem DataItemField { get; set; }
