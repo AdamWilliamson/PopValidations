@@ -345,14 +345,14 @@ public class ParamBuilder<TParamType>
                         result.SetResult(schema[config.CustomValidationAttribute]?[objHeirarcy[0]]?.Values()?.Contains("Must not be null.") == true)
                     );
 
-                openApiNavigator.ParameterPairByName(url, type, objHeirarcy)
+                openApiNavigator.ParameterOrItemsByName(url, type, objHeirarcy)
                     .Modify(("required", () => true))
                     .Assert((schema, result) => result.SetResult(schema["required"]?.Value<bool>() == true));
 
                 return this;
             }
 
-            var paramBase = openApiNavigator.GoToParamSchemaPair(url, type, objHeirarcy);
+            var paramBase = openApiNavigator.NavToParameterProperty(url, type, objHeirarcy);
             
             if (HasChildren()) 
             {

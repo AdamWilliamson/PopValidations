@@ -15,6 +15,7 @@ internal class ApiWebApplicationFactory : WebApplicationFactory<Program>
     List<(Type, Type)> validators = new();
     List<(Type, Func<IServiceProvider, object>)> realizedValidators = new();
     List<(Type, object)> registeredValues = new();
+    List<(Type Interface, Type Old, object Instance)> replaceRegisteredValues = new();
 
     public ApiWebApplicationFactory Register(Type t, object o) 
     {
@@ -88,6 +89,17 @@ internal class ApiWebApplicationFactory : WebApplicationFactory<Program>
             {
                 services.AddTransient(val.Item1, val.Item2);
             }
+
+            foreach( var replacement in replaceRegisteredValues)
+            {
+                services.Remove(new ServiceDescriptor(replacement.Interface, replacement.Old, ServiceLifetime.Transient));
+                services.Add(new ServiceDescriptor(replacement.Interface, replacement.Instance, ServiceLifetime.Singleton));
+            }
         });
+    }
+
+    internal void ReplaceRegister<TInterface, TOld, TNew>(TNew instance)
+    {
+        replaceRegisteredValues.Add((typeof(TInterface), typeof(TOld), instance));
     }
 }

@@ -22,7 +22,7 @@ public class PopApiIsNotNullValidationToOpenApiConverter : IsNotNullValidationTo
         string paramName,
         DescriptionOutcome description)
     {
-            owningObjectSchema.Required = true;
+        owningObjectSchema.Required = true;
     }
 
     public void UpdateAttribute(

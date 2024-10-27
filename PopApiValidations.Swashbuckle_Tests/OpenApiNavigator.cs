@@ -118,10 +118,7 @@ public static class NavExtensions
             {
                 obj.Add(prop, creation.Invoke());
             }
-            else
-            {
-                obj[prop] =creation.Invoke();
-            }
+
             return obj[prop];
         }
         else if (item is JArray arr)
@@ -281,51 +278,30 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
 {
     private readonly PopApiOpenApiConfig config = config;
 
-    //public Pair<TObj> IfNullNav<TObj>(this Pair<TObj> start, Func<JObject, TObj> navFunc)
-    //{
-    //    if (start.OpenApi == null)
-    //    {
-    //        var newBase = BasePair();
-
-    //        return new Pair<TObj>(
-    //            navFunc.Invoke(newBase.OpenApi),
-    //            navFunc.Invoke(newBase.Clean)
-    //        );
-    //    }
-
-    //    return start;
-    //}
-
     private Pair<JObject> BasePair()
     {
         return new Pair<JObject>(results, openApi, clean, openApi, clean);
     }
-
-    //public Dictionary<string, JObject> Parameters(string url, string type)
-    //{
-    //    return openApi?["paths"]?[url]?[type]["parameters"]
-    //            ?.Where(x => x is not null && x as JObject is not null && x.Value<string>("name") is not null)
-    //            ?.ToDictionary(x => x.Value<string>("name"), x => x as JObject)
-    //        ?? new();
-    //}
 
     public Pair<JArray> ParametersPair(string url, string type)
     {
         return GetPath(url, type).Nav(schema =>schema["parameters"] as JArray);
     }
 
-    //public JObject? Parameter(string url, string type, string paramName)
-    //{
-    //    var parameters = Parameters(url, type);
-
-    //    if (parameters is not null && parameters.ContainsKey(paramName))
-    //        return Parameters(url, type)[paramName];
-
-    //    return null;
-    //}
-
     public Pair<JObject> ParameterPairByName(string url, string type, string[] objHeirarchy)
     {
+        return ParametersPair(url, type)
+            .Nav(pair => pair!.Single(x => x["name"]!.Value<string>() == objHeirarchy[0].Replace("[n]","")) as JObject);
+    }
+
+    public Pair<JObject> ParameterOrItemsByName(string url, string type, string[] objHeirarchy)
+    {
+        if (objHeirarchy[0].EndsWith("[n]"))
+        {
+            return ParametersPair(url, type)
+            .Nav(pair => pair!.Single(x => x["name"]!.Value<string>() == objHeirarchy[0].Replace("[n]", ""))["schema"]?["items"] as JObject);
+        }
+
         return ParametersPair(url, type)
             .Nav(pair => pair!.Single(x => x["name"]!.Value<string>() == objHeirarchy[0]) as JObject);
     }
@@ -337,7 +313,11 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
             return false;
         }
 
-        return GetPath(url, type).CanNav(pair => pair["parameters"]?.SingleOrDefault(x => x?["name"]?.Value<string>() == paramName[0]) as JObject);
+        return GetPath(url, type)
+            .CanNav(pair => 
+                pair["parameters"]?
+                    .SingleOrDefault(x => x?["name"]?.Value<string>() == paramName[0].Replace("[n]","")) as JObject
+            );
     }
 
     public bool CheckIfRequestBody(string url, string type, string[]? paramName)
@@ -346,54 +326,19 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
         return GetPath(url, type).CanNav(schema => schema["requestBody"] as JObject);
     }
 
-    //public JObject GetParamValidationOwner(string url, string type, string paramName)
-    //{
-    //    var parameter = Parameter(url, type, paramName);
-    //    if (parameter is JObject convertedParam)
-    //    {
-    //        return convertedParam;
-    //    }
-
-    //    return openApi["paths"]?[url]?[type]?["requestBody"] as JObject;
-    //}
-
     public Pair<JObject> GetPath(string url, string type)
     {
         return BasePair().Nav(pair => pair["paths"]?[url]?[type] as JObject);
     }
 
-    //public Pair<JObject> GetParamValidationOwnerPair(string url, string type, string[] paramName)
-    //{
-    //    if (CheckIfParameterExists(url, type, paramName))
-    //    {
-    //        return ParameterPairByName(url, type, paramName[0]);
-    //    }
-
-    //    return BasePair().Nav(pair => pair["paths"]?[url]?[type]?["requestBody"] as JObject);
-    //}
-
-    //public List<JObject> GetParamObjects(string url, string type, string paramName)
-    //{
-    //    var parameter = Parameter(url, type, paramName);
-    //    if (parameter is JObject convertedParam)
-    //    {
-    //        return new List<JObject>() { convertedParam as JObject };
-    //    }
-
-    //    return openApi["paths"]?[url]?[type]?["requestBody"]?["content"]
-    //        ?.Values()
-    //        .Cast<JObject>().ToList() ?? new();
-    //}
-
-    //public Pair<JObject> RequestBodyPair(string url, string type)
-    //{
-    //    return BasePair().Nav(schema => schema["paths"]?[url]?[type]?["requestBody"] as JObject);
-    //}
-
     public Pair<JObject> GetParamSchemaPair(string url, string type, string[] objHeirarchy)
     {
         if (CheckIfParameterExists(url, type, objHeirarchy))
         {
+            if (objHeirarchy[0].EndsWith("[n]"))
+            {
+                return ParameterPairByName(url, type, objHeirarchy).Nav(schema => schema["schema"]?["items"] as JObject);
+            }
             return ParameterPairByName(url, type, objHeirarchy).Nav(schema => schema["schema"] as JObject);
         }
 
@@ -406,7 +351,14 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
 
         foreach (var nextProperty in objHeirarchy.Skip(1))
         {
-            pair = pair.Nav(schema => schema["properties"]?[nextProperty] as JObject);// GoToChild(schemas, nextProperty);
+            if (nextProperty.EndsWith("[n]"))
+            {
+                pair = pair.Nav(schema => schema["properties"]?[nextProperty.Replace("[n]", "")]?["items"] as JObject);
+            }
+            else
+            {
+                pair = pair.Nav(schema => schema["properties"]?[nextProperty] as JObject);// GoToChild(schemas, nextProperty);
+            }
         }
 
         return pair;
@@ -427,7 +379,14 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
             {
                 foreach (var nextProperty in objHeirarchy[0..^1])
                 {
-                    pair = pair.NavList(schema => schema["properties"]?[nextProperty] as JObject);
+                    if (nextProperty.EndsWith("[n]"))
+                    {
+                        pair = pair.NavList(schema => schema["properties"]?[nextProperty.Replace("[n]", "")]?["items"] as JObject);
+                    }
+                    else
+                    {
+                        pair = pair.NavList(schema => schema["properties"]?[nextProperty] as JObject);
+                    }
                 }
             }
 
@@ -450,89 +409,6 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
             .NavList(schema => schema[property] as JArray);
     }
 
-    //public List<JObject> GetParamValidationObjectSchemas(string url, string type, string paramName)
-    //{
-    //    var parameter = Parameter(url, type, paramName);
-    //    if (parameter is JObject convertedParam)
-    //    {
-    //        return new List<JObject>() { convertedParam["schema"] as JObject };
-    //    }
-
-    //    return openApi["paths"]?[url]?[type]?["requestBody"]?["content"]
-    //        ?.Values()
-    //        .Select(x => x["schema"]).Cast<JObject>().ToList() ?? new();
-    //}
-
-    //public List<JObject> GetParamValidationObjectSchemas(string url, string type, string[] objHeirarchy)
-    //{
-    //    var schema = GetParamValidationObjectSchemas(url, type, objHeirarchy[0]);
-
-    //    foreach(var nextProperty in objHeirarchy.Skip(1))
-    //    {
-    //        schema = GoToChild(schema, nextProperty);
-    //    }
-
-    //    return schema;
-    //}
-
-
-
-    //public Pair<JObject> GoToChild(Pair<JObject> items, string chidProperty)
-    //{
-    //    return items.Select(x => x["properties"][chidProperty]).Cast<JObject>().ToList();
-    //}
-
-    //public Pair<List<JObject>> GoToChild(Pair<List<JObject>> items, string chidProperty)
-    //{
-    //    return items.Nav(schema => schema.Select(x => x["properties"][chidProperty]).Cast<JObject>().ToList());
-    //}
-
-    public List<JObject> GoToChild(List<JObject> items, params string[] chidProperties)
-    {
-        var nextItems = items.ToList();
-
-        foreach(var prop in chidProperties)
-        {
-            nextItems = nextItems.Select(x => x["properties"]?[prop]).Cast<JObject>().ToList();
-        }
-
-        return nextItems;
-    }
-
-    public Pair<List<JObject>> GoToChild(Pair<List<JObject>> items, params string[] chidProperties)
-    {
-        //var nextItems = items.ToList();
-
-        foreach (var prop in chidProperties)
-        {
-            //nextItems = nextItems.Select(x => x["properties"][prop]).Cast<JObject>().ToList();
-            items = items.Nav(schema => schema.Select(x => x["properties"]?[prop]).Cast<JObject>().ToList());
-        }
-
-        //return nextItems;
-        return items;
-    }
-
-    public Pair<JObject> GoToChild(Pair<JObject> items, params string[] chidProperties)
-    {
-        foreach (var prop in chidProperties)
-        {
-            items = items.Nav(schema => schema["properties"]?[prop] as JObject);
-        }
-
-        return items;
-    }
-
-    //public List<JObject> GoToSchema(string url, string type, string[] childProperties)
-    //{
-    //    var restOftheProps = childProperties.Skip(1).ToList();
-    //    var baseObject = childProperties[0];
-
-    //    var schemas = GetParamValidationObjectSchemas(url, type, baseObject);
-
-    //    return GoToChild(schemas, restOftheProps.ToArray());
-    //}
-
     public Pair<JObject> GoToParamSchemaPair(string url, string type, string[] childProperties)
     {
         var schema = GetParamSchemaPair(url, type, childProperties);
@@ -541,31 +417,19 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
         {
             foreach (var prop in childProperties[1..^1])
             {
-                schema = schema.Nav(schema => schema["properties"]?[prop] as JObject);
+                if (prop.EndsWith("[n]"))
+                {
+                    schema = schema.Nav(schema => schema["properties"]?[prop.Replace("[n]", "")]?["items"] as JObject);
+                }
+                else
+                {
+                    schema = schema.Nav(schema => schema["properties"]?[prop] as JObject);
+                }
             }
         }
 
         return schema;
     }
-
-    //public JArray GetPathValidations(string url, string type, string paramName)
-    //{
-    //    var path = openApi?["paths"]?[url]?[type];
-
-    //    if (path[config.CustomValidationAttribute] is null)
-    //    {
-    //        path[config.CustomValidationAttribute] = new JObject();
-    //    }
-
-    //    var vobj = path[config.CustomValidationAttribute] as JObject;
-
-    //    if (vobj[paramName] is null)
-    //    {
-    //        (vobj[paramName] as JObject).Add(paramName, new JArray());
-    //    }
-
-    //    return vobj[paramName][paramName] as JArray;
-    //}
 
     public Pair<JArray> GetPathValidationsPair(string url, string type, string paramName)
     {
@@ -586,21 +450,7 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
                 }
             })
             .Nav(schema => schema?[config.CustomValidationAttribute]?[paramName]?[paramName] as JArray);
-
-        //return vobj[paramName][paramName] as JArray;
     }
-
-    //public JObject GetPathValidationObject(string url, string type)
-    //{
-    //    var path = openApi?["paths"]?[url]?[type];
-
-    //    if (path[config.CustomValidationAttribute] is null)
-    //    {
-    //        path[config.CustomValidationAttribute] = new JObject();
-    //    }
-
-    //    return path[config.CustomValidationAttribute] as JObject;
-    //}
 
     public Pair<JObject> GetPathValidationObjectPair(string url, string type)
     {
@@ -614,44 +464,6 @@ public class OpenApiNavigator(PopApiOpenApiConfig config, AssertionResult result
             })
             .Nav(schema => schema[config.CustomValidationAttribute] as JObject);
     }
-
-    //public List<JArray> GetParamValidationsArray(string url, string type, string paramName)
-    //{
-    //    //var schemas = GetParamSchemas(url, type, paramName);
-    //    var validationAttributes = new List<JArray>();
-
-    //    if (Parameter(url, type, paramName) is not null) 
-    //    {
-    //        var pathObj = openApi?["paths"]?[url]?[type];
-
-    //        if (pathObj[config.CustomValidationAttribute] is null)
-    //        {
-    //            (pathObj as JObject).Add(config.CustomValidationAttribute, new JObject());
-    //        }
-
-    //        if (pathObj[config.CustomValidationAttribute][paramName] is null)
-    //        {
-    //            (pathObj[config.CustomValidationAttribute] as JObject).Add(paramName, new JArray());
-    //        }
-
-    //        validationAttributes.Add(pathObj[config.CustomValidationAttribute][paramName] as JArray);
-    //    }
-
-
-    //    var requestBody = openApi["paths"]?[url]?[type]?["requestBody"];
-
-    //    if (!validationAttributes.Any() && requestBody is not null)
-    //    {
-    //        if (openApi["paths"]?[url]?[type]?["requestBody"][config.CustomValidationAttribute] is null)
-    //        {
-    //            (openApi["paths"]?[url]?[type]?["requestBody"] as JObject).Add(config.CustomValidationAttribute, new JArray());
-    //        }
-
-    //        validationAttributes.Add(openApi["paths"]?[url]?[type]?["requestBody"][config.CustomValidationAttribute] as JArray);
-    //    }
-
-    //    return validationAttributes;
-    //}
 
     public Pair<List<JArray>> GetParamOrRequestBodyPropertyValidationArrayPair(string url, string type, params string[] objHeirarchy)
     {

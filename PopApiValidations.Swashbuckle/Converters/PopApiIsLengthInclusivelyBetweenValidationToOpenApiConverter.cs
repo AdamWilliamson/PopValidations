@@ -13,16 +13,20 @@ public class PopApiIsLengthInclusivelyBetweenValidationToOpenApiConverter : IsLe
         attributeDescription.Add(description.Message);
     }
 
-    public void UpdateParamSchema(OpenApiOperation owningObjectSchema, OpenApiParameter parameterSchema, string paramName, DescriptionOutcome description)
+    public void UpdateParamSchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiParameter paramSchema,
+        string paramName,
+        DescriptionOutcome description)
     {
-        var startValue = description.Values.FirstOrDefault(x => x.Key == "startValue").Value;
-        var endValue = description.Values.FirstOrDefault(x => x.Key == "endValue").Value;
+        //var startValue = description.Values.FirstOrDefault(x => x.Key == "startValue").Value;
+        //var endValue = description.Values.FirstOrDefault(x => x.Key == "endValue").Value;
 
-        if (int.TryParse(startValue, out var start) && int.TryParse(endValue, out var end))
-        {
-            parameterSchema.Schema.MinLength = start;
-            parameterSchema.Schema.MaxLength = end;
-        }
+        //if (int.TryParse(startValue, out var start) && int.TryParse(endValue, out var end))
+        //{
+        //    schema.MinLength = start;
+        //    schema.MaxLength = end;
+        //}
     }
 
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)

@@ -17,14 +17,18 @@ public class PopApiIsLessThanValidationToOpenApiConverter : IsLessThanValidation
         attributeDescription.Add(description.Message);
     }
 
-    public void UpdateParamSchema(OpenApiOperation owningObjectSchema, OpenApiParameter parameterSchema, string paramName, DescriptionOutcome description)
+    public void UpdateParamSchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiParameter paramSchema,
+        string paramName,
+        DescriptionOutcome description)
     {
-        var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
-        if (decimal.TryParse(value, out var decimalValue))
-        {
-            parameterSchema.Schema.Maximum = decimalValue;
-            parameterSchema.Schema.ExclusiveMinimum = true;
-        }
+        //var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
+        //if (decimal.TryParse(value, out var decimalValue))
+        //{
+        //    schema.Maximum = decimalValue;
+        //    schema.ExclusiveMinimum = true;
+        //}
     }
 
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)

@@ -9,7 +9,7 @@ public interface IPopApiValidationToOpenApiConverter : IValidationToOpenApiConve
 {
     void UpdateParamSchema(
         OpenApiOperation owningObjectSchema,
-        OpenApiParameter parameterSchema,
+        OpenApiParameter paramSchema,
         string paramName,
         DescriptionOutcome description
     );
@@ -22,10 +22,10 @@ public interface IPopApiValidationToOpenApiConverter : IValidationToOpenApiConve
     );
 
     void UpdateAttribute(
-        OpenApiOperation owningObjectSchema,
-        OpenApiSchema paramSchema,
+        OpenApiOperation owningObjectSchema,        // Remove
+        OpenApiSchema paramSchema,          // Remove
         string paramName,
         DescriptionOutcome description,
-        PopValidationArray attributeDescription
+        PopValidationArray attributeDescription // Make First
     );
 }

@@ -8,17 +8,31 @@ namespace PopApiPopValidations.Swashbuckle.Converters;
 
 public class PopApiIsEmailValidationToOpenApiConverter : IsEmailValidationToOpenApiConverter, IPopApiValidationToOpenApiConverter
 {
-    public void UpdateAttribute(OpenApiOperation owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description, PopValidationArray attributeDescription)
+    public void UpdateAttribute(
+        OpenApiOperation owningObjectSchema, 
+        OpenApiSchema paramSchema, 
+        string paramName, 
+        DescriptionOutcome description, 
+        PopValidationArray attributeDescription)
     {
         attributeDescription.Add(description.Message);
     }
 
-    public void UpdateParamSchema(OpenApiOperation owningObjectSchema, OpenApiParameter parameterSchema, string paramName, DescriptionOutcome description)
+    public void UpdateParamSchema(
+        OpenApiOperation owningObjectSchema, 
+        OpenApiParameter parameterSchema,
+        //OpenApiSchema schema, 
+        string paramName, 
+        DescriptionOutcome description)
     {
         parameterSchema.Schema.Format = "email";
     }
 
-    public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)
+    public void UpdateRequestBodySchema(
+        OpenApiRequestBody owningObjectSchema, 
+        OpenApiSchema paramSchema, 
+        string paramName, 
+        DescriptionOutcome description)
     {
         paramSchema.Format = "email";
     }
