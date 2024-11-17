@@ -16,7 +16,7 @@ public class ParamIndexedPropertyExpressionToken<TValidationType, TInput, TOutpu
     public IParamVisitor Visitor { get; protected set; }
 
     private string? _name = null;
-    public string Name => _name + $"[n]";
+    public string Name => _name;// + $"[n]";
     public int Index { get; protected set; }
     public int EnumerableIndex { get; protected set; }
     public Type ParamType => typeof(TOutput);

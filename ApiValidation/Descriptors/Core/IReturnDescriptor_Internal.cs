@@ -27,4 +27,6 @@ public interface IReturnDescriptor_Internal
 {
     IFunctionExpressionToken FunctionDescriptor { get; }
     IFunctionContext GetContext();
+
+    bool IsRunning();
 }

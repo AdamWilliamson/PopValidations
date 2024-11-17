@@ -23,6 +23,19 @@ public class PopApiIsNullValidationToOpenApiConverter : IsNullValidationToOpenAp
         };
     }
 
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+        itemSchema.Enum = new List<IOpenApiAny>()
+        {
+            new OpenApiString("null")
+        };
+    }
+
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)
     {
         paramSchema.Nullable = true;

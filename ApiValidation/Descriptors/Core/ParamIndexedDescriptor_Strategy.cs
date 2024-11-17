@@ -21,12 +21,12 @@ public class ParamIndexedDescriptor_Strategy<TValidationType, TEnumeratedParamTy
     public int? EnumerableIndex { get; }
     protected string EnumerableIndexString => (EnumerableIndex is null or < 0) ? "n" : EnumerableIndex.ToString() ?? "n";
     public int? ParamIndex { get; }
-    public string PropertyName => (ParamToken?.FunctionToken?.Name ?? string.Empty) + $"::({ParamToken!.Name},{ParamIndex},{ParamToken!.ParamType.Name})[{EnumerableIndexString}]";
+    public string PropertyName => (ParamToken?.FunctionToken?.Name ?? string.Empty) + $":Param({ParamToken!.Index},{ParamToken?.FunctionToken?.GetParamTypeNameFor(ParamToken!.Index) ?? ParamToken!.ParamType.Name},{ParamToken!.Name})[{EnumerableIndexString}]";
     public IParamToken<TParamType> ParamToken => paramToken;
 
     public string AddTo(string existing)
     {
-        return ParamToken?.FunctionToken?.CombineWithParentProperty(existing) + $"::({ParamToken!.Name},{ParamIndex},{ParamToken!.ParamType.Name})[{EnumerableIndexString}]";
+        return ParamToken?.FunctionToken?.CombineWithParentProperty(existing) + $":Param({ParamToken!.Index},{ParamToken?.FunctionToken?.GetParamTypeNameFor(ParamToken!.Index)?? ParamToken!.ParamType.Name},{ParamToken!.Name})[{EnumerableIndexString}]";
     }
 
     public IParamDescriptor_Strategy<TValidationType, TParamType> Clone()

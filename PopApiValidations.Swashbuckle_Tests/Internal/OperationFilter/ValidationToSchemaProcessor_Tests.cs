@@ -47,16 +47,27 @@ public class ValidationToSchemaProcessor_Tests
 {
     public static IEnumerable<object[]> ParameterTestData()
     {
+        var isNotNullOutcomes = new List<DescriptionOutcome>()
+        {
+            new DescriptionOutcome(nameof(IsNotNullValidation), "Must not be null.", new())
+        };
+
         yield return new ValidationProcessorTestData
         {
             MethodInfo = typeof(Test_Api).GetMethod(nameof(Test_Api.BasicRouteFunction)),
             ParameterIndex = 0,
             OpenApiPropertyName = "id",
-            DescriptionOutcomes = new()
-            {
-                new DescriptionOutcome(nameof(IsNotNullValidation), "Must not be null.", new())
-            }
+            DescriptionOutcomes = isNotNullOutcomes
         };
+
+        yield return new ValidationProcessorTestData
+        {
+            MethodInfo = typeof(Test_Api).GetMethod(nameof(Test_Api.QueryFunction)),
+            ParameterIndex = 0,
+            OpenApiPropertyName = "SubRequest.Integers",
+            DescriptionOutcomes = isNotNullOutcomes
+        };
+
     }
 
     public static IEnumerable<object[]> RequestBodyTestData()
@@ -80,7 +91,7 @@ public class ValidationToSchemaProcessor_Tests
         BaseData BaseData
         ) GetSUT(ValidationProcessorTestData testData)
     {
-        var desc = ApiValidations.Execution.PopApiValidations.Configuation.DescribeValidatingParam.Invoke(
+        var desc = ApiValidations.Execution.PopApi.Configuation.DescribeValidatingParam.Invoke(
             testData.MethodInfo, Math.Max(testData.ParameterIndex, 0), null
         );
 
@@ -104,11 +115,15 @@ public class ValidationToSchemaProcessor_Tests
 
             var openApiParamBasis = new OpenApiParamBasis(
                 openApiPropertyName: testData.OpenApiPropertyName,
-                currentObjectHeirarchy: desc + "." + testData.OpenApiPropertyName,
+                openApiHeirarchy: null,
+                propertyName: null,
+                currentObjectHeirarchy: desc,// + "." + testData.OpenApiPropertyName,
                 objectType: testData.ParameterType,
+                operation: operation,
                 schemas: [testingParameter.Schema],
                 parameterSchema: testingParameter,
-                requestBody: null
+                requestBody: null,
+                disableArray: false
             );
 
             return (operation, openApiParamBasis, validationResults, baseData);
@@ -120,12 +135,16 @@ public class ValidationToSchemaProcessor_Tests
             var baseData = new BaseData(config, operation, schemaRepository, testData.MethodInfo, validationResults);
 
             var openApiParamBasis = new OpenApiParamBasis(
-                openApiPropertyName: testData.OpenApiPropertyName,
-                currentObjectHeirarchy: desc + "." + testData.OpenApiPropertyName,
+                openApiPropertyName: testData.OpenApiPropertyName ?? "RequestBody",
+                openApiHeirarchy: null,
+                propertyName: null,
+                currentObjectHeirarchy: desc,// + "." + testData.OpenApiPropertyName,
                 objectType: testData.ParameterType,
-                schemas: operation.RequestBody.Content.Values.Select(x => x.Schema).ToArray(),//[testingParameter.Schema],
+                operation: operation,
+                schemas: operation.RequestBody.Content.Select(kvp => kvp.Value.Schema).ToArray(),
                 parameterSchema: null,
-                requestBody: operation.RequestBody
+                requestBody: operation.RequestBody,
+                disableArray: false
             );
 
             return (operation, openApiParamBasis, validationResults, baseData);
@@ -141,10 +160,19 @@ public class ValidationToSchemaProcessor_Tests
 
         var (operation, openApiParamBasis, validationResults, baseData) = GetSUT(testData);
 
-        var validationForSchema = ValidationProcessor.GetFlattenedValidationsFor(config, validationResults, openApiParamBasis.CurrentObjectHeirarchy);
-        
         // Act
-        ValidationToSchemaProcessor.ProcessOpenApiParameter(openApiParamBasis, validationForSchema, baseData);
+        var validationForSchema = ValidationProcessor.GetFlattenedValidationsFor(
+            config, 
+            validationResults, 
+            openApiParamBasis.CurrentObjectHeirarchy
+        );
+
+        ValidationToSchemaProcessor.AddValidationToOpenApiParameterAndRequestBodyLayerOnly(
+            openApiParamBasis, 
+            validationForSchema, 
+            baseData,
+            PopValidations.Swashbuckle.ValidationLevel.FullDetails
+        );
 
         // Assert
         operation.Extensions[config.CustomValidationAttribute].Should().NotBeNull();
@@ -166,7 +194,12 @@ public class ValidationToSchemaProcessor_Tests
         var validationForSchema = ValidationProcessor.GetFlattenedValidationsFor(config, validationResults, openApiParamBasis.CurrentObjectHeirarchy);
 
         // Act
-        ValidationToSchemaProcessor.ProcessOpenApiParameter(openApiParamBasis, validationForSchema, baseData);
+        ValidationToSchemaProcessor.AddValidationToOpenApiParameterAndRequestBodyLayerOnly(
+            openApiParamBasis, 
+            validationForSchema, 
+            baseData,
+            PopValidations.Swashbuckle.ValidationLevel.FullDetails
+        );
 
         // Assert
         operation.Extensions[config.CustomValidationAttribute].Should().NotBeNull();

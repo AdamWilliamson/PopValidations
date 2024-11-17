@@ -1,7 +1,7 @@
 ﻿{
     "results": [
         {
-            "property": "EnumerableStringReturn()->IEnumerable<String>:Return(String)[n]",
+            "property": "EnumerableStringReturn()->IEnumerable<String>:Return(IEnumerable<String>)[n]",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",

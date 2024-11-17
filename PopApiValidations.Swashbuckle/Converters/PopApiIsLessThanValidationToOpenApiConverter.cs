@@ -1,5 +1,6 @@
 ﻿using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Linq;
 using PopApiValidations.Swashbuckle.Converters;
 using PopValidations.Execution.Validations;
 using PopValidations.Swashbuckle.Converters;
@@ -23,12 +24,27 @@ public class PopApiIsLessThanValidationToOpenApiConverter : IsLessThanValidation
         string paramName,
         DescriptionOutcome description)
     {
-        //var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
-        //if (decimal.TryParse(value, out var decimalValue))
-        //{
-        //    schema.Maximum = decimalValue;
-        //    schema.ExclusiveMinimum = true;
-        //}
+        var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
+        if (decimal.TryParse(value, out var decimalValue))
+        {
+            paramSchema.Schema.Maximum = decimalValue;
+            paramSchema.Schema.ExclusiveMaximum = true;
+        }
+    }
+
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+        var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
+        if (decimal.TryParse(value, out var decimalValue))
+        {
+            itemSchema.Maximum = decimalValue;
+            itemSchema.ExclusiveMaximum = true;
+        }
     }
 
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)
@@ -37,7 +53,7 @@ public class PopApiIsLessThanValidationToOpenApiConverter : IsLessThanValidation
         if (decimal.TryParse(value, out var decimalValue))
         {
             paramSchema.Maximum = decimalValue;
-            paramSchema.ExclusiveMinimum = true;
+            paramSchema.ExclusiveMaximum = true;
         }
     }
 }

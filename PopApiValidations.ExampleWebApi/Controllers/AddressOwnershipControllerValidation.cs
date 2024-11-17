@@ -7,35 +7,55 @@ public class AddressOwnershipControllerValidation : ApiValidator<AddressOwnershi
 {
     public AddressOwnershipControllerValidation()
     {
-        //DescribeFunc(x => x.Get()).Return.IsNotNull();
+        DescribeFunc(x => x.Get()).Return.IsNotNull().ForEach(x => x.IsNotNull());
 
         DescribeFunc(x => x.GetById(Param.Is<int>().IsGreaterThan(0)));
 
-        //DescribeFunc(x => x.Delete(Param.Is<int>().IsGreaterThan(0)));
+        DescribeFunc(x => x.Delete(Param.Is<int>().IsGreaterThan(0)));
 
-        //DescribeFunc(x => x.AddAddressOwnership(
-        //    Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
-        //);
-        //DescribeFunc(x => x.AddAddressOwnership_Ignore(
-        //    Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
-        //);
-        //DescribeFunc(x => x.AddAddressOwnership_Rename(
-        //    Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
-        //);
+        DescribeFunc(x => 
+            x.AddAddressOwnership(
+                Param.Is<AddressOwnership>().IsNotNull().SetValidator(new CreatingAddressOwnershipValidation())
+            )
+        ).Return.IsNotNull().SetValidator(new CreatingAddressOwnershipValidation());
 
-        //DescribeFunc(x => x.InsertOwner(
-        //    Param.Is<int>().IsGreaterThan(0),
-        //    Param.Is<string?>().IsNotNull(),
-        //    Param.Is<string?>().IsNotNull(),
-        //    Param.Is<ContactRecordType?>().IsNotNull(),
-        //    Param.Is<string?>().IsNotNull()
-        //));
+        DescribeFunc(x => x.AddAddressOwnership_Ignore(
+            Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
+        );
+
+        DescribeFunc(x => x.AddAddressOwnership_Rename(
+            Param.Is<AddressOwnership>().SetValidator(new CreatingAddressOwnershipValidation()))
+        );
+
+        DescribeFunc(x => x.InsertOwner(
+            Param.Is<int>().IsGreaterThan(0),
+            Param.Is<string?>().IsNotNull(),
+            Param.Is<string?>().IsNotNull(),
+            Param.Is<ContactRecordType?>().IsNotNull(),
+            Param.Is<string?>().IsNotNull()
+        ));
 
         DescribeFunc(x => x.MultipleContentParameters(
             Param.Is<AddressOwnership>().Vitally().IsNotNull().SetValidator(new CreatingAddressOwnershipValidation()),
             Param.Is<int>().IsGreaterThan(0).IsLessThan(9999),
-            Param.Is<string>().Vitally().IsNotNull().IsLengthInclusivelyBetween(0,9999)
+            Param.Is<string>().Vitally().IsNotNull().IsLengthInclusivelyBetween(0, 9999)
         ));
+
+        DescribeFunc(x => x.BasicQueryArray(Param.IsEnumerable<int>().IsNotNull().ForEach(i => i.IsGreaterThan(3)).Convert<List<int>>()));
+
+        DescribeFunc(x => x.ObjectQueryArray(
+            Param.IsEnumerable<ContactRecord>()
+                .IsNotNull()
+                .ForEach(i => i.IsNotNull().SetValidator(new CreatingContactRecordValidation())).Convert<List<ContactRecord>>()
+            )
+        );
+
+        DescribeFunc(x => x.ObjectBodyArray(
+            Param.IsEnumerable<AddressOwnership>()
+                .IsNotNull()
+                .ForEach(i => i.IsNotNull().SetValidator(new CreatingAddressOwnershipValidation())).Convert<List<AddressOwnership>>()
+            )
+        );
     }
 }
 
@@ -45,7 +65,8 @@ public class CreatingAddressOwnershipValidation: ApiSubValidator<AddressOwnershi
     {
         Describe(x => x.Id).IsNull();
         Describe(x => x.Address).Vitally().IsNotNull().SetValidator(new CreatingAddressValidation());
-        DescribeEnumerable(x => x.Owners).Vitally().IsNotNull().ForEach(x => x.SetValidator(new CreatingPersonValidation()));
+        DescribeEnumerable(x => x.Owners).Vitally().IsNotNull().ForEach(x => x.IsNotNull().SetValidator(new CreatingPersonValidation()));
+        DescribeEnumerable(x => x.InteractionRating).Vitally().IsNotNull().ForEach(x => x.IsNotNull());
     }
 }
 

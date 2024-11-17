@@ -30,12 +30,12 @@ public class OpenApiConfig
         new IsEnumValidationToOpenApiConverter(),
         new IsEqualToValidationToOpenApiConverter(),
         new IsNullValidationToOpenApiConverter(),
-        new IsLengthInclusivelyBetweenValidationToOpenApiConverter(),
-        new IsLengthExclusivelyBetweenValidationToOpenApiConverter(),
+        new IsLengthInclusivelyBetweenValidationConverter(),
+        new IsLengthExclusivelyBetweenValidationConverter(),
         new IsGreaterThanValidationToOpenApiConverter(),
-        new IsGreaterThanOrEqualToValidationToOpenApiConverter(),
+        new IsGreaterThanOrEqualToValidationConverter(),
         new IsLessThanValidationToOpenApiConverter(),
-        new IsLessThanOrEqualToValidationToOpenApiConverter(),
+        new IsLessThanOrEqualToValidationConverter(),
         new IsEmptyValidationToOpenApiConverter(),
         new IsNotEmptyValidationToOpenApiConverter(),
         new IsCustomValidationToOpenApiConverter(),
@@ -61,7 +61,6 @@ public class OpenApiConfig
 
         IsGenericList = (Type oType) =>
         {
-            Console.WriteLine(oType.FullName);
             if (oType.IsGenericType)
             {
                 var genDef = oType.GetGenericTypeDefinition();

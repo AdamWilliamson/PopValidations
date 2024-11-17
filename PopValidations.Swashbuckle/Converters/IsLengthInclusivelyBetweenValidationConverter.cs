@@ -8,12 +8,12 @@ using PopValidations.Validations;
 
 namespace PopValidations.Swashbuckle.Converters;
 
-public class IsGreaterThanOrEqualToValidationToOpenApiConverter : IValidationToOpenApiConverter
+public class IsLengthInclusivelyBetweenValidationConverter : IValidationToOpenApiConverter
 {
     public bool Supports(DescriptionOutcome description)
     {
         return description.Validator == GenericNameHelper
-            .GetNameWithoutGenericArity(typeof(IsGreaterThanOrEqualToValidation));
+            .GetNameWithoutGenericArity(typeof(IsLengthInclusivelyBetweenValidation<>));
     }
 
     public void UpdateSchema(
@@ -23,11 +23,13 @@ public class IsGreaterThanOrEqualToValidationToOpenApiConverter : IValidationToO
         DescriptionOutcome description
     )
     {
-        var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
-        if (decimal.TryParse(value, out var decimalValue))
+        var startValue = description.Values.FirstOrDefault(x => x.Key == "startValue").Value;
+        var endValue = description.Values.FirstOrDefault(x => x.Key == "endValue").Value;
+
+        if (int.TryParse(startValue, out var start) && int.TryParse(endValue, out var end))
         {
-            propertySchema.Minimum = decimalValue;
-            propertySchema.ExclusiveMinimum = false;
+            propertySchema.MinLength = start;
+            propertySchema.MaxLength = end;
         }
     }
 

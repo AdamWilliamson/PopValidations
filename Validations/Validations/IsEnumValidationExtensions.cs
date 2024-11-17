@@ -13,7 +13,7 @@ public static class IsEnumValidationExtensions
         Action<ValidationOptions>? optionsAction = null
     )
     {
-        var validation = new IsEnumValidation<TFieldType>(enumType);
+        var validation = new IsEnumValidation(typeof(TFieldType), enumType);
         optionsAction?.Invoke(new ValidationOptions(validation));
         fieldDescriptor.AddValidation(validation);
         return fieldDescriptor;

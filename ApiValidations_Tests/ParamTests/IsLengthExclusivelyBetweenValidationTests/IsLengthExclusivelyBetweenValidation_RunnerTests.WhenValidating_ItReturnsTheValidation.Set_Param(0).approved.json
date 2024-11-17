@@ -6,7 +6,7 @@
         "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(1,Array,param2)": [
             "Is not between 10 and 20 exclusive."
         ],
-        "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(2,IEnumerable<String>,param3)": [
+        "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(2,IList<String>,param3)": [
             "Is not between -1 and 0 exclusive."
         ],
         "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(3,LinkedList<Int32>,param4)": [

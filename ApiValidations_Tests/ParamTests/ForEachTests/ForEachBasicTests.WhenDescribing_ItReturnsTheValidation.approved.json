@@ -1,7 +1,7 @@
 ﻿{
     "Results": [
         {
-            "Property": "EnumerableIntReturn(IEnumerable<Int32>)->Void::(param1[n],,Int32)[n]",
+            "Property": "EnumerableIntReturn(IEnumerable<Int32>)->Void:Param(0,IEnumerable<Int32>,param1)[n]",
             "Outcomes": [
                 {
                     "Validator": "IsNotNullValidation",

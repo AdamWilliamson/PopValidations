@@ -3,6 +3,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PopApiValidations.Swashbuckle.Internal.OperationFilter;
 
@@ -110,7 +111,7 @@ public class OpenApiOperationNavigator
                 {
                     foreach (var methodParam in methodParamGroup)
                     {
-                        var found = GetParamAsNavigator(openApiParam.Name, openApiParam.In, methodParam);
+                        var found = GetParamAsNavigator(openApiParam.Name, openApiParam.In, MethodInfo, methodParam);
                         if (found is not null)
                         {
                             navigators.Add(found!);
@@ -125,12 +126,15 @@ public class OpenApiOperationNavigator
         {
             foreach (var methodParam in methodParamGroup)
             {
-                navigators.Add(new OpenApiParamNavigator(
+                navigators.Add(
+                    new OpenApiParamNavigator(
+                        operation: Operation,
                         parameterInfo: methodParam,
-                        parameterName: null,
+                        openApiParameterName: null,
                         GetSchemas(null),
                         null,
-                        Operation.RequestBody
+                        Operation.RequestBody,
+                        parameterName: null
                     )
                 );
             }
@@ -139,45 +143,65 @@ public class OpenApiOperationNavigator
         return navigators;
     }
 
-    public OpenApiParamNavigator GetParamAsNavigator(string openApiPropertyName, ParameterLocation? location, ParameterInfo param)
+    public OpenApiParamNavigator GetParamAsNavigator(string? openApiPropertyName, ParameterLocation? location, MethodInfo method, ParameterInfo param)
     {
-        ParameterLocation[] parameterNamedTypes = [ParameterLocation.Query, ParameterLocation.Header, ParameterLocation.Path];
-
-        if (location.HasValue && parameterNamedTypes.Contains(location.Value) != true)
+        foreach(var methodParam in method.GetParameters())
         {
-            var paramName = GetAlternateName(param);
+            if (QueryParameterConverter.GetAlternateName(param) == openApiPropertyName)
+            {
+                return new OpenApiParamNavigator(
+                    operation: Operation,
+                    parameterInfo: param,
+                    openApiParameterName: openApiPropertyName,
+                    GetSchemas(openApiPropertyName),
+                    Operation.Parameters.First(x => x.Name == openApiPropertyName),
+                    null,
+                    parameterName: null
+                );
+            }
+        }
+
+        if (location.HasValue)
+        {
+            var paramName = QueryParameterConverter.GetAlternateName(param);
 
             if (paramName?.Equals(openApiPropertyName, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return new OpenApiParamNavigator(
+                    operation: Operation,
                     parameterInfo: param,
-                    parameterName: openApiPropertyName,
+                    openApiParameterName: openApiPropertyName,
                     GetSchemas(openApiPropertyName),
                     Operation.Parameters.First(x => x.Name == openApiPropertyName),
-                    null
+                    null,
+                    parameterName: QueryParameterConverter.GetPropertyNameFromQuery(openApiPropertyName, param)
                 );
             }
         }
         else
         {
-            var objHeirarchy = openApiPropertyName.Split(".");
-            var firstItem = objHeirarchy[0];
-
+            //  Is like an int.  Ignore.
             if (!IsComplexType(param.ParameterType))
             {
                 return new OpenApiParamNavigator(
+                        operation: Operation,
                         parameterInfo: param,
-                        parameterName: openApiPropertyName,
+                        openApiParameterName: null,
                         GetSchemas(openApiPropertyName),
                         Operation.Parameters.First(x => x.Name == openApiPropertyName),
-                        null
+                        null,
+                        parameterName: null
                     );
             }
             else
             {
+                //  Is an object. we can assume openApiPropertyname is not null, because this is also a parameter.
+                var objHeirarchy = openApiPropertyName.Split(".");
+                var firstItem = objHeirarchy[0];
+
                 foreach (var prop in param.ParameterType.GetProperties())
                 {
-                    var propName = GetAlternateName(prop);
+                    var propName = QueryParameterConverter.GetAlternateName(prop);
                     if (firstItem.Equals(propName, StringComparison.OrdinalIgnoreCase))
                     {
                         var curProp = prop;
@@ -186,7 +210,7 @@ public class OpenApiOperationNavigator
                         {
                             foreach (var childprop in prop.PropertyType.GetProperties())
                             {
-                                var childName = GetAlternateName(childprop);
+                                var childName = QueryParameterConverter.GetAlternateName(childprop);
                                 if (heirarchyItem.Equals(childName, StringComparison.OrdinalIgnoreCase))
                                 {
                                     curProp = childprop;
@@ -196,28 +220,35 @@ public class OpenApiOperationNavigator
                         }
 
                         return new OpenApiParamNavigator(
+                            operation: Operation,
                             parameterInfo: param,
-                            parameterName: openApiPropertyName,
+                            openApiParameterName: null, //param.Name,
                             GetSchemas(openApiPropertyName),
                             Operation.Parameters.First(x => x.Name == openApiPropertyName),
-                            null
+                            null,
+                            parameterName: null
                         );
                     }
                 }
             }
         }
 
-        throw new Exception("Param is not real?");
+        return null;
     }
 
 
-    public string? GetAlternateName(PropertyInfo propInfo)
+    
+}
+
+public static class QueryParameterConverter
+{
+    public static string? GetAlternateName(PropertyInfo propInfo)
     {
         var renameAttr = propInfo.GetCustomAttribute<JsonPropertyAttribute>();
         return renameAttr?.PropertyName ?? propInfo.Name;
     }
 
-    public string? GetAlternateName(ParameterInfo paramInfo)
+    public static string? GetAlternateName(ParameterInfo paramInfo)
     {
         var urlAttr = paramInfo.GetCustomAttribute<FromRouteAttribute>();
         if (urlAttr is not null && !string.IsNullOrWhiteSpace(urlAttr.Name))
@@ -268,5 +299,102 @@ public class OpenApiOperationNavigator
         }
 
         return paramInfo.Name;
+    }
+
+    public static string? GetPropertyNameFromQuery(string queryParameter, ParameterInfo parameterInfo)
+    {
+        if (string.IsNullOrWhiteSpace(queryParameter)) return null;
+
+        if (queryParameter == GetAlternateName(parameterInfo)) return null;
+
+        // Split the query parameter by the '.' character
+        var parts = queryParameter.Split('.');
+        Type currentType = parameterInfo.ParameterType; // Start with the type of the parameter
+        string builtUpName = "";
+
+        if (IsBasicType(parameterInfo.ParameterType) && parts.Count() > 1)
+        {
+            throw new Exception("Contains a . showing its a child property, but there isn't any..");
+        }
+        else if (IsBasicType(parameterInfo.ParameterType) && GetAlternateName(parameterInfo) == queryParameter)
+        {
+            //return parameterInfo.Name;
+            return null;
+        }
+
+        // Iterate through the parts of the query parameter
+        for (int i = 0; i < parts.Length; i++)
+        {
+            var part = parts[i];
+            // Get the property info for the current part
+            PropertyInfo? propertyInfo = GetPropertyInfo(currentType, part);
+
+            // If the property is not found, throw an exception
+            if (propertyInfo == null)
+            {
+                throw new ArgumentException($"Property '{part}' not found on type '{currentType.Name}'.");
+            }
+
+            // Build the hierarchy name
+            if (IsBasicType(propertyInfo.PropertyType))
+            {
+                builtUpName += $"{propertyInfo.Name}";
+            }
+            else if (IsEnumerableType(propertyInfo.PropertyType))
+            {
+                // Add the property name with [n] to denote an enumerable
+                builtUpName += $"{propertyInfo.Name}[n]";
+            }
+            else
+            {
+                builtUpName += $"{propertyInfo.Name}";
+            }
+
+            // Move to the type of the current property
+            currentType = propertyInfo.PropertyType.IsArray ? propertyInfo.PropertyType.GetElementType() : propertyInfo.PropertyType;
+
+            // Add a dot after the property name unless it's the last part
+            if (i < parts.Length - 1)
+            {
+                builtUpName += ".";
+            }
+        }
+
+        return builtUpName; // Return the built-up name without a trailing dot
+    }
+
+    private static PropertyInfo? GetPropertyInfo(Type type, string propertyName)
+    {
+        // Get the property by name first
+        PropertyInfo property = type.GetProperty(propertyName);
+        if (property != null)
+        {
+            return property;
+        }
+
+        // If not found, check for JsonProperty attributes
+        var properties = type.GetProperties();
+        foreach (var prop in properties)
+        {
+            var jsonAttr = prop.GetCustomAttribute<JsonPropertyAttribute>();
+            if (jsonAttr != null && string.Equals(jsonAttr.PropertyName, propertyName, StringComparison.OrdinalIgnoreCase))
+            {
+                return prop;
+            }
+        }
+
+        return null; // Property not found
+    }
+
+    private static bool IsBasicType(Type type)
+    {
+        // Define what constitutes a basic type (e.g., int, string, bool, etc.)
+        return type.IsPrimitive || type == typeof(string) || type.IsValueType;
+    }
+
+    private static bool IsEnumerableType(Type type)
+    {
+        // Check if the type is an array or implements IEnumerable<>
+        return type.IsArray || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(System.Collections.Generic.IEnumerable<>));
     }
 }

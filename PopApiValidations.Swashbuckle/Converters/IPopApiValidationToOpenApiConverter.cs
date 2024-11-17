@@ -14,6 +14,13 @@ public interface IPopApiValidationToOpenApiConverter : IValidationToOpenApiConve
         DescriptionOutcome description
     );
 
+    void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    );
+
     void UpdateRequestBodySchema(
         OpenApiRequestBody owningObjectSchema,
         OpenApiSchema paramSchema,

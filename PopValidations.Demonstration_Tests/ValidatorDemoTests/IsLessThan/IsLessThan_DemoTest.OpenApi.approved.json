@@ -3,7 +3,7 @@
     "properties": {
         "nInteger": {
             "maximum": 5,
-            "exclusiveMinimum": true,
+            "exclusiveMaximum": true,
             "type": "integer",
             "format": "int32",
             "nullable": true

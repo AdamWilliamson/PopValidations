@@ -26,7 +26,7 @@ public class IsEnumValidation_Tests
     public void WhenValidatingWithConvertableValues_TheyAllPass(object value)
     {
         // Arrange
-        var validator = new IsEnumValidation<object>(typeof(TestEnum));
+        var validator = new IsEnumValidation(typeof(object), typeof(TestEnum));
 
         // Act
         var result = validator.Validate(value);
@@ -47,7 +47,7 @@ public class IsEnumValidation_Tests
     public void WhenValidatingWithNonConvertableValues_TheyAllFail(object? value)
     {
         // Arrange
-        var validator = new IsEnumValidation<object?>(typeof(TestEnum));
+        var validator = new IsEnumValidation(typeof(object), typeof(TestEnum));
 
         // Act
         var result = validator.Validate(value);
@@ -62,7 +62,7 @@ public class IsEnumValidation_Tests
     public void WhenValidatingWithOddTypes_TheyAllFail(object? value)
     {
         // Arrange
-        var validator = new IsEnumValidation<object?>(typeof(TestEnum));
+        var validator = new IsEnumValidation(typeof(object), typeof(TestEnum));
 
         // Act
         var result = validator.Validate(value);
@@ -76,7 +76,7 @@ public class IsEnumValidation_Tests
     public void TheValidationAndDescriptionValues_AreCorrect()
     {
         // Arrange
-        var validator = new IsEnumValidation<int>(typeof(TestEnum));
+        var validator = new IsEnumValidation(typeof(int), typeof(TestEnum));
 
         // Act
         var validationResult = validator.Validate(0);

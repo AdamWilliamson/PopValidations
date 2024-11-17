@@ -27,7 +27,7 @@ public class IsLessThanValidationToOpenApiConverter : IValidationToOpenApiConver
         if (decimal.TryParse(value, out var decimalValue))
         {
             propertySchema.Maximum = decimalValue;
-            propertySchema.ExclusiveMinimum = true;
+            propertySchema.ExclusiveMaximum = true;
         }
     }
 

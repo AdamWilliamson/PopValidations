@@ -19,12 +19,27 @@ public class PopApiIsGreaterThanValidationToOpenApiConverter : IsGreaterThanVali
         string paramName,
         DescriptionOutcome description)
     {
-        //var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
-        //if (decimal.TryParse(value, out var decimalValue))
-        //{
-        //    schema.Minimum = decimalValue;
-        //    schema.ExclusiveMinimum = true;
-        //}
+        var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
+        if (decimal.TryParse(value, out var decimalValue))
+        {
+            paramSchema.Schema.Minimum = decimalValue;
+            paramSchema.Schema.ExclusiveMinimum = true;
+        }
+    }
+
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+        var value = description.Values.FirstOrDefault(x => x.Key == "value").Value;
+        if (decimal.TryParse(value, out var decimalValue))
+        {
+            itemSchema.Minimum = decimalValue;
+            itemSchema.ExclusiveMinimum = true;
+        }
     }
 
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)

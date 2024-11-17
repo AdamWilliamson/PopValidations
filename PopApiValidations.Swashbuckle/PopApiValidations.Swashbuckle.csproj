@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApiValidation\ApiValidations.csproj" />
+    <ProjectReference Include="..\PopHelpers\PopHelpers.csproj" />
     <ProjectReference Include="..\PopValidations.Swashbuckle\PopValidations.Swashbuckle.csproj" />
   </ItemGroup>
 

@@ -79,10 +79,10 @@ public abstract class ValidationComponentBase : IValidationComponent
             int index = name.IndexOf('`');
             name = index == -1 ? name : name.Substring(0, index);
 
-            if (t.IsGenericType)
-            {
-                name += $"<{string.Join(',', t.GenericTypeArguments.ToList().Select(x => GetNameWithoutGenericArity(x)).ToList())}>";
-            }
+            //if (t.IsGenericType)
+            //{
+            //    name += $"<{string.Join(',', t.GenericTypeArguments.ToList().Select(x => GetNameWithoutGenericArity(x)).ToList())}>";
+            //}
 
             return name;
         }

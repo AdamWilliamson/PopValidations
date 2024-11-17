@@ -6,7 +6,7 @@ using PopValidations.Swashbuckle.Internal;
 
 namespace PopApiPopValidations.Swashbuckle.Converters;
 
-public class PopApiIsLengthInclusivelyBetweenValidationToOpenApiConverter : IsLengthInclusivelyBetweenValidationToOpenApiConverter, IPopApiValidationToOpenApiConverter
+public class PopApiIsLengthInclusivelyBetweenValidationToOpenApiConverter : IsLengthInclusivelyBetweenValidationConverter, IPopApiValidationToOpenApiConverter
 {
     public void UpdateAttribute(OpenApiOperation owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description, PopValidationArray attributeDescription)
     {
@@ -27,6 +27,23 @@ public class PopApiIsLengthInclusivelyBetweenValidationToOpenApiConverter : IsLe
         //    schema.MinLength = start;
         //    schema.MaxLength = end;
         //}
+    }
+
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+        var startValue = description.Values.FirstOrDefault(x => x.Key == "startValue").Value;
+        var endValue = description.Values.FirstOrDefault(x => x.Key == "endValue").Value;
+
+        if (int.TryParse(startValue, out var start) && int.TryParse(endValue, out var end))
+        {
+            itemSchema.MinLength = start;
+            itemSchema.MaxLength = end;
+        }
     }
 
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)

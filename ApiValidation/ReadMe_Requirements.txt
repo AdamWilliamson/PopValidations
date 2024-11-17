@@ -18,3 +18,6 @@ V1
 	IsLengthInclusivelyBetweenValidation Does not include "Length" in it's description, making string errors/description wrong.
 		"Must be between 0 and 9999 inclusive."
 
+
+	validate Dictionary type
+	validate Set type

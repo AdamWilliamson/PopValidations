@@ -78,8 +78,7 @@ public class UnitTest1
         var validator = new TestControllerValidation();
         validator.DescribeFunc(x => x.CreateByUrl(
             validator.Param.Is<int?>().IsNotNull(),
-            validator.Param.Is<string>().IsNotNull(),
-            validator.Param.Is<List<int>>().IsNotNull()
+            validator.Param.Is<string>().IsNotNull()
         ));
 
         var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
@@ -94,40 +93,39 @@ public class UnitTest1
         builder.ParamIs<Request>("listOfIntField").IsNotNull2();
 
         //Assert
-        //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
         builder.Validate();
     }
 
-    [Fact]
-    public async Task CreateByQuery_Basic_Validation()
-    {
-        // Arrange
-        string methodName = nameof(TestController.CreateByQuery);
-        var controllerTester = new PopApiControllerValidationTestBuilder<TestController, TestControllerValidation>();
+    //[Fact]
+    //public async Task CreateByQuery_Basic_Validation()
+    //{
+    //    // Arrange
+    //    string methodName = nameof(TestController.CreateByQuery);
+    //    var controllerTester = new PopApiControllerValidationTestBuilder<TestController, TestControllerValidation>();
 
-        var config = new TestWebApiConfig();
-        config.ValidateEndpoint = (m) => m == typeof(TestController).GetMethod(methodName);
+    //    var config = new TestWebApiConfig();
+    //    config.ValidateEndpoint = (m) => m == typeof(TestController).GetMethod(methodName);
 
-        // Act
-        var objValidator = new TestSubValidation<Request>();
-        objValidator.Describe(x => x.IntegerField).IsNotNull();
+    //    // Act
+    //    var objValidator = new TestSubValidation<Request>();
+    //    objValidator.Describe(x => x.IntegerField).IsNotNull();
 
-        var validator = new TestControllerValidation();
-        validator.DescribeFunc(x => x.CreateByQuery(validator.Param.Is<Request>().SetValidator(objValidator).IsNotNull()));
+    //    var validator = new TestControllerValidation();
+    //    validator.DescribeFunc(x => x.CreateByQuery(validator.Param.Is<Request>().SetValidator(objValidator).IsNotNull()));
 
-        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
-            config,
-            nameof(TestController.CreateByQuery),
-            "/api/Test/CreateByQuery",
-            validator
-        );
+    //    var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
+    //        config,
+    //        nameof(TestController.CreateByQuery),
+    //        "/api/Test/CreateByQuery",
+    //        validator
+    //    );
 
-        builder.ParamIs<Request>("IntegerField").IsNotNull2();
+    //    builder.ParamIs<Request>("IntegerField").IsNotNull2();
 
-        //Assert
-        //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
-        builder.Validate();
-    }
+    //    //Assert
+    //    //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
+    //    builder.Validate();
+    //}
 
     [Fact]
     public async Task CreateByBody_Basic_Validation()

@@ -17,7 +17,7 @@ public class ForEachReturnDescriptor<TEnumeratedFieldType, TReturnType>
 
     protected bool _NextValidationVital { get; set; } = false;
     protected bool _AlwaysVital { get; set; } = false;
-    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $":Return({typeof(TReturnType).Name})[{(index >= 0 ? index.ToString() : 'n')}]";
+    public string PropertyName => (_functionDescriptor.Name ?? string.Empty) + $":Return({_functionDescriptor.GetReturnTypeName()})[{(index >= 0 ? index.ToString() : 'n')}]";
 
     IFunctionExpressionToken _functionDescriptor { get; set; }
     IFunctionExpressionToken IReturnDescriptor_Internal.FunctionDescriptor => _functionDescriptor;
@@ -32,6 +32,11 @@ public class ForEachReturnDescriptor<TEnumeratedFieldType, TReturnType>
         _functionDescriptor = functionDescription;
         this.index = index;
         this.context = context;
+    }
+
+    public bool IsRunning()
+    {
+        return store.GetContextItem(ApiValidationConstants.MethodResultKey) is not null;
     }
 
     public void UpdateContext(Dictionary<string, object?> context)

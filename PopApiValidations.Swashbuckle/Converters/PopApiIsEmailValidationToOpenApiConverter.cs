@@ -28,6 +28,16 @@ public class PopApiIsEmailValidationToOpenApiConverter : IsEmailValidationToOpen
         parameterSchema.Schema.Format = "email";
     }
 
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+        itemSchema.Format = "email";
+    }
+
     public void UpdateRequestBodySchema(
         OpenApiRequestBody owningObjectSchema, 
         OpenApiSchema paramSchema, 

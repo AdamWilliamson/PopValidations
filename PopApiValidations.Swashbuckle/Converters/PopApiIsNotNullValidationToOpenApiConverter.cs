@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using PopValidations.Execution.Validations;
 using PopValidations.Swashbuckle.Converters;
 using PopValidations.Swashbuckle.Internal;
@@ -23,6 +24,16 @@ public class PopApiIsNotNullValidationToOpenApiConverter : IsNotNullValidationTo
         DescriptionOutcome description)
     {
         owningObjectSchema.Required = true;
+    }
+
+    public void UpdateParamArraySchema(
+    OpenApiOperation owningObjectSchema,
+    OpenApiSchema itemSchema,
+    string paramName,
+    DescriptionOutcome description
+)
+    {
+        itemSchema.Nullable = false;
     }
 
     public void UpdateAttribute(

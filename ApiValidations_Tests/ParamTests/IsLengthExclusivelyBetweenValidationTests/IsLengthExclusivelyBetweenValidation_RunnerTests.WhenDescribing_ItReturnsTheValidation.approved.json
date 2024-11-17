@@ -41,7 +41,7 @@
             "ValidationGroups": []
         },
         {
-            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(2,IEnumerable<String>,param3)",
+            "Property": "Set(String,Array,IList<String>,LinkedList<Int32>,IEnumerable<Double>,Dictionary<String,Int32>)->Void:Param(2,IList<String>,param3)",
             "Outcomes": [
                 {
                     "Validator": "IsLengthExclusivelyBetweenValidation",

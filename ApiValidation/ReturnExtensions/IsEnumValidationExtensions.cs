@@ -12,7 +12,7 @@ public static class IsEnumReturnValidationExtensions
         Action<ValidationOptions>? optionsAction = null
     )
     {
-        var validation = new IsEnumValidation<TReturnType>(enumType);
+        var validation = new IsEnumValidation(typeof(TReturnType), enumType);
         optionsAction?.Invoke(new ValidationOptions(validation));
         fieldDescriptor.AddValidation(validation);
         return fieldDescriptor;

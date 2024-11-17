@@ -15,6 +15,7 @@ namespace ApiValidations.Execution;
 public interface IApiValidationDescriber
 {
     DescriptionResult Describe();
+    DescriptionResult Describe(MethodInfo methodInfo);
 }
 
 public interface IApiValidationRunner<TValidationType>: IApiValidationDescriber
@@ -94,13 +95,27 @@ public class ApiConfiguration
 
         DescribeValidatingParam = (MethodInfo methodInfo, int paramIndex, int? indexArray) =>
         {
-            var description = $"{FunctionDescription.Invoke(methodInfo)}{ParamDescription.Invoke(methodInfo, paramIndex)}";
-            if (indexArray.HasValue)
+            if (paramIndex == -1)
             {
-                description += $"[{(indexArray >= 0 ? indexArray.ToString() : 'n')}]";
-            }
+                var description = $"{FunctionDescription.Invoke(methodInfo)}";
+                if (indexArray.HasValue)
+                {
+                    description += $"[{(indexArray >= 0 ? indexArray.ToString() : 'n')}]";
+                }
 
-            return description;
+                return description;
+            }
+            else
+            {
+
+                var description = $"{FunctionDescription.Invoke(methodInfo)}{ParamDescription.Invoke(methodInfo, paramIndex)}";
+                if (indexArray.HasValue)
+                {
+                    description += $"[{(indexArray >= 0 ? indexArray.ToString() : 'n')}]";
+                }
+
+                return description;
+            }
         };
 
         DescribeValidatingReturn = (MethodInfo methodInfo, int? returnIndex) =>
@@ -249,11 +264,11 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
             mainValidator.SetCurrentExecutionContext(methodInfo);
         }
 
-        var funcDesc = PopApiValidations.Configuation.FunctionDescription(methodInfo.Method);
+        var funcDesc = PopApi.Configuation.FunctionDescription(methodInfo.Method);
         var objectGraphWithFunction = (string.IsNullOrWhiteSpace(methodInfo.ObjectMap))
             ? funcDesc
             : string.Join('.', [methodInfo.ObjectMap, funcDesc]);
-        var objectGraphWithFunctionAndParam = objectGraphWithFunction + PopApiValidations.Configuation.ParamToken;
+        var objectGraphWithFunctionAndParam = objectGraphWithFunction + PopApi.Configuation.ParamToken;
         var validations = await validationRunner.Validate(instance, [objectGraphWithFunctionAndParam]);
 
         return new ApiValidationResult(validations);
@@ -268,7 +283,7 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
             return new ApiValidationResult(validations);
         }
 
-        var funcDesc = PopApiValidations.Configuation.FunctionDescription(methodInfo.Method);
+        var funcDesc = PopApi.Configuation.FunctionDescription(methodInfo.Method);
         var objectGraphWithFunction = (string.IsNullOrWhiteSpace(methodInfo.ObjectMap))
             ? funcDesc
             : string.Join('.', [methodInfo.ObjectMap, funcDesc]);
@@ -287,7 +302,7 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
         }
 
         // Execute Function on Object
-        var returnDesc = PopApiValidations.Configuation.ReturnDescription(methodInfo.Method.ReturnType);
+        var returnDesc = PopApi.Configuation.ReturnDescription(methodInfo.Method.ReturnType);
         objectGraphWithFunction += returnDesc;
 
         //===
@@ -312,5 +327,12 @@ public class ApiValidationRunner<TValidationType> : IApiValidationRunner<TValida
     public DescriptionResult Describe() 
     {
         return validationRunner.Describe();
+    }
+
+    public DescriptionResult Describe(MethodInfo methodInfo)
+    {
+        var funcDesc = PopApi.Configuation.FunctionDescription(methodInfo);
+
+        return validationRunner.Describe([funcDesc]);
     }
 }

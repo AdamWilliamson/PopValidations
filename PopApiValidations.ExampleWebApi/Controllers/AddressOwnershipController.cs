@@ -34,6 +34,13 @@ public class AddressOwnershipController : ControllerBase
         return newAddressOwnership;
     }
 
+    [HttpPost(nameof(AddAddressOwnershipQuery))]
+    public AddressOwnership AddAddressOwnershipQuery([FromQuery] AddressOwnership newAddressOwnership)
+    {
+        AddressOwnershipDataSource.Instance.AddRecord(newAddressOwnership);
+        return newAddressOwnership;
+    }
+
     [HttpPost(nameof(AddAddressOwnership_Ignore))]
     [PopApiValidationsIgnore]
     public AddressOwnership AddAddressOwnership_Ignore([FromBody] AddressOwnership newAddressOwnership)
@@ -85,11 +92,29 @@ public class AddressOwnershipController : ControllerBase
 
 
     [HttpPost(nameof(TestyMcTestFace))]
-    public AddressOwnership TestyMcTestFace([FromQuery(Name ="TestyMyTestParam")] AddressOwnership newAddressOwnership, [FromQuery] AddressOwnership newAddressOwnership2)
+    public AddressOwnership TestyMcTestFace([FromQuery(Name = "TestyMyTestParam")] AddressOwnership newAddressOwnership, [FromQuery] AddressOwnership newAddressOwnership2)
     {
         AddressOwnershipDataSource.Instance.AddRecord(newAddressOwnership);
         return newAddressOwnership;
     }
+
+    [HttpGet(nameof(MultipleRequestBodyTypes))]
+    public IActionResult MultipleRequestBodyTypes([FromBody] AddressOwnership request, [FromForm] DumbTestRequest formRequest)
+    {
+        return Ok();
+    }
+
+    [HttpPost(nameof(BasicQueryArray))]
+    public void BasicQueryArray([FromQuery] List<int> ids) { }
+
+    [HttpPost(nameof(ObjectQueryArray))]
+    public void ObjectQueryArray([FromQuery] List<ContactRecord> contacts) { }
+
+    [HttpPost(nameof(ObjectBodyArray))]
+    public void ObjectBodyArray([FromBody] List<AddressOwnership> addresses) { }
+
+    [HttpPost(nameof(ObjectReturnArray))]
+    public List<AddressOwnership> ObjectReturnArray() { return new(); }
 }
 
 public class DumbTestRequest

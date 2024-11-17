@@ -22,6 +22,19 @@ public class PopApiIsEqualToValidationToOpenApiConverter : IsEqualToValidationTo
         };
     }
 
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+        itemSchema.Enum = new List<IOpenApiAny>()
+        {
+            new OpenApiString(description.Values.First(c => c.Key == "value").Value)
+        };
+    }
+
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)
     {
         paramSchema.Enum = new List<IOpenApiAny>()

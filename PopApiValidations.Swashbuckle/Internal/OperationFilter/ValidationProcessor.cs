@@ -74,7 +74,7 @@ public static class ValidationProcessor
             {
                 if (outcome == null) continue;
 
-                endOutcomes.Add(new(existing + additive, outcome!));
+                endOutcomes.Add(new(existing + additive + config.GroupResultIndicator, outcome!));
             }
         }
 
@@ -82,7 +82,7 @@ public static class ValidationProcessor
         {
             foreach (var child in group.Children)
             {
-                endOutcomes.AddRange(FlattenRecurse(config, existing + additive, child));
+                endOutcomes.AddRange(FlattenRecurse(config, existing + additive + config.GroupResultIndicator, child));
             }
         }
 

@@ -30,6 +30,15 @@ public class PopApiIsCustomValidationToOpenApiConverter : IsCustomValidationToOp
     {
     }
 
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+    }
+
     public void UpdateRequestBodySchema(
         OpenApiRequestBody owningObjectSchema, 
         OpenApiSchema paramSchema, 

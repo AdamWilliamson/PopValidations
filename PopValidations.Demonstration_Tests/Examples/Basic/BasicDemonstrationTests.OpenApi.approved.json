@@ -16,6 +16,7 @@
         },
         "duration": {
             "maximum": 5,
+            "exclusiveMaximum": true,
             "minimum": 2,
             "exclusiveMinimum": true,
             "type": "number",

@@ -98,7 +98,7 @@ public class ApiValidationsAttribute : ActionFilterAttribute
 
     private string ProcessParam(string errorKey, MethodInfo methodInfo)
     {
-        var paramName = ApiValidations.Execution.PopApiValidations.Configuation.GetParamNameFromErrorKey?.Invoke(errorKey) ?? errorKey;
+        var paramName = ApiValidations.Execution.PopApi.Configuation.GetParamNameFromErrorKey?.Invoke(errorKey) ?? errorKey;
 
         var objName = paramName.Split('.').FirstOrDefault();
         if (objName != null)

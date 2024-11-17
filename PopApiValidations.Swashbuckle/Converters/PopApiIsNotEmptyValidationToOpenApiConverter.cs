@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using PopApiValidations.Swashbuckle.Converters;
 using PopValidations.Execution.Validations;
 using PopValidations.Swashbuckle.Converters;
@@ -18,6 +19,16 @@ public class PopApiIsNotEmptyValidationToOpenApiConverter : IsNotEmptyValidation
         parameterSchema.Required = true;
         parameterSchema.Schema.MinLength = 1;
         parameterSchema.Schema.MinItems = 1;
+    }
+
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+        itemSchema.MinItems = 1;
     }
 
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)

@@ -8,7 +8,7 @@ using PopValidations.Validations;
 
 namespace PopValidations.Swashbuckle.Converters;
 
-public class IsLessThanOrEqualToValidationToOpenApiConverter : IValidationToOpenApiConverter
+public class IsLessThanOrEqualToValidationConverter : IValidationToOpenApiConverter
 {
     public bool Supports(DescriptionOutcome description)
     {

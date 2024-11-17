@@ -9,7 +9,6 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
     public override string DescriptionTemplate { get; protected set; }
     public override string ErrorTemplate { get; protected set; }
 
-    //private readonly Func<TFieldType?, bool> customValidationFunc;
     private readonly IScopedData<TFieldType, bool> scopedValue;
 
     public IsCustomValidation(
@@ -46,11 +45,6 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
             {
                 scopedValue?.SetParent(new ScopedData<TFieldType?>(default));
                 
-                //if (customValidationFunc != null && customValidationFunc.Invoke(default))
-                //{
-                //    return CreateValidationSuccessful();
-                //} 
-                //else
                 if (scopedValue != null && scopedValue.GetValue()  is true)
                 {
                     return CreateValidationSuccessful();
@@ -60,11 +54,6 @@ public class IsCustomValidation<TFieldType> : ValidationComponentBase
             {
                 scopedValue?.SetParent(new ScopedData<TFieldType?>(converted));
 
-                //if (customValidationFunc != null && customValidationFunc.Invoke(converted))
-                //{
-                //    return CreateValidationSuccessful();
-                //}
-                //else 
                 if (scopedValue != null && scopedValue.GetValue() is true)
                 {
                     return CreateValidationSuccessful();

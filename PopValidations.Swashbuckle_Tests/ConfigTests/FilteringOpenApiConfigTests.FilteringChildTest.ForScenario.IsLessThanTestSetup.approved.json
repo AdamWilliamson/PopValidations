@@ -31,7 +31,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "OK"
                     }
                 }
             }
@@ -44,7 +44,7 @@
                 "properties": {
                     "id": {
                         "maximum": 5,
-                        "exclusiveMinimum": true,
+                        "exclusiveMaximum": true,
                         "type": "integer",
                         "format": "int32",
                         "nullable": true

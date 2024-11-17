@@ -25,7 +25,7 @@ public class ParamBuilder<TParamType>
     OpenApiNavigator openApiNavigator;
     private readonly string[] objHeirarcy;
     readonly Type[] BasicDataTypes = [typeof(int), typeof(double), typeof(string), typeof(bool), typeof(DateTime), typeof(DateTimeOffset)];
-
+    bool isArray = false;
     public ParamType ParamType { get; }
 
     public ParamBuilder(
@@ -42,6 +42,7 @@ public class ParamBuilder<TParamType>
         this.type = type;
         this.openApiNavigator = openApiNavigator;
         this.objHeirarcy = objHeirarcy;
+        isArray = objHeirarcy?.LastOrDefault()?.EndsWith("[n]") ?? false;
     }
 
     //public void SetParameterValidation(string validation)
@@ -345,9 +346,12 @@ public class ParamBuilder<TParamType>
                         result.SetResult(schema[config.CustomValidationAttribute]?[objHeirarcy[0]]?.Values()?.Contains("Must not be null.") == true)
                     );
 
-                openApiNavigator.ParameterOrItemsByName(url, type, objHeirarcy)
-                    .Modify(("required", () => true))
-                    .Assert((schema, result) => result.SetResult(schema["required"]?.Value<bool>() == true));
+                if (!isArray)
+                {
+                    openApiNavigator.ParameterOrItemsByName(url, type, objHeirarcy)
+                        .Modify(("required", () => true))
+                        .Assert((schema, result) => result.SetResult(schema["required"]?.Value<bool>() == true));
+                }
 
                 return this;
             }

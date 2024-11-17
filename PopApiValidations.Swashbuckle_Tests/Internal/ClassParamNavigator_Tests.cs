@@ -15,6 +15,8 @@ public class SubRequest
 {
     [JsonProperty(PropertyName = "TooDeepInteger")]
     public int Integer { get; set; }
+
+    public List<int> Integers { get; set; } = new();
 }
 
 public class Request
@@ -28,6 +30,8 @@ public class Request
 
     [JsonProperty(PropertyName = "RenamedSubRequest")]
     public SubRequest SubRequest2 { get; set; }
+
+    public List<SubRequest> SubRequests { get; set; }
 }
 
 [ApiController]
@@ -36,6 +40,7 @@ public class Test_Api : Controller
     public void Function1(Request request) { }
 
     public void QueryFunction([FromQuery]Request request) { }
+    public void QueryListFunction([FromQuery] List<Request> requests) { }
     public void NamedQueryFunction([FromQuery(Name ="NewRequest")] Request request) { }
 
     public void PostFunction([FromBody]Request request) { }
@@ -155,10 +160,10 @@ public class ClassParamNavigator_Tests
         );
 
         // Act
-        var childNav = navigator.GetOpenApiParamNavigators().FirstOrDefault(x => x.ParameterName == scenario.OpenApiPropertyName);
+        var childNav = navigator.GetOpenApiParamNavigators().FirstOrDefault(x => x.OpenApiParameterName == scenario.OpenApiPropertyName);
 
         // Assert
-        childNav.ParameterName.Should().Be(scenario.OpenApiPropertyName);
+        childNav.OpenApiParameterName.Should().Be(scenario.OpenApiPropertyName);
         childNav.ObjectType.Should().Be(scenario.ObjectType);
     }
 }

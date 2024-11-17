@@ -12,6 +12,7 @@ namespace PopValidations.Execution;
 public interface IValidationDescriber
 {
     DescriptionResult Describe();
+    DescriptionResult Describe(string[] allowedGraphs);
 }
 
 public interface IValidationRunner<TValidationType>: IValidationDescriber
@@ -116,6 +117,16 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
 
     public DescriptionResult Describe() 
     {
+        return DescribeImpl();
+    }
+
+    public DescriptionResult Describe(string[] allowedGraphs)
+    {
+        return DescribeImpl(allowedGraphs);
+    }
+
+    private DescriptionResult DescribeImpl(string[]? allowedGraphs = null)
+    {
         if (descriptionResult != null) return descriptionResult;
         if (mainValidators == null) return new();
 
@@ -133,7 +144,8 @@ public class ValidationRunner<TValidationType> : IValidationRunner<TValidationTy
         }
 
         var groupedItems = allItems
-            .GroupBy(x => new { x.PropertyName });
+            .GroupBy(x => new { x.PropertyName })
+            .Where(x => allowedGraphs == null || allowedGraphs.Any(g => x.Key.PropertyName.StartsWith(g)));
 
         foreach (var validationObjectGroup in groupedItems)
         {

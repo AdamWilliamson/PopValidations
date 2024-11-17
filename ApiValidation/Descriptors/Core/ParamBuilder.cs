@@ -33,6 +33,18 @@ public class ParamBuilder<TValidationType>
         );
     }
 
+    public ParamDescriptor<IEnumerable<TParamType>, TValidationType> IsList<TParamType>()
+    {
+        var pt = new ParamToken<IEnumerable<TParamType>, TValidationType>(owner);
+        return new ParamDescriptor<IEnumerable<TParamType>, TValidationType>(
+            owner,
+            new ParamDescriptor_Strategy<IEnumerable<TParamType>, TValidationType>(
+                pt
+            )
+        );
+    }
+
+
     public void SetCurrentExecutionContext(HeirarchyMethodInfo methodInfo)
     {
         owner.SetCurrentExecutionContext(methodInfo);

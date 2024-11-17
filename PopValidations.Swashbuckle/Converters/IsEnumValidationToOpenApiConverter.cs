@@ -13,7 +13,7 @@ public class IsEnumValidationToOpenApiConverter : IValidationToOpenApiConverter
     public bool Supports(DescriptionOutcome description)
     {
         return description.Validator == GenericNameHelper
-            .GetNameWithoutGenericArity(typeof(IsEnumValidation<>));
+            .GetNameWithoutGenericArity(typeof(IsEnumValidation));
     }
 
     protected List<string> GetEnumValues(DescriptionOutcome description)

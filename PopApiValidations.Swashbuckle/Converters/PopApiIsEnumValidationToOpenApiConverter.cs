@@ -23,6 +23,16 @@ public class PopApiIsEnumValidationToOpenApiConverter : IsEnumValidationToOpenAp
         //schema.Enum = new List<IOpenApiAny>(GetEnumValues(description).Select(v => new OpenApiString(v)));
     }
 
+    public void UpdateParamArraySchema(
+        OpenApiOperation owningObjectSchema,
+        OpenApiSchema itemSchema,
+        string paramName,
+        DescriptionOutcome description
+    )
+    {
+        itemSchema.Enum = new List<IOpenApiAny>(GetEnumValues(description).Select(v => new OpenApiString(v)));
+    }
+
     public void UpdateRequestBodySchema(OpenApiRequestBody owningObjectSchema, OpenApiSchema paramSchema, string paramName, DescriptionOutcome description)
     {
         paramSchema.Enum = new List<IOpenApiAny>(GetEnumValues(description).Select(v => new OpenApiString(v)));

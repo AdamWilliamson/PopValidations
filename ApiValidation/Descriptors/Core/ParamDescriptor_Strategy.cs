@@ -31,7 +31,7 @@ public class ParamDescriptor_Strategy<TParamType, TValidationType>
     }
 
     public int? ParamIndex => ParamToken.Index;
-    public string PropertyName => (ParamToken.FunctionToken?.Name ?? string.Empty) + $":Param({ParamIndex},{GenericNameHelper.GetNameWithoutGenericArity(ParamToken.ParamType)},{ParamToken.Name})";
+    public string PropertyName => (ParamToken.FunctionToken?.Name ?? string.Empty) + $":Param({ParamIndex},{ParamToken.FunctionToken?.GetParamTypeNameFor(ParamIndex) ?? GenericNameHelper.GetNameWithoutGenericArity(ParamToken.ParamType)},{ParamToken.Name})";
 
     public virtual string AddTo(string existing)
     {

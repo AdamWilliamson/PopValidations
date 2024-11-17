@@ -11,9 +11,7 @@ public class RequestDataItem
 
 public abstract class AbstractComplexObject
 {
-    //[Required]
     public int? IntegerField { get; set; }
-    //[Required]
     public string StringField { get; set; }
     public List<string> ListOfStringsField { get; set; }
     public RequestDataItem DataItemField { get; set; }
@@ -28,6 +26,7 @@ public class SubRequest : AbstractComplexObject
 public class Request : AbstractComplexObject
 {
     public SubRequest SubRequestField { get; set; }
+    public List<SubRequest> SubRequestFieldList { get; set; }
 }
 
 public class TestControllerValidation : ApiValidator<TestController> { }
@@ -55,8 +54,8 @@ public class TestController : Controller
         return Ok();
     }
 
-    [HttpPost(nameof(CreateByUrl) +"/{id}/{stringField}/{listOfIntField}")]
-    public ActionResult<Response> CreateByUrl(int? id, string stringField, List<int> listOfIntField)
+    [HttpPost(nameof(CreateByUrl) +"/{id}/{stringField}")]
+    public ActionResult<Response> CreateByUrl([FromRoute]int? id, [FromRoute] string stringField)
     {
         return Ok();
     }
@@ -79,8 +78,8 @@ public class TestController : Controller
         return Ok();
     }
 
-    [HttpPost(nameof(UpdateByUrl) + "/{id}/{stringField}/{listOfIntField}")]
-    public ActionResult<Response> UpdateByUrl(int id, string stringField, List<int> listOfIntField)
+    [HttpPut(nameof(UpdateByUrl) + "/{id}/{stringField}")]
+    public ActionResult<Response> UpdateByUrl(int id, string stringField)
     {
         return Ok();
     }

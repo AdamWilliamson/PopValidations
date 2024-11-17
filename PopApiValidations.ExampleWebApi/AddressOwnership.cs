@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Converters;
+using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 
 namespace PopApiValidations.ExampleWebApi;
@@ -35,7 +36,10 @@ public class AddressOwnership
 {
     public int? Id { get; set; }
     public Address Address { get; set; }
+    public Person PrimaryOwner { get; set; } = new();
     public List<Person> Owners { get; set; } = new();
+    public Dictionary<string, Person> Dependants { get; set; } = new();
+    public Dictionary<string, int> InteractionRating {  get; set; } = new(); 
 }
 
 public static class ObjectMother

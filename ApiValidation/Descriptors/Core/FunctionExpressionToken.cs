@@ -1,5 +1,6 @@
 ﻿using ApiValidations.Helpers;
 using PopValidations.FieldDescriptors.Base;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace ApiValidations.Descriptors.Core;
@@ -18,6 +19,9 @@ public interface IFunctionExpressionToken
     new string Name { get; }
 
     bool Matches(string name, Type returnType, IEnumerable<ParamDetailsDTO> paramList);
+
+    string? GetParamTypeNameFor(int? index);
+    string? GetReturnTypeName();
 }
 
 public class FunctionExpressionToken<TValidationType> : IFunctionExpressionToken
@@ -25,7 +29,24 @@ public class FunctionExpressionToken<TValidationType> : IFunctionExpressionToken
     public string Name { get; }
     public Type? ReturnType { get; }
     public List<ParamDetailsDTO>? Params { get; }
-    
+
+    public string? GetParamTypeNameFor(int? index)
+    {
+        if (index == null) return null;
+
+        var type = Params?.Single(x => x.Index == index).ParamType;
+        if (type is not null)
+        {
+            return GenericNameHelper.GetNameWithoutGenericArity(type);
+        }
+        return null;
+    }
+
+    public string? GetReturnTypeName()
+    {
+        return GenericNameHelper.GetNameWithoutGenericArity(ReturnType ?? typeof(void));
+    }
+
     public FunctionExpressionToken(string? name, Type? returnType, List<ParamDetailsDTO>? paramList)
     {
         Name = name + $"({string.Join(',', paramList?.Select(x => GenericNameHelper.GetNameWithoutGenericArity(x.ParamType)) ?? [])})->{GenericNameHelper.GetNameWithoutGenericArity(returnType)}";

@@ -156,7 +156,7 @@
             "validationGroups": []
         },
         {
-            "property": "EnumerableReturnFunc()->List<Int32>:Return(Int32)[n]",
+            "property": "EnumerableReturnFunc()->List<Int32>:Return(List<Int32>)[n]",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",
@@ -167,7 +167,7 @@
             "validationGroups": []
         },
         {
-            "property": "EnumerableParamFunc(List<Int32>)->Void::(enumerableParam[n],,Int32)[n]",
+            "property": "EnumerableParamFunc(List<Int32>)->Void:Param(0,List<Int32>,enumerableParam)[n]",
             "outcomes": [
                 {
                     "validator": "IsNotNullValidation",

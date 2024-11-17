@@ -11,7 +11,7 @@ public static class IsEnumValidationExtensions
         Type enumType
     )
     {
-        var validation = new IsEnumValidation<TParamType>(enumType);
+        var validation = new IsEnumValidation(typeof(TParamType), enumType);
         return fieldDescriptor.AddValidation(validation);
     }
 
@@ -21,7 +21,7 @@ public static class IsEnumValidationExtensions
         Action<ValidationOptions>? optionsAction
     )
     {
-        var validation = new IsEnumValidation<TParamType>(enumType);
+        var validation = new IsEnumValidation(typeof(TParamType), enumType);
         optionsAction?.Invoke(new ValidationOptions(validation));
         return fieldDescriptor.AddValidation(validation);
     }

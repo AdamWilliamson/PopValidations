@@ -5,7 +5,8 @@ using System.Reflection;
 
 namespace PopApiValidations.Swashbuckle_Tests.Internal;
 
-public static class RouteHelpers {
+public static class RouteHelpers 
+{
     public static bool IsComplexType(Type type)
     {
         return !type.IsPrimitive && type != typeof(string) && !type.IsValueType;

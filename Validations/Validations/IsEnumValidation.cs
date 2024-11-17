@@ -4,20 +4,22 @@ using PopValidations.Validations.Base;
 
 namespace PopValidations.Validations;
 
-public class IsEnumValidation<TFieldType> : ValidationComponentBase
+public class IsEnumValidation: ValidationComponentBase
 {
+    private readonly Type fieldType;
     private readonly Type enumType;
 
     public override string DescriptionTemplate { get; protected set; } = "Must be one of '{{enumNames}}' or '{{enumValues}}'.";
     public override string ErrorTemplate { get; protected set; } = "'{{value}}' Is not a valid value.";
 
-    public IsEnumValidation(Type enumType)
+    public IsEnumValidation(Type fieldType, Type enumType)
     {
         if (enumType == null || !enumType.IsEnum)
         {
             throw new ArgumentException("Type is not of an Enum");
         }
 
+        this.fieldType = fieldType;
         this.enumType = enumType;
     }
 
@@ -68,7 +70,7 @@ public class IsEnumValidation<TFieldType> : ValidationComponentBase
 
     private string GetFieldType()
     {
-        var type = typeof(TFieldType);
+        var type = fieldType;
         if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
         {
             type = type.GetGenericArguments()[0];

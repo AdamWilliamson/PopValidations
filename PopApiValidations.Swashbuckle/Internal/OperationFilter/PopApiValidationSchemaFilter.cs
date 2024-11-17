@@ -14,6 +14,8 @@ using Newtonsoft.Json.Schema;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Http;
 using System.Reflection;
+using PopHelpers;
+using Microsoft.OpenApi.Interfaces;
 
 namespace PopApiValidations.Swashbuckle.Internal.OperationFilter;
 
@@ -25,62 +27,121 @@ public record BaseData(
     List<DescriptionItemResult> ValidationResults
 );
 
-public class PopApiValidationSchemaFilter : IOperationFilter
-{
-    private readonly IApiValidationRunnerFactory factory;
-    private readonly PopApiOpenApiConfig config;
-    private readonly ILogger<PopApiValidationSchemaFilter> logger;
+//public class OpenApiWriterForParameter
+//{
+//    private readonly PopApiOpenApiConfig config;
+//    private readonly OpenApiOperation operation;
+//    public OpenApiSchema? Schema { get; protected set; } = null;
+//    private PopValidationArray? SchemaValidationArray = null;
+//    private PopValidationArray? OperationValidationArray = null;
+//    ValidationLevel PropertyValidationLevel = ValidationLevel.FullDetails;
+//    string? currentOpenApiObjectHeirarchy = null;
 
-    public PopApiValidationSchemaFilter(
-        IApiValidationRunnerFactory factory,
-        PopApiOpenApiConfig config,
-        ILogger<PopApiValidationSchemaFilter> logger
-    )
-    {
-        this.factory = factory;
-        this.config = config;
-        this.logger = logger;
-    }
+//    public OpenApiWriterForParameter(PopApiOpenApiConfig config, OpenApiOperation operation)
+//    {
+//        this.config = config;
+//        this.operation = operation;
+//    }
 
-    public void Apply(OpenApiOperation operation, OperationFilterContext context)
-    {
-        if (context.MethodInfo.DeclaringType is null) return;
-        if (config.ValidateEndpoint?.Invoke(context.MethodInfo) == false)
-            return;
+//    public void SetCurrentSchema(OpenApiSchema schema)
+//    {
+//        Schema = schema;
+//    }
 
-        var runner = factory.GetRunner(context.MethodInfo.DeclaringType);
+//    public void SetCurrentOpenApiObjectHeirarchy(string objHeirarchy)
+//    {
+//        currentOpenApiObjectHeirarchy = objHeirarchy;
+//    }
 
-        if (runner == null) return;
+//    public void WriteToSchema(string property, string value)
+//    {
+//        if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttributeInBase))
+//        {
+//            OperationValidationArray ??= PopValidationArray.From(config.CustomValidationAttribute, operation.Extensions, property);
 
-        var results = runner.Describe();
+//            OperationValidationArray.SetLineHeader(currentOpenApiObjectHeirarchy + "." + property);
+//            OperationValidationArray.Add(value);
 
-        if (!results.Results.Any()) return;
+//            return;
+//        }
 
-        var operationNavigator = new OpenApiOperationNavigator(
-            config: config, 
-            schemaRepository: context.SchemaRepository, 
-            operation: operation, 
-            methodInfo: context.MethodInfo);
+//        if (PropertyValidationLevel.HasFlag(ValidationLevel.ValidationAttribute))
+//        {
+//            SchemaValidationArray ??= PopValidationArray.From(config.CustomValidationAttribute, Schema.Extensions, property);
+//            SchemaValidationArray.Add(value);
 
-        var baseData = new BaseData(config, operation, context.SchemaRepository, context.MethodInfo, results.Results);
+//            return;
+//        }
+//    }
+//}
 
-        foreach (var paramNavigator in operationNavigator.GetOpenApiParamNavigators())
-        {
-            var desc = ApiValidations.Execution.PopApiValidations.Configuation.DescribeValidatingParam.Invoke(
-                context.MethodInfo, Math.Max(paramNavigator.ParamIndex, 0), null
-            );
+//public class PopApiValidationSchemaFilter : IOperationFilter
+//{
+//    private readonly IApiValidationRunnerFactory factory;
+//    private readonly PopApiOpenApiConfig config;
+//    private readonly ILogger<PopApiValidationSchemaFilter> logger;
 
-            var validationDescriptions = ValidationProcessor.GetFlattenedValidationsFor(config, results.Results, paramNavigator.ParameterName);
+//    public PopApiValidationSchemaFilter(
+//        IApiValidationRunnerFactory factory,
+//        PopApiOpenApiConfig config,
+//        ILogger<PopApiValidationSchemaFilter> logger
+//    )
+//    {
+//        this.factory = factory;
+//        this.config = config;
+//        this.logger = logger;
+//    }
 
-            foreach (var paramImpl in paramNavigator.GetParamBases(desc, config.OrdinalIndicator))
-            {
-                ValidationToSchemaProcessor.ProcessOpenApiParameter(paramImpl, validationDescriptions, baseData);
-            }
+//    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+//    {
+//        if (context.MethodInfo.DeclaringType is null) return;
+//        if (config.ValidateEndpoint?.Invoke(context.MethodInfo) == false)
+//            return;
 
-            foreach(var paramProperty in paramNavigator.GetPropertyBases(desc, config.OrdinalIndicator))
-            {
+//        var runner = factory.GetRunner(context.MethodInfo.DeclaringType);
 
-            }
-        }
-    }
-}
+//        if (runner == null) return;
+
+//        var results = runner.Describe();
+
+//        if (!results.Results.Any()) return;
+
+//        var operationNavigator = new OpenApiOperationNavigator(
+//            config: config, 
+//            schemaRepository: context.SchemaRepository, 
+//            operation: operation, 
+//            methodInfo: context.MethodInfo);
+
+//        var baseData = new BaseData(config, operation, context.SchemaRepository, context.MethodInfo, results.Results);
+
+//        foreach (var paramNavigator in operationNavigator.GetOpenApiParamNavigators())
+//        {
+//            var desc = ApiValidations.Execution.PopApi.Configuation.DescribeValidatingParam.Invoke(
+//                context.MethodInfo, Math.Max(paramNavigator.ParamIndex, 0), null
+//            );
+
+//            desc = (string.IsNullOrWhiteSpace(paramNavigator.OpenApiParameterName))? desc : desc + "." + paramNavigator.OpenApiParameterName;
+
+//            var validationDescriptions = ValidationProcessor.GetFlattenedValidationsFor(config, results.Results, desc);
+
+//            foreach (var paramImpl in paramNavigator.GetParamBases(desc, config.OrdinalIndicator))
+//            {
+//                ValidationToSchemaProcessor.AddValidationToOpenApiParameterAndRequestBodyLayerOnly(
+//                    paramImpl, 
+//                    validationDescriptions, 
+//                    baseData,
+//                    ValidationLevel.FullDetails
+//                );
+
+//                //foreach(var property in paramImpl.GetPropertyBases(baseData.Config))
+//                //{
+//                //    ValidationToSchemaProcessor.AddValidationToOpenApiProperty(
+//                //        property,
+//                //        baseData,
+//                //        results.Results
+//                //    );
+//                //}
+//            }
+//        }
+//    }
+//}

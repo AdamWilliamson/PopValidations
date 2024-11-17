@@ -3,8 +3,11 @@ using ApiValidations.Execution;
 using ApiValidations.Helpers;
 using PopValidations.Execution.Stores;
 using PopValidations.FieldDescriptors.Base;
+using PopValidations.Scopes;
+using PopValidations.Scopes.Whens;
 using PopValidations.Validations.Base;
 using PopValidations.ValidatorInternals;
+using System.Reflection;
 
 namespace ApiValidations.Descriptors;
 
@@ -40,6 +43,11 @@ public class ReturnDescriptor<TValidationType> : IReturnDescriptor, IFieldDescri
         this.store = store;
         this._functionDescriptor = functionDescription;
         this.context = context;
+    }
+
+    public bool IsRunning()
+    {
+        return store.GetContextItem(ApiValidationConstants.MethodResultKey) is not null;
     }
 
     public void UpdateContext(Dictionary<string, object?> context)
@@ -88,7 +96,7 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
     protected bool _NextValidationVital { get; set; } = false;
     protected bool _AlwaysVital { get; set; } = false;
     public string PropertyName => (_functionDescriptor.Name ?? string.Empty)
-        + PopApiValidations.Configuation.ReturnDescription.Invoke(typeof(TReturnType));
+        + PopApi.Configuation.ReturnDescription.Invoke(typeof(TReturnType));
         //$":Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
 
     IFunctionExpressionToken _functionDescriptor { get; set; }
@@ -101,6 +109,11 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
         this.context = context;
     }
 
+    public bool IsRunning()
+    {
+        return store.GetContextItem(ApiValidationConstants.MethodResultKey) is not null;
+    }
+
     public void UpdateContext(Dictionary<string, object?> context)
     {
         // Currently contains no context
@@ -109,49 +122,94 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
     public virtual string AddTo(string existing)
     {
         return _functionDescriptor.CombineWithParentProperty(existing) 
-            + PopApiValidations.Configuation.ReturnDescription.Invoke(typeof(TReturnType));
+            + PopApi.Configuation.ReturnDescription.Invoke(typeof(TReturnType));
         //$":Return({GenericNameHelper.GetNameWithoutGenericArity(typeof(TReturnType))})";
     }
 
     public void AddValidation(IValidationComponent validation)
     {
-        store.AddItem(_NextValidationVital || _AlwaysVital, this, validation);
-        _NextValidationVital = false;
+        var when = new WhenNotValidatingReturnValidatorScope<TValidationType, TReturnType>(
+            this,
+            [(rd) => {
+                rd.store.AddItem(_NextValidationVital || _AlwaysVital, this, validation);
+                rd._NextValidationVital = false;
+            }
+            ]);
+
+        this.store?.AddItem(null, when);
+
+
+
+        //store.AddItem(_NextValidationVital || _AlwaysVital, this, validation);
+        //_NextValidationVital = false;
     }
 
     public IReturnDescriptor<TReturnType> NextValidationIsVital()
     {
-        _NextValidationVital = true;
+        var when = new WhenNotValidatingReturnValidatorScope<TValidationType, TReturnType>(
+            this,
+            [(rd) => {
+                rd._NextValidationVital = true;
+            }
+            ]);
+
+        this.store?.AddItem(null, when);
+
+        //_NextValidationVital = true;
         return this;
     }
 
     public IReturnDescriptor<TReturnType> SetAlwaysVital()
     {
-        _AlwaysVital = true;
+        var when = new WhenNotValidatingReturnValidatorScope<TValidationType, TReturnType>(
+            this,
+            [(rd) => {
+                rd._AlwaysVital = true;
+            }
+            ]);
+
+        this.store?.AddItem(null, when);
+        //_AlwaysVital = true;
         return this;
     }
 
     public void AddSubValidator(ISubValidatorClass<TReturnType> component)
     {
-        foreach (var item in component.Store.GetItems())
-        {
-            store.AddItemToCurrentScope(this, item);
-        }
+        var when = new WhenNotValidatingReturnValidatorScope<TValidationType, TReturnType>(
+            this,
+            [(rd) => {
+                foreach (var item in component.Store.GetItems())
+                {
+                    rd.store.AddItemToCurrentScope(this, item);
+                }
 
-        component.ChangeStore(store);
+                component.ChangeStore(rd.store);
 
-        _NextValidationVital = false;
+                rd._NextValidationVital = false;
+            }
+            ]);
+
+        this.store?.AddItem(null, when);
+
+
+       
     }
 
     public void AddSelfDescribingEntity(IExpandableEntity component)
     {
-        if (_NextValidationVital || _AlwaysVital) component.AsVital();
+        var when = new WhenNotValidatingReturnValidatorScope<TValidationType, TReturnType>(
+            this,
+            [(rd) => {
+                if (rd._NextValidationVital || rd._AlwaysVital) component.AsVital();
 
-        store.AddItem(
-            null,
-            component
-        );
-        _NextValidationVital = false;
+                rd.store.AddItem(
+                    null,
+                    component
+                );
+                rd._NextValidationVital = false;
+            }
+            ]);
+        store?.AddItem(null, when);
     }
 
     public virtual object? GetValue(object? value)
@@ -160,4 +218,57 @@ public class ReturnDescriptor<TReturnType, TValidationType> : IReturnDescriptor<
     }
 
     public IFunctionContext GetContext() { return context; }
+}
+
+
+public sealed class WhenNotValidatingReturnValidatorScope<TValidationType, TReturnType> : ScopeBase
+{
+    //private readonly Action rules;
+    private readonly ReturnDescriptor<TReturnType, TValidationType> returnDescriptor; 
+    private readonly List<Action<ReturnDescriptor<TReturnType, TValidationType>>> addValidationActions;
+
+    public override string Name => string.Empty;
+    public override bool IgnoreScope => true;
+
+    public WhenNotValidatingReturnValidatorScope(
+        ReturnDescriptor<TReturnType, TValidationType> returnDescriptor,
+        List<Action<ReturnDescriptor<TReturnType, TValidationType>>> addValidationActions)
+    {
+        //this.rules = rules;
+        this.returnDescriptor = returnDescriptor;
+        this.addValidationActions = addValidationActions;
+
+        Decorator = (item, fieldDescriptor) => new WhenValidationItemDecorator<TValidationType>(
+            item,
+            // This needs to do true/false, depending on whether its Validating an OBJECT vs validating a Function.
+            new WhenStringValidator_IfTrue<TValidationType>(
+                (_) => Task.FromResult(returnDescriptor.IsRunning())
+            ),
+            fieldDescriptor
+        );
+    }
+
+    protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
+    {
+        foreach (var action in addValidationActions)
+        {
+            action.Invoke(returnDescriptor);
+        }
+    }
+
+    protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
+    {
+        //rules.Invoke();
+        //paramDescriptor.
+        foreach (var action in addValidationActions)
+        {
+            action.Invoke(returnDescriptor);
+        }
+    }
+
+    public override void ChangeStore(IValidationStore store) { }
+    public override void UpdateContext(Dictionary<string, object?> context)
+    {
+        returnDescriptor.UpdateContext(context);
+    }
 }
