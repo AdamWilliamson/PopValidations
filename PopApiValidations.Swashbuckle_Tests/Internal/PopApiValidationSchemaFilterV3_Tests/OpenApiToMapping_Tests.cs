@@ -2,7 +2,6 @@
 using DjvuNet.Tests.Xunit;
 using Microsoft.AspNetCore.JsonPatch.Operations;
 using Microsoft.AspNetCore.Routing;
-using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,7 @@ using FluentAssertions;
 using System.Reflection;
 using DiffEngine;
 using static PopApiValidations.Swashbuckle_Tests.Internal.PopApiValidationSchemaFilterV3_Tests.OpenApiToMapping_Tests;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiSimplification;
 
 namespace PopApiValidations.Swashbuckle_Tests.Internal.PopApiValidationSchemaFilterV3_Tests;
 
@@ -40,7 +40,7 @@ public class OpenApiToMapping_Tests
     public void Test(OpenApiMappingData testData)
     {
         // Arrange
-        var mapper = new OpenApiToMapping();
+        var mapper = new OpenApiToSimplifier();
         var prefix = PopApi.Configuation.DescribeValidatingParam?.Invoke(testData.MethodInfo, 0, null);
 
         SchemaRepository schemaRepository = new();

@@ -1,79 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Interfaces;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
 
-namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3;
+namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiSimplification;
 
-public class OpenApiOperationMapping
-{
-    public string Path { get; set; }
-    public string HttpMethod { get; set; } // GET, POST, PUT, DELETE, etc.
-    public MethodInfo MethodInfo { get; set; } // The MethodInfo for the operation
-    public List<OpenApiParameterMapping> Parameters { get; set; } = new List<OpenApiParameterMapping>();
-    public OpenApiRequestBodyMapping RequestBody { get; set; } // Request body, if applicable
-    public List<OpenApiResponseMapping> Responses { get; set; } = new List<OpenApiResponseMapping>(); // Responses for the operation
-    public IDictionary<string, IOpenApiExtension> Extensions { get; set; }
-}
-
-public class OpenApiParameterMapping
-{
-    public string Name { get; set; }
-    public ParameterLocation In { get; set; }
-    public OpenApiParameter Parameter { get; set; }
-    public OpenApiSchema Schema { get; set; }
-
-    public bool IsArray { get; set; } // Indicates if the parameter is an array
-    public List<OpenApiPropertyMapping> PropertyMappings { get; set; } = new List<OpenApiPropertyMapping>();
-    public IDictionary<string, IOpenApiExtension> ParentPropertyExtensions { get; set; }
-}
-
-public class OpenApiResponseMapping
-{
-    public string StatusCode { get; set; }
-    public string Content { get; set; }
-    public OpenApiSchema? Schema { get; set; }
-    public IDictionary<string, IOpenApiExtension> ParentPropertyExtensions { get; set; }
-    public List<OpenApiPropertyMapping> PropertyMappings { get; set; } = new ();
-}
-
-public class OpenApiRequestBodyMapping
-{
-    public OpenApiRequestBody RequestBody { get; set; }
-    public Dictionary<string, OpenApiSchema> ContentSchemas { get; set; } = new Dictionary<string, OpenApiSchema>();
-
-    public List<OpenApiPropertyMapping> PropertyMappings { get; set; } = new List<OpenApiPropertyMapping>();
-    public IDictionary<string, IOpenApiExtension> ParentPropertyExtensions { get; set; }
-}
-
-public class OpenApiPropertyMapping
-{
-    public string PropertyName { get; set; }
-    public OpenApiSchema PropertySchema { get; set; }
-    public bool IsArray { get; set; } // Indicates if the property is an array
-    public List<OpenApiPropertyMapping> NestedProperties { get; set; } = new List<OpenApiPropertyMapping>(); // Nested properties (if any)
-    public IDictionary<string, IOpenApiExtension> ParentPropertyExtensions { get; set; }
-
-    public OpenApiSchema[] SecondarySchemas { get; set; }
-}
-
-
-public class OpenApiToMapping
+public class OpenApiToSimplifier
 {
     public OpenApiOperationMapping MapOpenApiOperation(OpenApiOperation operation, SchemaRepository schemaRepository, MethodInfo methodInfo)
     {
         var operationMapping = new OpenApiOperationMapping
         {
             Path = operation.OperationId,
-            HttpMethod = GetOpenApiOperation(methodInfo),
+            HttpMethod = MethodHelper.GetOpenApiOperation(methodInfo),
             MethodInfo = methodInfo,
             Extensions = operation.Extensions,
         };
@@ -92,12 +32,12 @@ public class OpenApiToMapping
             };
 
             // Recursively map properties for complex types
-            if (parameterMapping.Schema != null && !IsSimpleType(parameterMapping.Schema))
+            if (parameterMapping.Schema != null && !SchemaHelper.IsSimpleType(parameterMapping.Schema))
             {
                 parameterMapping.PropertyMappings.AddRange(
                     MapProperties(
                         parameter.Extensions,
-                        parameterMapping.Schema, 
+                        parameterMapping.Schema,
                         schemaRepository,
                         []
                     )
@@ -130,7 +70,7 @@ public class OpenApiToMapping
             var secondaryBodies = operation.RequestBody.Content.Skip(1).ToList();
 
             var schema = ResolveSchema(chosenRequestBody.Value.Schema, schemaRepository);
-            if (schema != null && !IsSimpleType(schema))
+            if (schema != null && !SchemaHelper.IsSimpleType(schema))
             {
                 requestBodyMapping.PropertyMappings.AddRange(
                     MapProperties(
@@ -144,25 +84,6 @@ public class OpenApiToMapping
                     )
                 );
             }
-
-            //foreach (var content in operation.RequestBody.Content)
-            //{
-            //    var schema = ResolveSchema(content.Value.Schema, schemaRepository);
-            //    requestBodyMapping.ContentSchemas[content.Key] = schema;
-
-            //    // Recursively map properties for the schema
-            //    if (schema != null && !IsSimpleType(schema))
-            //    {
-            //        requestBodyMapping.PropertyMappings.AddRange(
-            //            MapProperties(
-            //                operation.Extensions,
-            //                schema, 
-            //                schemaRepository,
-            //                []
-            //            )
-            //        );
-            //    }
-            //}
 
             operationMapping.RequestBody = requestBodyMapping;
         }
@@ -180,7 +101,7 @@ public class OpenApiToMapping
                     ParentPropertyExtensions = operation.Extensions
                 };
 
-                if (responseMapping.Schema != null && !IsSimpleType(responseMapping.Schema))
+                if (responseMapping.Schema != null && !SchemaHelper.IsSimpleType(responseMapping.Schema))
                 {
                     responseMapping.PropertyMappings.AddRange(
                         MapProperties(
@@ -196,16 +117,6 @@ public class OpenApiToMapping
         }
 
         return operationMapping;
-    }
-
-    private string GetOpenApiOperation(MethodInfo method)
-    {
-        if (method.GetCustomAttribute<HttpGetAttribute>() != null) return "GET";
-        if (method.GetCustomAttribute<HttpPostAttribute>() != null) return "POST";
-        if (method.GetCustomAttribute<HttpPutAttribute>() != null) return "PUT";
-        if (method.GetCustomAttribute<HttpDeleteAttribute>() != null) return "DELETE";
-        if (method.GetCustomAttribute<HttpPatchAttribute>() != null) return "PATCH";
-        return "UNKNOWN"; // Default
     }
 
     private OpenApiSchema? ResolveSchema(OpenApiSchema schema, SchemaRepository schemaRepository)
@@ -224,15 +135,9 @@ public class OpenApiToMapping
         return schema;
     }
 
-    private bool IsSimpleType(OpenApiSchema schema)
-    {
-        // Simple types are primitive types or well-known types like string, number, boolean, etc.
-        return schema.Type == "string" || schema.Type == "number" || schema.Type == "integer" || schema.Type == "boolean";
-    }
-
     private List<OpenApiPropertyMapping> MapProperties(
         IDictionary<string, IOpenApiExtension> parentExtensions,
-        OpenApiSchema schema, 
+        OpenApiSchema schema,
         SchemaRepository schemaRepository,
         OpenApiSchema[] secondarySchemas)
     {
@@ -261,7 +166,7 @@ public class OpenApiToMapping
                 propertyMapping.NestedProperties.AddRange(
                     MapProperties(
                         property.Value.Extensions,
-                        propertyMapping.PropertySchema.Items, 
+                        propertyMapping.PropertySchema.Items,
                         schemaRepository,
                         propertyMapping.SecondarySchemas
                             .Select(x => x.Items)
@@ -270,13 +175,13 @@ public class OpenApiToMapping
                     )
                 );
             }
-            else if (propertyMapping.PropertySchema != null && !IsSimpleType(propertyMapping.PropertySchema))
+            else if (propertyMapping.PropertySchema != null && !SchemaHelper.IsSimpleType(propertyMapping.PropertySchema))
             {
                 // If the property is not a simple type, recurse through its properties
                 propertyMapping.NestedProperties.AddRange(
                     MapProperties(
                         property.Value.Extensions,
-                        propertyMapping.PropertySchema, 
+                        propertyMapping.PropertySchema,
                         schemaRepository,
                         propertyMapping.SecondarySchemas
                     )
@@ -291,7 +196,7 @@ public class OpenApiToMapping
             propertyMappings.AddRange(
                 MapProperties(
                     parentExtensions,
-                    schema.Items, 
+                    schema.Items,
                     schemaRepository,
                     secondarySchemas.Select(x => x.Items).ToArray()
                 )

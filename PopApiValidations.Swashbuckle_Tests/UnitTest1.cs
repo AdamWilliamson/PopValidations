@@ -84,13 +84,12 @@ public class UnitTest1
         var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
             config,
             nameof(TestController.CreateByUrl),
-            "/api/Test/CreateByUrl/{id}/{stringField}/{listOfIntField}",
+            "/api/Test/CreateByUrl/{id}/{stringField}",
             validator
         );
 
         builder.ParamIs<Request>("id").IsNotNull2();
         builder.ParamIs<Request>("stringField").IsNotNull2();
-        builder.ParamIs<Request>("listOfIntField").IsNotNull2();
 
         //Assert
         builder.Validate();

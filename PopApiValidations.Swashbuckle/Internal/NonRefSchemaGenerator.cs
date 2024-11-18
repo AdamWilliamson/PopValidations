@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
 
 namespace Swashbuckle.AspNetCore.SwaggerGen
 {
@@ -26,10 +27,10 @@ namespace Swashbuckle.AspNetCore.SwaggerGen
         }
 
         public OpenApiSchema GenerateSchema(
-            Type modelType, 
-            SchemaRepository schemaRepository, 
-            MemberInfo? memberInfo = null, 
-            ParameterInfo? parameterInfo = null, 
+            Type modelType,
+            SchemaRepository schemaRepository,
+            MemberInfo? memberInfo = null,
+            ParameterInfo? parameterInfo = null,
             ApiParameterRouteInfo? routeInfo = null)
         {
             if (memberInfo != null)
@@ -167,7 +168,7 @@ namespace Swashbuckle.AspNetCore.SwaggerGen
 
         private DataContract GetDataContractFor(Type modelType)
         {
-            var effectiveType = Nullable.GetUnderlyingType(modelType) ?? modelType;
+            var effectiveType = TypeHelper.GetUnderlyingType(modelType) ?? modelType;
             return _serializerDataContractResolver.GetDataContractForType(effectiveType);
         }
 
@@ -488,6 +489,6 @@ namespace Swashbuckle.AspNetCore.SwaggerGen
             {
                 filter.Apply(schema, filterContext);
             }
-        }   
+        }
     }
 }

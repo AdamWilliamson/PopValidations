@@ -1,20 +1,13 @@
 ﻿using ApiValidations.Execution;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PopApiValidations.Swashbuckle_Tests.Helpers;
 using FluentAssertions;
-using Microsoft.AspNetCore.JsonPatch.Operations;
-using Microsoft.AspNetCore.Routing;
-using static PopApiValidations.Swashbuckle_Tests.Internal.PopApiValidationSchemaFilterV3_Tests.OpenApiToMapping_Tests;
 using System.Reflection;
-using Xunit.Abstractions;
 using DjvuNet.Tests.Xunit;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiSimplification;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiToMethodMapping;
 
 namespace PopApiValidations.Swashbuckle_Tests.Internal.PopApiValidationSchemaFilterV3_Tests;
 
@@ -37,23 +30,9 @@ public class OpenApiToTypeMapping_Tests
     [MemberData(nameof(GetTestData))]
     public void Test(TypeToOpenApiMappingTestData testData)
     {
-        //So. It turns out the Obj Heirarchy cant be built with sub objects, sub objects, whose properties are basic.
-        //    because it may just make the parameter the subobjects nav path, and its type stays simple.
-        //    which means it wonthave a heirarchy, if it doesnt use the parameter name.
-        //    but if it uses the parameter name, then you cannot use the obj heirarchy as it is indexer the filter.
-
-        //    ..  Kicker..   You CANNOT use the objHeirarchy as it is in the filter.
-        //     Its built from the names insid ethe open api..  Which might be renamed.  
-        //    .. so it has to be built from the merge of the two, and the navigation path. :(
-
-        //    2 big refactors.  include parameter names.
-        //    Rebuild the OpenApiToTypeMapping to build a new objHeirarchy for the filter.
-
-
         // Arrange
-        //var methodInfo = typeof(TestController).GetMethod(nameof(TestController.GetById));
-        var openApiMapper = new OpenApiToMapping();
-        var typeMapper = new TypeToMapping();
+        var openApiMapper = new OpenApiToSimplifier();
+        var typeMapper = new MethodSimplifier();
         var prefix = PopApi.Configuation.DescribeValidatingParam?.Invoke(testData.MethodInfo, 0, null);
 
         SchemaRepository schemaRepository = new();
@@ -66,11 +45,10 @@ public class OpenApiToTypeMapping_Tests
         var openApiToTypeMapper = new OpenApiToTypeMapper();
 
         // Act
-        var typeMapping = typeMapper.CreateMappings(typeof(TestController));
         var openApiMapping = openApiMapper.MapOpenApiOperation(operation, schemaRepository, testData.MethodInfo);
         var flatMap = openApiToTypeMapper.MapOpenApiOperationToFunction(
             openApiMapping, 
-            typeMapping.Single(x  => x.MethodInfo == openApiMapping.MethodInfo)
+            typeMapper.GetMethodMap(openApiMapping.MethodInfo)
         );
 
         // Assert

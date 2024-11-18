@@ -4,8 +4,11 @@ using PopValidations.Execution.Description;
 using PopValidations.Swashbuckle;
 using PopValidations.Swashbuckle.Internal;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using PopApiValidations.Swashbuckle.Internal.OperationFilter;
 using PopApiValidations.Swashbuckle.Converters;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiSimplification;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiToMethodMapping;
 
 namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3;
 
@@ -40,9 +43,8 @@ public class PopApiValidationSchemaFilter : IOperationFilter
 
         if (!results.Results.Any()) return;
 
-        
-        var openApiMapper = new OpenApiToMapping();
-        var typeMapper = new TypeToMapping();
+        var openApiMapper = new OpenApiToSimplifier();
+        var typeMapper = new MethodSimplifier();
         var openApiToTypeMapper = new OpenApiToTypeMapper();
 
         var baseData = new BaseData(config, operation, context.SchemaRepository, context.MethodInfo, results.Results);
@@ -63,13 +65,6 @@ public class PopApiValidationSchemaFilter : IOperationFilter
         DescriptionResult results,
         OperationFilterContext context)
     {
-        //foreach (var mappingResult in mappingResults)
-        //{
-        //    ////desc = (string.IsNullOrWhiteSpace(paramNavigator.OpenApiParameterName)) ? desc : desc + "." + paramNavigator.OpenApiParameterName;
-        //    //var prefix = PopApi.Configuation.DescribeValidatingParam?.Invoke(context.MethodInfo, 0, null);
-        //    //var validationDescriptions = ValidationProcessor.GetFlattenedValidationsFor(config, results.Results, desc); 
-        //}
-
         var groupings = mappingResults.GroupBy(x => x.ParameterMapping?.ParameterInfo?.Position ?? -1);
         foreach (var grouping in groupings)
         {
@@ -90,14 +85,10 @@ public class PopApiValidationSchemaFilter : IOperationFilter
         DescriptionResult results,
         OperationFilterContext context)
     {
-        string functionDesc = //(position != -1)
-            //? 
+        string functionDesc = 
             ApiValidations.Execution.PopApi.Configuation.DescribeValidatingParam.Invoke(
                     context.MethodInfo, position, null
                 );
-            //: ApiValidations.Execution.PopApi.Configuation.DescribeValidatingReturn.Invoke(
-            //        context.MethodInfo,null
-            //    );
 
         foreach (var mappingResult in mappingResults)
         {
@@ -119,20 +110,7 @@ public class PopApiValidationSchemaFilter : IOperationFilter
                     desc = desc + "." +mappingResult.ResultPropertyHeirarchy;
                 }
             }
-            //if (mappingResult.PropertyMapping is not null)
-            //{
-            //    desc = string.Join('.', desc, mappingResult.PropertyMapping.ResultPropertyName);
-            //}
-            //else if (mappingResult.ParameterMapping is not null && mappingResult.IsArray)
-            //{
-            //    desc += "[n]";
-            //}
             
-            //if (mappingResult.PropertyMapping is null && mappingResult.IsArray)
-            //{
-            //    desc += "[n]";
-            //}
-
             var validationDescriptions = ValidationProcessor.GetFlattenedValidationsFor(baseData.Config, results.Results, desc);
 
             ProcessProperty(baseData, validationDescriptions, mappingResult);

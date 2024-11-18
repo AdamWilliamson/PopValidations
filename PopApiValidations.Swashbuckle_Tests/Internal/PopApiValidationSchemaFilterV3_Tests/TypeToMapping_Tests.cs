@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using DjvuNet.Tests.Xunit;
 using FluentAssertions;
-using Microsoft.AspNetCore.JsonPatch.Operations;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
 using PopApiValidations.Swashbuckle_Tests.Helpers;
-using PopApiValidations.Swashbuckle_Tests.Internal.OperationFilter;
-using Xunit.Abstractions;
 
 namespace PopApiValidations.Swashbuckle_Tests.Internal.PopApiValidationSchemaFilterV3_Tests;
 using Request = PopApiValidations.Swashbuckle_Tests.Helpers.Request;
@@ -48,7 +35,7 @@ public class TypeToMapping_Tests
     public void GivenAObjectHeirarchy_AndMatchingMethodConstraints_ThenItFindsItWasGenerated(TestData data)
     {
         // Arrange
-        var mapper = new TypeToMapping();
+        var mapper = new MethodSimplifier();
 
         // Act           
         var mapping = mapper.GetMethodMap(data.MethodInfo);

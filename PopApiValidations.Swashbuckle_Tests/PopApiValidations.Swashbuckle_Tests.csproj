@@ -32,4 +32,8 @@
     <ProjectReference Include="..\PopApiValidations.WebApi\PopApiValidations.WebApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Internal\PopApiValidationSchemaFilterV3_Tests\Helpers\" />
+  </ItemGroup>
+
 </Project>

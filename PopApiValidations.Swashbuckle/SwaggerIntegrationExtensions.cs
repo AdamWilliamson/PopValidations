@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using PopApiValidations.Swashbuckle.Internal;
-using PopApiValidations.Swashbuckle.Internal.OperationFilter;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3;
 using Swashbuckle.AspNetCore.SwaggerGen;
 

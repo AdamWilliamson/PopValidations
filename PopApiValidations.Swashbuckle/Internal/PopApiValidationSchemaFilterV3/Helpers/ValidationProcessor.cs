@@ -1,7 +1,7 @@
 ﻿using PopValidations.Execution.Description;
 using PopValidations.Execution.Validations;
 
-namespace PopApiValidations.Swashbuckle.Internal.OperationFilter;
+namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
 
 public record GroupedDescriptions(string GroupTitle, DescriptionOutcome Outcome);
 
@@ -27,7 +27,6 @@ public static class ValidationProcessor
     public static ValidationForSchema GetFlattenedValidationsFor(
         PopApiOpenApiConfig config,
         List<DescriptionItemResult> descriptionItems,
-        //OpenApiParamNavigator navigator
         string parameterName
     )
     {
@@ -43,7 +42,7 @@ public static class ValidationProcessor
                 {
                     if (outcome == null) continue;
 
-                    endOutcomes.Add(new (string.Empty, outcome!));
+                    endOutcomes.Add(new(string.Empty, outcome!));
                 }
             }
 
@@ -60,8 +59,8 @@ public static class ValidationProcessor
     }
 
     private static List<GroupedDescriptions> FlattenRecurse(
-        PopApiOpenApiConfig config, 
-        string existing, 
+        PopApiOpenApiConfig config,
+        string existing,
         DescriptionGroupResult group
     )
     {
