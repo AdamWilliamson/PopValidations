@@ -1,33 +1,26 @@
-﻿using ApprovalTests;
-using FluentAssertions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using PopApiValidations.Swashbuckle;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using Xunit.Abstractions;
 
 namespace PopApiValidations.Swashbuckle_Tests;
-
-//public class Request_CreationValidation : ApiSubValidator<Request>
-//{
-//    public Request_CreationValidation()
-//    {
-//        Describe(x => x.IntegerField).Vitally().IsEqualTo(0);
-//    }
-//}
 
 public record Pair<T>(AssertionResult Results, JObject OpenApiBase, JObject CleanBase, T OpenApi, T Clean);
 
 public class AssertionResult
 {
     public bool Success { get; private set; } = true;
+    public List<string> Errors { get; private set; } = new();
 
     public void SetResult(bool result)
     {
         if (result) return;
         Success = false;
+    }
+
+    public void SetResult(bool result, string error)
+    {
+        if (result) return;
+        Success = false;
+        Errors.Add(error);
     }
 }
 
@@ -35,7 +28,7 @@ public static class NavExtensions
 {
     public static Pair<TOut> Nav<TIn, TOut>(this Pair<TIn> start, Func<TIn, TOut?> navFunc)
     {
-            return new Pair<TOut>(
+        return new Pair<TOut>(
             start.Results,
             start.OpenApiBase,
             start.CleanBase,

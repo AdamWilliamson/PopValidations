@@ -8,7 +8,7 @@ namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.
     public class TypeToOpenApiMappingResult
     {
         public string Route { get; set; }
-        public string ResultPropertyHeirarchy => PropertyMapping?.ResultPropertyName ?? string.Empty;
+        public string ResultPropertyHeirarchy { get; set; }//=> PropertyMapping?.ResultPropertyName ?? string.Empty;
         public string OpenApiObjHeirarchy { get; set; }
         public string OpenApiPropertyName { get; set; }
         public PropertyMapping? PropertyMapping { get; set; }

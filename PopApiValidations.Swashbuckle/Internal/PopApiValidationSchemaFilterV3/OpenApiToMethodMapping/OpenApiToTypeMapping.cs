@@ -1,4 +1,5 @@
-﻿using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
+﻿using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiSimplification;
 using System.Diagnostics;
 
@@ -63,6 +64,7 @@ public class OpenApiToTypeMapper
                         PropertyMapping = null,
                         PropertySchema = bodySchema.Value,
                         ParentPropertyExtensions = operationMapping.RequestBody.ParentPropertyExtensions,
+                        ResultPropertyHeirarchy = "[n]",
                         IsArray = true,
                         RequestBody = operationMapping.RequestBody.RequestBody,
                         //RequestBodyContentSchemas = operationMapping.RequestBody.RequestBody.Content.Select(x => x.Value.Schema).ToArray(),
@@ -85,18 +87,21 @@ public class OpenApiToTypeMapper
                 });
             }
 
-            foreach (var property in operationMapping.RequestBody.PropertyMappings)
+            if (!TypeHelper.IsSimpleType(parameterMapping.ParameterInfo.ParameterType))
             {
-                results.AddRange(ProcessComplexObjectProperties(
-                    operationMapping.Path,
-                    operationMapping.HttpMethod,
-                    "RequestBody" + (isArray ? "[n]" : null),
-                    "RequestBody" + (isArray ? "[n]" : string.Empty),
-                    functionMapping,
-                    operationMapping.RequestBody,
-                    parameterMapping, // No parameter index for the body directly
-                    property
-                ));
+                foreach (var property in operationMapping.RequestBody.PropertyMappings)
+                {
+                    results.AddRange(ProcessComplexObjectProperties(
+                        operationMapping.Path,
+                        operationMapping.HttpMethod,
+                        "RequestBody" + (isArray ? "[n]" : null),
+                        "RequestBody" + (isArray ? "[n]" : string.Empty),
+                        functionMapping,
+                        operationMapping.RequestBody,
+                        parameterMapping, // No parameter index for the body directly
+                        property
+                    ));
+                }
             }
         }
 
@@ -113,6 +118,7 @@ public class OpenApiToTypeMapper
                         Route = operationMapping.Path,
                         OpenApiObjHeirarchy = "[n]",
                         OpenApiPropertyName = "Response[n]",
+                        ResultPropertyHeirarchy = "[n]",
                         PropertyMapping = null,
                         PropertySchema = null,
                         ParentPropertyExtensions = operationMapping.Extensions,
@@ -263,6 +269,8 @@ public class OpenApiToTypeMapper
         var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? parameter.Name : openApiPrefix + '.' + parameter.Name;
         var isArray = parameter.Schema.Items != null;
 
+        var foundProperty = FindPropertyMapping(parameterMapping, newOpenApiPrefix);
+
         if (parameter.IsArray)
         {
             results.Add(new TypeToOpenApiMappingResult
@@ -271,7 +279,8 @@ public class OpenApiToTypeMapper
                 OpenApiObjHeirarchy = newPrefix + "[n]",
                 OpenApiPropertyName = parameter.Name,
                 PropertySchema = parameter.Schema,
-                PropertyMapping = FindPropertyMapping(parameterMapping, newOpenApiPrefix),
+                PropertyMapping = foundProperty,
+                ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
                 IsArray = parameter.IsArray,
                 Parameter = parameter?.Parameter,
                 ParameterMapping = parameterMapping, // Set the parameter index
@@ -280,14 +289,14 @@ public class OpenApiToTypeMapper
             Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
         }
 
-
         results.Add(new TypeToOpenApiMappingResult
         {
             Route = route,
             OpenApiObjHeirarchy = newPrefix,
             OpenApiPropertyName = parameter.Name,
             PropertySchema = parameter.Schema,
-            PropertyMapping = FindPropertyMapping(parameterMapping, newOpenApiPrefix),
+            PropertyMapping = foundProperty,
+            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
             IsArray = false,
             Parameter = parameter?.Parameter,
             ParameterMapping = parameterMapping, // Set the parameter index
@@ -329,6 +338,8 @@ public class OpenApiToTypeMapper
         var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.PropertyName : prefix + '.' + property.PropertyName;
         var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? property.PropertyName : openApiPrefix + '.' + property.PropertyName;
 
+        var foundProperty = FindPropertyMapping(parameterMapping, newOpenApiPrefix);
+
         if (property.IsArray)
         {
             results.Add(new TypeToOpenApiMappingResult
@@ -337,7 +348,8 @@ public class OpenApiToTypeMapper
                 OpenApiObjHeirarchy = newPrefix + "[n]",
                 OpenApiPropertyName = property.PropertyName,
                 PropertySchema = property.PropertySchema,
-                PropertyMapping = FindPropertyMapping(parameterMapping, newOpenApiPrefix),
+                PropertyMapping = foundProperty,
+                ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
                 IsArray = true,
                 Parameter = parameter?.Parameter,
                 ParameterMapping = parameterMapping, // Set the parameter index
@@ -354,7 +366,8 @@ public class OpenApiToTypeMapper
             OpenApiObjHeirarchy = newPrefix,
             OpenApiPropertyName = property.PropertyName,
             PropertySchema = property.PropertySchema,
-            PropertyMapping = FindPropertyMapping(parameterMapping, newOpenApiPrefix),
+            PropertyMapping = foundProperty,
+            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
             IsArray = false,
             Parameter = parameter?.Parameter,
             ParameterMapping = parameterMapping, // Set the parameter index
@@ -399,6 +412,8 @@ public class OpenApiToTypeMapper
         var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.PropertyName : prefix + '.' + property.PropertyName;
         var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? property.PropertyName : openApiPrefix + '.' + property.PropertyName;
 
+        var foundProperty = FindPropertyMapping(parameterMapping, newOpenApiPrefix);
+
         if (property.IsArray)
         {
             results.Add(new TypeToOpenApiMappingResult
@@ -407,7 +422,8 @@ public class OpenApiToTypeMapper
                 OpenApiObjHeirarchy = newPrefix + "[n]",
                 OpenApiPropertyName = property.PropertyName + "[n]",
                 PropertySchema = property.PropertySchema,
-                PropertyMapping = FindPropertyMapping(parameterMapping, newOpenApiPrefix),
+                PropertyMapping = foundProperty,
+                ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
                 IsArray = true,
                 Parameter = null, // No parameter for request body
                 ParameterMapping = parameterMapping, // No parameter index for request body directly
@@ -424,7 +440,8 @@ public class OpenApiToTypeMapper
             OpenApiObjHeirarchy = newPrefix,
             OpenApiPropertyName = property.PropertyName,
             PropertySchema = property.PropertySchema,
-            PropertyMapping = FindPropertyMapping(parameterMapping, newOpenApiPrefix),
+            PropertyMapping = foundProperty,
+            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
             IsArray = false,
             Parameter = null, // No parameter for request body
             ParameterMapping = parameterMapping, // No parameter index for request body directly
@@ -468,6 +485,8 @@ public class OpenApiToTypeMapper
         var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.PropertyName : prefix + '.' + property.PropertyName;
         var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? property.PropertyName : openApiPrefix + '.' + property.PropertyName;
 
+                var foundProperty = FindPropertyMapping(returnMapping, newOpenApiPrefix);
+
         if (property.IsArray)
         {
             results.Add(new TypeToOpenApiMappingResult
@@ -476,7 +495,8 @@ public class OpenApiToTypeMapper
                 OpenApiObjHeirarchy = newPrefix + "[n]",
                 OpenApiPropertyName = property.PropertyName + "[n]",
                 PropertySchema = property.PropertySchema,
-                PropertyMapping = FindPropertyMapping(returnMapping, newOpenApiPrefix),
+                PropertyMapping = foundProperty,
+                ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
                 IsArray = true,
                 Parameter = null,
                 ParameterMapping = null,
@@ -495,7 +515,8 @@ public class OpenApiToTypeMapper
             OpenApiObjHeirarchy = newPrefix,
             OpenApiPropertyName = property.PropertyName,
             PropertySchema = property.PropertySchema,
-            PropertyMapping = FindPropertyMapping(returnMapping, newOpenApiPrefix),
+            PropertyMapping = foundProperty,
+            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
             IsArray = false,
             Parameter = null,
             ParameterMapping = null,

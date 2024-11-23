@@ -51,6 +51,11 @@ public static class ObjectMother
             return new AddressOwnership()
             {
                 Id = -2,
+                PrimaryOwner = new()
+                {
+                    FirstName = "Jon",
+                    LastName = "Candy"
+                },
                 Address = new Address() { Id = -3, Postcode = -1200, StreetName = string.Empty, StreetNumber = -12, Suburb = string.Empty },
                 Owners = new List<Person>()
                 {
@@ -83,6 +88,11 @@ public class AddressOwnershipBuilder
         return new AddressOwnership()
         {
             Id = null,
+            PrimaryOwner = new()
+            {
+                FirstName = "Jon",
+                LastName = "Candy"
+            },
             Address = new Address() { Id = null, Postcode = 6107, StreetName = "Nicholson", StreetNumber = 4, Suburb = "Cannington" },
             Owners = new List<Person>()
             {

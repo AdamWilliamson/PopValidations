@@ -5,7 +5,7 @@ using PopApiValidations.Swashbuckle_Tests.Helpers;
 using PopValidations;
 using Formatting = Newtonsoft.Json.Formatting;
 
-namespace PopApiValidations.Swashbuckle_Tests;
+namespace PopApiValidations.Swashbuckle_Tests.ValidationModificationTests;
 
 public class UnitTest1
 {

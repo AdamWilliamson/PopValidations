@@ -321,16 +321,46 @@ public class ParamBuilder<TParamType>
                         ("RequestBody", () => new JArray()),
                         (null, () => "Must not be null.")
                     )
-                    .Assert((schema, result) => result.SetResult(schema[config.CustomValidationAttribute]?["RequestBody"]?.Values().Contains("Must not be null.") == true));
+                    .Assert((schema, result) => result.SetResult(
+                        schema[config.CustomValidationAttribute]?["RequestBody"]?.Values().Contains("Must not be null.") == true,
+                        "Complex RequestBody ValidationAttribute Does not contain value."
+                        )
+                    );
 
                 openApiNavigator.GetRequestBodyParentPair(url, type)
                     .Modify(("required", () => true))
-                    .Assert((schema, result) => result.SetResult(schema["required"]?.Value<bool>() == true));
+                    .Assert(
+                        (schema, result) => result.SetResult(
+                            schema["required"]?.Value<bool>() == true, 
+                            $"Complex RequestBody Required {schema["required"]?.Value<bool>()}"
+                        )
+                    );
 
                 return this;
             }
 
-            ParamSchema = openApiNavigator.GetRequestBodySchemasPair(url, type, objHeirarcy);
+            var BasePair = openApiNavigator.GetPath(url, type);
+            var requestBody = openApiNavigator.GetRequestBodyParentPair(url, type);
+
+            BasePair
+                .Modify(
+                    (config.CustomValidationAttribute, () => new JObject()),
+                    ("RequestBody", () => new JArray()),
+                    (null, () => "Must not be null.")
+                )
+                .Assert((schema, result) =>
+                    result.SetResult(
+                        schema[config.CustomValidationAttribute]?["RequestBody"]?.Values().Contains("Must not be null.") == true,
+                        "RequestBody ValidationAttribute Does not contain value."
+                    )
+                );
+            requestBody
+                .Modify(("required", () => true))
+                .Assert((schema, result) => result.SetResult(
+                    schema["required"].Value<bool>() == true,
+                    $"RequestBody Required {schema["required"]?.Value<bool>()}")
+                )
+                ;
         }
         else
         {
@@ -371,34 +401,28 @@ public class ParamBuilder<TParamType>
             }
 
             ParamSchema = paramBase.Nav(x => new List<JObject>() { x });
+
+            var ParamName = objHeirarcy[^1];
+            ParamSchema
+                .ModifyList(
+                    (config.CustomValidationAttribute, () => new JObject()),
+                    (ParamName, () => new JArray()),
+                    (null, () => "Must not be null.")
+                )
+                .AssertList((schema, result) =>
+                    result.SetResult(schema[config.CustomValidationAttribute]?[ParamName]?.Values().Contains("Must not be null.") == true)
+                )
+                .ModifyList(
+                    ("required", () => new JArray()),
+                    (null, () => ParamName)
+                )
+                .AssertList((schema, result) =>
+                    result.SetResult(schema["required"]?.Values().Contains(ParamName) == true)
+                )
+                ;
         }
 
-        var ParamName = objHeirarcy[^1];
-        ParamSchema
-            .ModifyList(
-                (config.CustomValidationAttribute, () => new JObject()),
-                (ParamName, () => new JArray()),
-                (null, () => "Must not be null.")
-            )
-            .AssertList((schema, result) =>
-                result.SetResult(schema[config.CustomValidationAttribute]?[ParamName]?.Values().Contains("Must not be null.") == true)
-            )
-            .ModifyList(
-                ("required", () => new JArray()),
-                (null, () => ParamName)
-            )
-            .AssertList((schema, result) =>
-                result.SetResult(schema["required"]?.Values().Contains(ParamName) == true)
-            )
-            //.NavList(schema => schema["properties"]?[ParamName])
-            //.ModifyList(("required", () => true))
-            //.ModifyListRemove("nullable")
-            //.AssertList((schema, result) =>
-            //{
-            //    result.SetResult(schema["required"]?.Value<bool>() == true);
-            //    result.SetResult(schema["nullable"] == null);
-            //})
-            ;
+        
 
 
         //if (openApiNavigator.CheckIfParameterExists(url, type, objHeirarcy))

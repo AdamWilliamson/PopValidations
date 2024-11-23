@@ -44,7 +44,8 @@ public static class TypeHelper
 
         // Simple types are typically primitive types or basic types like int, string, DateTime, etc.
         return underlyingType.IsPrimitive || underlyingType == typeof(string) || underlyingType == typeof(decimal)
-               || underlyingType == typeof(DateTime) || underlyingType == typeof(Guid);
+               || underlyingType == typeof(DateTime) || underlyingType == typeof(Guid)
+               || (underlyingType == typeof(Task) && !underlyingType.IsGenericType);
     }
 
     public static bool IsArrayType(Type type)

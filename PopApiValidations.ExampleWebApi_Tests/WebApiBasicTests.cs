@@ -5,6 +5,8 @@ using System.Text.Json;
 using PopApiValidations.ExampleWebApi;
 using System.Text;
 using FluentAssertions.Execution;
+//using Newtonsoft.Json;
+//using Newtonsoft.Json;
 
 namespace PopApiValidations.ExampleWebApi_Tests;
 
@@ -121,7 +123,7 @@ public class WebApiBasicTests : WebApiTestBase<AddressOwnershipController>
         var response = await client.PostAsync(
             GetUrl(nameof(AddressOwnershipController.AddAddressOwnership)),
             new StringContent(
-                JsonSerializer.Serialize(ObjectMother.AddressOwnershipSetup.FullHeirarchyWithInvalidFields()),
+                Newtonsoft.Json.JsonConvert.SerializeObject(ObjectMother.AddressOwnershipSetup.FullHeirarchyWithInvalidFields()),
                 Encoding.UTF8,
                 "application/json"
             )
@@ -156,7 +158,8 @@ public class WebApiBasicTests : WebApiTestBase<AddressOwnershipController>
                 "application/json"
             )
         );
-
+        //var response = await client.SendAsync( message ).ConfigureAwait(false);
+        var responseText = await response.Content.ReadAsStringAsync();
         // Assert
         response.EnsureSuccessStatusCode();
     }
@@ -193,7 +196,7 @@ public class WebApiBasicTests : WebApiTestBase<AddressOwnershipController>
         var response = await client.PostAsync(
             GetUrl(nameof(AddressOwnershipController.AddAddressOwnership_Ignore)),
             new StringContent(
-                JsonSerializer.Serialize(ObjectMother.AddressOwnershipSetup.FullHeirarchyWithInvalidFields()),
+                System.Text.Json.JsonSerializer.Serialize(ObjectMother.AddressOwnershipSetup.FullHeirarchyWithInvalidFields()),
                 Encoding.UTF8,
                 "application/json"
             )
@@ -230,7 +233,7 @@ public class WebApiBasicTests : WebApiTestBase<AddressOwnershipController>
         var response = await client.PostAsync(
             GetUrl(nameof(AddressOwnershipController.AddAddressOwnership_Rename)),
             new StringContent(
-                JsonSerializer.Serialize(ObjectMother.AddressOwnershipSetup.FullHeirarchyWithInvalidFields()),
+                System.Text.Json.JsonSerializer.Serialize(ObjectMother.AddressOwnershipSetup.FullHeirarchyWithInvalidFields()),
                 Encoding.UTF8,
                 "application/json"
             )

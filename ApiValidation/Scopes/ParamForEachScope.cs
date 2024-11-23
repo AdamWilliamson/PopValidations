@@ -29,7 +29,6 @@ internal class ParamForEachScope<TValidationType, TListType, TParamType> : Scope
 
     protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {
-        throw new NotImplementedException("Cannot invoke scope container in Non-Api validation.");
     }
 
     protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)

@@ -5,6 +5,10 @@ using PopApiValidations.Swashbuckle;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using ApiValidations;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.Extensions.Configuration;
+using PopApiValidations.ExampleWebApi.Controllers;
 
 namespace PopApiValidations.Swashbuckle_Tests.Helpers;
 
@@ -66,10 +70,23 @@ internal class ApiWebApplicationFactory : WebApplicationFactory<Program>
         {
             builder.WithAdditionalControllers(AdditionalControllers.ToArray());
         }
+        
         builder.ConfigureAppConfiguration(config => {});
 
         builder.ConfigureTestServices(services => 
         {
+            if (Config != null)
+            {
+                services.AddSingleton(typeof(PopApiOpenApiConfig), Config);
+            }
+            else
+            {
+                services.AddSingleton(typeof(PopApiOpenApiConfig), new PopApiOpenApiConfig()
+                {
+                    ValidateEndpoint = (x) => false
+                });
+            }
+
             services.AddSwaggerGenNewtonsoftSupport();
 
             foreach (var item in registeredValues)
@@ -78,7 +95,7 @@ internal class ApiWebApplicationFactory : WebApplicationFactory<Program>
             }
 
             // Override to specify custom configs for testing settings.
-            services.RegisterPopApiValidationsOpenApiDefaults(Config);
+            //services.RegisterPopApiValidationsOpenApiDefaults(Config);
 
             foreach (var val in validators) 
             {

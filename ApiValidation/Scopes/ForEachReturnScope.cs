@@ -31,7 +31,6 @@ internal class ForEachReturnScope<TReturnType> : ScopeBase
 
     protected override void InvokeScopeContainer(ValidationConstructionStore store, object? value)
     {
-        throw new NotImplementedException();
     }
 
     protected override void InvokeScopeContainerToDescribe(ValidationConstructionStore store)
