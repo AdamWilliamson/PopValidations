@@ -1,4 +1,4 @@
 ﻿using ApprovalTests.Reporters;
 using ApprovalTests.Reporters.TestFrameworks;
 
-[assembly: UseReporter(typeof(NUnitReporter), typeof(DiffReporter))]
+[assembly: UseReporter(typeof(FrameworkAssertReporter), typeof(DiffReporter))]

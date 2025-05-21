@@ -1,20 +1,42 @@
-﻿namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
+﻿using System.Reflection;
 
-public class ReturnMapping
+namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
+
+public class ReturnMapping : IGeneralMapping
 {
-    public Type ReturnType { get; set; }
+    public Type Type => ReturnType;
+    public string Name => string.Empty;
+    public string OpenApiName => string.Empty;
+    public string? ResultName => null;
+    public OpenApiLocation MappingType => OpenApiLocation.Return;
+
+
+    public required Type ReturnType { get; set; }
     public bool IsArrayType { get; set; }
     public List<PropertyMapping> Properties { get; set; } = new();
 
+
+    private List<(string, PropertyMapping?)> result = new();
     public List<(string, PropertyMapping?)> GetOpenApiPropertyNames()
     {
-        List<(string, PropertyMapping?)> result = new();
+        if (result.Any()) return result;
+
         var prefix = "Response";
 
         if (!Properties.Any())
         {
             result.Add((prefix, null));
         }
+
+        result.Add((prefix, new PropertyMapping
+        {
+            IsArrayType = IsArrayType,
+            PropertyType = ReturnType,
+            PropertyName = string.Empty,
+            OpenApiPropertyName = prefix,
+            ResultPropertyName = null,
+            Properties = Properties,
+        }));
 
         foreach (var property in Properties)
         {

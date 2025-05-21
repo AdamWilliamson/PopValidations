@@ -1,0 +1,37 @@
+﻿{
+    "paths": {
+        "/api/Test/CreateByQueryMultiple": {
+            "post": {
+                "parameters": {
+                    "0": {
+                        "schema": {
+                            "items": {
+                                "properties": {
+                                    "subRequestFieldList": {
+                                        "required": [
+                                            "ListOfStringsField"
+                                        ],
+                                        "items": {
+                                            "x-validation": {
+                                                "listOfStringsField": [
+                                                    "Must not be null."
+                                                ]
+                                            },
+                                            "properties": {
+                                                "listOfStringsField": {
+                                                    "nullable": {
+                                                        "-": true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

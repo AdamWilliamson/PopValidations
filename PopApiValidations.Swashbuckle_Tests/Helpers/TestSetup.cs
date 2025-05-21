@@ -25,13 +25,11 @@ public class TestSetup<TTestController, TRequestValidator>
     private void Configurev2(PopApiOpenApiConfig config, TRequestValidator validator)
     {
         Factory
-            //.AddValidator<TRequestValidator, TTestController>()
             .AddRealizedValidator(typeof(IApiMainValidator<TTestController>), (x) =>
             {
                 return validator;
             })
             .WithConfig(config);
-        //IApiMainValidator<TValidationType>
 
         Client = Factory.CreateClient();
     }

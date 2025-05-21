@@ -1,21 +1,9 @@
 ﻿using ApiValidations.Execution;
 using DjvuNet.Tests.Xunit;
-using Microsoft.AspNetCore.JsonPatch.Operations;
-using Microsoft.AspNetCore.Routing;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PopApiValidations.Swashbuckle_Tests.Helpers;
-using System.Reflection.Metadata;
-using System.Data.Common;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using FluentAssertions;
 using System.Reflection;
-using DiffEngine;
-using static PopApiValidations.Swashbuckle_Tests.Internal.PopApiValidationSchemaFilterV3_Tests.OpenApiToMapping_Tests;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiSimplification;
 
 namespace PopApiValidations.Swashbuckle_Tests.Internal.PopApiValidationSchemaFilterV3_Tests;
@@ -67,6 +55,14 @@ public class OpenApiToMapping_Tests
             .Be(1, objFlatMap.FirstOrDefault().ToString());
     }
 
+    enum FlatteningType
+    {
+        Object,
+        Hidden,
+        Flatten,
+        FlattenChildrenOnly
+    };
+
     public static IEnumerable<object[]> GetControllersPropertyOutlay()
     {
         MethodInfo methodInfo;
@@ -86,7 +82,7 @@ public class OpenApiToMapping_Tests
 
         // Create
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.Create));
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, route: "api/test", method: "POST", prefix: "RequestBody.", false))
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, route: "api/test", method: "POST", prefix: "RequestBody.", false, "POST"))
         {
             yield return item;
         }
@@ -110,7 +106,7 @@ public class OpenApiToMapping_Tests
 
         // CreateByQuery
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.CreateByQuery));
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath + "/CreateByQuery", "POST", "", true))
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath + "/CreateByQuery", "POST", "", true, "QUERY"))
         {
             yield return item;
         }
@@ -118,7 +114,7 @@ public class OpenApiToMapping_Tests
         //CreateByBody
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.CreateByBody));
         yield return new OpenApiMappingData(MethodInfo: methodInfo, Route: controllerPath + "/CreateByBody", Operation: "POST", ObjHeirarchy: "RequestBody", Type: "object");
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath + "/CreateByBody", "POST", "RequestBody.", false))
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath + "/CreateByBody", "POST", "RequestBody.", false, "POST"))
         {
             yield return item;
         }
@@ -126,7 +122,7 @@ public class OpenApiToMapping_Tests
         // Update
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.Update));
         yield return new OpenApiMappingData(MethodInfo: methodInfo, Route: controllerPath, Operation: "PUT", ObjHeirarchy: "RequestBody", Type: "object");
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath, "PUT", "RequestBody.", false))
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath, "PUT", "RequestBody.", false, "PUT"))
         {
             yield return item;
         }
@@ -152,7 +148,7 @@ public class OpenApiToMapping_Tests
         // UpdateByQuery
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.UpdateByQuery));
         //yield return new TestData(Route: controllerPath + "/UpdateByQuery", Operation: "PUT", ObjHeirarchy: "RequestBody", Type: typeof(Request));
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath + "/UpdateByQuery", "PUT", "", true))
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath + "/UpdateByQuery", "PUT", "", true, "QUERY"))
         {
             yield return item;
         }
@@ -160,7 +156,14 @@ public class OpenApiToMapping_Tests
         //UpdateByBody
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.UpdateByBody));
         yield return new OpenApiMappingData(MethodInfo: methodInfo, Route: controllerPath + "/UpdateByBody", Operation: "PUT", ObjHeirarchy: "RequestBody", Type: "object");
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, controllerPath + "/UpdateByBody", "PUT", "RequestBody.", false))
+        foreach (var item in CreateForRequest(
+            methodInfo: methodInfo, 
+            controllerPath + "/UpdateByBody", 
+            "PUT", 
+            "RequestBody.", 
+            false,
+            "PUT")
+        )
         {
             yield return item;
         }
@@ -186,32 +189,45 @@ public class OpenApiToMapping_Tests
         //============================================================================
     }
 
-    public static IEnumerable<object[]> CreateForRequest(MethodInfo methodInfo, string route, string method, string prefix, bool isParameter)
+    public static IEnumerable<object[]> CreateForRequest(
+        MethodInfo methodInfo, 
+        string route, 
+        string method, 
+        string prefix, 
+        bool isParameter,
+        string paramMethod)
     {
         if (!isParameter) yield return new OpenApiMappingData(methodInfo, route, method, prefix + "SubRequestField", "object");
-        foreach (var item in CreateForAbstractComplexObject(methodInfo, route, method, prefix + "SubRequestField.", isParameter))
+        foreach (var item in CreateForAbstractComplexObject(methodInfo, route, method, prefix + "SubRequestField.", isParameter, paramMethod))
         {
             yield return item;
         }
 
         yield return new OpenApiMappingData(methodInfo, route, method, prefix + "SubRequestFieldList", "array", IsArray: true);
-        foreach (var item in CreateForAbstractComplexObject(methodInfo, route, method, prefix + "SubRequestFieldList.", isParameter))
+        foreach (var item in CreateForAbstractComplexObject(methodInfo, route, method, prefix + "SubRequestFieldList.", isParameter, method))
         {
             yield return item;
         }
 
-        foreach(var item in CreateForAbstractComplexObject(methodInfo, route, method, prefix, isParameter))
+        foreach(var item in CreateForAbstractComplexObject(methodInfo, route, method, prefix, isParameter, method))
         {
             yield return item;
         }
     }
 
-    public static IEnumerable<object[]> CreateForAbstractComplexObject(MethodInfo methodInfo, string route, string method, string prefix, bool isParameter)
+    public static IEnumerable<object[]> CreateForAbstractComplexObject(
+        MethodInfo methodInfo, 
+        string route, 
+        string method, 
+        string prefix, 
+        bool isParameter,
+        string paramMethod)
     {
         yield return new OpenApiMappingData(methodInfo, route, method, prefix + "IntegerField", "number");
         yield return new OpenApiMappingData(methodInfo, route, method, prefix + "StringField", "string");
         yield return new OpenApiMappingData(methodInfo, route, method, prefix + "ListOfStringsField", "array", IsArray: true);
         if (!isParameter) yield return new OpenApiMappingData(methodInfo, route, method, prefix + "DataItemField", "object");
+
         foreach (var item in CreateForRequestDataItem(methodInfo, route, method, prefix + "DataItemField."))
         {
             yield return item;
@@ -223,8 +239,8 @@ public class OpenApiToMapping_Tests
             yield return item;
         }
         //yield return new OpenApiMappingData(methodInfo, route, method, prefix + "ListOfRequestDataItemsField".Insert().Replace., "array");
-
-        yield return new OpenApiMappingData(methodInfo, route, method, prefix + "DictOfStringIntField", "object");
+        var DictionaryIsObject = paramMethod == "QUERY" || paramMethod == "HEADER";
+        yield return new OpenApiMappingData(methodInfo, route, method, prefix + "DictOfStringIntField", DictionaryIsObject? "object" : "array", IsArray: !DictionaryIsObject);
     }
 
     public static IEnumerable<object[]> CreateForRequestDataItem(MethodInfo methodInfo, string route, string method, string prefix)

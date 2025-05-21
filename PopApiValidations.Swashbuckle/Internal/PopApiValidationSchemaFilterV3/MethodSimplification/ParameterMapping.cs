@@ -3,17 +3,66 @@ using Microsoft.OpenApi.Models;
 
 namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
 
-public class ParameterMapping
+/// </summary>
+public enum OpenApiLocation
 {
-    public ParameterInfo ParameterInfo { get; set; }
+    Query,
+    Header,
+    Path,
+    Cookie,
+    Return,
+    ResponseBody,
+    Form
+}
+
+public interface IGeneralMapping
+{
+    public bool IsArrayType { get; }
+    public Type Type { get; }
+    public List<PropertyMapping> Properties { get; }
+
+    public string Name { get; }
+    public string OpenApiName { get; }
+    public string? ResultName { get; }
+    public OpenApiLocation MappingType { get; }
+
+    public List<(string, PropertyMapping?)> GetOpenApiPropertyNames();
+}
+
+public class ParameterMapping : IGeneralMapping
+{
+    public required ParameterInfo ParameterInfo { get; set; }
+    public Type Type => ParameterInfo.ParameterType;
     public bool IsOpenApiRequestBody { get; set; }
     public string? OpenApiParameterName { get; set; }
     public bool IsArrayType { get; set; }
     public ParameterLocation? Location { get; set; } = null; // Default value is Unknown
+
+    public string Name => ParameterInfo.Name ?? string.Empty;
+    public string OpenApiName => OpenApiParameterName;
+    public string? ResultName => (string.Equals(this.ParameterInfo.Name,OpenApiName,StringComparison.InvariantCultureIgnoreCase))? string.Empty : OpenApiParameterName;
+    public required OpenApiLocation MappingType { get; set; }
+
     public List<PropertyMapping> Properties { get; set; } = new();
+
+    private bool useName()
+    {
+        if (IsOpenApiRequestBody) return false;
+
+        if (!Properties.Any()) return true;
+
+        if (Location != ParameterLocation.Query) return true;
+
+        if (Location == ParameterLocation.Query && IsArrayType) return true;
+
+        return false;
+    }
+
+    List<(string, PropertyMapping?)> result = new();
     public List<(string, PropertyMapping?)> GetOpenApiPropertyNames()
     {
-        List<(string, PropertyMapping?)> result = new();
+        if (result.Any()) return result;
+
         var prefix = string.Empty;
 
         //var paramLocation = new[] { ParameterLocation.Query, ParameterLocation.Path, ParameterLocation.Header  };
@@ -27,10 +76,22 @@ public class ParameterMapping
         //    prefix = ParameterInfo.Name;
         //}
 
-        if (!Properties.Any())
+        result.Add(
+            (
+                string.IsNullOrWhiteSpace(prefix)? OpenApiParameterName : prefix + "." + OpenApiParameterName, 
+                new PropertyMapping
+                {
+                    IsArrayType = IsArrayType,
+                    PropertyType = ParameterInfo.ParameterType,
+                    PropertyName = ParameterInfo.Name,
+                    OpenApiPropertyName = OpenApiParameterName,
+                    ResultPropertyName = ResultName,
+                    Properties = Properties,
+                }
+            ));
+
+        if (useName())
         {
-            result.Add((OpenApiParameterName, null));
-            //prefix = OpenApiParameterName;
             prefix = ParameterInfo.Name;
         }
 

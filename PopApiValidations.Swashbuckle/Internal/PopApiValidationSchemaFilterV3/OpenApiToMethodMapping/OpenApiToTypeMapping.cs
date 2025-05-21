@@ -1,12 +1,17 @@
-﻿using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
+﻿using Microsoft.AspNetCore.Routing;
+using Microsoft.OpenApi.Models;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiSimplification;
+using System.Data.Common;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 
 namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiToMethodMapping;
 
 public class OpenApiToTypeMapper
 {
+    private const string OpenApiPrefix = "Response";
+
     public List<TypeToOpenApiMappingResult> MapOpenApiOperationToFunction(
         OpenApiOperationMapping operationMapping,
         FunctionMapping functionMapping)
@@ -16,150 +21,381 @@ public class OpenApiToTypeMapper
         // Process the parameters of the OpenApiOperationMapping
         foreach (var parameter in operationMapping.Parameters)
         {
-            var parameterMapping = FindFunction(functionMapping, parameter.Name);
-
-            if (parameter.PropertyMappings?.Any() == true)
-            {
-                // Process complex object properties for Body parameters
-                results.AddRange(ProcessComplexObjectProperties(
-                    operationMapping.Path,
-                    operationMapping.HttpMethod,
-                    string.Empty,
-                    null,
-                    functionMapping,
-                    parameter,
-                    parameterMapping // Pass the parameter index
-                ));
-            }
-            else
-            {
-                // Process the other parameters directly
-                results.AddRange(ProcessSimpleOpenApiParameterMapping(
-                    operationMapping.Path,
-                    operationMapping.HttpMethod,
-                    string.Empty,
-                    parameter,
-                    parameterMapping // Pass the parameter index
-                ));
-            }
+            results.AddRange(CreateParameter(operationMapping, functionMapping, parameter));
         }
 
         // Process the request body
         if (operationMapping.RequestBody?.ContentSchemas?.Any() == true)
         {
-            var parameterMapping = FindFunctionForRequestBody(functionMapping);
-            var isArray = false;
-
-            foreach (var bodySchema in operationMapping.RequestBody.ContentSchemas.Take(1))
-            {
-                isArray = bodySchema.Value.Items != null;
-
-                if (isArray)
-                {
-                    results.Add(new TypeToOpenApiMappingResult
-                    {
-                        Route = operationMapping.Path,
-                        OpenApiObjHeirarchy = "RequestBody[n]",
-                        OpenApiPropertyName = "RequestBody[n]",
-                        PropertyMapping = null,
-                        PropertySchema = bodySchema.Value,
-                        ParentPropertyExtensions = operationMapping.RequestBody.ParentPropertyExtensions,
-                        ResultPropertyHeirarchy = "[n]",
-                        IsArray = true,
-                        RequestBody = operationMapping.RequestBody.RequestBody,
-                        //RequestBodyContentSchemas = operationMapping.RequestBody.RequestBody.Content.Select(x => x.Value.Schema).ToArray(),
-                        ParameterMapping = parameterMapping // No specific parameter, so set to -1
-                    });
-                }
-
-                results.Add(new TypeToOpenApiMappingResult
-                {
-                    Route = operationMapping.Path,
-                    OpenApiObjHeirarchy = "RequestBody",
-                    OpenApiPropertyName = "RequestBody",
-                    PropertyMapping = null,
-                    PropertySchema = bodySchema.Value,
-                    ParentPropertyExtensions = operationMapping.RequestBody.ParentPropertyExtensions,
-                    IsArray = false,
-                    RequestBody = operationMapping.RequestBody.RequestBody,
-                    //RequestBodyContentSchemas = operationMapping.RequestBody.RequestBody.Content.Select(x => x.Value.Schema).ToArray(),
-                    ParameterMapping = parameterMapping // No specific parameter, so set to -1
-                });
-            }
-
-            if (!TypeHelper.IsSimpleType(parameterMapping.ParameterInfo.ParameterType))
-            {
-                foreach (var property in operationMapping.RequestBody.PropertyMappings)
-                {
-                    results.AddRange(ProcessComplexObjectProperties(
-                        operationMapping.Path,
-                        operationMapping.HttpMethod,
-                        "RequestBody" + (isArray ? "[n]" : null),
-                        "RequestBody" + (isArray ? "[n]" : string.Empty),
-                        functionMapping,
-                        operationMapping.RequestBody,
-                        parameterMapping, // No parameter index for the body directly
-                        property
-                    ));
-                }
-            }
+            results.AddRange(CreateRequestBody(operationMapping, functionMapping));
         }
 
-        if (operationMapping.Responses?.Any() == true)
+        foreach (var response in operationMapping.Responses?.Where(x => x.StatusCode == "200" && x.Schema != null) ?? [])
         {
-            foreach (var response in operationMapping.Responses.Where(x => x.StatusCode == "200" && x.Schema != null))
-            {
-                var isArray = response.Schema.Items != null;
-
-                if (isArray)
-                {
-                    results.Add(new TypeToOpenApiMappingResult
-                    {
-                        Route = operationMapping.Path,
-                        OpenApiObjHeirarchy = "[n]",
-                        OpenApiPropertyName = "Response[n]",
-                        ResultPropertyHeirarchy = "[n]",
-                        PropertyMapping = null,
-                        PropertySchema = null,
-                        ParentPropertyExtensions = operationMapping.Extensions,
-                        IsArray = true,
-                        RequestBody = null,
-                        ParameterMapping = null,
-                        ResponseMapping = response,
-                        ReturnMapping = functionMapping.Return.First(),
-                    });
-                }
-
-                results.Add(new TypeToOpenApiMappingResult
-                {
-                    Route = operationMapping.Path,
-                    OpenApiObjHeirarchy = null,
-                    OpenApiPropertyName = "Response",
-                    PropertyMapping = null,
-                    PropertySchema = null,
-                    ParentPropertyExtensions = operationMapping.Extensions,
-                    IsArray = false,
-                    RequestBody = null,
-                    ParameterMapping = null,
-                    ResponseMapping = response,
-                    ReturnMapping = functionMapping.Return.First(),
-                });
-
-                foreach (var property in response.PropertyMappings)
-                {
-                    results.AddRange(ProcessComplexObjectProperties(
-                       operationMapping.Path,
-                       operationMapping.HttpMethod,
-                       isArray ? "[n]" : string.Empty,
-                       "Response" + (isArray ? "[n]" : string.Empty),
-                       functionMapping,
-                       functionMapping.Return.First(),
-                       response,
-                       property
-                   ));
-                }
-            }
+            results.AddRange(CreateResponse(operationMapping, functionMapping, response));       
         }
+
+        return results;
+    }
+
+    private List<TypeToOpenApiMappingResult> CreateParameter(OpenApiOperationMapping operationMapping, FunctionMapping functionMapping, OpenApiParameterMapping parameter)
+    {
+        var results = new List<TypeToOpenApiMappingResult>();
+
+        var parameterMapping = FindFunction(functionMapping, parameter.Name);
+        var property = FindPropertyMapping(parameterMapping, parameter.Name);
+
+        results.Add(TypeToOpenApiMappingResult.ForParameter(
+                    asArrayNotation: false,
+                    route: operationMapping.Path,
+                    //prefix: string.Empty,//parameter.Name,
+                    //property: parameter,
+                    //parentSchema: parameter.Schema,
+                    
+                    parameter: parameter,
+                    parameterMapping: parameterMapping,
+                    foundProperty: property
+                //,parameterMapping: parameterMapping
+                ));
+
+        //results.Add(new TypeToOpenApiMappingResult(
+        //            asArrayNotation: false,
+        //            route: operationMapping.Path,
+        //            prefix: string.Empty,//parameter.Name,
+        //            property: parameter,
+        //            parentSchema: parameter.Schema,
+        //            foundProperty: null,
+        //            parameter: parameter,
+        //            parameterMapping: parameterMapping
+        //        ));
+
+        if (parameter.IsArray)
+        {
+            results.Add(TypeToOpenApiMappingResult.ForParameter(
+                   asArrayNotation: true,
+                   route: operationMapping.Path,
+                   //prefix: string.Empty,//parameter.Name,
+                   //property: parameter,
+                   //parentSchema: parameter.Schema,
+
+                   parameter: parameter,
+                   parameterMapping: parameterMapping,
+                   foundProperty: property
+               //,parameterMapping: parameterMapping
+               ));
+
+            //results.Add(new TypeToOpenApiMappingResult(
+            //        asArrayNotation: true,
+            //        route: operationMapping.Path,
+            //        prefix: "[n]",
+            //        property: parameter,
+            //        parentSchema: parameter.Schema,
+            //        foundProperty: null,
+            //        parameter: parameter,
+            //        parameterMapping: parameterMapping
+            //    ));
+        }
+
+        // loop through the "schemas" of the parameter, an array will be an array, the others may be sub properties.
+        foreach (var prop in parameter.PropertyMappings)
+        {
+            results.AddRange(ProcessComplexObjectProperties(
+                route: operationMapping.Path,
+                httpMethod: operationMapping.HttpMethod,
+                prefix: parameter.Name + (parameter.IsArray ? "[n]" : string.Empty),
+                openApiPrefix: parameter.Name,
+                functionMapping: functionMapping,
+                parameter: parameter,
+                functionItemMapping: parameterMapping,
+                property: prop,
+                parent: null
+            ));
+        }
+        //ProcessSimpleOpenApiParameterMapping(
+        //        operationMapping.Path,
+        //        operationMapping.HttpMethod,
+        //        string.Empty,
+        //        parameter,
+        //        parameterMapping // Pass the parameter index
+        //    )
+        //if (parameter.PropertyMappings?.Any() == true)
+        //{
+        //    // Process complex object properties for Body parameters
+
+        //    results.Add(new TypeToOpenApiMappingResult
+        //    {
+        //        Route = operationMapping.Path,
+        //        OpenApiObjHeirarchy = parameter.Name + ((parameter.IsArray) ? "[n]" : String.Empty),
+        //        OpenApiPropertyName = parameter.Name + ((parameter.IsArray) ? "[n]" : String.Empty),
+        //        PropertyMapping = null,
+        //        DirectParentSchema = null,
+        //        PropertySchema = parameter.Schema,
+        //        IsArray = true,
+        //        Parameter = parameter.Parameter,
+        //        ParameterMapping = parameterMapping, // Set the parameter index
+        //        ParentPropertyExtensions = parameter.ParentPropertyExtensions,
+        //        ResultPropertyHeirarchy = ((parameter.IsArray) ? "[n]" : String.Empty)// parameter.Name + ((parameter.IsArray) ? "[n]" : String.Empty)
+        //    }) ;
+
+        //}
+        //else
+        //{
+        //    // Process the other parameters directly
+        //    results.AddRange(ProcessSimpleOpenApiParameterMapping(
+        //        operationMapping.Path,
+        //        operationMapping.HttpMethod,
+        //        string.Empty,
+        //        parameter,
+        //        parameterMapping // Pass the parameter index
+        //    ));
+        //}
+
+        return results;
+    }
+
+    private List<TypeToOpenApiMappingResult> CreateRequestBody(OpenApiOperationMapping operationMapping, FunctionMapping functionMapping)
+    {
+        var results = new List<TypeToOpenApiMappingResult>();
+
+        var parameterMapping = FindFunctionForRequestBody(functionMapping);
+        var isArray = operationMapping.RequestBody.IsArray;
+
+        const string requestBodyString = "RequestBody";
+
+        results.Add(TypeToOpenApiMappingResult.ForRequestBody(
+            asArrayNotation: false,
+            route: operationMapping.Path,
+        //prefix: string.Empty,//parameter.Name,
+        //property: parameter,
+        //parentSchema: parameter.Schema,
+            
+            requestBody: operationMapping.RequestBody,
+            parameterMapping: parameterMapping,
+            foundProperty: null
+        //,parameterMapping: parameterMapping
+        ));
+
+        if (isArray)
+        {
+            results.Add(TypeToOpenApiMappingResult.ForRequestBody(
+            asArrayNotation: true,
+            route: operationMapping.Path,
+            //prefix: string.Empty,//parameter.Name,
+            //property: parameter,
+            //parentSchema: parameter.Schema,
+
+            requestBody: operationMapping.RequestBody,
+            parameterMapping: parameterMapping,
+            foundProperty: null
+        //,parameterMapping: parameterMapping
+        ));
+
+            //results.AddRange(ProcessComplexObjectProperties(
+            //        operationMapping.Path,
+            //        operationMapping.HttpMethod,
+            //        requestBodyString + "[n]",
+            //        requestBodyString + "[n]",
+            //        functionMapping,
+            //        operationMapping.RequestBody,
+            //        parameterMapping, // No parameter index for the body directly
+            //        operationMapping.RequestBody//,
+            //       // null
+            //    ));
+        }
+
+        //results.AddRange(ProcessComplexObjectProperties(
+        //        operationMapping.Path,
+        //        operationMapping.HttpMethod,
+        //        requestBodyString + (isArray ? "[n]" : string.Empty),
+        //        requestBodyString + (isArray ? "[n]" : string.Empty),
+        //        functionMapping,
+        //        operationMapping.RequestBody,
+        //        parameterMapping, // No parameter index for the body directly
+        //        operationMapping.RequestBody//,
+        //                                    //null
+        //    ));
+
+        foreach (var prop in operationMapping.RequestBody.PropertyMappings)
+        {
+            results.AddRange(ProcessComplexObjectProperties(
+                route: operationMapping.Path,
+                httpMethod: operationMapping.HttpMethod,
+                prefix: (isArray ? "[n]" : string.Empty),
+                openApiPrefix: requestBodyString + (isArray ? "[n]" : string.Empty),
+                functionMapping: functionMapping,
+                parameter: operationMapping.RequestBody,
+                functionItemMapping: parameterMapping,
+                property: prop,
+                parent: prop.DirectParentSchema
+            ));
+        }
+
+
+        //foreach (var bodySchema in operationMapping.RequestBody.ContentSchemas.Take(1))
+        //{
+        //    isArray = bodySchema.Value.Items != null;
+
+
+        //    if (isArray)
+        //    {
+        //        results.Add(new TypeToOpenApiMappingResult
+        //        {
+        //            Route = operationMapping.Path,
+        //            OpenApiObjHeirarchy = "RequestBody[n]",
+        //            OpenApiPropertyName = "RequestBody[n]",
+        //            PropertyMapping = null,
+        //            DirectParentSchema = operationMapping.RequestBody.ContentSchemas.Values.First(),
+        //            PropertySchema = bodySchema.Value,
+        //            ParentPropertyExtensions = operationMapping.RequestBody.ParentPropertyExtensions,
+        //            ResultPropertyHeirarchy = "[n]",
+        //            IsArray = true,
+        //            RequestBody = operationMapping.RequestBody.RequestBody,
+        //            //RequestBodyContentSchemas = operationMapping.RequestBody.RequestBody.Content.Select(x => x.Value.Schema).ToArray(),
+        //            ParameterMapping = parameterMapping // No specific parameter, so set to -1
+        //        });
+        //    }
+
+        //    results.Add(new TypeToOpenApiMappingResult
+        //    {
+        //        Route = operationMapping.Path,
+        //        OpenApiObjHeirarchy = "RequestBody",
+        //        OpenApiPropertyName = "RequestBody",
+        //        PropertyMapping = null,
+        //        DirectParentSchema = operationMapping.RequestBody.ContentSchemas.Values.First(),
+        //        PropertySchema = bodySchema.Value,
+        //        ParentPropertyExtensions = operationMapping.RequestBody.ParentPropertyExtensions,
+        //        IsArray = false,
+        //        RequestBody = operationMapping.RequestBody.RequestBody,
+        //        //RequestBodyContentSchemas = operationMapping.RequestBody.RequestBody.Content.Select(x => x.Value.Schema).ToArray(),
+        //        ParameterMapping = parameterMapping, // No specific parameter, so set to -1
+        //        ResultPropertyHeirarchy = string.Empty
+        //    });
+        //}
+
+        //if (!TypeHelper.IsSimpleType(parameterMapping.ParameterInfo.ParameterType))
+        //{
+        //    foreach (var property in operationMapping.RequestBody.PropertyMappings)
+        //    {
+        //        results.AddRange(ProcessComplexObjectProperties(
+        //            operationMapping.Path,
+        //            operationMapping.HttpMethod,
+        //            "RequestBody" + (isArray ? "[n]" : null),
+        //            "RequestBody" + (isArray ? "[n]" : string.Empty),
+        //            functionMapping,
+        //            operationMapping.RequestBody,
+        //            parameterMapping, // No parameter index for the body directly
+        //            property, 
+        //            property.DirectParentSchema
+        //        ));
+        //    }
+        //}
+
+        return results;
+    }
+
+    private List<TypeToOpenApiMappingResult> CreateResponse(OpenApiOperationMapping operationMapping, FunctionMapping functionMapping, OpenApiResponseMapping response)
+    {
+        var results = new List<TypeToOpenApiMappingResult>();
+
+        var isArray = response.Schema.Items != null;
+        var responeFunctionItem = functionMapping.Return.First();
+
+        results.Add(TypeToOpenApiMappingResult.ForResponse(
+            asArrayNotation: false,
+            route: operationMapping.Path,
+            response: response,
+            functionItemMapping: responeFunctionItem,
+            foundProperty: null
+        ));
+
+
+        results.AddRange(ProcessComplexObjectProperties(
+               route: operationMapping.Path,
+               httpMethod: operationMapping.HttpMethod,
+               prefix: string.Empty,
+               openApiPrefix: OpenApiPrefix,
+               functionMapping: functionMapping,
+               parameter: response,
+               functionItemMapping: responeFunctionItem,
+               property: response,
+               parent: null
+           ));
+
+        if (isArray)
+        {
+            results.Add(TypeToOpenApiMappingResult.ForResponse(
+                asArrayNotation: true,
+                route: operationMapping.Path,
+                response: response,
+                functionItemMapping: responeFunctionItem,
+                foundProperty: null
+            ));
+
+            results.AddRange(ProcessComplexObjectProperties(
+               route: operationMapping.Path,
+               httpMethod: operationMapping.HttpMethod,
+               prefix: "[n]",
+               openApiPrefix: "Response[n]",
+               functionMapping: functionMapping,
+               parameter: response,
+               functionItemMapping: responeFunctionItem,
+               property: response,
+               parent: null
+           ));
+        }
+
+
+        //if (isArray)
+        //{
+        //    results.Add(new TypeToOpenApiMappingResult
+        //    {
+        //        Route = operationMapping.Path,
+        //        OpenApiObjHeirarchy = "[n]",
+        //        OpenApiPropertyName = "Response[n]",
+        //        ResultPropertyHeirarchy = "[n]",
+        //        PropertyMapping = null,
+        //        DirectParentSchema = null,
+        //        PropertySchema = null,
+        //        ParentPropertyExtensions = operationMapping.Extensions,
+        //        IsArray = true,
+        //        RequestBody = null,
+        //        ParameterMapping = null,
+        //        ResponseMapping = response,
+        //        ReturnMapping = functionMapping.Return.First(),
+        //    });
+        //}
+
+        //results.Add(new TypeToOpenApiMappingResult
+        //{
+        //    Route = operationMapping.Path,
+        //    OpenApiObjHeirarchy = null,
+        //    OpenApiPropertyName = "Response",
+        //    PropertyMapping = null,
+        //    DirectParentSchema = null,
+        //    PropertySchema = null,
+        //    ParentPropertyExtensions = operationMapping.Extensions,
+        //    IsArray = false,
+        //    RequestBody = null,
+        //    ParameterMapping = null,
+        //    ResponseMapping = response,
+        //    ReturnMapping = functionMapping.Return.First(),
+        //    ResultPropertyHeirarchy = string.Empty
+        //});
+
+        //foreach (var property in response.PropertyMappings)
+        //{
+        //    results.AddRange(ProcessComplexObjectProperties(
+        //       operationMapping.Path,
+        //       operationMapping.HttpMethod,
+        //       isArray ? "[n]" : string.Empty,
+        //       "Response" + (isArray ? "[n]" : string.Empty),
+        //       functionMapping,
+        //       response,
+        //       functionMapping.Return.First(),
+        //       property,
+        //       response.Schema
+        //   ));
+        //}
 
         return results;
     }
@@ -187,72 +423,162 @@ public class OpenApiToTypeMapper
     //        .Item2;
     //}
 
-    public PropertyMapping? FindPropertyMapping(ReturnMapping returnMapping, string parameterName)
+    public PropertyMapping? FindPropertyMapping(IGeneralMapping generalMapping, string parameterName)
     {
         parameterName = parameterName.Replace("[n]", "").Replace("[n.Key]", "").Replace("[n.Value]", "");
 
-        return returnMapping.GetOpenApiPropertyNames()
+        return generalMapping.GetOpenApiPropertyNames()
             .FirstOrDefault(y => string.Equals(y.Item1, parameterName, StringComparison.InvariantCultureIgnoreCase))
             .Item2;
     }
 
-    public PropertyMapping? FindPropertyMapping(ParameterMapping parameterMapping, string parameterName)
-    {
-        parameterName = parameterName.Replace("[n]", "").Replace("[n.Key]", "").Replace("[n.Value]", "");
+    //public PropertyMapping? FindPropertyMapping(IGeneralMapping parameterMapping, string parameterName)
+    //{
+    //    parameterName = parameterName.Replace("[n]", "").Replace("[n.Key]", "").Replace("[n.Value]", "");
 
-        return parameterMapping.GetOpenApiPropertyNames()
-            .FirstOrDefault(y => string.Equals(y.Item1, parameterName, StringComparison.InvariantCultureIgnoreCase))
-            .Item2;
-    }
+    //    return parameterMapping.GetOpenApiPropertyNames()
+    //        .FirstOrDefault(y => string.Equals(y.Item1, parameterName, StringComparison.InvariantCultureIgnoreCase))
+    //        .Item2;
+    //}
 
     public ParameterMapping FindFunctionForRequestBody(FunctionMapping functionMapping)
     {
         return functionMapping.Parameters.OrderBy(x => x.ParameterInfo.Position).First(x => x.IsOpenApiRequestBody);
     }
 
+    //private List<TypeToOpenApiMappingResult> ProcessSimpleOpenApiParameterMapping(
+    //    string route,
+    //    string httpMethod,
+    //    string? prefix,
+    //    IOpenApiParameterMapping parameter,
+    //    IGeneralMapping parameterMapping) // Take the parameter index as an argument
+    //{
+    //    var results = new List<TypeToOpenApiMappingResult>();
 
+    //    var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.Name : prefix + '.' + property.Name;
 
-    private List<TypeToOpenApiMappingResult> ProcessSimpleOpenApiParameterMapping(
-        string route,
-        string httpMethod,
-        string? prefix,
-        OpenApiParameterMapping parameter,
-        ParameterMapping parameterMapping) // Take the parameter index as an argument
-    {
-        var results = new List<TypeToOpenApiMappingResult>();
-        //var newPrefix = string.IsNullOrWhiteSpace(prefix) ? parameter.Name : prefix + '.' + parameter.Name;
-        // If it's an array, treat it as a list of items
-        if (parameter.IsArray)
-        {
-            results.Add(new TypeToOpenApiMappingResult
-            {
-                Route = route,
-                OpenApiObjHeirarchy = parameter.Name + "[n]",
-                OpenApiPropertyName = parameter.Name + "[n]",
-                PropertyMapping = null,
-                PropertySchema = parameter.Schema,
-                IsArray = true,
-                Parameter = parameter.Parameter,
-                ParameterMapping = parameterMapping, // Set the parameter index
-                ParentPropertyExtensions = parameter.ParentPropertyExtensions,
-            });
-        }
+    //    //var newPrefix = string.IsNullOrWhiteSpace(prefix) ? parameter.Name : prefix + '.' + parameter.Name;
+    //    // If it's an array, treat it as a list of items
+    //    if (parameter.IsArray)
+    //    {
+    //        results.Add(new TypeToOpenApiMappingResult
+    //        {
+    //            Route = route,
+    //            OpenApiObjHeirarchy = parameter.Name + "[n]",
+    //            OpenApiPropertyName = parameter.Name + "[n]",
+    //            PropertyMapping = null,
+    //            DirectParentSchema = null,
+    //            PropertySchema = parameter.Schema,
+    //            IsArray = true,
+    //            Parameter = parameter.Parameter,
+    //            ParameterMapping = parameterMapping, // Set the parameter index
+    //            ParentPropertyExtensions = parameter.ParentPropertyExtensions,
+    //            ResultPropertyHeirarchy = parameter.Name + "[n]"
+    //        });
+    //    }
 
-        results.Add(new TypeToOpenApiMappingResult
-        {
-            Route = route,
-            OpenApiObjHeirarchy = parameter.Name,
-            OpenApiPropertyName = parameter.Name,
-            PropertyMapping = null,
-            PropertySchema = parameter.Schema,
-            IsArray = false,
-            Parameter = parameter.Parameter,
-            ParameterMapping = parameterMapping, // Set the parameter index
-            ParentPropertyExtensions = parameter.ParentPropertyExtensions,
-        });
+    //    results.Add(new TypeToOpenApiMappingResult
+    //    {
+    //        Route = route,
+    //        OpenApiObjHeirarchy = parameter.Name,
+    //        OpenApiPropertyName = parameter.Name,
+    //        PropertyMapping = null,
+    //        DirectParentSchema = null,
+    //        PropertySchema = parameter.Schema,
+    //        IsArray = false,
+    //        Parameter = parameter.Parameter,
+    //        ParameterMapping = parameterMapping, // Set the parameter index
+    //        ParentPropertyExtensions = parameter.ParentPropertyExtensions,
+    //        ResultPropertyHeirarchy = parameter.Name
+    //    });
 
-        return results;
-    }
+    //    results.Add(new TypeToOpenApiMappingResult(
+    //        asArrayNotation: true,
+    //        route: route,
+    //        prefix: newPrefix,
+    //        property: property,
+    //        parentSchema: parent,
+    //        foundProperty: foundProperty,
+    //        parameter: parameter,
+    //        parameterMapping: parameterMapping
+    //    ));
+
+    //    return results;
+    //}
+
+    //private List<TypeToOpenApiMappingResult> ProcessComplexObjectProperties(
+    //    string route,
+    //    string httpMethod,
+    //    string? prefix,
+    //    string? openApiPrefix,
+    //    FunctionMapping functionMapping,
+    //    IOpenApiParameterMapping parameter,
+    //    IGeneralMapping parameterMapping) // Take the parameter index as an argument
+    //{
+    //    var results = new List<TypeToOpenApiMappingResult>();
+
+    //    var newPrefix = string.IsNullOrWhiteSpace(prefix) ? parameter.Name : prefix + '.' + parameter.Name;
+    //    var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? parameter.Name : openApiPrefix + '.' + parameter.Name;
+    //    var isArray = parameter.Schema.Items != null;
+
+    //    var foundProperty = FindPropertyMapping(parameterMapping, newOpenApiPrefix);
+    //    if (foundProperty != null)
+    //    {
+    //        //if (parameter.IsArray)
+    //        //{
+    //        //    Debug.Assert(!foundProperty.ResultPropertyName.EndsWith("[n]"));
+    //        //    results.Add(new TypeToOpenApiMappingResult
+    //        //    {
+    //        //        Route = route,
+    //        //        OpenApiObjHeirarchy = newPrefix + "[n]",
+    //        //        OpenApiPropertyName = parameter.Name,
+    //        //        DirectParentSchema = null,
+    //        //        PropertySchema = parameter.Schema,
+    //        //        PropertyMapping = foundProperty,
+    //        //        ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
+    //        //        IsArray = parameter.IsArray,
+    //        //        Parameter = parameter?.Parameter,
+    //        //        ParameterMapping = parameterMapping, // Set the parameter index
+    //        //        ParentPropertyExtensions = parameter.ParentPropertyExtensions
+    //        //    });
+    //        //    Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+    //        //}
+
+    //        results.Add(new TypeToOpenApiMappingResult
+    //        {
+    //            Route = route,
+    //            OpenApiObjHeirarchy = newPrefix,
+    //            OpenApiPropertyName = parameter.Name,
+    //            DirectParentSchema = null,
+    //            PropertySchema = parameter.Schema,
+    //            PropertyMapping = foundProperty,
+    //            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
+    //            IsArray = false,
+    //            Parameter = parameter?.Parameter,
+    //            ParameterMapping = parameterMapping, // Set the parameter index
+    //            ParentPropertyExtensions = parameter.ParentPropertyExtensions
+    //        });
+    //        Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+    //    }
+
+    //    foreach (var property in parameter.PropertyMappings)
+    //    {
+    //        // Flatten the properties recursively
+    //        results.AddRange(ProcessComplexObjectProperties(
+    //            route,
+    //            httpMethod,
+    //            newPrefix + (isArray ? "[n]" : null),
+    //            newOpenApiPrefix + (isArray ? "[n]" : string.Empty),
+    //            functionMapping,
+    //            parameter,
+    //            parameterMapping, // Pass the parameter index
+    //            property,
+    //            parameter.Schema
+    //        ));
+    //    }
+
+    //    return results;
+    //}
 
     private List<TypeToOpenApiMappingResult> ProcessComplexObjectProperties(
         string route,
@@ -260,289 +586,318 @@ public class OpenApiToTypeMapper
         string? prefix,
         string? openApiPrefix,
         FunctionMapping functionMapping,
-        OpenApiParameterMapping parameter,
-        ParameterMapping parameterMapping) // Take the parameter index as an argument
+        IOpenApiParameterMapping? parameter,
+        IGeneralMapping functionItemMapping, // Take the parameter index as an argument
+        IOpenApiPropertyMapping property,
+        OpenApiSchema? parent
+        )
     {
         var results = new List<TypeToOpenApiMappingResult>();
-
-        var newPrefix = string.IsNullOrWhiteSpace(prefix) ? parameter.Name : prefix + '.' + parameter.Name;
-        var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? parameter.Name : openApiPrefix + '.' + parameter.Name;
-        var isArray = parameter.Schema.Items != null;
-
-        var foundProperty = FindPropertyMapping(parameterMapping, newOpenApiPrefix);
-
-        if (parameter.IsArray)
+        foreach (var schema in property.Schemas)
         {
-            results.Add(new TypeToOpenApiMappingResult
+            // Prefix the property hierarchy with the parent (route + operation + property name)
+            var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.Name : prefix + '.' + property.Name;
+
+            // if the openApiPrefix is null, then it hasn't yet been called reciprocally.
+            //  if it IS NOT null, then we are in the child of a parent.
+            //  EXCEPT in the case of Named items, like RequestBody.
+            // Then we are In the parent, not in the child, even though it has a "parent name"
+
+            var newOpenApiPrefix = openApiPrefix switch
             {
-                Route = route,
-                OpenApiObjHeirarchy = newPrefix + "[n]",
-                OpenApiPropertyName = parameter.Name,
-                PropertySchema = parameter.Schema,
-                PropertyMapping = foundProperty,
-                ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
-                IsArray = parameter.IsArray,
-                Parameter = parameter?.Parameter,
-                ParameterMapping = parameterMapping, // Set the parameter index
-                ParentPropertyExtensions = parameter.ParentPropertyExtensions
-            });
-            Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
-        }
+                "RequestBody" => "RequestBody."+ property.Name,
+                "" or null => property.Name,
+                _ => openApiPrefix + '.' + property.Name
+            };
+                //(openApiPrefix)
+                
+                //(string.IsNullOrWhiteSpace(openApiPrefix) || !string.IsNullOrWhiteSpace(property.Name)) 
+                //? property.Name 
+                //: openApiPrefix + '.' + property.Name;
 
-        results.Add(new TypeToOpenApiMappingResult
-        {
-            Route = route,
-            OpenApiObjHeirarchy = newPrefix,
-            OpenApiPropertyName = parameter.Name,
-            PropertySchema = parameter.Schema,
-            PropertyMapping = foundProperty,
-            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
-            IsArray = false,
-            Parameter = parameter?.Parameter,
-            ParameterMapping = parameterMapping, // Set the parameter index
-            ParentPropertyExtensions = parameter.ParentPropertyExtensions
-        });
-        Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+            var foundProperty = FindPropertyMapping(functionItemMapping, newOpenApiPrefix);
 
-        foreach (var property in parameter.PropertyMappings)
-        {
-            // Flatten the properties recursively
-            results.AddRange(ProcessComplexObjectProperties(
-                route,
-                httpMethod,
-                newPrefix + (isArray ? "[n]" : null),
-                newOpenApiPrefix + (isArray ? "[n]" : string.Empty),
-                functionMapping,
-                parameter,
-                parameterMapping, // Pass the parameter index
-                property
-            ));
-        }
-
-        return results;
-    }
-
-    private List<TypeToOpenApiMappingResult> ProcessComplexObjectProperties(
-        string route,
-        string httpMethod,
-        string? prefix,
-        string? openApiPrefix,
-        FunctionMapping functionMapping,
-        OpenApiParameterMapping? parameter,
-        ParameterMapping parameterMapping, // Take the parameter index as an argument
-        OpenApiPropertyMapping property)
-    {
-        var results = new List<TypeToOpenApiMappingResult>();
-
-        // Prefix the property hierarchy with the parent (route + operation + property name)
-        var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.PropertyName : prefix + '.' + property.PropertyName;
-        var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? property.PropertyName : openApiPrefix + '.' + property.PropertyName;
-
-        var foundProperty = FindPropertyMapping(parameterMapping, newOpenApiPrefix);
-
-        if (property.IsArray)
-        {
-            results.Add(new TypeToOpenApiMappingResult
+            if (foundProperty != null)
             {
-                Route = route,
-                OpenApiObjHeirarchy = newPrefix + "[n]",
-                OpenApiPropertyName = property.PropertyName,
-                PropertySchema = property.PropertySchema,
-                PropertyMapping = foundProperty,
-                ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
-                IsArray = true,
-                Parameter = parameter?.Parameter,
-                ParameterMapping = parameterMapping, // Set the parameter index
-                RequestBody = null,
-                ParentPropertyExtensions = property.ParentPropertyExtensions,
-                PropertySecondarySchemas = property.SecondarySchemas
-            });
-            Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
-        }
+                if (property.IsArray)
+                {
+                    //    Debug.Assert(!foundProperty.ResultPropertyName.EndsWith("[n]"));
+                    //    results.Add(new TypeToOpenApiMappingResult
+                    //    {
+                    //        Route = route,
+                    //        OpenApiObjHeirarchy = newPrefix + "[n]",
+                    //        OpenApiPropertyName = property.PropertyName,
+                    //        DirectParentSchema = parent,
+                    //        PropertySchema = property.PropertySchema,
+                    //        PropertyMapping = foundProperty,
+                    //        ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
+                    //        IsArray = true,
+                    //        Parameter = parameter?.Parameter,
+                    //        ParameterMapping = parameterMapping, // Set the parameter index
+                    //        RequestBody = null,
+                    //        ParentPropertyExtensions = property.ParentPropertyExtensions,
+                    //        PropertySecondarySchemas = property.SecondarySchemas
+                    //    });
+                    //    Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
 
-        results.Add(new TypeToOpenApiMappingResult
-        {
-            Route = route,
-            OpenApiObjHeirarchy = newPrefix,
-            OpenApiPropertyName = property.PropertyName,
-            PropertySchema = property.PropertySchema,
-            PropertyMapping = foundProperty,
-            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
-            IsArray = false,
-            Parameter = parameter?.Parameter,
-            ParameterMapping = parameterMapping, // Set the parameter index
-            RequestBody = null,
-            ParentPropertyExtensions = property.ParentPropertyExtensions,
-            PropertySecondarySchemas = property.SecondarySchemas
-        });
-        Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+                results.Add(TypeToOpenApiMappingResult.ForProperty(
+                   asArrayNotation: true,
+                   route: route,
+                   parentResultPrefix: prefix ?? string.Empty + "[n]",
+                   parameter: parameter,
+                   functionItemMapping: functionItemMapping,
+                   foundProperty: foundProperty,
+                   propertySchema: schema,
+                   parentProeprtyExtensions: property.ParentPropertyExtensions,
+                   directParentSchema: parent
+               //prefix: string.Empty,//parameter.Name,
+               //property: parameter,
+               //parentSchema: parameter.Schema,
 
-        // Process nested properties recursively
-        foreach (var nestedProperty in property.NestedProperties)
-        {
-            results.AddRange(ProcessComplexObjectProperties(
-                route,
-                httpMethod,
-                newPrefix + (property.IsArray ? "[n]" : string.Empty),
-                newOpenApiPrefix + (property.IsArray ? "[n]" : string.Empty),
-                functionMapping,
-                parameter,
-                parameterMapping, // Pass the parameter index
-                nestedProperty
-            ));
+               //parameter: parameter,
+               //foundProperty: property
+               //,parameterMapping: parameterMapping
+               ));
+
+                    //results.Add(new TypeToOpenApiMappingResult(
+                    //    asArrayNotation: true,
+                    //    route: route,
+                    //    prefix: newPrefix,
+                    //    property: property,
+                    //    parentSchema: parent,
+                    //    foundProperty: foundProperty,
+                    //    parameter: parameter,
+                    //    parameterMapping: parameterMapping
+                    //));
+                }
+
+                results.Add(TypeToOpenApiMappingResult.ForProperty(
+                   asArrayNotation: false,
+                   route: route,
+                   parentResultPrefix: prefix ?? string.Empty,
+                   parameter: parameter,
+                   functionItemMapping: functionItemMapping,
+                   foundProperty: foundProperty,
+                   propertySchema: schema,
+                   parentProeprtyExtensions: property.ParentPropertyExtensions,
+                   directParentSchema: parent
+               //prefix: string.Empty,//parameter.Name,
+               //property: parameter,
+               //parentSchema: parameter.Schema,
+
+               //parameter: parameter,
+               //foundProperty: property
+               //,parameterMapping: parameterMapping
+               ));
+
+                //results.Add(new TypeToOpenApiMappingResult(
+                //    asArrayNotation: false,
+                //    route: route,
+                //    prefix: newPrefix,
+                //    property: property,
+                //    parentSchema: parent,
+                //    foundProperty: foundProperty,
+                //    parameter: parameter,
+                //    parameterMapping: parameterMapping
+                //));
+                //{
+                //    Route = route,
+                //    OpenApiObjHeirarchy = newPrefix,
+                //    OpenApiPropertyName = property.PropertyName,
+                //    DirectParentSchema = parent,
+                //    PropertySchema = property.PropertySchema,
+                //    PropertyMapping = foundProperty,
+                //    ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
+                //    IsArray = false,
+                //    Parameter = parameter?.Parameter,
+                //    ParameterMapping = parameterMapping, // Set the parameter index
+                //    RequestBody = null,
+                //    ParentPropertyExtensions = property.ParentPropertyExtensions,
+                //    PropertySecondarySchemas = property.SecondarySchemas
+                //}
+
+                Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+
+                // Process nested properties recursively
+                foreach (var nestedProperty in property.PropertyMappings)
+                {
+                    results.AddRange(ProcessComplexObjectProperties(
+                        route: route,
+                        httpMethod: httpMethod,
+                        prefix: newPrefix + (property.IsArray ? "[n]" : string.Empty),
+                        openApiPrefix: newOpenApiPrefix + (property.IsArray ? "[n]" : string.Empty),
+                        functionMapping: functionMapping,
+                        parameter: parameter,
+                        functionItemMapping: functionItemMapping, // Pass the parameter index
+                        property: nestedProperty,//,
+                        parent: schema
+                        //null
+                    ));
+                }
+            }
         }
 
         return results;
     }
 
     // New method for handling complex request body properties
-    private List<TypeToOpenApiMappingResult> ProcessComplexObjectProperties(
-        string route,
-        string httpMethod,
-        string prefix,
-        string? openApiPrefix,
-        FunctionMapping functionMapping,
-        OpenApiRequestBodyMapping requestBody,
-        ParameterMapping parameterMapping, // Take the parameter index as an argument
-        OpenApiPropertyMapping property)
-    {
-        var results = new List<TypeToOpenApiMappingResult>();
+    //private List<TypeToOpenApiMappingResult> ProcessComplexObjectProperties(
+    //    string route,
+    //    string httpMethod,
+    //    string prefix,
+    //    string? openApiPrefix,
+    //    FunctionMapping functionMapping,
+    //    IOpenApiParameterMapping requestBody,
+    //    IGeneralMapping parameterMapping, // Take the parameter index as an argument
+    //    OpenApiPropertyMapping property,
+    //    OpenApiSchema? parent = null)
+    //{
+    //    var results = new List<TypeToOpenApiMappingResult>();
 
-        // Prefix the property hierarchy with the parent (route + operation + property name)
-        var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.PropertyName : prefix + '.' + property.PropertyName;
-        var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? property.PropertyName : openApiPrefix + '.' + property.PropertyName;
+    //    // Prefix the property hierarchy with the parent (route + operation + property name)
+    //    var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.PropertyName : prefix + '.' + property.PropertyName;
+    //    var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? property.PropertyName : openApiPrefix + '.' + property.PropertyName;
 
-        var foundProperty = FindPropertyMapping(parameterMapping, newOpenApiPrefix);
+    //    var foundProperty = FindPropertyMapping(parameterMapping, newOpenApiPrefix);
 
-        if (property.IsArray)
-        {
-            results.Add(new TypeToOpenApiMappingResult
-            {
-                Route = route,
-                OpenApiObjHeirarchy = newPrefix + "[n]",
-                OpenApiPropertyName = property.PropertyName + "[n]",
-                PropertySchema = property.PropertySchema,
-                PropertyMapping = foundProperty,
-                ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
-                IsArray = true,
-                Parameter = null, // No parameter for request body
-                ParameterMapping = parameterMapping, // No parameter index for request body directly
-                RequestBody = requestBody?.RequestBody,
-                ParentPropertyExtensions = property.ParentPropertyExtensions,
-                PropertySecondarySchemas = property.SecondarySchemas
-            });
-            Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
-        }
+    //    //if (property.IsArray)
+    //    //{
+    //    //    Debug.Assert(!foundProperty.ResultPropertyName.EndsWith("[n]"));
+    //    //    results.Add(new TypeToOpenApiMappingResult
+    //    //    {
+    //    //        Route = route,
+    //    //        OpenApiObjHeirarchy = newPrefix + "[n]",
+    //    //        OpenApiPropertyName = property.PropertyName + "[n]",
+    //    //        DirectParentSchema = parent,
+    //    //        PropertySchema = property.PropertySchema,
+    //    //        PropertyMapping = foundProperty,
+    //    //        ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
+    //    //        IsArray = true,
+    //    //        Parameter = null, // No parameter for request body
+    //    //        ParameterMapping = parameterMapping, // No parameter index for request body directly
+    //    //        RequestBody = requestBody?.RequestBody,
+    //    //        ParentPropertyExtensions = property.ParentPropertyExtensions,
+    //    //        PropertySecondarySchemas = property.SecondarySchemas
+    //    //    });
+    //    //    Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+    //    //}
 
-        results.Add(new TypeToOpenApiMappingResult
-        {
-            Route = route,
-            OpenApiObjHeirarchy = newPrefix,
-            OpenApiPropertyName = property.PropertyName,
-            PropertySchema = property.PropertySchema,
-            PropertyMapping = foundProperty,
-            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
-            IsArray = false,
-            Parameter = null, // No parameter for request body
-            ParameterMapping = parameterMapping, // No parameter index for request body directly
-            RequestBody = requestBody?.RequestBody,
-            ParentPropertyExtensions = property.ParentPropertyExtensions,
-            PropertySecondarySchemas = property.SecondarySchemas
-        });
-        Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+    //    results.Add(new TypeToOpenApiMappingResult
+    //    {
+    //        Route = route,
+    //        OpenApiObjHeirarchy = newPrefix,
+    //        OpenApiPropertyName = property.PropertyName,
+    //        DirectParentSchema = parent,
+    //        PropertySchema = property.PropertySchema,
+    //        PropertyMapping = foundProperty,
+    //        ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
+    //        IsArray = false,
+    //        Parameter = null, // No parameter for request body
+    //        ParameterMapping = parameterMapping, // No parameter index for request body directly
+    //        RequestBody = requestBody?.RequestBody,
+    //        ParentPropertyExtensions = property.ParentPropertyExtensions,
+    //        PropertySecondarySchemas = property.SecondarySchemas
+    //    });
+    //    Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
 
-        // Process nested properties recursively
-        foreach (var nestedProperty in property.NestedProperties)
-        {
-            results.AddRange(ProcessComplexObjectProperties(
-                route,
-                httpMethod,
-                newPrefix + (property.IsArray ? "[n]" : string.Empty),
-                newOpenApiPrefix + (property.IsArray ? "[n]" : string.Empty),
-                functionMapping,
-                requestBody,
-                parameterMapping, // Pass the parameter index
-                nestedProperty
-            ));
-        }
+    //    // Process nested properties recursively
+    //    foreach (var nestedProperty in property.NestedProperties)
+    //    {
+    //        results.AddRange(ProcessComplexObjectProperties(
+    //            route,
+    //            httpMethod,
+    //            newPrefix + (property.IsArray ? "[n]" : string.Empty),
+    //            newOpenApiPrefix + (property.IsArray ? "[n]" : string.Empty),
+    //            functionMapping,
+    //            requestBody,
+    //            parameterMapping, // Pass the parameter index
+    //            nestedProperty,
+    //            property.PropertySchema
+    //        ));
+    //    }
 
-        return results;
-    }
+    //    return results;
+    //}
 
-    private List<TypeToOpenApiMappingResult> ProcessComplexObjectProperties(
-        string route,
-        string httpMethod,
-        string prefix,
-        string? openApiPrefix,
-        FunctionMapping functionMapping,
-        ReturnMapping returnMapping,
-        OpenApiResponseMapping returnResponse,
-        OpenApiPropertyMapping property)
-    {
-        var results = new List<TypeToOpenApiMappingResult>();
+    //private List<TypeToOpenApiMappingResult> ProcessComplexObjectProperties(
+    //    string route,
+    //    string httpMethod,
+    //    string prefix,
+    //    string? openApiPrefix,
+    //    FunctionMapping functionMapping,
+    //    IGeneralMapping returnMapping,
+    //    IOpenApiParameterMapping returnResponse,
+    //    OpenApiPropertyMapping property,
+    //    OpenApiSchema? parent = null)
+    //{
+    //    var results = new List<TypeToOpenApiMappingResult>();
 
-        // Prefix the property hierarchy with the parent (route + operation + property name)
-        var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.PropertyName : prefix + '.' + property.PropertyName;
-        var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? property.PropertyName : openApiPrefix + '.' + property.PropertyName;
+    //    // Prefix the property hierarchy with the parent (route + operation + property name)
+    //    var newPrefix = string.IsNullOrWhiteSpace(prefix) ? property.PropertyName : prefix + '.' + property.PropertyName;
+    //    var newOpenApiPrefix = string.IsNullOrWhiteSpace(openApiPrefix) ? property.PropertyName : openApiPrefix + '.' + property.PropertyName;
 
-                var foundProperty = FindPropertyMapping(returnMapping, newOpenApiPrefix);
+    //    var foundProperty = FindPropertyMapping(returnMapping, newOpenApiPrefix);
 
-        if (property.IsArray)
-        {
-            results.Add(new TypeToOpenApiMappingResult
-            {
-                Route = route,
-                OpenApiObjHeirarchy = newPrefix + "[n]",
-                OpenApiPropertyName = property.PropertyName + "[n]",
-                PropertySchema = property.PropertySchema,
-                PropertyMapping = foundProperty,
-                ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
-                IsArray = true,
-                Parameter = null,
-                ParameterMapping = null,
-                RequestBody = null,
-                ParentPropertyExtensions = property.ParentPropertyExtensions,
-                PropertySecondarySchemas = property.SecondarySchemas,
-                ResponseMapping = returnResponse,
-                ReturnMapping = returnMapping,
-            });
-            Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
-        }
+    //    //if (property.IsArray)
+    //    //{
+    //    //    Debug.Assert(!foundProperty.ResultPropertyName.EndsWith("[n]"));
+    //    //    results.Add(new TypeToOpenApiMappingResult
+    //    //    {
+    //    //        Route = route,
+    //    //        OpenApiObjHeirarchy = newPrefix + "[n]",
+    //    //        OpenApiPropertyName = property.PropertyName + "[n]",
+    //    //        DirectParentSchema = parent,
+    //    //        PropertySchema = property.PropertySchema,
+    //    //        PropertyMapping = foundProperty,
+    //    //        ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty) + "[n]",
+    //    //        IsArray = true,
+    //    //        Parameter = null,
+    //    //        ParameterMapping = null,
+    //    //        RequestBody = null,
+    //    //        ParentPropertyExtensions = property.ParentPropertyExtensions,
+    //    //        PropertySecondarySchemas = property.SecondarySchemas,
+    //    //        ResponseMapping = returnResponse,
+    //    //        ReturnMapping = returnMapping,
+    //    //    });
+    //    //    Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+    //    //}
 
-        results.Add(new TypeToOpenApiMappingResult
-        {
-            Route = route,
-            OpenApiObjHeirarchy = newPrefix,
-            OpenApiPropertyName = property.PropertyName,
-            PropertySchema = property.PropertySchema,
-            PropertyMapping = foundProperty,
-            ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
-            IsArray = false,
-            Parameter = null,
-            ParameterMapping = null,
-            RequestBody = null,
-            ParentPropertyExtensions = property.ParentPropertyExtensions,
-            PropertySecondarySchemas = property.SecondarySchemas,
-            ResponseMapping = returnResponse,
-            ReturnMapping = returnMapping,
-        });
-        Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
+    //    results.Add(new TypeToOpenApiMappingResult
+    //    {
+    //        Route = route,
+    //        OpenApiObjHeirarchy = newPrefix,
+    //        OpenApiPropertyName = property.PropertyName,
+    //        DirectParentSchema = parent,
+    //        PropertySchema = property.PropertySchema,
+    //        PropertyMapping = foundProperty,
+    //        ResultPropertyHeirarchy = (foundProperty.ResultPropertyName ?? string.Empty),
+    //        IsArray = false,
+    //        Parameter = null,
+    //        ParameterMapping = null,
+    //        RequestBody = null,
+    //        ParentPropertyExtensions = property.ParentPropertyExtensions,
+    //        PropertySecondarySchemas = property.SecondarySchemas,
+    //        ResponseMapping = returnResponse,
+    //        ReturnMapping = returnMapping,
+    //    });
+    //    Debug.Assert(results.Last().PropertyMapping != null || results.Last().Parameter != null);
 
-        // Process nested properties recursively
-        foreach (var nestedProperty in property.NestedProperties)
-        {
-            results.AddRange(ProcessComplexObjectProperties(
-                route,
-                httpMethod,
-                newPrefix + (property.IsArray ? "[n]" : string.Empty),
-                newOpenApiPrefix + (property.IsArray ? "[n]" : string.Empty),
-                functionMapping,
-                returnMapping,
-                returnResponse,
-                nestedProperty
-            ));
-        }
+    //    // Process nested properties recursively
+    //    foreach (var nestedProperty in property.NestedProperties)
+    //    {
+    //        results.AddRange(ProcessComplexObjectProperties(
+    //            route,
+    //            httpMethod,
+    //            newPrefix + (property.IsArray ? "[n]" : string.Empty),
+    //            newOpenApiPrefix + (property.IsArray ? "[n]" : string.Empty),
+    //            functionMapping,
+    //            returnMapping,
+    //            returnResponse,
+    //            nestedProperty,
+    //            property?.PropertySchema
+    //        ));
+    //    }
 
-        return results;
-    }
+    //    return results;
+    //}
 }

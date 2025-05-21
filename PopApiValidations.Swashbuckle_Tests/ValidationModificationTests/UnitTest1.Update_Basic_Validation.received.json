@@ -1,0 +1,15 @@
+﻿{
+    "paths": {
+        "/api/Test": {
+            "put": {
+                "x-validation": {
+                    "-": {
+                        "RequestBody": [
+                            "Must not be null."
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

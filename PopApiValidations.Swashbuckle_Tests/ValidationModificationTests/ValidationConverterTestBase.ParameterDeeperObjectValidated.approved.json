@@ -1,0 +1,18 @@
+﻿{
+    "paths": {
+        "/api/Test/CreateByQuery": {
+            "post": {
+                "x-validation": {
+                    "SubRequestField.IntegerField": [
+                        "Must not be null."
+                    ]
+                },
+                "parameters": {
+                    "0": {
+                        "required": true
+                    }
+                }
+            }
+        }
+    }
+}

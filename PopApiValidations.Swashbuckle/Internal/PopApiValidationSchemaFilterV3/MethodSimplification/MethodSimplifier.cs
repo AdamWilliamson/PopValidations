@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
+using Microsoft.OpenApi.Models;
+using System.Linq;
 
 namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
 
@@ -23,10 +25,11 @@ public class MethodSimplifier
             var parameterMapping = new ParameterMapping
             {
                 ParameterInfo = parameter,
-                OpenApiParameterName = GetOpenApiParameterName(parameter),
+                OpenApiParameterName = GetOpenApiParameterName(parameter) ?? string.Empty,
                 IsArrayType = TypeHelper.IsArrayType(parameter.ParameterType),
                 Location = ParameterInfoHelper.GetParameterLocation(parameter), // Determine the location of the parameter
-                IsOpenApiRequestBody = ParameterInfoHelper.GetParameterLocation(parameter) == null
+                IsOpenApiRequestBody = ParameterInfoHelper.GetParameterLocation(parameter) == null,
+                MappingType = ParameterInfoHelper.GetParameterLocation2(parameter)
             };
 
             // Determine if the parameter is a simple type or a complex type
@@ -47,7 +50,7 @@ public class MethodSimplifier
                     if (TypeHelper.IsArrayType(parameter.ParameterType))
                     {
                         var propertyMappings = MapListOrArrayProperties(
-                            parameterMapping.OpenApiParameterName ?? parameter.Name,
+                            parameterMapping.OpenApiParameterName,// ?? parameter.Name,
                             parameter.ParameterType
                         );
 
@@ -60,7 +63,7 @@ public class MethodSimplifier
                     else if (TypeHelper.IsDictionaryType(parameter.ParameterType))
                     {
                         var propertyMappings = MapDictionaryProperties(
-                            parameterMapping.OpenApiParameterName ?? parameter.Name,
+                            parameterMapping.OpenApiParameterName,// ?? parameter.Name,
                             parameter.ParameterType
                         );
 
@@ -170,6 +173,11 @@ public class MethodSimplifier
     // Get the OpenAPI parameter name, using attributes like FromBody, FromQuery, etc.
     private string? GetOpenApiParameterName(ParameterInfo parameter)
     {
+        if (new List<ParameterLocation?>() { (ParameterLocation?)null }.Contains(ParameterInfoHelper.GetParameterLocation(parameter)))
+        {
+            return null;
+        }
+
         var parameterName = parameter.Name;
 
         var fromBodyAttribute = parameter.GetCustomAttribute<FromBodyAttribute>();
@@ -263,20 +271,20 @@ public class MethodSimplifier
                         OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
                         IsArrayType = true,
                         PropertyType = TypeHelper.GetDictionaryKeyType(property.PropertyType), // Ensure we use the generic element type
-                        ResultPropertyName = propertyMapping.ResultPropertyName + "[n.Key]",
+                        ResultPropertyName = propertyMapping.ResultPropertyName// + "[n.Key]",
                     }
                 );
 
-                propertyMappings.Add(
-                    new PropertyMapping
-                    {
-                        PropertyName = property.Name,
-                        OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
-                        IsArrayType = true,
-                        PropertyType = TypeHelper.GetDictionaryValueType(property.PropertyType), // Ensure we use the generic element type
-                        ResultPropertyName = propertyMapping.ResultPropertyName + "[n.Value]",
-                    }
-                );
+                //propertyMappings.Add(
+                //    new PropertyMapping
+                //    {
+                //        PropertyName = property.Name,
+                //        OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
+                //        IsArrayType = true,
+                //        PropertyType = TypeHelper.GetDictionaryValueType(property.PropertyType), // Ensure we use the generic element type
+                //        ResultPropertyName = propertyMapping.ResultPropertyName + "[n.Value]",
+                //    }
+                //);
 
                 propertyMapping.Properties.AddRange(MapDictionaryProperties(propertyMapping.ResultPropertyName, property.PropertyType));
             }
@@ -291,7 +299,7 @@ public class MethodSimplifier
                         OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
                         IsArrayType = TypeHelper.IsArrayType(property.PropertyType),
                         PropertyType = TypeHelper.GetElementType(property.PropertyType), // Ensure we use the generic element type
-                        ResultPropertyName = propertyMapping.ResultPropertyName + "[n]",
+                        ResultPropertyName = propertyMapping.ResultPropertyName// + "[n]",
                     }
                 );
 

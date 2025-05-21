@@ -1,0 +1,15 @@
+﻿{
+    "paths": {
+        "/api/Test/CreateByBody": {
+            "post": {
+                "x-validation": {
+                    "-": {
+                        "RequestBody": [
+                            "Must not be null."
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

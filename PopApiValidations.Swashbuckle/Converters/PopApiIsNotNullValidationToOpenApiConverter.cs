@@ -33,6 +33,7 @@ public class PopApiIsNotNullValidationToOpenApiConverter : IsNotNullValidationTo
     DescriptionOutcome description
 )
     {
+        //itemSchema.Required.Add(paramName);
         itemSchema.Nullable = false;
     }
 

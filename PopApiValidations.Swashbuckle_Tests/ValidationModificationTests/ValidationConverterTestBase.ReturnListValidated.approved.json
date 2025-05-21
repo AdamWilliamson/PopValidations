@@ -1,0 +1,13 @@
+﻿{
+    "paths": {
+        "/api/Test/CreateMultiple": {
+            "post": {
+                "x-validation": {
+                    "Response[n]": [
+                        "Must not be null."
+                    ]
+                }
+            }
+        }
+    }
+}

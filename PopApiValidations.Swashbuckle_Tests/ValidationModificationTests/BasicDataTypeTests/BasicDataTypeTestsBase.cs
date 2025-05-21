@@ -1,3 +1,4 @@
+using PopApiValidations.Swashbuckle_Tests.Helpers;
 using PopApiValidations.Swashbuckle_Tests.ValidationModificationTests.TestClasses;
 using System.Reflection;
 
@@ -67,7 +68,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull2();
+        sut.ParamIs<TType>("value").IsNotNull();
 
         //Assert
         sut.Validate();
@@ -83,7 +84,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull2();
+        sut.ParamIs<TType>("value").IsNotNull();
 
         //Assert
         sut.Validate();
@@ -99,7 +100,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull2();
+        sut.ParamIs<TType>("value").IsNotNull();
 
         //Assert
         sut.Validate();
@@ -115,7 +116,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull2();
+        sut.ParamIs<TType>("value").IsNotNull();
 
         //Assert
         sut.Validate();
@@ -131,7 +132,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull2();
+        sut.ParamIs<TType>("value").IsNotNull();
 
         //Assert
         sut.Validate();
@@ -147,7 +148,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull2();
+        sut.ParamIs<TType>("value").IsNotNull();
 
         //Assert
         sut.Validate();
@@ -163,7 +164,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull2();
+        sut.ParamIs<TType>("value").IsNotNull();
 
         //Assert
         sut.Validate();

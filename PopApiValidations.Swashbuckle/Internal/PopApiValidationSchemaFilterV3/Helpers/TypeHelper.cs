@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
 
@@ -110,9 +105,9 @@ public static class TypeHelper
     {
         type = GetUnderlyingType(type) ?? type;
 
-        if (type.IsArray && type.IsGenericType)
+        if (type.IsArray)
         {
-            return type.GetElementType();  // Get the element type for arrays
+            return GetUnderlyingType(type.GetElementType());  // Get the element type for arrays
         }
 
         if (type.IsGenericType)
@@ -125,7 +120,7 @@ public static class TypeHelper
 
             if (TypeHelper.IsArrayType(type))
             {
-                return type.GetGenericArguments()[0];  // Get the generic argument type for List<T>
+                return GetUnderlyingType(type.GetGenericArguments()[0]);  // Get the generic argument type for List<T>
             }
         }
 

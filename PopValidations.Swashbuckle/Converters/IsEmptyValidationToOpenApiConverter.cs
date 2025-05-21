@@ -23,8 +23,11 @@ public class IsEmptyValidationToOpenApiConverter : IValidationToOpenApiConverter
         DescriptionOutcome description
     )
     {
-        propertySchema.MaxLength = 0;
-        propertySchema.MaxItems = 0;
+        if (propertySchema.Type != "object")
+        {
+            propertySchema.MaxLength = 0;
+            propertySchema.MaxItems = 0;
+        }
     }
 
     public void UpdateAttribute(

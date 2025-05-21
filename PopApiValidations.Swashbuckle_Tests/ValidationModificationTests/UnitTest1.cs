@@ -29,7 +29,7 @@ public class UnitTest1
             validator
         );
 
-        builder.ParamIs<Request>().IsNotNull2();
+        builder.ParamIs<Request>().IsNotNull();
 
         //Assert
         builder.Validate();
@@ -57,7 +57,7 @@ public class UnitTest1
             validator
         );
 
-        builder.ParamIs<Request>("id").IsNotNull2();
+        builder.ParamIs<Request>("id").IsNotNull();
 
         //Assert
         //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
@@ -88,8 +88,8 @@ public class UnitTest1
             validator
         );
 
-        builder.ParamIs<Request>("id").IsNotNull2();
-        builder.ParamIs<Request>("stringField").IsNotNull2();
+        builder.ParamIs<Request>("id").IsNotNull();
+        builder.ParamIs<Request>("stringField").IsNotNull();
 
         //Assert
         builder.Validate();
@@ -147,7 +147,7 @@ public class UnitTest1
             validator
         );
 
-        builder.ParamIs<Request>().IsNotNull2();
+        builder.ParamIs<Request>().IsNotNull();
 
         //Assert
         //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));
@@ -175,7 +175,7 @@ public class UnitTest1
             validator
         );
 
-        builder.ParamIs<Request>().IsNotNull2();
+        builder.ParamIs<Request>().IsNotNull();
 
         //Assert
         //Approvals.AssertEquals(helper.CleanContent.ToString(Formatting.Indented), helper.ParsedContent.ToString(Formatting.Indented));

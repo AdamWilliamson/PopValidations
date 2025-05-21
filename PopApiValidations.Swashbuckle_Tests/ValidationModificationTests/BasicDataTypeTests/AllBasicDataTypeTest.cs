@@ -83,7 +83,7 @@ public class ActionResultOfBoolDataTypeTest : BasicDataTypeTestsBase<ActionResul
 
 public class ActionResultOfDateTimeDataTypeTest : BasicDataTypeTestsBase<ActionResult<DateTime>> { }
 
-// More complex types
+// Container types
 public class DictionaryDataTypeTest : BasicDataTypeTestsBase<Dictionary<string, int>> { }
 
 public class ListDataTypeTest : BasicDataTypeTestsBase<List<string>> { }

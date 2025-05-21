@@ -19,9 +19,7 @@ public abstract class AbstractComplexObject
     public Dictionary<string, int> DictOfStringIntField { get; set; }
 }
 
-public class SubRequest : AbstractComplexObject
-{ 
-}
+public class SubRequest : AbstractComplexObject {}
 
 public class Request : AbstractComplexObject
 {
@@ -48,10 +46,22 @@ public class TestController : Controller
         return Ok();
     }
 
-    [HttpPost()]
-    public ActionResult<Response> Create(Request request)
+    [HttpGet(nameof(GetByIds))]
+    public ActionResult<IEnumerable<Response>> GetByIds([FromQuery]int?[] ids)
     {
         return Ok();
+    }
+
+    [HttpPost]
+    public Response Create(Request request)
+    {
+        return null;
+    }
+
+    [HttpPost(nameof(CreateMultiple))]
+    public IEnumerable<Response> CreateMultiple(IEnumerable<Request> request)
+    {
+        return [];
     }
 
     [HttpPost(nameof(CreateByUrl) +"/{id}/{stringField}")]
@@ -62,6 +72,12 @@ public class TestController : Controller
 
     [HttpPost(nameof(CreateByQuery))]
     public ActionResult<Response> CreateByQuery([FromQuery]Request request)
+    {
+        return Ok();
+    }
+
+    [HttpPost(nameof(CreateByQueryMultiple))]
+    public ActionResult<Response> CreateByQueryMultiple([FromQuery] IEnumerable<Request> requests)
     {
         return Ok();
     }
@@ -78,12 +94,18 @@ public class TestController : Controller
         return Ok();
     }
 
+    [HttpPut(nameof(UpdateMultiple))]
+    public ActionResult<Response[]> UpdateMultiple(Request[] request)
+    {
+        return Ok();
+    }
+
     [HttpPut(nameof(UpdateByUrl) + "/{id}/{stringField}")]
     public ActionResult<Response> UpdateByUrl(int id, string stringField)
     {
         return Ok();
     }
-
+     
     [HttpPut(nameof(UpdateByQuery))]
     public ActionResult<Response> UpdateByQuery([FromQuery]Request request)
     {

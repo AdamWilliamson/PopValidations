@@ -150,6 +150,7 @@ public class OpenApiToSimplifier
             var propertyMapping = new OpenApiPropertyMapping
             {
                 PropertyName = property.Key,
+                DirectParentSchema = schema,
                 PropertySchema = ResolveSchema(property.Value, schemaRepository),
                 IsArray = property.Value.Type == "array", // Check if the property is an array
                 ParentPropertyExtensions = schema.Extensions,

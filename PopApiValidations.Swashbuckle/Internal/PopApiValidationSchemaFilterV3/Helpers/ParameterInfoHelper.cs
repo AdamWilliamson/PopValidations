@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,26 @@ public static class ParameterInfoHelper
 
         // Default to Unknown if no attribute and no matching conditions are found
         return null;
+    }
+
+    public static OpenApiLocation GetParameterLocation2(ParameterInfo parameter)
+    {
+        // First check for attributes that specify parameter location
+        if (parameter.GetCustomAttribute<FromBodyAttribute>() != null) return OpenApiLocation.ResponseBody;
+        if (parameter.GetCustomAttribute<FromQueryAttribute>() != null) return OpenApiLocation.Query;
+        if (parameter.GetCustomAttribute<FromHeaderAttribute>() != null) return OpenApiLocation.Header;
+        if (parameter.GetCustomAttribute<FromRouteAttribute>() != null) return OpenApiLocation.Path;
+        if (parameter.GetCustomAttribute<FromFormAttribute>() != null) return OpenApiLocation.Form;
+        //if (TypeHelper.IsComplexOrEnumerable(parameter.ParameterType)) return null;
+
+        // If it's a simple type and the route contains {parameterName}, classify it as Route
+        if (TypeHelper.IsSimpleType(parameter.ParameterType) && IsRouteParameterInUrl(parameter))
+        {
+            return OpenApiLocation.Path;
+        }
+
+        // Default to Unknown if no attribute and no matching conditions are found
+        return OpenApiLocation.ResponseBody;
     }
 
     public static bool IsRouteParameterInUrl(ParameterInfo parameter)

@@ -41,6 +41,12 @@ public class AddressOwnershipController : ControllerBase
         return newAddressOwnership;
     }
 
+    [HttpPost(nameof(AddAddressOwnershipQuery2))]
+    public ActionResult AddAddressOwnershipQuery2([FromQuery] AddressOwnership?[] newAddressOwnership)
+    {
+        return Ok();
+    }
+
     [HttpPost(nameof(AddAddressOwnership_Ignore))]
     [PopApiValidationsIgnore]
     public AddressOwnership AddAddressOwnership_Ignore([FromBody] AddressOwnership newAddressOwnership)

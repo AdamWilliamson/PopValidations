@@ -1,5 +1,4 @@
-﻿using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using PopApiValidations.Swashbuckle.Converters;
 using PopValidations.Execution.Validations;
 using PopValidations.Swashbuckle.Converters;

@@ -358,10 +358,9 @@ public static class OpenApiOperationBuilder
 
     private static bool IsGenericList(Type type)
     {
-        return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
+        return PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers.TypeHelper.IsArrayType(type);
+        // return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
     }
-
-
 
     private static void ExpandComplexTypeProperties(PropertyInfo property, OpenApiOperation operation, string prefix, ParameterLocation? location, SchemaRepository schemaRepository, bool useReferences)
     {

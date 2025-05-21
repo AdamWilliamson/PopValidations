@@ -1,0 +1,205 @@
+﻿using ApiValidations;
+using DjvuNet.Tests.Xunit;
+using Microsoft.AspNetCore.Mvc;
+using PopApiValidations.Swashbuckle_Tests.Helpers;
+using PopValidations;
+using System.Reflection;
+
+namespace PopApiValidations.Swashbuckle_Tests.Converter_FeatureTests;
+
+public class IsNotEmptyOpenApiConverter_Tests
+{
+    [DjvuTheory]
+    [MemberData(nameof(ParamAndChildObjectSetups))]
+    public async Task Param_AndChildObject_Validation(
+        string description,
+        string route,
+        string methodName,
+        Func<MethodInfo, bool> validateEndpointFunc,
+        Func<TestControllerValidation> createValidation,
+        Action<ApiValidationBuilder> validationBuilder
+        )
+    {
+        //Arrange
+        var controllerTester = new PopApiControllerValidationTestBuilder<TestController, TestControllerValidation>();
+
+        var config = new TestWebApiConfig();
+        config.ValidateEndpoint = validateEndpointFunc;
+
+        //Act
+        var validator = createValidation.Invoke();
+
+        var builder = await controllerTester.GetBuilder<ActionResult<Response>>(
+            config,
+            methodName,
+            route,
+            validator
+        );
+
+        validationBuilder.Invoke(builder);
+
+        //Assert
+        Assert.NotEmpty(description);
+        builder.Validate();
+    }
+
+    public static IEnumerable<object[]> ParamAndChildObjectSetups()
+    {
+        yield return new object[] {
+            "Create Post Request.IntegerField are not null",
+            "/api/Test",
+            nameof(TestController.Create),
+            (MethodInfo m) => m == typeof(TestController).GetMethod(nameof(TestController.Create)),
+            () =>
+            {
+                var subValidator = new TestSubValidation<Request>();
+                subValidator.Describe(x => x.IntegerField).IsNotEmpty();
+
+                var validator = new TestControllerValidation();
+                validator.DescribeFunc(x => x.Create(validator.Param.Is<Request>().SetValidator(subValidator)));
+                return validator;
+            },
+            (ApiValidationBuilder builder) =>
+            {
+                builder.ParamIs<Request>(["integerField"]).IsNotEmpty();
+            }
+        };
+
+       // yield return new object[] {
+       //     "Create Post Request.SubRequestField.IntegerField are not null",
+       //     "/api/Test",
+       //     nameof(TestController.Create),
+       //     (MethodInfo m) => m == typeof(TestController).GetMethod(nameof(TestController.Create)),
+       //     () =>
+       //     {
+       //         var subRequestFieldValidator = new TestSubValidation<SubRequest>();
+       //         subRequestFieldValidator.Describe(x => x.IntegerField).IsNotEmpty();
+
+       //         var subValidator = new TestSubValidation<Request>();
+       //         subValidator.Describe(x => x.SubRequestField).IsNotEmpty().SetValidator(subRequestFieldValidator);
+
+       //         var validator = new TestControllerValidation();
+       //         validator.DescribeFunc(x => x.Create(validator.Param.Is<Request>().IsNotEmpty().SetValidator(subValidator)));
+       //         return validator;
+       //     },
+       //     (ApiValidationBuilder builder) =>
+       //     {
+       //         builder.ParamIs<Request>(["subRequestField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(["subRequestField", "integerField"]).IsNotEmpty();
+       //     }
+       // };
+
+       // yield return new object[] {
+       //     "Create Post Request.SubRequestField.IntegerField.DataItemField are not null",
+       //     "/api/Test",
+       //     nameof(TestController.Create),
+       //     (MethodInfo m) => m == typeof(TestController).GetMethod(nameof(TestController.Create)),
+       //     () =>
+       //     {
+       //         var subRequestDataItemValidator = new TestSubValidation<RequestDataItem>();
+       //         subRequestDataItemValidator.Describe(x => x.Identifier).IsNotEmpty();
+
+       //         var subRequestFieldValidator = new TestSubValidation<SubRequest>();
+       //         subRequestFieldValidator.Describe(x => x.IntegerField).IsNotEmpty();
+       //         subRequestFieldValidator.Describe(x => x.DataItemField)
+       //             .IsNotEmpty()
+       //             .SetValidator(subRequestDataItemValidator)
+       //             ;
+
+       //         var requestDataItemValidator = new TestSubValidation<RequestDataItem>();
+       //         requestDataItemValidator.Describe(x => x.Identifier).IsNotEmpty();
+
+       //         var subValidator = new TestSubValidation<Request>();
+       //         subValidator.Describe(x => x.IntegerField).IsNotEmpty();
+       //         subValidator.Describe(x => x.DataItemField)
+       //             .IsNotEmpty()
+       //             .SetValidator(requestDataItemValidator)
+       //         ;
+       //         subValidator.Describe(x => x.SubRequestField)
+       //             .IsNotEmpty()
+       //             .SetValidator(subRequestFieldValidator);
+
+       //         var validator = new TestControllerValidation();
+       //         validator.DescribeFunc(x => x.Create(validator.Param.Is<Request>()
+       //             .IsNotEmpty()
+       //             .SetValidator(subValidator)));
+       //         return validator;
+       //     },
+       //     (ApiValidationBuilder builder) =>
+       //     {
+       //         builder.ParamIs<Request>(["subRequestField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(["integerField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(["dataItemField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(["dataItemField", "identifier"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(["subRequestField", "integerField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(["subRequestField", "dataItemField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(["subRequestField", "dataItemField", "identifier"]).IsNotEmpty();
+       //     }
+       // };
+
+       // yield return new object[] {
+       //     "CreateByQuery Post Request.SubRequestField.IntegerField are not null",
+       //     "/api/Test/CreateByQuery",
+       //     nameof(TestController.CreateByQuery),
+       //     (MethodInfo m) => m == typeof(TestController).GetMethod(nameof(TestController.CreateByQuery)),
+       //     () =>
+       //     {
+       //         var subRequestFieldValidator = new TestSubValidation<SubRequest>();
+       //         subRequestFieldValidator.Describe(x => x.IntegerField).IsNotEmpty();
+
+       //         var subValidator = new TestSubValidation<Request>();
+       //         subValidator.Describe(x => x.IntegerField).IsNotEmpty();
+       //         subValidator.Describe(x => x.SubRequestField)
+       //             .SetValidator(subRequestFieldValidator);
+
+       //         var validator = new TestControllerValidation();
+       //         validator.DescribeFunc(x => x.CreateByQuery(validator.Param.Is<Request>()
+       //             .IsNotEmpty()
+       //             .SetValidator(subValidator)));
+
+       //         return validator;
+       //     },
+       //     (ApiValidationBuilder builder) =>
+       //     {
+       //         builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.IntegerField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(ParamType.FromQuery, ["IntegerField"]).IsNotEmpty();
+       //     }
+       // };
+
+       // yield return new object[] {
+       //     "CreateByQuery Post Array Fields are not null",
+       //     "/api/Test/CreateByQuery",
+       //     nameof(TestController.CreateByQuery),
+       //     (MethodInfo m) => m == typeof(TestController).GetMethod(nameof(TestController.CreateByQuery)),
+       //     () =>
+       //     {
+       //         var subRequestFieldValidator = new TestSubValidation<SubRequest>();
+       //         subRequestFieldValidator.DescribeEnumerable(x => x.ListOfStringsField)
+       //             .IsNotEmpty()
+       //             .ForEach(x => x.IsNotEmpty());
+
+       //         var subValidator = new TestSubValidation<Request>();
+       //         subValidator.DescribeEnumerable(x => x.ListOfStringsField)
+       //             .IsNotEmpty()
+       //             .ForEach(x => x.IsNotEmpty());
+       //         subValidator.Describe(x => x.SubRequestField)
+       //             .SetValidator(subRequestFieldValidator);
+
+       //         var validator = new TestControllerValidation();
+       //         validator.DescribeFunc(x => x.CreateByQuery(validator.Param.Is<Request>()
+       //             .IsNotEmpty()
+       //             .SetValidator(subValidator)));
+
+       //         return validator;
+       //     },
+       //     (ApiValidationBuilder builder) =>
+       //     {
+       //         builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.ListOfStringsField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.ListOfStringsField[n]"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(ParamType.FromQuery, ["ListOfStringsField"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(ParamType.FromQuery, ["ListOfStringsField[n]"]).IsNotEmpty();
+       //         builder.ParamIs<Request>(ParamType.FromQuery, ["ListOfStringsField[n]"]).IsNotEmpty();
+       //     }
+       //};
+    }
+}

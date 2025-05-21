@@ -1,0 +1,13 @@
+﻿{
+    "paths": {
+        "/api/Test/{id}": {
+            "get": {
+                "x-validation": {
+                    "id": [
+                        "Must not be null."
+                    ]
+                }
+            }
+        }
+    }
+}
