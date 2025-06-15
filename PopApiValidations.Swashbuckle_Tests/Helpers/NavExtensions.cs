@@ -15,6 +15,17 @@ public static class NavExtensions
         );
     }
 
+    //public static Pair2 Nav<TIn, TOut>(this Pair2 start, Func<TIn, TOut?> navFunc)
+    //{
+    //    return new Pair2(
+    //        start.Results,
+    //        start.OpenApiBase,
+    //        start.CleanBase,
+    //        navFunc.Invoke(start.OpenApi) ?? throw new Exception("Validated OpenApi navigation failed."),
+    //        navFunc.Invoke(start.Clean) ?? throw new Exception("Clean OpenApi navigation failed.")
+    //    );
+    //}
+
     public static Pair2 Nav(this Pair2 start, Func<JObject, JObject?> navFunc)
     {
         return new Pair2(
@@ -23,6 +34,17 @@ public static class NavExtensions
             start.CleanBase,
             start.OpenApi.Select(o => navFunc.Invoke(o) ?? throw new Exception("Validated OpenApi navigation failed.")).ToList(),
             start.Clean.Select(o => navFunc.Invoke(o) ?? throw new Exception("Clean OpenApi navigation failed.")).ToList()
+        );
+    }
+
+    public static Pair2 Nav(this Pair2 start, Func<JObject, List<JObject?>> navFunc)
+    {
+        return new Pair2(
+            start.Results,
+            start.OpenApiBase,
+            start.CleanBase,
+            start.OpenApi.SelectMany(o => navFunc.Invoke(o) ?? throw new Exception("Validated OpenApi navigation failed.")).ToList(),
+            start.Clean.SelectMany(o => navFunc.Invoke(o) ?? throw new Exception("Clean OpenApi navigation failed.")).ToList()
         );
     }
 
@@ -47,21 +69,17 @@ public static class NavExtensions
 
     public static Pair2 Nav(this Pair2 start, string[] childProperties)
     {
-        //var schema = GetParamSchemaPair(url, type, childProperties);
         Pair2 temp = start;
 
-        //if (childProperties.Length > 1)
+        foreach (var prop in childProperties.Select(x => ToLowerFirstChar(x)))
         {
-            foreach (var prop in childProperties.Select(x => ToLowerFirstChar(x)))//[0..^1])
+            if (prop.EndsWith("[n]"))
             {
-                if (prop.EndsWith("[n]"))
-                {
-                    temp = temp.Nav(schema => schema["properties"]?[prop.Replace("[n]", "")]?["items"] as JObject);
-                }
-                else
-                {
-                    temp = temp.Nav(schema => schema["properties"]?[prop] as JObject);
-                }
+                temp = temp.Nav(schema => schema["properties"]?[prop.Replace("[n]", "")]?["items"] as JObject);
+            }
+            else
+            {
+                temp = temp.Nav(schema => schema["properties"]?[prop] as JObject);
             }
         }
 
@@ -81,11 +99,11 @@ public static class NavExtensions
         }
     }
 
-    public static Pair<TIn> Modify<TIn>(this Pair<TIn> start, Action<TIn> navFunc)
-    {
-        navFunc.Invoke(start.Clean);
-        return start;
-    }
+    //public static Pair<TIn> Modify<TIn>(this Pair<TIn> start, Action<TIn> navFunc)
+    //{
+    //    navFunc.Invoke(start.Clean);
+    //    return start;
+    //}
 
     public static Pair2 Modify(this Pair2 start, Action<JObject> modifyFunc)
     {
@@ -152,18 +170,18 @@ public static class NavExtensions
         }
     }
 
-    public static Pair2 ModifyRemove2(this Pair2 start, params string[] properties)
-    {
-        foreach (var current in start.Clean)
-        {
-            foreach (var prop in properties)
-            {
-                Remove(current, prop);
-            }
-        }
+    //public static Pair2 ModifyRemove2(this Pair2 start, params string[] properties)
+    //{
+    //    foreach (var current in start.Clean)
+    //    {
+    //        foreach (var prop in properties)
+    //        {
+    //            Remove(current, prop);
+    //        }
+    //    }
 
-        return start;
-    }
+    //    return start;
+    //}
 
     public static Pair2 Assert(this Pair2 start, Action<JObject, AssertionResult> assertion, string? description = null)
     {

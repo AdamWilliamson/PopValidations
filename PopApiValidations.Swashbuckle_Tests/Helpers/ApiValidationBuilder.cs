@@ -39,6 +39,11 @@ public class ApiValidationBuilder
         return new ParamBuilder<TParamType>(paramType, config, new(errors, openApi, clean), objHeirarchy, url, type);
     }
 
+    public ReturnBuilder<TParamType> ReturnIs<TParamType>(params string[] objHeirarchy)
+    {
+        return new ReturnBuilder<TParamType>(config, new(errors, openApi, clean), objHeirarchy ?? [], url, type);
+    }
+
     public void Validate()
     {
         if (!errors.Success)

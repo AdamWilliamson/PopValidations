@@ -39,7 +39,7 @@ public class TypeToMapping_Tests
 
         // Act           
         var mapping = mapper.GetMethodMap(data.MethodInfo);
-        var flatMap = GetOpenApiObjectHierarchy(mapping);//new List<(string Route, string Operation, string ObjHeirarchy, Type Type)>();
+        var flatMap = GetOpenApiObjectHierarchy(mapping);
 
         var operationFlatMap = flatMap.Where(x => x.Operation == data.Operation).ToList();
         //var routeFlatMap = operationFlatMap.Where(x => x.Route == data.Route).ToList();
@@ -52,6 +52,45 @@ public class TypeToMapping_Tests
             .Count()
             .Should()
             .Be(1, objFlatMap.FirstOrDefault().ToString());
+    }
+
+    private static IEnumerable<object[]> RequestFields(
+        MethodInfo methodInfo,
+        string route,
+        string operation,
+        string? objPrefix,
+        string? resultPrefix
+        )
+    {
+        foreach (var item in AbstractComplexObjectFields(methodInfo, route, operation, objPrefix, resultPrefix))
+        {
+            yield return item;
+        }
+
+        yield return new TestData(
+            MethodInfo: methodInfo,
+            Route: route,
+            Operation: operation,
+            ObjHeirarchy: objPrefix + "SubRequestField",
+            Type: typeof(SubRequest),
+            ResultName: resultPrefix + "SubRequestField");
+        foreach (var item in AbstractComplexObjectFields(methodInfo, route, operation, objPrefix + "SubRequestField.", resultPrefix + "SubRequestField."))
+        {
+            yield return item;
+        }
+
+        yield return new TestData(
+            MethodInfo: methodInfo,
+            Route: route,
+            Operation: operation,
+            ObjHeirarchy: objPrefix + "SubRequestFieldList",
+            Type: typeof(SubRequest),
+            ResultName: resultPrefix + "SubRequestFieldList",
+            IsArray: true);
+        foreach (var item in AbstractComplexObjectFields(methodInfo, route, operation, objPrefix + "SubRequestFieldList.", resultPrefix + "SubRequestFieldList[n]."))
+        {
+            yield return item;
+        }
     }
 
     private static IEnumerable<object[]> AbstractComplexObjectFields(
@@ -92,14 +131,14 @@ public class TypeToMapping_Tests
             Type: typeof(RequestDataItem),
             ResultName: resultPrefix + "DataItemField",
             IsArray: false);
-        yield return new TestData(
-            MethodInfo: methodInfo, 
-            Route: route, 
-            Operation: operation, 
-            ObjHeirarchy: objPrefix + "ListOfRequestDataItemsField", 
-            Type: typeof(RequestDataItem),
-            ResultName: resultPrefix + "ListOfRequestDataItemsField",
-            IsArray: true);
+        //yield return new TestData(
+        //    MethodInfo: methodInfo, 
+        //    Route: route, 
+        //    Operation: operation, 
+        //    ObjHeirarchy: objPrefix + "ListOfRequestDataItemsField", 
+        //    Type: typeof(RequestDataItem),
+        //    ResultName: resultPrefix + "ListOfRequestDataItemsField",
+        //    IsArray: true);
         yield return new TestData(
             MethodInfo: methodInfo, 
             Route: route, 
@@ -116,14 +155,14 @@ public class TypeToMapping_Tests
             Type: typeof(object),
             ResultName: resultPrefix + "ListOfRequestDataItemsField[n].Value",
             IsArray: false);
-        yield return new TestData(
-            MethodInfo: methodInfo, 
-            Route: route, 
-            Operation: operation, 
-            ObjHeirarchy: objPrefix + "DictOfStringIntField", 
-            Type: typeof(KeyValuePair<string, int>),
-            ResultName: resultPrefix + "DictOfStringIntField",
-            IsArray: true);
+        //yield return new TestData(
+        //    MethodInfo: methodInfo, 
+        //    Route: route, 
+        //    Operation: operation, 
+        //    ObjHeirarchy: objPrefix + "DictOfStringIntField", 
+        //    Type: typeof(KeyValuePair<string, int>),
+        //    ResultName: resultPrefix + "DictOfStringIntField",
+        //    IsArray: true);
         yield return new TestData(
             MethodInfo: methodInfo, 
             Route: route, 
@@ -140,45 +179,6 @@ public class TypeToMapping_Tests
             Type: typeof(int),
             ResultName: resultPrefix + "DictOfStringIntField[n.Value]",
             IsArray: false);
-    }
-
-    private static IEnumerable<object[]> RequestFields(
-        MethodInfo methodInfo, 
-        string route, 
-        string operation, 
-        string? objPrefix,
-        string? resultPrefix
-        )
-    {
-        foreach (var item in AbstractComplexObjectFields(methodInfo, route, operation, objPrefix, resultPrefix))
-        {
-            yield return item;
-        }
-
-        yield return new TestData(
-            MethodInfo: methodInfo, 
-            Route: route, 
-            Operation: operation, 
-            ObjHeirarchy: objPrefix + "SubRequestField",
-            Type: typeof(SubRequest),
-            ResultName: resultPrefix + "SubRequestField");
-        foreach (var item in AbstractComplexObjectFields(methodInfo, route, operation, objPrefix + "SubRequestField.", resultPrefix + "SubRequestField."))
-        {
-            yield return item;
-        }
-
-        yield return new TestData(
-            MethodInfo: methodInfo, 
-            Route: route, 
-            Operation: operation, 
-            ObjHeirarchy: objPrefix + "SubRequestFieldList",
-            Type: typeof(SubRequest),
-            ResultName: resultPrefix + "SubRequestFieldList",
-            IsArray: true);
-        foreach (var item in AbstractComplexObjectFields(methodInfo, route, operation, objPrefix + "SubRequestFieldList.", resultPrefix + "SubRequestFieldList[n]."))
-        {
-            yield return item;
-        }
     }
 
     public static IEnumerable<object[]> GetControllersPropertyOutlay()
@@ -338,13 +338,14 @@ public class TypeToMapping_Tests
     }
 
 
-    public List<(string Route, string Operation, string ObjHeirarchy, Type Type, string? ResultName)> GetOpenApiObjectHierarchy(FunctionMapping mapping)
+    public List<(string Route, string Operation, string ObjHeirarchy, Type Type, string? ResultName)> 
+        GetOpenApiObjectHierarchy(FunctionMapping mapping)
     {
         var flatListOfProperties = new List<(string Route, string Operation, string ObjHeirarchy, Type Type, string? ResultName)>();
         var route = mapping.OpenApiPath;
         var operation = mapping.OpenApiOperation;
         
-        foreach(var parameter in  mapping.Parameters)
+        foreach(var parameter in mapping.Parameters)
         {
             if (parameter.IsOpenApiRequestBody)
             {

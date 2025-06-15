@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Routing;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiSimplification;
-using System.Data.Common;
 using System.Diagnostics;
-using System.Reflection.Metadata;
 
 namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.OpenApiToMethodMapping;
 

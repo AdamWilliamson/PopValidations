@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using PopApiValidations.Swashbuckle;
-using System.Linq;
 
 namespace PopApiValidations.Swashbuckle_Tests.Helpers;
 

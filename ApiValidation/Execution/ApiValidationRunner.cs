@@ -79,6 +79,15 @@ public class ApiConfiguration
     public Func<MethodInfo, int, int?, string> DescribeValidatingParam { get; set; }
     public Func<MethodInfo, int?, string> DescribeValidatingReturn { get; set; }
     public Func<string, string> GetParamNameFromErrorKey { get; set; }
+    public List<Type> TypesToTreatAsSimple { get; set; } = new()
+    {
+        typeof(Uri),
+        typeof(Guid),
+        typeof(DateTime),
+        typeof(DateTimeOffset),
+        typeof(TimeSpan),
+        typeof(string),
+    };
 
     public ApiConfiguration()
     {

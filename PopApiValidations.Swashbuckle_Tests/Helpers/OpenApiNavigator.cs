@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 
 namespace PopApiValidations.Swashbuckle_Tests.Helpers;
 
@@ -104,6 +105,32 @@ public class OpenApiNavigator(AssertionResult results, JObject openApi, JObject 
     public Pair2 NavToParameterProperty2(string url, string type, params string[] objHeirarchy)
     {
         var pair = GetParamSchemaPair2(url, type, objHeirarchy);
+
+        foreach (var nextProperty in objHeirarchy.Skip(1))
+        {
+            if (nextProperty.EndsWith("[n]"))
+            {
+                pair = pair.Nav(schema => schema["properties"]?[nextProperty.Replace("[n]", "")]?["items"] as JObject);
+            }
+            else
+            {
+                pair = pair.Nav(schema => schema["properties"]?[nextProperty] as JObject);
+            }
+        }
+
+        return pair;
+    }
+
+    public Pair2 NavToResponses(string url, string type, params string[] objHeirarchy)
+    {
+        var pair = GetPath2(url, type)
+            .Nav(schema => 
+                (schema["responses"]?["200"]?["content"] as JObject)
+                ?.Properties()
+                .Select(x => x.Value as JObject)
+                .ToList() ?? throw new Exception("")
+            )
+            .Nav(schema => schema["schema"] as JObject);
 
         foreach (var nextProperty in objHeirarchy.Skip(1))
         {

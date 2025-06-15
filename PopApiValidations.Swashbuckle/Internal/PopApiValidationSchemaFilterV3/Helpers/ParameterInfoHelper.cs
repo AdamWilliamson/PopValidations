@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApiValidations.Execution;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.OpenApi.Models;
 using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.MethodSimplification;
 using System;
@@ -21,11 +23,56 @@ public static class ParameterInfoHelper
         if (parameter.GetCustomAttribute<FromRouteAttribute>() != null) return ParameterLocation.Path;
         if (parameter.GetCustomAttribute<FromFormAttribute>() != null) return null;
         if (TypeHelper.IsComplexOrEnumerable(parameter.ParameterType)) return null;
-
+        
         // If it's a simple type and the route contains {parameterName}, classify it as Route
         if (TypeHelper.IsSimpleType(parameter.ParameterType) && IsRouteParameterInUrl(parameter))
         {
             return ParameterLocation.Path;
+        }
+
+        if (IsRouteParameterInUrl(parameter)) return ParameterLocation.Path;
+
+        foreach(var queryAttr in new List<Type>()
+            {
+                typeof(HttpGetAttribute),
+                typeof(HttpDeleteAttribute),
+                typeof(HttpPatchAttribute),
+                typeof(HttpPostAttribute),
+                typeof(HttpPutAttribute)
+            }
+        )
+        {
+            var attr = parameter.Member.GetCustomAttribute(queryAttr);
+            if (attr != null)
+            {
+                return ParameterLocation.Query;
+            }
+        }
+
+        foreach (var queryAttr in new List<Type>()
+            {
+                typeof(HttpHeadAttribute)
+            }
+        )
+        {
+            var attr = parameter.Member.GetCustomAttribute(queryAttr);
+            if (attr != null)
+            {
+                return ParameterLocation.Header;
+            }
+        }
+
+        foreach (var queryAttr in new List<Type>()
+            {
+                typeof(HttpOptionsAttribute)
+            }
+        )
+        {
+            var attr = parameter.Member.GetCustomAttribute(queryAttr);
+            if (attr != null)
+            {
+                return ParameterLocation.Header;
+            }
         }
 
         // Default to Unknown if no attribute and no matching conditions are found
@@ -47,6 +94,11 @@ public static class ParameterInfoHelper
         {
             return OpenApiLocation.Path;
         }
+
+        if (IsRouteParameterInUrl(parameter)) return OpenApiLocation.Path;
+
+        var deleteAttribute = parameter.Member.GetCustomAttribute<HttpDeleteAttribute>();
+        if (deleteAttribute != null) return OpenApiLocation.Query;
 
         // Default to Unknown if no attribute and no matching conditions are found
         return OpenApiLocation.ResponseBody;

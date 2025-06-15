@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApiValidations.Execution;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections;
+using System.Reflection.Metadata;
 
 namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Helpers;
 
@@ -98,7 +100,16 @@ public static class TypeHelper
     {
         Type underlyingType = GetUnderlyingType(type) ?? type;
         // Check if it's a complex type (class) or a collection type (array, List<T>, Dictionary<TKey, TValue>)
-        return underlyingType.IsClass && underlyingType != typeof(string) || TypeHelper.IsArrayType(underlyingType) || TypeHelper.IsDictionaryType(underlyingType);
+        return 
+            (
+                underlyingType.IsClass 
+                && !PopApi.Configuation.TypesToTreatAsSimple.Contains(underlyingType)
+            )
+            || TypeHelper.IsArrayType(underlyingType) 
+            || TypeHelper.IsDictionaryType(underlyingType)
+            || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Task<>))
+            || type == typeof(Task)
+        ;
     }
 
     public static Type GetElementType(Type type)

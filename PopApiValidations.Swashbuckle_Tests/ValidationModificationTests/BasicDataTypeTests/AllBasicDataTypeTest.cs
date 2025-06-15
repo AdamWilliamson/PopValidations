@@ -67,7 +67,7 @@ public class TaskDataTypeTest : BasicDataTypeTestsBase<Task> { }
 
 public class TaskOfIntDataTypeTest : BasicDataTypeTestsBase<Task<int>> { }
 
-public class TaskOfStringDataTypeTest : BasicDataTypeTestsBase<Task<string>> { }
+public class TaskOfStringDataTypeTest : BasicReturnDataTypeTestsBase<Task<string>> { }
 
 public class TaskOfBoolDataTypeTest : BasicDataTypeTestsBase<Task<bool>> { }
 
