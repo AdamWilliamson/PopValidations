@@ -106,13 +106,14 @@ public class ApiConfiguration
         {
             if (paramIndex == -1)
             {
-                var description = $"{FunctionDescription.Invoke(methodInfo)}";
-                if (indexArray.HasValue)
-                {
-                    description += $"[{(indexArray >= 0 ? indexArray.ToString() : 'n')}]";
-                }
+                return DescribeValidatingReturn?.Invoke(methodInfo, indexArray) ?? "";
+                //var description = $"{FunctionDescription.Invoke(methodInfo)}";
+                //if (indexArray.HasValue)
+                //{
+                //    description += $"[{(indexArray >= 0 ? indexArray.ToString() : 'n')}]";
+                //}
 
-                return description;
+                //return description;
             }
             else
             {

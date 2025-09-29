@@ -1,6 +1,6 @@
 ﻿{
     "paths": {
-        "/api/Test": {
+        "/api/test": {
             "post": {
                 "responses": {
                     "200": {
@@ -8,9 +8,9 @@
                             "text/plain": {
                                 "schema": {
                                     "properties": {
-                                        "subResponseField": {
+                                        "subresponsefield": {
                                             "required": [
-                                                "IntegerField"
+                                                "integerField"
                                             ],
                                             "x-validation": {
                                                 "integerField": [
@@ -18,7 +18,7 @@
                                                 ]
                                             },
                                             "properties": {
-                                                "integerField": {
+                                                "integerfield": {
                                                     "nullable": {
                                                         "-": true
                                                     }
@@ -31,9 +31,9 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "subResponseField": {
+                                        "subresponsefield": {
                                             "required": [
-                                                "IntegerField"
+                                                "integerField"
                                             ],
                                             "x-validation": {
                                                 "integerField": [
@@ -41,7 +41,7 @@
                                                 ]
                                             },
                                             "properties": {
-                                                "integerField": {
+                                                "integerfield": {
                                                     "nullable": {
                                                         "-": true
                                                     }
@@ -54,9 +54,9 @@
                             "text/json": {
                                 "schema": {
                                     "properties": {
-                                        "subResponseField": {
+                                        "subresponsefield": {
                                             "required": [
-                                                "IntegerField"
+                                                "integerField"
                                             ],
                                             "x-validation": {
                                                 "integerField": [
@@ -64,7 +64,7 @@
                                                 ]
                                             },
                                             "properties": {
-                                                "integerField": {
+                                                "integerfield": {
                                                     "nullable": {
                                                         "-": true
                                                     }

@@ -604,7 +604,8 @@ public class OpenApiToTypeMapper
             {
                 "RequestBody" => "RequestBody."+ property.Name,
                 "" or null => property.Name,
-                _ => openApiPrefix + '.' + property.Name
+                _ when (property.Name is not "" or null) => openApiPrefix + '.' + property.Name,
+                _ => openApiPrefix,
             };
                 //(openApiPrefix)
                 

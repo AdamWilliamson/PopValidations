@@ -1,6 +1,6 @@
 ﻿{
     "paths": {
-        "/api/Test/CreateByQuery": {
+        "/api/test/createbyquery": {
             "post": {
                 "x-validation": {
                     "SubRequestField.IntegerField": [
@@ -9,7 +9,11 @@
                 },
                 "parameters": {
                     "0": {
-                        "required": true
+                        "schema": {
+                            "required": [
+                                "IntegerField"
+                            ]
+                        }
                     }
                 }
             }

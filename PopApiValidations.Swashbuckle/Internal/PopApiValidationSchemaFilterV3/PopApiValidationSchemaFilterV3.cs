@@ -95,10 +95,10 @@ public class PopApiValidationSchemaFilter : IOperationFilter
         {
             string desc = functionDesc;
 
-            if (position == -1)
-            {
-                desc += ApiValidations.Execution.PopApi.Configuation.ReturnDescription.Invoke(mappingResult.FunctionReturnMapping.ReturnType);
-            }
+            //if (position == -1)
+            //{
+            //    desc += ApiValidations.Execution.PopApi.Configuation.ReturnDescription.Invoke(mappingResult.FunctionReturnMapping.ReturnType);
+            //}
 
             if (!string.IsNullOrWhiteSpace(mappingResult.ResultPropertyHeirarchy))
             {

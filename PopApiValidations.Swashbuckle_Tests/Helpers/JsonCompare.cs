@@ -1,19 +1,19 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace PopApiValidations.Swashbuckle_Tests.ValidationModificationTests;
+namespace PopApiValidations.Swashbuckle_Tests.Helpers;
 
 public static class JsonCompare
 {
     public static string FindDiffString(JToken leftJson, JToken rightJson)
     {
-        return FindDiff(leftJson, rightJson).ToString(Newtonsoft.Json.Formatting.None);
+        return FindDiff(leftJson, rightJson)?.ToString(Newtonsoft.Json.Formatting.None) ?? string.Empty;
     }
 
     //https://stackoverflow.com/questions/24876082/find-and-return-json-differences-using-newtonsoft-in-c
-    public static JObject FindDiff(JToken leftJson, JToken rightJson)
+    public static JObject? FindDiff(JToken leftJson, JToken rightJson)
     {
         var difference = new JObject();
-        if (JToken.DeepEquals(leftJson, rightJson)) return difference;
+        if (JToken.DeepEquals(leftJson, rightJson)) return null;
 
         switch (leftJson.Type)
         {
@@ -29,7 +29,7 @@ public static class JsonCompare
                     {
                         difference[tag] = new JObject
                         {
-                            ["-"] = LeftJSON?[tag]
+                            ["+"] = LeftJSON?[tag]
                         };
                     }
 
@@ -45,19 +45,24 @@ public static class JsonCompare
 
                     foreach (var tag in ModifiedTags)
                     {
-                        if (LeftJSON?[tag] is null)
+                        if (LeftJSON?.Property(tag, StringComparison.InvariantCultureIgnoreCase) is null 
+                            && RightJSON?.Property(tag, StringComparison.InvariantCultureIgnoreCase) is null)
                         {
                             continue;
                         }
 
-                        if (RightJSON?[tag] is null)
+                        if (RightJSON?.Property(tag, StringComparison.InvariantCultureIgnoreCase) is null)
                         {
-                            difference[tag] = LeftJSON[tag];
+                            difference[tag] = LeftJSON?.Property(tag, StringComparison.InvariantCultureIgnoreCase)!.Value;
                             continue;
                         }
 
-                        var foundDifference = FindDiff(LeftJSON![tag]!, RightJSON![tag]!);
-                        if (foundDifference.HasValues)
+                        var foundDifference = FindDiff(
+                            LeftJSON?.Property(tag, StringComparison.InvariantCultureIgnoreCase)!.Value!,
+                            RightJSON?.Property(tag, StringComparison.InvariantCultureIgnoreCase)!.Value!
+                        );
+
+                        if (foundDifference?.HasValues == true)
                         {
                             difference[tag] = foundDifference;
                         }
@@ -76,7 +81,7 @@ public static class JsonCompare
                             for (int index = 0; index < LeftArray.Count(); index++)
                             {
                                 var foundDifference = FindDiff(LeftArray[index], RightArray[index]);
-                                if (foundDifference.HasValues)
+                                if (foundDifference?.HasValues == true)
                                 {
                                     difference[$"{index}"] = foundDifference;
                                 }
@@ -100,24 +105,30 @@ public static class JsonCompare
                     }
                 }
                 break;
+
             default:
-                difference["-"] = leftJson;
-                difference["+"] = rightJson;
+                difference.Add("+", leftJson);
+                difference.Add("-", rightJson);
                 break;
         }
 
-        return difference;
+        if (difference.HasValues || difference.Count > 0)
+            return difference;
+
+        return null;
     }
 
-    public static bool DeepEqualsIgnoreCase(JToken token1, JToken token2)
+    public static bool DeepEqualsIgnoreCase(JToken? token1, JToken? token2)
     {
         if (token1 == null && token2 == null) return true;
         if (token1 == null || token2 == null) return false;
         if (token1.Type != token2.Type)
         {
             // Special case: allow comparing strings and raw JSON as string
-            if ((token1.Type == JTokenType.String && token2.Type == JTokenType.String) ||
-                (token1.Type == JTokenType.Property && token2.Type == JTokenType.Property))
+            if (
+                token1.Type == JTokenType.String && token2.Type == JTokenType.String 
+                || token1.Type == JTokenType.Property && token2.Type == JTokenType.Property
+            )
             {
                 return string.Equals(token1.ToString(), token2.ToString(), StringComparison.OrdinalIgnoreCase);
             }

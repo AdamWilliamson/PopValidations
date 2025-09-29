@@ -44,15 +44,16 @@ public class ParamBuilder<TParamType>
     public bool HasChildren()
     {
         return
-            openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy?.Any() == true
-            || openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy!.Length > 1;
+            //openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy?.Any() == true
+            //||
+            openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy!.Length > 1;
     }
 
     public bool IsTargettingRequestBody()
     {
         return
-            openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy?.Any() == false
-            //|| openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy!.Length == 1;
+            // openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy?.Any() == false
+            openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy.Length <= 1
             ;
     }
 

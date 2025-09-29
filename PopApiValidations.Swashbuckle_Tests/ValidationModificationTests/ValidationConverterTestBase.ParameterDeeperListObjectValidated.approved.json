@@ -1,27 +1,24 @@
 ﻿{
     "paths": {
-        "/api/Test/CreateByQueryMultiple": {
+        "/api/test/createbyquerymultiple": {
             "post": {
                 "parameters": {
                     "0": {
                         "schema": {
                             "items": {
                                 "properties": {
-                                    "subRequestFieldList": {
-                                        "required": [
-                                            "ListOfStringsField"
-                                        ],
+                                    "subrequestfieldlist": {
                                         "items": {
                                             "x-validation": {
-                                                "listOfStringsField": [
+                                                "ListOfStringsField[n]": [
                                                     "Must not be null."
                                                 ]
                                             },
                                             "properties": {
-                                                "listOfStringsField": {
-                                                    "nullable": {
-                                                        "-": true
-                                                    }
+                                                "listofstringsfield": {
+                                                    "required": [
+                                                        "items"
+                                                    ]
                                                 }
                                             }
                                         }

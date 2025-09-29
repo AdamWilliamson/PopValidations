@@ -1,1 +1,81 @@
-﻿
+﻿{
+    "paths": {
+        "/api/test": {
+            "post": {
+                "requestbody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "subrequestfield": {
+                                        "required": [
+                                            "integerField"
+                                        ],
+                                        "x-validation": {
+                                            "integerField": [
+                                                "Must not be null."
+                                            ]
+                                        },
+                                        "properties": {
+                                            "integerfield": {
+                                                "nullable": {
+                                                    "-": true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "properties": {
+                                    "subrequestfield": {
+                                        "required": [
+                                            "integerField"
+                                        ],
+                                        "x-validation": {
+                                            "integerField": [
+                                                "Must not be null."
+                                            ]
+                                        },
+                                        "properties": {
+                                            "integerfield": {
+                                                "nullable": {
+                                                    "-": true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "properties": {
+                                    "subrequestfield": {
+                                        "required": [
+                                            "integerField"
+                                        ],
+                                        "x-validation": {
+                                            "integerField": [
+                                                "Must not be null."
+                                            ]
+                                        },
+                                        "properties": {
+                                            "integerfield": {
+                                                "nullable": {
+                                                    "-": true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

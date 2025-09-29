@@ -1,1 +1,13 @@
-﻿
+﻿{
+    "paths": {
+        "/api/test": {
+            "post": {
+                "x-validation": {
+                    "response": [
+                        "Must not be null."
+                    ]
+                }
+            }
+        }
+    }
+}

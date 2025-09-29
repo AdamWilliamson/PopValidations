@@ -270,7 +270,7 @@ public abstract class ValidationConverterTestBase
         var validator = new TestControllerValidation();
         ReturnDeeperObjectValidated_AddValidations(validator);
 
-        var result = await controllerTester.GetHelper<ActionResult<Response>>(
+        var result = await controllerTester.GetHelper<Response>(
             config,
             nameof(TestController.Create),
             "/api/Test",

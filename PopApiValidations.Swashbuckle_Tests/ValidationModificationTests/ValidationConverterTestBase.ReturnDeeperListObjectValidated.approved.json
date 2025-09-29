@@ -1,1 +1,95 @@
-﻿
+﻿{
+    "paths": {
+        "/api/test/createmultiple": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "listofsubresponsefield": {
+                                                "required": [
+                                                    "integerField"
+                                                ],
+                                                "items": {
+                                                    "x-validation": {
+                                                        "integerField": [
+                                                            "Must not be null."
+                                                        ]
+                                                    },
+                                                    "properties": {
+                                                        "integerfield": {
+                                                            "nullable": {
+                                                                "-": true
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "listofsubresponsefield": {
+                                                "required": [
+                                                    "integerField"
+                                                ],
+                                                "items": {
+                                                    "x-validation": {
+                                                        "integerField": [
+                                                            "Must not be null."
+                                                        ]
+                                                    },
+                                                    "properties": {
+                                                        "integerfield": {
+                                                            "nullable": {
+                                                                "-": true
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "listofsubresponsefield": {
+                                                "required": [
+                                                    "integerField"
+                                                ],
+                                                "items": {
+                                                    "x-validation": {
+                                                        "integerField": [
+                                                            "Must not be null."
+                                                        ]
+                                                    },
+                                                    "properties": {
+                                                        "integerfield": {
+                                                            "nullable": {
+                                                                "-": true
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

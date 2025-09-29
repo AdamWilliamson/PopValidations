@@ -1,1 +1,84 @@
-﻿
+﻿{
+    "paths": {
+        "/api/test/createmultiple": {
+            "post": {
+                "requestbody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "items": {
+                                    "properties": {
+                                        "subrequestfieldlist": {
+                                            "items": {
+                                                "x-validation": {
+                                                    "listOfStringsField[n]": [
+                                                        "Must not be null."
+                                                    ]
+                                                },
+                                                "properties": {
+                                                    "listofstringsfield": {
+                                                        "required": [
+                                                            "items"
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "items": {
+                                    "properties": {
+                                        "subrequestfieldlist": {
+                                            "items": {
+                                                "x-validation": {
+                                                    "listOfStringsField[n]": [
+                                                        "Must not be null."
+                                                    ]
+                                                },
+                                                "properties": {
+                                                    "listofstringsfield": {
+                                                        "required": [
+                                                            "items"
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "items": {
+                                    "properties": {
+                                        "subrequestfieldlist": {
+                                            "items": {
+                                                "x-validation": {
+                                                    "listOfStringsField[n]": [
+                                                        "Must not be null."
+                                                    ]
+                                                },
+                                                "properties": {
+                                                    "listofstringsfield": {
+                                                        "required": [
+                                                            "items"
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

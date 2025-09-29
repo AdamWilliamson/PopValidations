@@ -1,9 +1,9 @@
 ﻿{
     "paths": {
-        "/api/Test/CreateMultiple": {
+        "/api/test/createmultiple": {
             "post": {
                 "x-validation": {
-                    "Response[n]": [
+                    "response[n]": [
                         "Must not be null."
                     ]
                 }

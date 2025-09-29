@@ -1,11 +1,20 @@
 ﻿{
     "paths": {
-        "/api/Test/{id}": {
+        "/api/test/{id}": {
             "get": {
                 "x-validation": {
                     "id": [
                         "Must not be null."
                     ]
+                },
+                "parameters": {
+                    "0": {
+                        "schema": {
+                            "required": [
+                                "id"
+                            ]
+                        }
+                    }
                 }
             }
         }

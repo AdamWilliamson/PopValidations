@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PopApiValidations.Swashbuckle;
-using PopApiValidations.Swashbuckle_Tests.ValidationModificationTests;
 
 namespace PopApiValidations.Swashbuckle_Tests.Helpers;
 
