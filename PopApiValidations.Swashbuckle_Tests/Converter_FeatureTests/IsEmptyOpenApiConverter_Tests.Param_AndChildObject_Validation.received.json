@@ -1,1 +1,80 @@
-﻿{}
+﻿{
+    "paths": {
+        "/api/test": {
+            "post": {
+                "x-validation": {
+                    "requestBody": [
+                        "Must be empty."
+                    ]
+                },
+                "requestbody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must be empty."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "maxlength": {
+                                            "-": null
+                                        },
+                                        "maxitems": {
+                                            "-": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must be empty."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "maxlength": {
+                                            "-": null
+                                        },
+                                        "maxitems": {
+                                            "-": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must be empty."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "maxlength": {
+                                            "-": null
+                                        },
+                                        "maxitems": {
+                                            "-": null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

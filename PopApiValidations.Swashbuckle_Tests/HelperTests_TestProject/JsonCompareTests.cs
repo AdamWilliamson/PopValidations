@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Newtonsoft.Json.Linq;
 using PopApiValidations.Swashbuckle_Tests.Helpers;
 using Xunit.Abstractions;
@@ -37,6 +38,7 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("+").And.Contain("-");
     }
 
     [Fact]
@@ -63,6 +65,7 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("-");
     }
 
     [Fact]
@@ -86,6 +89,7 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("+").And.Contain("-");
     }
 
     [Fact]
@@ -109,6 +113,7 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("-");
     }
 
     [Fact]
@@ -146,6 +151,7 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("+").And.Contain("-");
     }
 
     [Fact]
@@ -184,6 +190,7 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("-");
     }
 
     [Fact]
@@ -223,10 +230,11 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("+").And.Contain("-");
     }
 
     [Fact]
-    public void Given3ObjectsDeep_ItDetectsAnAddedProperty()
+    public void Given3ObjectsDeep_ItDetectsAnRemovedProperty()
     {
         // Arrange
         var obj1 = new JObject
@@ -263,6 +271,48 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("-");
+    }
+
+    [Fact]
+    public void Given3ObjectsDeep_ItDetectsAnAddedProperty()
+    {
+        // Arrange
+        var obj1 = new JObject
+        {
+            ["User"] = new JObject
+            {
+                ["Id"] = 1,
+                ["Profile"] = new JObject
+                {
+                    ["Email"] = "alice@example.com",
+                    ["Verified"] = true,
+                    ["Google"] = "tired"
+                }
+            },
+            ["Role"] = "Admin"
+        };
+
+        var obj2 = new JObject
+        {
+            ["User"] = new JObject
+            {
+                ["Id"] = 1,
+                ["Profile"] = new JObject
+                {
+                    ["Email"] = "alice@example.com3",
+                    ["Verified"] = true,
+                }
+            },
+            ["Role"] = "Admin"
+        };
+
+        // Act
+        var differences = JsonCompare.FindDiffString(obj1, obj2);
+
+        //Assert
+        Assert.NotEmpty(differences);
+        differences.Should().Contain("+");
     }
 
     [Fact]
@@ -308,6 +358,7 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().Contain("+").And.Contain("-");
     }
 
     [Fact]
@@ -321,7 +372,12 @@ public class JsonCompareTests
                 new JObject
                 {
                     ["Id"] = 1,
-                    ["Name"] = "Alice"
+                    ["Name"] = "Alice",
+                    ["Image"] = new JObject{
+                        ["Dog"] = new JObject{
+                            ["Type"] = "Bulldog"
+                        }
+                    }
                 },
                 new JObject
                 {
@@ -339,7 +395,6 @@ public class JsonCompareTests
                 {
                     ["Id"] = 1,
                     ["Name"] = "Alice",
-                    ["Image"] = "url"
                 },
                 new JObject
                 {
@@ -354,6 +409,7 @@ public class JsonCompareTests
 
         //Assert
         Assert.NotEmpty(differences);
+        differences.Should().NotContain("+").And.NotContain("-");
     }
 
     [Fact]

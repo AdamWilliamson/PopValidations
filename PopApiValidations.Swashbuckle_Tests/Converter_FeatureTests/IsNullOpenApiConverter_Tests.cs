@@ -61,7 +61,7 @@ public class NotNullOpenApiConverter_Tests
             },
             (ApiValidationBuilder builder) =>
             {
-                builder.ParamIs<Request>(["integerField"]).IsNotNull();
+                builder.ParamIs<Request>(["request","integerField"]).IsNotNull();
             }
         };
 
@@ -84,9 +84,9 @@ public class NotNullOpenApiConverter_Tests
             },
             (ApiValidationBuilder builder) =>
             {
-                builder.ParamIs<Request>().IsNotNull();
-                builder.ParamIs<Request>(["subRequestField"]).IsNotNull();
-                builder.ParamIs<Request>(["subRequestField", "integerField"]).IsNotNull();
+                builder.ParamIs<Request>(["request"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "subRequestField"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "subRequestField", "integerField"]).IsNotNull();
             }
         };
 
@@ -128,14 +128,14 @@ public class NotNullOpenApiConverter_Tests
             },
             (ApiValidationBuilder builder) =>
             {
-                builder.ParamIs<Request>().IsNotNull();
-                builder.ParamIs<Request>(["subRequestField"]).IsNotNull();
-                builder.ParamIs<Request>(["integerField"]).IsNotNull();
-                builder.ParamIs<Request>(["dataItemField"]).IsNotNull();
-                builder.ParamIs<Request>(["dataItemField", "identifier"]).IsNotNull();
-                builder.ParamIs<Request>(["subRequestField", "integerField"]).IsNotNull();
-                builder.ParamIs<Request>(["subRequestField", "dataItemField"]).IsNotNull();
-                builder.ParamIs<Request>(["subRequestField", "dataItemField", "identifier"]).IsNotNull();
+                builder.ParamIs<Request>(["request"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "subRequestField"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "integerField"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "dataItemField"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "dataItemField", "identifier"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "subRequestField", "integerField"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "subRequestField", "dataItemField"]).IsNotNull();
+                builder.ParamIs<Request>(["request", "subRequestField", "dataItemField", "identifier"]).IsNotNull();
             }
         };
 
@@ -164,8 +164,8 @@ public class NotNullOpenApiConverter_Tests
             (ApiValidationBuilder builder) =>
             {
                 //builder.ParamIs<Request>().IsNotNull();  // Query based classes, dont pass validation.
-                builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.IntegerField"]).IsNotNull();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["IntegerField"]).IsNotNull();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "SubRequestField.IntegerField"]).IsNotNull();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "IntegerField"]).IsNotNull();
             }
         };
 
@@ -198,10 +198,10 @@ public class NotNullOpenApiConverter_Tests
             (ApiValidationBuilder builder) =>
             {
                 //builder.ParamIs<Request>().IsNotNull();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.ListOfStringsField"]).IsNotNull();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.ListOfStringsField[n]"]).IsNotNull();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["ListOfStringsField"]).IsNotNull();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["ListOfStringsField[n]"]).IsNotNull();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "SubRequestField.ListOfStringsField"]).IsNotNull();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "SubRequestField.ListOfStringsField[n]"]).IsNotNull();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "ListOfStringsField"]).IsNotNull();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "ListOfStringsField[n]"]).IsNotNull();
             }
        };
     }

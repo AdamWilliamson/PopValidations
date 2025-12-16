@@ -23,17 +23,31 @@ public class ApiValidationBuilder
         this.type = type;
     }
 
-    public ParamBuilder<TParamType> ParamIs<TParamType>(string paramName)
+    /// <summary>
+    /// Is used to identify the parameter, and then, its child property selected, to the nth degree.
+    /// </summary>
+    /// <typeparam name="TParamType"></typeparam>
+    /// <param name="objHeirarchy">the param name, and its child property selected, to the nth degree.</param>
+    /// <returns>the builder</returns>
+    /// <exception cref="ArgumentException"></exception>
+    public ParamBuilder<TParamType> ParamIs<TParamType>(string[] objHeirarchy)
     {
-        return new ParamBuilder<TParamType>(ParamType.Auto, config, new(errors, openApi, clean), [paramName], url, type);
-    }
+        if (objHeirarchy == null || objHeirarchy.Length == 0)
+        {
+            throw new ArgumentException("objHeirarchy must have at least one element to identify the parameter.");
+        }
 
-    public ParamBuilder<TParamType> ParamIs<TParamType>(params string[] objHeirarchy)
-    {
         return new ParamBuilder<TParamType>(ParamType.Auto, config, new(errors, openApi, clean), objHeirarchy, url, type);
     }
 
-    public ParamBuilder<TParamType> ParamIs<TParamType>(ParamType paramType, params string[] objHeirarchy)
+    /// <summary>
+    /// Is used to identify the parameter, and then, its child property selected, to the nth degree.
+    /// </summary>
+    /// <typeparam name="TParamType"></typeparam>
+    /// <param name="paramType"></param>
+    /// <param name="objHeirarchy"></param>
+    /// <returns></returns>
+    public ParamBuilder<TParamType> ParamIs<TParamType>(ParamType paramType, string[] objHeirarchy)
     {
         return new ParamBuilder<TParamType>(paramType, config, new(errors, openApi, clean), objHeirarchy, url, type);
     }

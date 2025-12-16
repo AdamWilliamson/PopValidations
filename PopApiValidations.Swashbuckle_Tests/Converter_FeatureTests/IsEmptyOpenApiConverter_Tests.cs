@@ -61,7 +61,7 @@ public class IsEmptyOpenApiConverter_Tests
             },
             (ApiValidationBuilder builder) =>
             {
-                builder.ParamIs<Request>(["integerField"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "integerField"]).IsEmpty();
             }
         };
 
@@ -84,8 +84,8 @@ public class IsEmptyOpenApiConverter_Tests
             },
             (ApiValidationBuilder builder) =>
             {
-                builder.ParamIs<Request>(["subRequestField"]).IsEmpty();
-                builder.ParamIs<Request>(["subRequestField", "integerField"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "subRequestField"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "subRequestField", "integerField"]).IsEmpty();
             }
         };
 
@@ -125,14 +125,14 @@ public class IsEmptyOpenApiConverter_Tests
             },
             (ApiValidationBuilder builder) =>
             {
-                builder.ParamIs<Request>().IsEmpty();
-                builder.ParamIs<Request>(["subRequestField"]).IsEmpty();
-                builder.ParamIs<Request>(["integerField"]).IsEmpty();
-                builder.ParamIs<Request>(["dataItemField"]).IsEmpty();
-                builder.ParamIs<Request>(["dataItemField", "identifier"]).IsEmpty();
-                builder.ParamIs<Request>(["subRequestField", "integerField"]).IsEmpty();
-                builder.ParamIs<Request>(["subRequestField", "dataItemField"]).IsEmpty();
-                builder.ParamIs<Request>(["subRequestField", "dataItemField", "identifier"]).IsEmpty();
+                builder.ParamIs<Request>(["request",]).IsEmpty();
+                builder.ParamIs<Request>(["request", "subRequestField"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "integerField"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "dataItemField"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "dataItemField", "identifier"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "subRequestField", "integerField"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "subRequestField", "dataItemField"]).IsEmpty();
+                builder.ParamIs<Request>(["request", "subRequestField", "dataItemField", "identifier"]).IsEmpty();
             }
         };
 
@@ -160,8 +160,8 @@ public class IsEmptyOpenApiConverter_Tests
             },
             (ApiValidationBuilder builder) =>
             {
-                builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.IntegerField"]).IsEmpty();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["IntegerField"]).IsEmpty();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "SubRequestField.IntegerField"]).IsEmpty();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "IntegerField"]).IsEmpty();
             }
         };
 
@@ -193,10 +193,10 @@ public class IsEmptyOpenApiConverter_Tests
             },
             (ApiValidationBuilder builder) =>
             {
-                builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.ListOfStringsField"]).IsEmpty();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["SubRequestField.ListOfStringsField[n]"]).IsEmpty();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["ListOfStringsField"]).IsEmpty();
-                builder.ParamIs<Request>(ParamType.FromQuery, ["ListOfStringsField[n]"]).IsEmpty();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "SubRequestField.ListOfStringsField"]).IsEmpty();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "SubRequestField.ListOfStringsField[n]"]).IsEmpty();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "ListOfStringsField"]).IsEmpty();
+                builder.ParamIs<Request>(ParamType.FromQuery, ["request", "ListOfStringsField[n]"]).IsEmpty();
             }
        };
     }

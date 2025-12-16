@@ -68,7 +68,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull();
+        sut.ParamIs<TType>(["value"]).IsNotNull();
 
         //Assert
         sut.Validate();
@@ -84,7 +84,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull();
+        sut.ParamIs<TType>(["value"]).IsNotNull();
 
         //Assert
         sut.Validate();
@@ -100,7 +100,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull();
+        sut.ParamIs<TType>(["value"]).IsNotNull();
 
         //Assert
         sut.Validate();
@@ -116,7 +116,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull();
+        sut.ParamIs<TType>(["value"]).IsNotNull();
 
         //Assert
         sut.Validate();
@@ -132,7 +132,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull();
+        sut.ParamIs<TType>(["value"]).IsNotNull();
 
         //Assert
         sut.Validate();
@@ -148,7 +148,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull();
+        sut.ParamIs<TType>(["value"]).IsNotNull();
 
         //Assert
         sut.Validate();
@@ -164,7 +164,7 @@ public abstract class BasicDataTypeTestsBase<TType>
         );
 
         // Act
-        sut.ParamIs<TType>("value").IsNotNull();
+        sut.ParamIs<TType>(["value"]).IsNotNull();
 
         //Assert
         sut.Validate();

@@ -1,1 +1,101 @@
-﻿{}
+﻿{
+    "paths": {
+        "/api/test": {
+            "post": {
+                "x-validation": {
+                    "requestBody": [
+                        "Must be null."
+                    ]
+                },
+                "requestbody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "enum": {
+                                    "-": [
+                                        "null"
+                                    ]
+                                },
+                                "nullable": {
+                                    "-": true
+                                },
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must be null."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "enum": {
+                                            "-": [
+                                                "null"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "enum": {
+                                    "-": [
+                                        "null"
+                                    ]
+                                },
+                                "nullable": {
+                                    "-": true
+                                },
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must be null."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "enum": {
+                                            "-": [
+                                                "null"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "enum": {
+                                    "-": [
+                                        "null"
+                                    ]
+                                },
+                                "nullable": {
+                                    "-": true
+                                },
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must be null."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "enum": {
+                                            "-": [
+                                                "null"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

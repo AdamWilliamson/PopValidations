@@ -5,7 +5,37 @@
                 "x-validation": {
                     "response[n]": [
                         "Must not be null."
+                    ],
+                    "[n]": [
+                        "Must not be null."
                     ]
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "required": [
+                                        "items"
+                                    ]
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "items"
+                                    ]
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "required": [
+                                        "items"
+                                    ]
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -24,7 +24,8 @@ namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.
         public IOpenApiParameterMapping ParameterMapping { get; private set; } // Added to store the method parameter index
         public IGeneralMapping FunctionItemMapping { get; private set; }
         //public IGeneralMapping TypeMapping { get; set; } // Added to store the method parameter index
-        public OpenApiResponseMapping? ResponseMapping { get; private set; }
+        public IOpenApiParameterMapping? ResponseMapping { get; private set; }
+        public IOpenApiParameterMapping? RequestBodyMapping { get; private set; }
         public ReturnMapping? FunctionReturnMapping { get => FunctionItemMapping as ReturnMapping; }
 
         private TypeToOpenApiMappingResult() { }
@@ -140,7 +141,6 @@ namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.
             return result;
         }
 
-
         public static TypeToOpenApiMappingResult ForRequestBody(
             bool asArrayNotation,
             string route,
@@ -158,6 +158,7 @@ namespace PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.
             result.FunctionItemMapping = parameterMapping;
             result.ResultPropertyHeirarchy = string.Empty;
             result.OpenApiPropertyName = "RequestBody";
+            result.RequestBodyMapping = requestBody;
 
             if (foundProperty != null)
             {

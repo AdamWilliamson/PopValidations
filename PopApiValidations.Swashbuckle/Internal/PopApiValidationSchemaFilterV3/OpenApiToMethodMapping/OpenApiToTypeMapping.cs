@@ -305,8 +305,9 @@ public class OpenApiToTypeMapper
             foundProperty: null
         ));
 
-
-        results.AddRange(ProcessComplexObjectProperties(
+        foreach (var property in response.PropertyMappings)
+        {
+            results.AddRange(ProcessComplexObjectProperties(
                route: operationMapping.Path,
                httpMethod: operationMapping.HttpMethod,
                prefix: string.Empty,
@@ -314,9 +315,10 @@ public class OpenApiToTypeMapper
                functionMapping: functionMapping,
                parameter: response,
                functionItemMapping: responeFunctionItem,
-               property: response,
+               property: property,
                parent: null
            ));
+        }
 
         if (isArray)
         {

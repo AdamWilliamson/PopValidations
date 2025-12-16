@@ -1,1 +1,113 @@
-﻿{}
+﻿{
+    "paths": {
+        "/api/test": {
+            "post": {
+                "x-validation": {
+                    "requestBody": [
+                        "Must not be empty."
+                    ]
+                },
+                "requestbody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "minlength": {
+                                    "-": null
+                                },
+                                "minitems": {
+                                    "-": null
+                                },
+                                "required": {
+                                    "-": [
+                                        "integerField"
+                                    ]
+                                },
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must not be empty."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "minlength": {
+                                            "-": null
+                                        },
+                                        "minitems": {
+                                            "-": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "minlength": {
+                                    "-": null
+                                },
+                                "minitems": {
+                                    "-": null
+                                },
+                                "required": {
+                                    "-": [
+                                        "integerField"
+                                    ]
+                                },
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must not be empty."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "minlength": {
+                                            "-": null
+                                        },
+                                        "minitems": {
+                                            "-": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "minlength": {
+                                    "-": null
+                                },
+                                "minitems": {
+                                    "-": null
+                                },
+                                "required": {
+                                    "-": [
+                                        "integerField"
+                                    ]
+                                },
+                                "x-validation": {
+                                    "-": {
+                                        "integerField": [
+                                            "Must not be empty."
+                                        ]
+                                    }
+                                },
+                                "properties": {
+                                    "integerfield": {
+                                        "minlength": {
+                                            "-": null
+                                        },
+                                        "minitems": {
+                                            "-": null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

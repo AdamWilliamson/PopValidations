@@ -31,12 +31,12 @@ public class MethodSimplifier
                 IsOpenApiRequestBody = ParameterInfoHelper.GetParameterLocation(parameter) == null,
                 MappingType = ParameterInfoHelper.GetParameterLocation2(parameter)
             };
+            functionMapping.Parameters.Add(parameterMapping);
 
             // Determine if the parameter is a simple type or a complex type
             if (TypeHelper.IsSimpleType(parameter.ParameterType))
             {
                 // Simple type: No need for body mapping, just add it directly
-                functionMapping.Parameters.Add(parameterMapping);
                 continue;
             }
             else
@@ -118,9 +118,6 @@ public class MethodSimplifier
                         }
                     }
                 }
-
-                // Add the parameter mapping to the function (even if it’s complex)
-                functionMapping.Parameters.Add(parameterMapping);
             }
         }
 
@@ -238,21 +235,36 @@ public class MethodSimplifier
         {
             if (!property.CanRead || !property.CanWrite) continue;
 
-            var propertyMapping = new PropertyMapping
-            {
-                PropertyName = property.Name,
-                OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
-                IsArrayType = TypeHelper.IsArrayType(property.PropertyType) || TypeHelper.IsDictionaryType(property.PropertyType),
-                PropertyType = TypeHelper.GetElementType(property.PropertyType), // Ensure we use the generic element type
-                ResultPropertyName = Prefix(resultPrefix, property.Name),
-            };
+            var resultPropertyName = Prefix(resultPrefix, property.Name);
 
+            if (TypeHelper.IsSimpleType(property.PropertyType))
+            {
+                var propertyMapping = new PropertyMapping
+                {
+                    PropertyName = property.Name,
+                    OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
+                    IsArrayType = TypeHelper.IsArrayType(property.PropertyType) || TypeHelper.IsDictionaryType(property.PropertyType),
+                    PropertyType = TypeHelper.GetElementType(property.PropertyType), // Ensure we use the generic element type
+                    ResultPropertyName = resultPropertyName,
+                };
+                propertyMappings.Add(propertyMapping);
+            }
             // If the property is a complex type (object), recurse into its properties
-            if (property.PropertyType.IsClass
+            else if (property.PropertyType.IsClass
                 && property.PropertyType != typeof(string)
                 && !TypeHelper.IsArrayType(property.PropertyType)
                 && !TypeHelper.IsDictionaryType(property.PropertyType))
             {
+                var propertyMapping = new PropertyMapping
+                {
+                    PropertyName = property.Name,
+                    OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
+                    IsArrayType = TypeHelper.IsArrayType(property.PropertyType) || TypeHelper.IsDictionaryType(property.PropertyType),
+                    PropertyType = TypeHelper.GetElementType(property.PropertyType), // Ensure we use the generic element type
+                    ResultPropertyName = resultPropertyName,
+                };
+                propertyMappings.Add(propertyMapping);
+
                 propertyMapping.Properties.AddRange(
                     GetPropertyMappings(
                         propertyMapping.ResultPropertyName,
@@ -260,20 +272,19 @@ public class MethodSimplifier
                     )
                 );
             }
-
             // If the property is a dictionary, map both key and value recursively
-            if (TypeHelper.IsDictionaryType(property.PropertyType))
+            else if (TypeHelper.IsDictionaryType(property.PropertyType))
             {
-                propertyMappings.Add(
-                    new PropertyMapping
-                    {
-                        PropertyName = property.Name,
-                        OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
-                        IsArrayType = true,
-                        PropertyType = TypeHelper.GetDictionaryKeyType(property.PropertyType), // Ensure we use the generic element type
-                        ResultPropertyName = propertyMapping.ResultPropertyName// + "[n.Key]",
-                    }
-                );
+                var propertyMapping = new PropertyMapping
+                {
+                    PropertyName = property.Name,
+                    OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
+                    IsArrayType = true,
+                    PropertyType = TypeHelper.GetDictionaryKeyType(property.PropertyType), // Ensure we use the generic element type
+                    ResultPropertyName = resultPropertyName// + "[n.Key]",
+                };
+
+                propertyMappings.Add(propertyMapping);
 
                 //propertyMappings.Add(
                 //    new PropertyMapping
@@ -292,16 +303,15 @@ public class MethodSimplifier
             // If the property is a list or array, directly handle the value type without "Item"
             else if (TypeHelper.IsArrayType(property.PropertyType))
             {
-                propertyMappings.Add(
-                    new PropertyMapping
-                    {
-                        PropertyName = property.Name,
-                        OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
-                        IsArrayType = TypeHelper.IsArrayType(property.PropertyType),
-                        PropertyType = TypeHelper.GetElementType(property.PropertyType), // Ensure we use the generic element type
-                        ResultPropertyName = propertyMapping.ResultPropertyName// + "[n]",
-                    }
-                );
+                var propertyMapping = new PropertyMapping
+                {
+                    PropertyName = property.Name,
+                    OpenApiPropertyName = PropertyInfoHelper.GetOpenApiPropertyName(property),
+                    IsArrayType = TypeHelper.IsArrayType(property.PropertyType),
+                    PropertyType = TypeHelper.GetElementType(property.PropertyType), // Ensure we use the generic element type
+                    ResultPropertyName = resultPropertyName// + "[n]",
+                };
+                propertyMappings.Add(propertyMapping);
 
                 propertyMapping.Properties.AddRange(
                     MapListOrArrayProperties(
@@ -312,7 +322,7 @@ public class MethodSimplifier
             }
 
             // Add this property mapping to the list
-            propertyMappings.Add(propertyMapping);
+            //propertyMappings.Add(propertyMapping);
         }
 
         return propertyMappings;

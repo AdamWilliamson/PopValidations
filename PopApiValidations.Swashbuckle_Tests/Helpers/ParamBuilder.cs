@@ -44,8 +44,6 @@ public class ParamBuilder<TParamType>
     public bool HasChildren()
     {
         return
-            //openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy?.Any() == true
-            //||
             openApiNavigator.CheckIfRequestBody(url, type, objHeirarcy) && objHeirarcy!.Length > 1;
     }
 

@@ -11,7 +11,7 @@ using PopApiValidations.Swashbuckle.Internal.PopApiValidationSchemaFilterV3.Open
 
 namespace PopApiValidations.Swashbuckle_Tests.Internal.PopApiValidationSchemaFilterV3_Tests;
 
-public record TypeToOpenApiMappingTestData(MethodInfo MethodInfo, string ObjHeirarchy, string SchemaType, bool IsParameter = true)
+public record TypeToOpenApiMappingTestData(MethodInfo MethodInfo, string ObjHeirarchy, string? SchemaType, bool IsParameter = true)
 { 
     public override string ToString()
     {
@@ -58,12 +58,12 @@ public class OpenApiToTypeMapping_Tests
             );
         var paramMap = objMap.Where(x => (testData.IsParameter && x.Parameter != null) || (!testData.IsParameter && x.RequestBody is not null));
         var objHeir = paramMap.Where(x => x.OpenApiObjHeirarchy == testData.ObjHeirarchy);
-        var namedMap = objHeir.Where(x => x.ParameterMapping is not null);
+        var namedMap = objHeir.Where(x => x.ParameterMapping is not null || x.RequestBodyMapping is not null);
 
         namedMap.Should().HaveCount(1);
     }
 
-    public static TypeToOpenApiMappingTestData TD(MethodInfo MethodInfo, string ObjHeirarchy, string SchemaType, bool IsParameter = true)
+    public static TypeToOpenApiMappingTestData TD(MethodInfo MethodInfo, string ObjHeirarchy, string? SchemaType, bool IsParameter = true)
     {
         return new TypeToOpenApiMappingTestData(
             MethodInfo: MethodInfo, 
@@ -81,7 +81,7 @@ public class OpenApiToTypeMapping_Tests
 
         // Create
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.Create));
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, prefix: "RequestBody.", IsParameter: false))
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, prefix: "", IsParameter: false))
         {
             yield return item;
         }
@@ -108,16 +108,16 @@ public class OpenApiToTypeMapping_Tests
 
         //CreateByBody
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.CreateByBody));
-        yield return TD(MethodInfo: methodInfo, ObjHeirarchy: "RequestBody", SchemaType: "object", IsParameter: false);
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, "RequestBody.", false))
+        yield return TD(MethodInfo: methodInfo, ObjHeirarchy: "", SchemaType: null, IsParameter: false);
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, "", false))
         {
             yield return item;
         }
 
         // Update
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.Update));
-        yield return TD(MethodInfo: methodInfo, ObjHeirarchy: "RequestBody", SchemaType: "object", IsParameter: false);
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, "RequestBody.", false))
+        yield return TD(MethodInfo: methodInfo, ObjHeirarchy: "", SchemaType: null, IsParameter: false);
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, "", false))
         {
             yield return item;
         }
@@ -146,8 +146,8 @@ public class OpenApiToTypeMapping_Tests
 
         //UpdateByBody
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.UpdateByBody));
-        yield return TD(MethodInfo: methodInfo, ObjHeirarchy: "RequestBody", SchemaType: "object", IsParameter: false);
-        foreach (var item in CreateForRequest(methodInfo: methodInfo, "RequestBody.", false))
+        yield return TD(MethodInfo: methodInfo, ObjHeirarchy: "", SchemaType: "object", IsParameter: false);
+        foreach (var item in CreateForRequest(methodInfo: methodInfo, "", false))
         {
             yield return item;
         }
@@ -166,7 +166,7 @@ public class OpenApiToTypeMapping_Tests
 
         //DeleteByBody
         methodInfo = typeof(TestController).GetMethod(nameof(TestController.DeleteByBody));
-        yield return TD(MethodInfo: methodInfo, ObjHeirarchy: "RequestBody", SchemaType: "number", IsParameter: false);
+        yield return TD(MethodInfo: methodInfo, ObjHeirarchy: "", SchemaType: "number", IsParameter: false);
 
     }
 
@@ -209,7 +209,7 @@ public class OpenApiToTypeMapping_Tests
         }
         //yield return new OpenApiMappingData(methodInfo, route, method, prefix + "ListOfRequestDataItemsField".Insert().Replace., "array");
 
-        yield return TD(methodInfo, prefix + "DictOfStringIntField", "object", IsParameter);
+        yield return TD(methodInfo, prefix + "DictOfStringIntField", "array", IsParameter);
     }
 
     public static IEnumerable<object[]> CreateForRequestDataItem(MethodInfo methodInfo, string prefix, bool IsParameter)
